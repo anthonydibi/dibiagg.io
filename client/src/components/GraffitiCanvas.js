@@ -117,7 +117,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     React.useEffect(()=>{
         fetchMaxStep();
         fetchCanvasState(0);
-    }, []);
+    });
 
   return (
     <Box w="100%">

@@ -5,12 +5,10 @@ export default function IconCard(props) {
     return (
         <Center py={6}>
             <Flex
-            flex={"1"}
-            gridAutoRows={"1fr"}
-            gridAutoColumns={"1fr"}
-            maxW={"500px"}
             bg={useColorModeValue(props.color, "gray.800")}
             boxShadow={"xl"}
+            h={"480px"}
+            w={"400px"}
             p={6}
             rounded={"lg"}
             textAlign={"center"}
