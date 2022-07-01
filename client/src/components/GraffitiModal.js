@@ -20,7 +20,7 @@ export default function GraffitiModal(props){
                     <Text fontSize={"lg"}>This is a canvas where whatever you draw will be visible to others who
                     visits this page. The wall is reset each day, and you can travel back in time using the arrow buttons above the canvas.</Text>
                     <br />
-                    <Text fontSize = {"md"}>Be warned: this is just a prototype, so the user experience is buggy. Whatever is currently on your screen is accepted as the true state of the canvas,
+                    <Text textColor={"red"} fontSize = {"md"}><b>Be warned:</b> this is just a prototype, so the user experience is buggy. Whatever is currently on your screen is accepted as the true state of the canvas,
                     so drawings may be overwritten and things will definitely go wrong. There also isn't support for multiple people drawing simultaneously so your masterpiece will be overwritten if someone else
                     is currently drawing. This is something I'm working on!</Text>
                 </ModalBody>
