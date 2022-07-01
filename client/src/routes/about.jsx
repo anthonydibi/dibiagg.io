@@ -32,7 +32,7 @@ export default function About(){
                         </Text>
                         <Text fontSize="2xl">
                         </Text>
-                        <Grid flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={'repeat(2, 1fr)'}>
+                        <Grid flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}>
                             <GridItem>
                                 <IconCard src={"https://pbs.twimg.com/profile_images/1244925541448286208/rzylUjaf_400x400.jpg"}
                                 color={"white"}
