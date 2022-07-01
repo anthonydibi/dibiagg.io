@@ -6,7 +6,7 @@ import IconCard from '../components/IconCard'
 export default function About(){
     return (
         <Center>
-            <Box p={"20"} bg={useColorModeValue('pink.50', 'gray.900')} boxShadow="md" my="4" maxW={"60%"} transitionDuration="1000ms">
+            <Box p={"20"} bg={useColorModeValue('pink.50', 'gray.900')} boxShadow="md" my="4" w={"1000px"} transitionDuration="1000ms">
                 <Center>
                     <Stack spacing={9} p={10}>
                         <Center>
@@ -30,7 +30,7 @@ export default function About(){
                             have just used WordPress, but I am passionate about web development and I wanted to try my hand at learning some new technologies
                             as I build it up so I decided to use the following technologies.
                         </Text>
-                        <Grid autoColumns={"1fr"} templateColumns={'repeat(2, 1fr)'}>
+                        <Grid flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={'repeat(2, 1fr)'}>
                             <GridItem>
                                 <IconCard src={"https://pbs.twimg.com/profile_images/1244925541448286208/rzylUjaf_400x400.jpg"}
                                 color={"white"}
@@ -46,10 +46,10 @@ export default function About(){
                                 </IconCard>
                             </GridItem>
                             <GridItem>
-                                <IconCard src={"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/440px-Postgresql_elephant.svg.png"}
+                                <IconCard src={"https://channelmix.com/wp-content/uploads/2019/03/postgreSQL-source-logo-mark.png"}
                                 color={"white"}
                                 text={"PostGRES is my database of choice. When I started building my website I knew that I wanted to have a graffiti wall, so I needed an easy way to persist and restore the state of the graffiti canvas. That meant that a database which natively supports JSON data would be essential. I'm a SQL gal, so MongoDB was off the table, which made PostGRES the obvious candidate."}
-                                rounded={"false"}>
+                                rounded={"true"}>
                                 </IconCard>
                             </GridItem>
                             <GridItem>

@@ -18,7 +18,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const isDrawing = React.useRef(false);
     const [weekOf, setWeekOf] = React.useState(lastMonday.toISOString().split('T')[0]);
 
-    const API_URL = process.env.API_URL;
+    const API_URL = 'https://dibiaggdotio.herokuapp.com';
 
     const handleChangeComplete = (color) => {
         setColor(color);
