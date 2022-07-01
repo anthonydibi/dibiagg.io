@@ -6,9 +6,8 @@ import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { SwatchesPicker } from 'react-color'
 
 export default function GraffitiCanvas() { //built off of free-draw template from react-konva docs
-    let lastMonday = new Date();
-    lastMonday.setHours(0, 0, 0, 0);
-    lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() + 6) % 7);
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
     const [maxStep, setMaxStep] = React.useState(0);
     const [step, setStep] = React.useState(0);
     const tool = "pen";
@@ -16,7 +15,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const [lines, setLines] = React.useState([]);
     const [color, setColor] = React.useState("#000000")
     const isDrawing = React.useRef(false);
-    const [weekOf, setWeekOf] = React.useState(lastMonday.toISOString().split('T')[0]);
+    const [weekOf, setWeekOf] = React.useState(today.toISOString().split('T')[0]);
 
     const API_URL = 'https://dibiaggdotio.herokuapp.com';
 
@@ -30,7 +29,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             .then(response => response.json())
             .then(data => {
                 setLines(data.lines);
-                setWeekOf(data.week_of.split(' ')[0]);
+                setWeekOf(data.day.split(' ')[0]);
             })
     }
 

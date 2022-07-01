@@ -20,6 +20,7 @@ app.use(
     extended: true,
   })
 )
+
 app.use(cors())
 
 types.setTypeParser(1114, function(stringValue) {
@@ -27,13 +28,13 @@ types.setTypeParser(1114, function(stringValue) {
 });
 
 app.get('/graffiti', (request, response) => {
-    let lastMonday = new Date();
-    lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() + 6) % 7);
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
     let step = request.query.step;
-    client.query('SELECT * FROM graffiti ORDER BY week_of DESC LIMIT 1 OFFSET $1', [step], (err, res) => {
+    client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1 OFFSET $1', [step], (err, res) => {
         if(err) throw err;
         if(res.rows.length == 0){
-            response.json({week_of: lastMonday.getDate().toString(), lines: []});
+            response.json({day: today.toISOString().split('T')[0], lines: []});
         }
         else{
             response.json(res.rows[0]);
@@ -49,27 +50,26 @@ app.get('/graffiti/maxstep', (request, response) => {
 })
 
 app.post('/graffiti', (request, response) => {
-    let lastMonday = new Date();
-    lastMonday.setHours(0, 0, 0, 0);
-    lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() + 6) % 7);
-    client.query('SELECT * FROM graffiti ORDER BY week_of DESC LIMIT 1', (err, res) => {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1', (err, res) => {
         if(err) throw err;
         if(res.rows.length != 0){
-            let latest = new Date(res.rows[0].week_of.replace(' ', 'T'));
-            if(latest >= lastMonday){
-                client.query("UPDATE graffiti set lines = $1 where week_of = (SELECT MAX(week_of) from graffiti)", [JSON.stringify(request.body.lines)], (err, res) => {
+            let latest = new Date(res.rows[0].day.replace(' ', 'T'));
+            if(latest >= today){
+                client.query("UPDATE graffiti set lines = $1 where day = (SELECT MAX(day) from graffiti)", [JSON.stringify(request.body.lines)], (err, res) => {
                     if(err) throw err;
                     return;
                 })
             }
             else{
-                client.query("INSERT INTO graffiti(week_of, lines) VALUES($1, $2)", [lastMonday, JSON.stringify(request.body.lines)], (err, res) => {
+                client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify(request.body.lines)], (err, res) => {
                     if(err) throw err;
                 });
             }
         }
         else{
-            client.query("INSERT INTO graffiti(week_of, lines) VALUES($1, $2)", [lastMonday, JSON.stringify(request.body.lines)], (err, res) => {
+            client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify(request.body.lines)], (err, res) => {
                 if(err) throw err;
             });
         }
