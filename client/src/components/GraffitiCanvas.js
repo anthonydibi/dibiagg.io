@@ -15,7 +15,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const [lines, setLines] = React.useState([]);
     const [color, setColor] = React.useState("#000000")
     const isDrawing = React.useRef(false);
-    const [weekOf, setWeekOf] = React.useState(today.toISOString().split('T')[0]);
+    const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
 
     const API_URL = 'https://dibiaggdotio.herokuapp.com';
 
@@ -29,7 +29,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             .then(response => response.json())
             .then(data => {
                 setLines(data.lines);
-                setWeekOf(data.day.split(' ')[0]);
+                setDay(data.day.split(' ')[0]);
             })
     }
 
@@ -122,10 +122,10 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
   return (
     <Box w="100%">
         <Center>
-            <IconButton isRound="true" m="2" value="previousWeek" variant="solid" icon={<AiFillCaretLeft/>} onClick={ back }>
+            <IconButton isRound="true" m="2" value="previousDay" variant="solid" icon={<AiFillCaretLeft/>} onClick={ back }>
             </IconButton>
-            <Heading my={"6"}>Week of {weekOf}</Heading>
-            <IconButton isRound="true" m="2" value="nextWeek" variant="solid" icon={<AiFillCaretRight/>} onClick={ forward }>
+            <Heading my={"6"}>{day}</Heading>
+            <IconButton isRound="true" m="2" value="nextDay" variant="solid" icon={<AiFillCaretRight/>} onClick={ forward }>
             </IconButton>
         </Center>
         <Flex>
