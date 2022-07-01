@@ -25,6 +25,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     };
 
     const fetchCanvasState = (step) => {
+        console.log("Fetching canvas state");
         fetch(API_URL + '/graffiti?' + new URLSearchParams({ step: step }))
             .then(response => response.json())
             .then(data => {
@@ -117,7 +118,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     React.useEffect(()=>{
         fetchMaxStep();
         fetchCanvasState(0);
-    });
+    }, []);
 
   return (
     <Box w="100%">
