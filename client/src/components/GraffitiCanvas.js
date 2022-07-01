@@ -18,12 +18,14 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const isDrawing = React.useRef(false);
     const [weekOf, setWeekOf] = React.useState(lastMonday.toISOString().split('T')[0]);
 
+    const API_URL = process.env.API_URL;
+
     const handleChangeComplete = (color) => {
         setColor(color);
     };
 
     const fetchCanvasState = (step) => {
-        fetch('http://localhost:' + process.env.PORT + '/graffiti?' + new URLSearchParams({ step: step }))
+        fetch(API_URL + '/graffiti?' + new URLSearchParams({ step: step }))
             .then(response => response.json())
             .then(data => {
                 setLines(data.lines);
@@ -32,7 +34,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     }
 
     const fetchMaxStep = () => {
-        fetch('http://localhost:3001/graffiti/maxstep')
+        fetch(API_URL + '/graffiti/maxstep')
             .then(response => response.json())
             .then(data => {
                 let count = parseInt(data.count);
@@ -42,7 +44,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
 
     const postCanvasState = (lines) => {
         let data = {lines: lines};
-        fetch('http://localhost:3001/graffiti', {
+        fetch(API_URL + '/graffiti', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -132,7 +134,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             onChangeComplete={handleChangeComplete}
             />
         </Box>
-        <Box ml={"-15px"} zIndex={"5"} mb={"6"} boxShadow="dark-lg" border="3px" borderColor="teal" borderRadius="md">
+        <Box zIndex={"5"} mb={"6"} boxShadow="dark-lg" border="3px" borderColor="teal" borderRadius="md">
             <Stage
                 width={1000}
                 height={1000}

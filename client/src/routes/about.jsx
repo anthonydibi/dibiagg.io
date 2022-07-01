@@ -1,4 +1,4 @@
-import {SimpleGrid, Heading, Center, Box, Text, Stack, useColorModeValue, GridItem} from "@chakra-ui/react"
+import {Grid, Heading, Center, Box, Text, Stack, useColorModeValue, GridItem} from "@chakra-ui/react"
 import React from 'react';
 import Emoji from '../components/Emoji'
 import IconCard from '../components/IconCard'
@@ -30,7 +30,7 @@ export default function About(){
                             have just used WordPress, but I am passionate about web development and I wanted to try my hand at learning some new technologies
                             as I build it up so I decided to use the following technologies.
                         </Text>
-                        <SimpleGrid gap={1} minChildWidth='400px'>
+                        <Grid autoColumns={"1fr"} templateColumns={'repeat(2, 1fr)'}>
                             <GridItem>
                                 <IconCard src={"https://pbs.twimg.com/profile_images/1244925541448286208/rzylUjaf_400x400.jpg"}
                                 color={"white"}
@@ -59,7 +59,7 @@ export default function About(){
                                 rounded={"true"}>
                                 </IconCard>
                             </GridItem>
-                        </SimpleGrid>
+                        </Grid>
                     </Stack>
                 </Center>
             </Box>

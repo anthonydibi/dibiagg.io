@@ -1,17 +1,20 @@
 import React from 'react';
-import {Box, Center, useColorModeValue, Image, Text} from '@chakra-ui/react';
+import {Flex, Center, useColorModeValue, Image, Text} from '@chakra-ui/react';
 
 export default function IconCard(props) {
     return (
         <Center py={6}>
-            <Box
-            w={"85%"}
-            maxW={"400px"}
+            <Flex
+            flex={"1"}
+            gridAutoRows={"1fr"}
+            gridAutoColumns={"1fr"}
+            maxW={"500px"}
             bg={useColorModeValue(props.color, "gray.800")}
             boxShadow={"xl"}
             p={6}
             rounded={"lg"}
-            textAlign={"center"}>
+            textAlign={"center"}
+            flexDirection={"column"}>
                 <Center>
                     <Image 
                     src={props.src}
@@ -24,7 +27,7 @@ export default function IconCard(props) {
                 <Text fontSize={"xl"}>
                     {props.text}
                 </Text>
-            </Box>
+            </Flex>
         </Center>
     );
 }
