@@ -133,40 +133,40 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             </IconButton>
         </Center>
         <Flex>
-        <Box flex={"1"} align={"right"} overflow={"hidden"}>
-            <SwatchesPicker color={color} height={1000}
-            onChangeComplete={handleChangeComplete}
-            />
-        </Box>
-        <Box zIndex={"5"} mb={"6"} boxShadow="dark-lg" border="3px" borderColor="teal" borderRadius="md">
-            <Stage
-                width={1000}
-                height={1000}
-                onMouseDown={handleMouseDown}
-                onMousemove={handleMouseMove}
-                onMouseup={handleMouseUp}
-            >
-                <Layer>
-                {lines.map((line, i) => (
-                    <Line
-                    key={i}
-                    points={line.points}
-                    stroke={line.color}
-                    strokeWidth={5}
-                    tension={0.5}
-                    lineCap="round"
-                    globalCompositeOperation={
-                        line.tool === 'eraser' ? 'destination-out' : 'source-over'
-                    }
-                    />
-                ))}
-                </Layer>
-            </Stage>
-        </Box>
-        <Box flex={"1"}>
-            <IconButton isRound="true" m="2" value="undo" variant="solid" icon={<FaUndo/>} onClick={ undo }>
-            </IconButton>
-        </Box>
+            <Box flex={"1"} align={"right"}>
+                <SwatchesPicker color={color} height={1000}
+                onChangeComplete={handleChangeComplete}
+                />
+            </Box>
+            <Box zIndex={"5"} mb={"6"} boxShadow="dark-lg" border="3px" borderColor="teal" borderRadius="md">
+                <Stage
+                    width={1000}
+                    height={1000}
+                    onMouseDown={handleMouseDown}
+                    onMousemove={handleMouseMove}
+                    onMouseup={handleMouseUp}
+                >
+                    <Layer>
+                    {lines.map((line, i) => (
+                        <Line
+                        key={i}
+                        points={line.points}
+                        stroke={line.color}
+                        strokeWidth={5}
+                        tension={0.5}
+                        lineCap="round"
+                        globalCompositeOperation={
+                            line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                        }
+                        />
+                    ))}
+                    </Layer>
+                </Stage>
+            </Box>
+            <Box flex={"1"}>
+                <IconButton isRound="true" m="2" value="undo" variant="solid" icon={<FaUndo/>} onClick={ undo }>
+                </IconButton>
+            </Box>
         </Flex>
     </Box>
   );
