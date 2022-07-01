@@ -59,18 +59,20 @@ app.post('/graffiti', (request, response) => {
             if(latest >= today){
                 client.query("UPDATE graffiti set lines = $1 where day = (SELECT MAX(day) from graffiti)", [JSON.stringify(request.body.lines)], (err, res) => {
                     if(err) throw err;
-                    return;
+                    response.status(200);
                 })
             }
             else{
                 client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify(request.body.lines)], (err, res) => {
                     if(err) throw err;
+                    response.status(200);
                 });
             }
         }
         else{
             client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify(request.body.lines)], (err, res) => {
                 if(err) throw err;
+                response.status(200);
             });
         }
     });

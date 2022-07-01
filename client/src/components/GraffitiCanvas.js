@@ -55,14 +55,16 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     }
 
     const handleMouseDown = (e) => {
-        isDrawing.current = true;
-        const pos = e.target.getStage().getPointerPosition();
-        setLines([...lines, { tool, color: color.hex, points: [pos.x, pos.y] }]);
+        if(step === 0){
+            isDrawing.current = true;
+            const pos = e.target.getStage().getPointerPosition();
+            setLines([...lines, { tool, color: color.hex, points: [pos.x, pos.y] }]);
+        }
     };
 
     const handleMouseMove = (e) => {
-        // no drawing - skipping
-        if (!isDrawing.current) {
+        // not drawing or not on current day - skipping
+        if (!isDrawing.current || step !== 0) {
             return;
         }
         const stage = e.target.getStage();
@@ -77,9 +79,11 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     };
 
     const handleMouseUp = () => {
-        isDrawing.current = false;
-        setNumSessionLines(numSessionLines + 1);
-        save();
+        if(step === 0){
+            isDrawing.current = false;
+            setNumSessionLines(numSessionLines + 1);
+            save();
+        }
     };
 
     const undo = () => {
