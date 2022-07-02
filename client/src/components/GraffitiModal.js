@@ -18,11 +18,10 @@ export default function GraffitiModal(props){
                 <ModalCloseButton />
                 <ModalBody>
                     <Text fontSize={"lg"}>This is a canvas where whatever you draw will be visible to others who
-                    visit this page. The wall is reset each day, and you can travel back in time using the arrow buttons above the canvas.</Text>
+                    visit this page. Use the buttons on the right of the canvas to select the pen and eraser tools. The wall is reset each day, and you can travel back in time using the arrow buttons above the canvas.</Text>
                     <br />
-                    <Text textColor={"red"} fontSize = {"md"}><b>Be warned:</b> this is just a prototype, so the user experience is buggy. Whatever is currently on your screen is accepted as the true state of the canvas,
-                    so drawings may be overwritten and things will definitely go wrong. There also isn't support for multiple people drawing simultaneously so your masterpiece will be overwritten if someone else
-                    is currently drawing. This is something I'm working on!</Text>
+                    <Text textColor={"red"} fontSize = {"md"}><b>Be warned:</b> this is just a prototype, so the user experience is buggy, especially
+                    when multiple users are drawing simultaneously. Your masterpiece may be overwritten or deleted. This is something I am working on!</Text>
                 </ModalBody>
 
                 <ModalFooter>
