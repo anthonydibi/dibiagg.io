@@ -127,6 +127,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             if(step === 0 && !isDrawing.current) fetchCanvasState(0);
         }, 1000);
         return () => clearInterval(interval);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
   return (
