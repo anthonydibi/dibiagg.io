@@ -28,7 +28,7 @@ types.setTypeParser(1114, function(stringValue) {
 });
 
 app.get('/graffiti', (request, response) => {
-    let today = new Date().setUTC;
+    let today = new Date();
     today.setHours(0, 0, 0, 0);
     let step = request.query.step;
     client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1 OFFSET $1', [step], (err, res) => {
