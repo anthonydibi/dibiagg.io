@@ -43,6 +43,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
 
     const postCanvasState = (callback) => {
         let data = {line: lines[lines.length - 1]};
+        if(data.line === null) return;
         return fetch(API_URL + '/graffiti', {
             method: 'POST',
             mode: 'cors',
