@@ -28,7 +28,7 @@ types.setTypeParser(1114, function(stringValue) {
 });
 
 app.get('/graffiti', (request, response) => {
-    let today = new Date();
+    let today = new Date().setUTC;
     today.setHours(0, 0, 0, 0);
     let step = request.query.step;
     client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1 OFFSET $1', [step], (err, res) => {
@@ -40,7 +40,7 @@ app.get('/graffiti', (request, response) => {
             let latestDate = new Date(res.rows[0].day);
             latestDate.setHours(0, 0, 0, 0);
             if(latestDate.getTime() !== today.getTime()){
-                client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify([])], (err, res) => {
+                client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, []], (err, res) => {
                     if(err) throw err;
                     response.json({day: today.toISOString().split('T')[0], lines: []});
                 });
