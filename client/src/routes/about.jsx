@@ -8,9 +8,9 @@ export default function About(){
         <>
             <Box h="70px" w="100%"></Box> {/*spacer for sticky nav*/}
             <Center>
-                <Box mt="100px" p={"20"} bg={useColorModeValue('pink.50', 'gray.900')} boxShadow="md" my="4" w={"1000px"} transitionDuration="1000ms">
+                <Box p={"20"} bg={useColorModeValue('pink.50', 'gray.900')} boxShadow="md" my="4" w={"1000px"} transitionDuration="1000ms">
                     <Center>
-                        <Stack spacing={9} p={10}>
+                        <Stack spacing={9} p={{base: 0, md: 10}}>
                             <Center>
                                 <Heading
                                     fontWeight={600}

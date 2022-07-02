@@ -16,7 +16,8 @@ import {
 import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as RouteLink } from "react-router-dom";
 
-const Links = [{display: 'About', href: '/About'}, {display: 'Graffiti', href: '/Graffiti'}];
+const LeftLinks = [{display: 'About', href: '/About'}, {display: 'Graffiti', href: '/Graffiti'}];
+const RightLinks = [{display: 'Resume', href: '/Resume'},{display: "Contact", href: '/Contact'}]
 
 const NavLink = ({ children }) => (
   <Link
@@ -57,7 +58,7 @@ export default function Nav() {
               as={'nav'}
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
+              {LeftLinks.map((link) => (
                 <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
               ))}
             </HStack>
@@ -66,6 +67,15 @@ export default function Nav() {
           <Spacer />
           <Flex alignItems={'center'}>
             <Menu>
+            <HStack
+              mr={"32px"}
+              as={'nav'}
+              spacing={4}
+              display={{ base: 'none', md: 'flex' }}>
+              {RightLinks.map((link) => (
+                <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
+              ))}
+            </HStack>
             <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
@@ -75,13 +85,19 @@ export default function Nav() {
         </Flex>
 
       {isOpen ? (
+        <>
+        <Box h="70px"></Box>
         <Box pb={4} display={{ md: 'none' }}>
           <Stack as={'nav'} spacing={4}>
-            {Links.map((link) => (
+            {LeftLinks.map((link) => (
+              <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
+            ))}
+            {RightLinks.map((link) => (
               <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
             ))}
           </Stack>
         </Box>
+        </>
       ) : null}
     </>
   );
