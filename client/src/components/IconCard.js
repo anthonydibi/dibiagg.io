@@ -21,7 +21,7 @@ export default function IconCard(props) {
             pos={"relative"}
             mb={"6"}>
             </Image>
-            <Text fontSize={"xl"} width={"80%"}>
+            <Text fontSize={{ base: "md", sm: "lg", md: "xl" }} width={"80%"}>
                 {props.text}
             </Text>
         </Flex>

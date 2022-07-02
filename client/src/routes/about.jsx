@@ -23,16 +23,16 @@ export default function About(){
                                     (dee-bee-aw-jee-oh)
                                 </Text>
                             </Center>
-                            <Text fontSize="2xl">
+                            <Text fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
                                 Welcome to <Text display={"inline-block"} bgClip="text" bgGradient='linear(to-l, #7928CA, #FF0080)'>dibiagg.io</Text>! 
                                 I'm studying computer science at the University of Minnesota, with a focus in software engineering and 
                                 web development. This is my personal website, which functions as a little sandbox for whatever 
                                 projects I decide to whip up, as well as a hub for my portfolio, resume, contact links, etc.
                             </Text>
-                            <Text fontSize={"2xl"}>
+                            <Text fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
                                 Here is the stuff I used to build this website!
                             </Text>
-                            <Text fontSize="2xl">
+                            <Text fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
                             </Text>
                             <Grid flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}>
                                 <GridItem>
