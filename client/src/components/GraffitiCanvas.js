@@ -124,7 +124,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         fetchMaxStep();
         fetchCanvasState(0);
         const interval = setInterval(() => {
-            if(step === 0 && !isDrawing.current) fetchCanvasState(step);
+            if(step === 0 && !isDrawing.current) fetchCanvasState(0);
         }, 1000);
         return () => clearInterval(interval);
     }, []);
