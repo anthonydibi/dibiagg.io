@@ -1,4 +1,4 @@
-import { Center } from "@chakra-ui/react"
+import { Center, Box } from "@chakra-ui/react"
 import GraffitiCanvas from '../components/GraffitiCanvas'
 import GraffitiModal from '../components/GraffitiModal'
 
@@ -13,10 +13,13 @@ export default function Graffiti(){
     }
 
     return (
-        <Center>
-            {console.log(showModal)}
-            {showModal && <GraffitiModal />}
-            <GraffitiCanvas/>
-        </Center>
+        <>
+            <Box h="70px" w="100%"></Box> {/*spacer for sticky nav*/}
+            <Center>
+                {console.log(showModal)}
+                {showModal && <GraffitiModal />}
+                <GraffitiCanvas/>
+            </Center>
+        </>
     );
 }

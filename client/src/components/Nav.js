@@ -37,7 +37,7 @@ export default function Nav() {
 
   return (
     <>
-        <Flex boxShadow="sm" bg={useColorModeValue('pink.50', 'gray.900')} px={4} h={16} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex top="0" position="fixed" w="100%" zIndex="100" boxShadow="sm" bg={useColorModeValue('pink.50', 'gray.900')} px={4} h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Spacer />
           <IconButton
             size={'md'}

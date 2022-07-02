@@ -1,11 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 var cors = require('cors')
 
 const { Client, types } = require('pg');
 const { json } = require('express')
+
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -61,26 +62,27 @@ app.get('/graffiti/maxstep', (request, response) => {
 
 app.post('/graffiti', (request, response) => {
     let today = new Date();
+    let line = request.body.lines
     today.setHours(0, 0, 0, 0);
     client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1', (err, res) => {
         if(err) throw err;
         if(res.rows.length != 0){
             let latest = new Date(res.rows[0].day.replace(' ', 'T'));
             if(latest >= today){
-                client.query("UPDATE graffiti set lines = $1 where day = (SELECT MAX(day) from graffiti)", [JSON.stringify(request.body.lines)], (err, res) => {
+                client.query("UPDATE graffiti SET lines = lines || $1::jsonb where day = (SELECT MAX(day) from graffiti)", [JSON.stringify([request.body.line])], (err, res) => {
                     if(err) throw err;
                     response.status(200);
                 })
             }
             else{
-                client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify(request.body.lines)], (err, res) => {
+                client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2::jsonb)", [today, JSON.stringify([request.body.line])], (err, res) => {
                     if(err) throw err;
                     response.status(200);
                 });
             }
         }
         else{
-            client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify(request.body.lines)], (err, res) => {
+            client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2::jsonb)", [today, JSON.stringify([request.body.line])], (err, res) => {
                 if(err) throw err;
                 response.status(200);
             });

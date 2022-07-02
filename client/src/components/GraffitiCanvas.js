@@ -1,7 +1,7 @@
 import { Stage, Layer, Line } from 'react-konva'
 import React from 'react'
-import { Flex, IconButton, Box, Center, Heading } from '@chakra-ui/react'
-import { FaUndo } from 'react-icons/fa'
+import { Flex, IconButton, Box, Center, Heading, Grid, GridItem } from '@chakra-ui/react'
+import { FaEraser, FaPen } from 'react-icons/fa'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { SwatchesPicker } from 'react-color'
 
@@ -10,22 +10,22 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     today.setHours(0, 0, 0, 0);
     const [maxStep, setMaxStep] = React.useState(0);
     const [step, setStep] = React.useState(0);
-    const tool = "pen";
+    const [tool, setTool] = React.useState('pen');
     const [numSessionLines, setNumSessionLines] = React.useState(0);
     const [lines, setLines] = React.useState([]);
     const [color, setColor] = React.useState("#000000")
     const isDrawing = React.useRef(false);
     const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
 
-    const API_URL = 'https://dibiaggdotio.herokuapp.com';
+    // const API_URL = 'https://dibiaggdotio.herokuapp.com';
+    const API_URL = 'http://localhost:3001'
 
     const handleChangeComplete = (color) => {
         setColor(color);
     };
 
     const fetchCanvasState = (stepIn) => {
-        console.log("Fetching canvas state");
-        fetch(API_URL + '/graffiti?' + new URLSearchParams({ step: stepIn }))
+        return fetch(API_URL + '/graffiti?' + new URLSearchParams({ step: stepIn }))
             .then(response => response.json())
             .then(data => {
                 setLines(data.lines);
@@ -34,7 +34,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     }
 
     const fetchMaxStep = () => {
-        fetch(API_URL + '/graffiti/maxstep')
+        return fetch(API_URL + '/graffiti/maxstep')
             .then(response => response.json())
             .then(data => {
                 let count = parseInt(data.count);
@@ -42,9 +42,9 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             });
     }
 
-    const postCanvasState = (lines) => {
-        let data = {lines: lines};
-        fetch(API_URL + '/graffiti', {
+    const postCanvasState = (callback) => {
+        let data = {line: lines[lines.length - 1]};
+        return fetch(API_URL + '/graffiti', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -80,20 +80,21 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
 
     const handleMouseUp = () => {
         if(step === 0){
+            console.log(tool);
             isDrawing.current = false;
             setNumSessionLines(numSessionLines + 1);
-            save();
+            save(() => fetchCanvasState(step));
         }
     };
 
-    const undo = () => {
-        if(numSessionLines > 0){
-            const newLines = lines.slice(0, lines.length - 1);
-            setLines(newLines);
-            setNumSessionLines(numSessionLines - 1);
-            save();
-        }
-    }
+    // const undo = () => {
+    //     if(numSessionLines > 0){
+    //         const newLines = lines.slice(0, lines.length - 1);
+    //         setLines(newLines);
+    //         setNumSessionLines(numSessionLines - 1);
+    //         save();
+    //     }
+    // }
 
     const back = () => {
         if(step + 1 > maxStep){
@@ -111,16 +112,21 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         setStep(step - 1);
     }
 
-    const save = () => {
+    const save = (callback) => {
         if(step !== 0){
             return;
         }
-        postCanvasState(lines);
+        postCanvasState()
+            .then(result => callback());
     }
 
     React.useEffect(()=>{
         fetchMaxStep();
         fetchCanvasState(0);
+        const interval = setInterval(() => {
+            if(step === 0 && !isDrawing.current) fetchCanvasState(step);
+        }, 1000);
+        return () => clearInterval(interval);
     }, []);
 
   return (
@@ -152,7 +158,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                         key={i}
                         points={line.points}
                         stroke={line.color}
-                        strokeWidth={5}
+                        strokeWidth={line.tool === 'eraser' ? 15 : 5}
                         tension={0.5}
                         lineCap="round"
                         globalCompositeOperation={
@@ -164,8 +170,16 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                 </Stage>
             </Box>
             <Box flex={"1"}>
-                <IconButton isRound="true" m="2" value="undo" variant="solid" icon={<FaUndo/>} onClick={ undo }>
-                </IconButton>
+                <Grid>
+                    <GridItem>
+                        <IconButton size="lg" isRound="true" m="2" value="pen" variant="solid" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
+                        </IconButton>
+                    </GridItem>
+                    <GridItem>
+                        <IconButton size="lg" isRound="true" m="2" value="eraser" variant="solid" icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
+                        </IconButton>
+                    </GridItem>
+                </Grid>
             </Box>
         </Flex>
     </Box>
