@@ -31,7 +31,7 @@ types.setTypeParser(1114, function(stringValue) {
 app.get('/graffiti', (request, response) => {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
-    let step = request.query.step;
+    let step = parseInt(request.query.step);
     client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1 OFFSET $1', [step], (err, res) => {
         if(err) throw err;
         if(res.rows.length == 0){
@@ -40,9 +40,6 @@ app.get('/graffiti', (request, response) => {
         else{
             let latestDate = new Date(res.rows[0].day);
             latestDate.setHours(0, 0, 0, 0);
-            console.log("step: " + step + " today: " + today.getTime() + " latest: " + latestDate.getTime());
-            console.log(step === 0 );
-            console.log( latestDate.getTime() !== today.getTime());
             if(step === 0 && latestDate.getTime() !== today.getTime()){
                 client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify([])], (err, res) => {
                     
