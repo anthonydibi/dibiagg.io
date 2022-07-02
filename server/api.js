@@ -37,7 +37,14 @@ app.get('/graffiti', (request, response) => {
             response.json({day: today.toISOString().split('T')[0], lines: []});
         }
         else{
-            response.json(res.rows[0]);
+            let latestDate = new Date(res.rows[0].day);
+            latestDate.setHours(0, 0, 0, 0);
+            if(latestDate.getTime() !== today.getTime()){
+                response.json({day: today.toISOString().split('T')[0], lines: []});
+            }
+            else{
+                response.json(res.rows[0]);
+            }
         }
     });
 })
