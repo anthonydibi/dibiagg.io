@@ -23,9 +23,9 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         setColor(color);
     };
 
-    const fetchCanvasState = (step) => {
+    const fetchCanvasState = (stepIn) => {
         console.log("Fetching canvas state");
-        fetch(API_URL + '/graffiti?' + new URLSearchParams({ step: step }))
+        fetch(API_URL + '/graffiti?' + new URLSearchParams({ step: stepIn }))
             .then(response => response.json())
             .then(data => {
                 setLines(data.lines);
@@ -99,16 +99,16 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step + 1 > maxStep){
             return;
         }
+        fetchCanvasState(step + 1);
         setStep(step + 1);
-        fetchCanvasState(step);
     }
 
     const forward = () => {
         if(step - 1 < 0){
             return;
         }
+        fetchCanvasState(step - 1);
         setStep(step - 1);
-        fetchCanvasState(step);
     }
 
     const save = () => {

@@ -39,6 +39,8 @@ app.get('/graffiti', (request, response) => {
         else{
             let latestDate = new Date(res.rows[0].day);
             latestDate.setHours(0, 0, 0, 0);
+            console.log(latestDate);
+            console.log(today);
             if(latestDate.getTime() !== today.getTime()){
                 client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify([])], (err, res) => {
                     if(err) throw err;
