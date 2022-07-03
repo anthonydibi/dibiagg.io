@@ -11,6 +11,7 @@ import {
 import About from "./routes/about";
 import Graffiti from "./routes/graffiti"
 import Nav from './components/Nav'
+import Resume from './routes/resume';
 import theme from './theme'
 
 const container = document.getElementById('root');
@@ -25,6 +26,7 @@ root.render(
         <Route path="/" element={<About />} />
         <Route path="about" element={<About />} />
         <Route path="graffiti" element={<Graffiti />} />
+        <Route path="resume" element={<Resume />} />
       </Routes>
     </ChakraProvider>
   </BrowserRouter>
