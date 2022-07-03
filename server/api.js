@@ -33,7 +33,7 @@ app.get('/graffiti', (request, response) => {
     today.setHours(0, 0, 0, 0);
     let step = parseInt(request.query.step);
     client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1 OFFSET $1', [step], (err, res) => {
-        if(err) throw err;
+        if(err) console.log(error);
         if(res.rows.length == 0){
             response.json({day: today.toISOString().split('T')[0], lines: []});
         }
@@ -42,8 +42,7 @@ app.get('/graffiti', (request, response) => {
             latestDate.setHours(0, 0, 0, 0);
             if(step === 0 && latestDate.getTime() !== today.getTime()){
                 client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2)", [today, JSON.stringify([])], (err, res) => {
-                    
-                    if(err) throw err;
+                    if(err) console.log(err);
                     response.json({day: today.toISOString().split('T')[0], lines: []});
                 });
             }
@@ -56,35 +55,34 @@ app.get('/graffiti', (request, response) => {
 
 app.get('/graffiti/maxstep', (request, response) => {
     client.query('SELECT COUNT(*) as count from graffiti', (err, res) => {
-        if(err) throw err;
+        if(err) console.log(err);
         response.json({count: parseInt(res.rows[0].count)});
     })
 })
 
 app.post('/graffiti', (request, response) => {
     let today = new Date();
-    let line = request.body.lines
     today.setHours(0, 0, 0, 0);
     client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1', (err, res) => {
-        if(err) throw err;
+        if(err) console.log(err);
         if(res.rows.length != 0){
             let latest = new Date(res.rows[0].day.replace(' ', 'T'));
             if(latest >= today){
                 client.query("UPDATE graffiti SET lines = lines || $1::jsonb where day = (SELECT MAX(day) from graffiti)", [JSON.stringify([request.body.line])], (err, res) => {
-                    if(err) throw err;
+                    if(err) console.log(err);
                     response.status(200);
                 })
             }
             else{
                 client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2::jsonb)", [today, JSON.stringify([request.body.line])], (err, res) => {
-                    if(err) throw err;
+                    if(err) console.log(err);
                     response.status(200);
                 });
             }
         }
         else{
             client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2::jsonb)", [today, JSON.stringify([request.body.line])], (err, res) => {
-                if(err) throw err;
+                if(err) console.log(err);
                 response.status(200);
             });
         }
