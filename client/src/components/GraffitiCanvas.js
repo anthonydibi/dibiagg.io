@@ -80,7 +80,6 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
 
     const handleMouseUp = () => {
         if(step === 0){
-            console.log(tool);
             isDrawing.current = false;
             setNumSessionLines(numSessionLines + 1);
             save(() => fetchCanvasState(step));
