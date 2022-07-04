@@ -36,6 +36,7 @@ const NavLink = ({ children }) => (
 export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const bgColor = useColorModeValue("pink.50", "gray.900");
 
   return (
     <>
@@ -90,8 +91,8 @@ export default function Nav() {
 
       {isOpen ? (
         <>
-        <Box h="70px"></Box>
-        <Box pb={4} display={{ md: 'none' }}>
+        <Box h="64px"></Box>
+        <Box zIndex={"500"} position={"fixed"} w={"100%"} bg={bgColor} p={4} display={{ md: 'none' }}>
           <Stack as={'nav'} spacing={4}>
             {LeftLinks.map((link) => (
               <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
