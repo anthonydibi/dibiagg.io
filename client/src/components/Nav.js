@@ -12,6 +12,7 @@ import {
   useColorMode,
   Stack,
   Spacer,
+  Center
 } from '@chakra-ui/react';
 import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as RouteLink } from "react-router-dom";
@@ -47,24 +48,27 @@ export default function Nav() {
             display={{ md: 'none' }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={8} alignItems={'center'}>
-            <Box>
-              <Heading size="xl"
-              bgClip="text"
-              bgGradient='linear(to-l, #7928CA, #FF0080)'>
-              dibiagg.io</Heading>
-            </Box>
-            <HStack
-              as={'nav'}
-              spacing={4}
-              display={{ base: 'none', md: 'flex' }}>
-              {LeftLinks.map((link) => (
-                <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
-              ))}
+          <Center>
+            <HStack spacing={8} alignItems={'center'}>
+              <Box>
+                <Heading mx={{ base: "5", md: "0"}}
+                size="xl"
+                bgClip="text"
+                bgGradient='linear(to-l, #7928CA, #FF0080)'>
+                dibiagg.io</Heading>
+              </Box>
+              <HStack
+                as={'nav'}
+                spacing={4}
+                display={{ base: 'none', md: 'flex' }}>
+                {LeftLinks.map((link) => (
+                  <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
+                ))}
+              </HStack>
             </HStack>
-          </HStack>
-          <Spacer />
-          <Spacer />
+          </Center>
+          <Spacer display={{ base: "none", md: "block"} } />
+          <Spacer display={{ base: "none", md: "block"} } />
           <Flex alignItems={'center'}>
             <Menu>
             <HStack
