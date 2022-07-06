@@ -13,6 +13,7 @@ import Graffiti from "./routes/graffiti"
 import Nav from './components/Nav'
 import Resume from './routes/resume'
 import theme from './theme'
+import ContactFooter from './components/ContactFooter';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -28,6 +29,7 @@ root.render(
         <Route path="graffiti" element={<Graffiti />} />
         <Route path="resume" element={<Resume />} />
       </Routes>
+      <ContactFooter/>
     </ChakraProvider>
   </BrowserRouter>
 );

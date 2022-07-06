@@ -16,8 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as RouteLink } from "react-router-dom";
-import { FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md'
+import ContactButtons from '../components/ContactButtons'
 
 const LeftLinks = [{display: 'About', href: '/About'}, {display: 'Graffiti', href: '/Graffiti'}];
 const RightLinks = [{display: 'Resume', href: '/Resume'}]
@@ -82,14 +81,7 @@ export default function Nav() {
               {RightLinks.map((link) => (
                 <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
               ))}
-              <IconButton aria-label="discord" size="lg" variant="ghost" icon={<FaDiscord />}>
-              </IconButton>
-              <IconButton aria-label="linkedin" size="lg" variant="ghost" icon={<FaLinkedin />}>
-              </IconButton>
-              <IconButton aria-label="email" size="lg" variant="ghost" icon={<MdEmail />}>
-              </IconButton>
-              <IconButton aria-label="github" size="lg" variant="ghost" icon={<FaGithub />}>
-              </IconButton>
+              <ContactButtons />
             </HStack>
             <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
@@ -111,14 +103,7 @@ export default function Nav() {
               <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
             ))}
             <Stack direction={"row"} justify={"center"}>
-            <IconButton aria-label="discord" size="lg" variant="ghost" icon={<FaDiscord />}>
-              </IconButton>
-              <IconButton aria-label="linkedin" size="lg" variant="ghost" icon={<FaLinkedin />}>
-              </IconButton>
-              <IconButton aria-label="email" size="lg" variant="ghost" icon={<MdEmail />}>
-              </IconButton>
-              <IconButton aria-label="github" size="lg" variant="ghost" icon={<FaGithub />}>
-              </IconButton>
+              <ContactButtons />
             </Stack>
           </Stack>
         </Box>
