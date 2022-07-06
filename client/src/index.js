@@ -11,7 +11,7 @@ import {
 import About from "./routes/about";
 import Graffiti from "./routes/graffiti"
 import Nav from './components/Nav'
-import Resume from './routes/resume';
+import Resume from './routes/resume'
 import theme from './theme'
 
 const container = document.getElementById('root');
