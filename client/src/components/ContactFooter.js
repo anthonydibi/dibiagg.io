@@ -4,7 +4,7 @@ import { Flex } from "@chakra-ui/react";
 export default function ContactFooter(){
     return (
         <>
-            <Flex p={4} w={"100%"} justify={'center'}>
+            <Flex py={10} w={"100%"} justify={'center'}>
                 <ContactButtons />
             </Flex>
         </>
