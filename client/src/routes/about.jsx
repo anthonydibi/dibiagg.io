@@ -14,7 +14,7 @@ export default function About(){
                         mb={6}>
                         <Emoji label={"hand_wave"} symbol={"👋"}/>Hi! My name is Anthony <Tooltip label="(dee-bee-aw-jee-oh)" fontSize={{base:"md", md: "lg"}}><Box as="abbr">Di Biaggio</Box></Tooltip>.
                     </Heading>
-                    <Stack spacing={9} px={{base: 10, md: 20}}>
+                    <Stack spacing={9} px={{base: 5, md: 20}}>
                         <Text px={6} fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
                             Welcome to <Text display={"inline-block"} bgClip="text" bgGradient='linear(to-l, #7928CA, #FF0080)'>dibiagg.io</Text>! 
                             I'm studying computer science at the University of Minnesota, with a focus in software engineering and 
