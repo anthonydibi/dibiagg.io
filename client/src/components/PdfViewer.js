@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { Flex, Text, Box, IconButton } from '@chakra-ui/react'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
+import './PdfStyle.css'
 
 
 export default function PdfViewer(props){  
@@ -19,7 +20,7 @@ export default function PdfViewer(props){
             <Flex direction={"column"}>
                 <Box p={"1"} border={"solid"} borderRadius={"md"}>
                     <Document file={props.filename} onLoadSuccess={onDocumentLoadSuccess}>
-                        <Page pageNumber={pageNumber} />
+                        <Page pageNumber={pageNumber}/>
                     </Document>
                 </Box>
                 <Flex justify={"center"} align={"center"}>

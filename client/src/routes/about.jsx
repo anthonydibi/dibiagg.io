@@ -16,7 +16,7 @@ export default function About(){
                     </Heading>
                     <Stack spacing={9} px={{base: 0, md: 20}}>
                         <Text px={6} fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
-                            Welcome to <Text display={"inline-block"} bgClip="text" bgGradient='linear(to-l, #7928CA, #FF0080)'>dibiagg.io</Text>! 
+                            Welcome to <Text as="span" display={"inline-block"} bgClip="text" bgGradient='linear(to-l, #7928CA, #FF0080)'>dibiagg.io</Text>! 
                             I'm studying computer science at the University of Minnesota, with a focus in software engineering and 
                             web development. This is my personal website, which functions as a little sandbox for whatever 
                             projects I decide to whip up, as well as a hub for my portfolio, resume, contact links, etc.
@@ -26,7 +26,7 @@ export default function About(){
                         </Text>
                         <Text fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
                         </Text>
-                        <Grid flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}>
+                        <Grid flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}>
                             <GridItem>
                                 <IconCard src={"https://pbs.twimg.com/profile_images/1244925541448286208/rzylUjaf_400x400.jpg"}
                                 color={"white"}
