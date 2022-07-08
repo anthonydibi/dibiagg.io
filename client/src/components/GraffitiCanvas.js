@@ -56,10 +56,11 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     }
 
     const handleMouseDown = (e) => {
+        console.log(color);
         if(step === 0){
             isDrawing.current = true;
             const pos = e.target.getStage().getPointerPosition();
-            setLines([...lines, { tool, color: color.hex, points: [pos.x/stageScale, pos.y/stageScale] }]);
+            setLines([...lines, { tool, color: color.hex ?? color, points: [pos.x/stageScale, pos.y/stageScale] }]);
         }
     };
 
