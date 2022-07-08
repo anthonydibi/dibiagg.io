@@ -56,7 +56,6 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     }
 
     const handleMouseDown = (e) => {
-        e.preventDefault();
         if(step === 0){
             isDrawing.current = true;
             const pos = e.target.getStage().getPointerPosition();
@@ -65,7 +64,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     };
 
     const handleMouseMove = (e) => {
-        e.preventDefault();
+        e.evt.preventDefault();
         // not drawing or not on current day - skipping
         if (!isDrawing.current || step !== 0) {
             return;
@@ -80,8 +79,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         setLines(lines.concat());
     };
 
-    const handleMouseUp = (e) => {
-        e.preventDefault();
+    const handleMouseUp = () => {
         if(step === 0){
             isDrawing.current = false;
             setNumSessionLines(numSessionLines + 1);
