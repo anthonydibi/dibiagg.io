@@ -1,6 +1,6 @@
 import { Stage, Layer, Line } from 'react-konva'
 import React from 'react'
-import { Flex, IconButton, Box, Center, Heading, Grid, GridItem, useBreakpointValue, Stack } from '@chakra-ui/react'
+import { Flex, IconButton, Box, Center, Heading, Grid, GridItem, useBreakpointValue, Stack, Skeleton } from '@chakra-ui/react'
 import { FaEraser, FaPen } from 'react-icons/fa'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { SliderPicker, SwatchesPicker } from 'react-color'
@@ -17,6 +17,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const isDrawing = React.useRef(false);
     const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
     const stageScale = useBreakpointValue({ base: window.innerWidth/1000, md: 1 })
+    const [isLoaded, setIsLoaded] = React.useState(false);
 
     const API_URL = 'https://dibiaggdotio.herokuapp.com';
 
@@ -30,6 +31,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             .then(data => {
                 setLines(data.lines);
                 setDay(data.day.split(' ')[0]);
+                setIsLoaded(true);
             })
     }
 
@@ -101,6 +103,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step + 1 > maxStep){
             return;
         }
+        setIsLoaded(false);
         fetchCanvasState(step + 1);
         setStep(step + 1);
     }
@@ -109,6 +112,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step - 1 < 0){
             return;
         }
+        setIsLoaded(false)
         fetchCanvasState(step - 1);
         setStep(step - 1);
     }
@@ -130,10 +134,10 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
   return (
     <Box w="100%">
         <Center>
-            <IconButton isRound="true" m="2" value="previousDay" variant="solid" icon={<AiFillCaretLeft/>} onClick={ back }>
+            <IconButton size="sm" isRound="true" m="2" value="previousDay" variant="solid" icon={<AiFillCaretLeft/>} onClick={ back }>
             </IconButton>
             <Heading my={"6"}>{day}</Heading>
-            <IconButton isRound="true" m="2" value="nextDay" variant="solid" icon={<AiFillCaretRight/>} onClick={ forward }>
+            <IconButton size="sm" isRound="true" m="2" value="nextDay" variant="solid" icon={<AiFillCaretRight/>} onClick={ forward }>
             </IconButton>
         </Center>
         <Flex direction={{base: "column", md: "row"}}>
@@ -142,7 +146,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                 onChangeComplete={handleChangeComplete}
                 />
             </Box>
-            <Box zIndex={"5"} mb={{base: 0, md: 6}} boxShadow="dark-lg" border="3px" borderColor="teal" borderRadius="md">
+            <Skeleton isLoaded={isLoaded} zIndex={"5"} mb={{base: 0, md: 6}} boxShadow="dark-lg" border="3px" borderColor="teal" borderRadius="md">
                 <Stage
                     width={1000 * stageScale}
                     height={1000 * stageScale}
@@ -171,7 +175,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                     ))}
                     </Layer>
                 </Stage>
-            </Box>
+            </Skeleton>
             <Box flex={"1"}>
                 <Grid display={{base: "none", md: "block"}}>
                     <GridItem>

@@ -17,9 +17,8 @@ export default function About(){
                     <Stack spacing={9} px={{base: 0, md: 20}}>
                         <Text px={6} fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
                             Welcome to <Text as="span" display={"inline-block"} bgClip="text" bgGradient='linear(to-l, #7928CA, #FF0080)'>dibiagg.io</Text>! 
-                            I'm studying computer science at the University of Minnesota, with a focus in software engineering and 
-                            web development. This is my personal website, which functions as a little sandbox for whatever 
-                            projects I decide to whip up, as well as a hub for my portfolio, resume, contact links, etc.
+                            I'm studying computer science at the University of Minnesota with a focus in software engineering. This is my personal website which functions as a little sandbox for whatever 
+                            projects I decide to whip up as well as a hub for my portfolio, resume, contact links, etc.
                         </Text>
                         <Text px={6} fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
                             Here is the stuff I used to build this website!
@@ -56,6 +55,22 @@ export default function About(){
                                 color={"white"}
                                 text={"The API and database are hosted on Heroku. Since this is a personal project I don't have a lot of time to fiddle with all of AWS' different services, whereas Heroku's deployment process is insanely streamlined."}
                                 heading={"Heroku"}
+                                rounded={"true"}>
+                                </IconCard>
+                            </GridItem>
+                            <GridItem>
+                                <IconCard src={"https://w7.pngwing.com/pngs/780/57/png-transparent-node-js-javascript-database-mongodb-native-miscellaneous-text-trademark.png"}
+                                color={"white"}
+                                text={"I wrote a Node.js API allows drawings on the graffiti page to be posted and retrieved from the PostGRES database. I also used the Express framework to streamline middleware and routing."}
+                                heading={"Node.js"}
+                                rounded={"true"}>
+                                </IconCard>
+                            </GridItem>
+                            <GridItem>
+                                <IconCard src={"https://www.netlify.com/v3/img/components/logomark.png"}
+                                color={"white"}
+                                text={"The front end is hosted on Netlify, which is also where I have all of the DNS configuration for my custom domain. Like Heroku, the deployment process is really easy and the free plan is pretty robust."}
+                                heading={"Netlify"}
                                 rounded={"true"}>
                                 </IconCard>
                             </GridItem>
