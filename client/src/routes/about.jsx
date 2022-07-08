@@ -12,7 +12,7 @@ export default function About(){
                     <Heading
                         fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
                         mb={6}>
-                        <Emoji label={"hand_wave"} symbol={"👋"}/>Hi! My name is Anthony <Tooltip label="(dee-bee-aw-jee-oh)" fontSize={{base:"md", md: "lg"}}><Box as="abbr">Di Biaggio</Box></Tooltip>.
+                        <Emoji label={"hand_wave"} symbol={"👋"}/>Hi! My name is Anthony <Tooltip label="(dee-bee-aw-jee-oh)" fontSize={{base:"md", md: "lg"}}><Text decoration={"underline dotted"} as="span">Di Biaggio</Text></Tooltip>.
                     </Heading>
                     <Stack spacing={9} px={{base: 5, md: 20}}>
                         <Text px={6} fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
