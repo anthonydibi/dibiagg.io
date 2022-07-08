@@ -18,7 +18,7 @@ export default function PdfViewer(props){
     return (
         <>
             <Flex direction={"column"}>
-                <Box p={"1"} border={"solid"} borderRadius={"md"}>
+                <Box p={1} border={"solid"} borderRadius={"md"} id={"ResumeContainer"}>
                     <Document file={props.filename} onLoadSuccess={onDocumentLoadSuccess}>
                         <Page pageNumber={pageNumber}/>
                     </Document>

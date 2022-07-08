@@ -1,9 +1,9 @@
 import { Stage, Layer, Line } from 'react-konva'
 import React from 'react'
-import { Flex, IconButton, Box, Center, Heading, Grid, GridItem } from '@chakra-ui/react'
+import { Flex, IconButton, Box, Center, Heading, Grid, GridItem, useBreakpointValue, Stack } from '@chakra-ui/react'
 import { FaEraser, FaPen } from 'react-icons/fa'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
-import { SwatchesPicker } from 'react-color'
+import { SliderPicker, SwatchesPicker } from 'react-color'
 
 export default function GraffitiCanvas() { //built off of free-draw template from react-konva docs
     let today = new Date();
@@ -16,8 +16,10 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const [color, setColor] = React.useState("#000000")
     const isDrawing = React.useRef(false);
     const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
+    const stageScale = useBreakpointValue({ base: window.innerWidth/1000, md: 1 })
 
-    const API_URL = 'https://dibiaggdotio.herokuapp.com';
+    //const API_URL = 'https://dibiaggdotio.herokuapp.com';
+    const API_URL = 'http://localhost:3001'
 
     const handleChangeComplete = (color) => {
         setColor(color);
@@ -58,7 +60,8 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step === 0){
             isDrawing.current = true;
             const pos = e.target.getStage().getPointerPosition();
-            setLines([...lines, { tool, color: color.hex, points: [pos.x, pos.y] }]);
+            setLines([...lines, { tool, color: color.hex, points: [pos.x/stageScale, pos.y/stageScale] }]);
+            console.log(lines);
         }
     };
 
@@ -67,11 +70,10 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if (!isDrawing.current || step !== 0) {
             return;
         }
-        const stage = e.target.getStage();
-        const point = stage.getPointerPosition();
+        const point = e.target.getStage().getPointerPosition();
         let lastLine = lines[lines.length - 1];
         // add point
-        lastLine.points = lastLine.points.concat([point.x, point.y]);
+        lastLine.points = lastLine.points.concat([point.x/stageScale, point.y/stageScale]);
 
         // replace last
         lines.splice(lines.length - 1, 1, lastLine);
@@ -134,19 +136,24 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             <IconButton isRound="true" m="2" value="nextDay" variant="solid" icon={<AiFillCaretRight/>} onClick={ forward }>
             </IconButton>
         </Center>
-        <Flex>
-            <Box flex={"1"} align={"right"}>
-                <SwatchesPicker color={color} height={1000}
+        <Flex direction={{base: "column", md: "row"}}>
+            <Box display={{base: "none", md: "block"}} flex={"1"} align={"right"}>
+                <SwatchesPicker color={color} height={1000 * stageScale}
                 onChangeComplete={handleChangeComplete}
                 />
             </Box>
-            <Box zIndex={"5"} mb={"6"} boxShadow="dark-lg" border="3px" borderColor="teal" borderRadius="md">
+            <Box zIndex={"5"} mb={{base: 0, md: 6}} boxShadow="dark-lg" border="3px" borderColor="teal" borderRadius="md">
                 <Stage
-                    width={1000}
-                    height={1000}
+                    width={1000 * stageScale}
+                    height={1000 * stageScale}
+                    scaleX={stageScale}
+                    scaleY={stageScale}
                     onMouseDown={handleMouseDown}
-                    onMousemove={handleMouseMove}
-                    onMouseup={handleMouseUp}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onTouchStart={handleMouseDown}
+                    onTouchMove={handleMouseMove}
+                    onTouchEnd={handleMouseUp}
                 >
                     <Layer>
                     {lines.map((line, i) => (
@@ -166,7 +173,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                 </Stage>
             </Box>
             <Box flex={"1"}>
-                <Grid>
+                <Grid display={{base: "none", md: "block"}}>
                     <GridItem>
                         <IconButton size="lg" isRound="true" m="2" value="pen" variant="solid" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
                         </IconButton>
@@ -176,6 +183,15 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                         </IconButton>
                     </GridItem>
                 </Grid>
+                <Stack direction={"row"} display={{base: "block", md: "none"}}>
+                        <IconButton size="lg" my={2} isRound="true" value="pen" variant="solid" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
+                        </IconButton>
+                        <IconButton size="lg" my={2} isRound="true" value="eraser" variant="solid" icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
+                        </IconButton>
+                        <Box w={"auto"}>
+                        <SliderPicker color={color} onChangeComplete={handleChangeComplete}/>
+                        </Box>
+                </Stack>
             </Box>
         </Flex>
     </Box>
