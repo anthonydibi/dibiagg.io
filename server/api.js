@@ -70,20 +70,20 @@ app.post('/graffiti', (request, response) => {
             if(latest >= today){
                 client.query("UPDATE graffiti SET lines = lines || $1::jsonb where day = (SELECT MAX(day) from graffiti)", [JSON.stringify([request.body.line])], (err, res) => {
                     if(err) console.log(err);
-                    response.status(200);
+                    response.sendStatus(200);
                 })
             }
             else{
                 client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2::jsonb)", [today, JSON.stringify([request.body.line])], (err, res) => {
                     if(err) console.log(err);
-                    response.status(200);
+                    response.sendStatus(200);
                 });
             }
         }
         else{
             client.query("INSERT INTO graffiti(day, lines) VALUES($1, $2::jsonb)", [today, JSON.stringify([request.body.line])], (err, res) => {
                 if(err) console.log(err);
-                response.status(200);
+                response.sendStatus(200);
             });
         }
     });
