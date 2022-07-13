@@ -6,23 +6,29 @@ import {
   IconButton,
   Heading,
   Button,
-  Menu,
   useDisclosure,
   useColorModeValue,
   useColorMode,
   Stack,
   Spacer,
-  Center
+  Center,
+  MenuButton,
+  Menu,
+  MenuList,
+  MenuItem,
+  Text
 } from '@chakra-ui/react';
-import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { Link as RouteLink } from "react-router-dom";
 import ContactButtons from '../components/ContactButtons'
 
 const LeftLinks = [{display: 'About', href: '/About'}, {display: 'Graffiti', href: '/Graffiti'}];
 const RightLinks = [{display: 'Resume', href: '/Resume'}]
 
-const NavLink = ({ children }) => (
+const NavLink = ({ onClick, children }) => (
   <Link
+    onClick={onClick}
+    fontWeight={"bold"}
     px={2}
     py={1}
     rounded={'md'}
@@ -66,6 +72,15 @@ export default function Nav() {
                 {LeftLinks.map((link) => (
                   <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
                 ))}
+                <Menu>
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                    Deathball Clone
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem>About</MenuItem>
+                    <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}>Play</MenuItem>
+                  </MenuList>
+                </Menu>
               </HStack>
             </HStack>
           </Center>
@@ -102,6 +117,7 @@ export default function Nav() {
             {RightLinks.map((link) => (
               <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
             ))}
+            <NavLink onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}>Deathball Clone</NavLink>
             <Stack direction={"row"} justify={"center"}>
               <ContactButtons />
             </Stack>
