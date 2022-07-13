@@ -75,8 +75,6 @@ export default function Nav() {
                     Deathball Clone
                   </MenuButton>
                   <MenuList>
-                    <MenuItem>About</MenuItem>
-                    <MenuItem>Leaderboard</MenuItem>
                     <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}>Play</MenuItem>
                   </MenuList>
                 </Menu>
