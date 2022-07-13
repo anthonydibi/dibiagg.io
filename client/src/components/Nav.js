@@ -15,8 +15,7 @@ import {
   MenuButton,
   Menu,
   MenuList,
-  MenuItem,
-  Text
+  MenuItem
 } from '@chakra-ui/react';
 import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { Link as RouteLink } from "react-router-dom";
@@ -67,7 +66,6 @@ export default function Nav() {
               </Box>
               <HStack
                 as={'nav'}
-                spacing={4}
                 display={{ base: 'none', md: 'flex' }}>
                 {LeftLinks.map((link) => (
                   <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
