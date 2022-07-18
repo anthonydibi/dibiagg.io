@@ -98,11 +98,12 @@ app.get('/deathball/games', (request, response) => {
 
 app.post('/deathball/games', (request, response) => {
     let today = new Date();
-    client.query('INSERT INTO deathballplayers(name) SELECT $1 WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1);', [request.body.winner], (err, res) => {
+    console.log(request.body);
+    client.query('INSERT INTO deathballplayers(name) SELECT $1::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1::varchar);', [request.body.winner], (err, res) => {
         if(err) console.log(err);
-        client.query('INSERT INTO deathballplayers(name) SELECT $1 WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1);', [request.body.loser], (err, res) => {
+        client.query('INSERT INTO deathballplayers(name) SELECT $1::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1::varchar);', [request.body.loser], (err, res) => {
             if(err) console.log(err);
-            client.query("INSERT INTO deathballgames(winner, loser, winnerscore, loserscore, date) VALUES((SELECT id FROM deathballplayers WHERE name = $1), (SELECT id FROM deathballplayers WHERE name = $2), $3, $4, $5)", [request.body.winner, request.body.loser, request.body.winnerscore, request.body.loserscore, today], (err, res) => {
+            client.query("INSERT INTO deathballgames(winner, loser, winnerscore, loserscore, date) VALUES((SELECT id FROM deathballplayers WHERE name = $1::varchar), (SELECT id FROM deathballplayers WHERE name = $2::varchar), $3, $4, $5)", [request.body.winner, request.body.loser, request.body.winnerscore, request.body.loserscore, today], (err, res) => {
                 if(err) console.log(err);
                 response.sendStatus(200);
             });
