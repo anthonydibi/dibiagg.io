@@ -98,7 +98,7 @@ app.get('/deathball/games', (request, response) => {
 
 app.post('/deathball/games', (request, response) => {
     let today = new Date();
-    client.query("INSERT INTO deathballgames(SELECT id FROM deathballplayers WHERE id = $1, SELECT id FROM deathballplayers WHERE id = $2, winnerscore, loserscore, date) VALUES($1, $2, $3, $4, $5)", [request.body.winner, request.body.loser, request.body.winnerscore, request.body.loserscore, today], (err, res){
+    client.query("INSERT INTO deathballgames(SELECT id FROM deathballplayers WHERE id = $1, SELECT id FROM deathballplayers WHERE id = $2, winnerscore, loserscore, date) VALUES($1, $2, $3, $4, $5)", [request.body.winner, request.body.loser, request.body.winnerscore, request.body.loserscore, today], (err, res) => {
         if(err) console.log(err);
     });
 })
