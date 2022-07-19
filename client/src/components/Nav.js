@@ -75,7 +75,7 @@ export default function Nav() {
                   Deathball Clone
                 </MenuButton>
                 <MenuList>
-                  <MenuItem w="auto" onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>Play</NavLink></MenuItem>
+                  <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>Play</NavLink></MenuItem>
                   <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>Leaderboard</NavLink></RouteLink></MenuItem>
                 </MenuList>
               </Menu>
