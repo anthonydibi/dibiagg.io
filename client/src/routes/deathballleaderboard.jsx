@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Stack, Box, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, useColorModeValue, IconButton } from "@chakra-ui/react";
+import { Stack, Box, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton } from "@chakra-ui/react";
 import { GiCrenelCrown } from 'react-icons/gi'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 
@@ -10,13 +10,14 @@ export default function DeathballLeaderboard(){
     const [standings, setStandings] = useState([]);
     const [start, setStart] = useState(0);
     const [stop, setStop] = useState(15);
-    const max = 0;
+    const [max, setMax] = useState(0);
+    const [navInfo, setNavInfo] = useState("");
 
     const fetchNumPlayers = () => {
-        return fetch(API_URL + '/deathball/count')
+        return fetch(API_URL + '/deathball/standings/count')
             .then(response => response.json())
             .then(data => {
-                max = data.count;
+                setMax(parseInt(data.count));
             })
     }
 
@@ -24,6 +25,7 @@ export default function DeathballLeaderboard(){
         return fetch(API_URL + '/deathball/standings?' + new URLSearchParams({start: startIn, stop: stopIn}))
             .then(response => response.json())
             .then(data => {
+                setNavInfo(`${standings.length == 0 ? 0 : start + 1} to ${standings.length < stop ? standings.length : stop + 1}`);
                 setStandings(data);
             })
     }
@@ -37,13 +39,14 @@ export default function DeathballLeaderboard(){
     }, [start, stop])
 
     const next = () => {
-        if(start + 15 < max){
+        if(start < max){
             setStart(start + 15);
             setStop(stop + 15);
         }
     }
 
     const back = () => {
+        console.log(max);
         if(start - 15 >= 0){
             setStart(start - 15);
             setStop(stop - 15);
@@ -89,6 +92,7 @@ export default function DeathballLeaderboard(){
                     <IconButton rounded='full' icon={<AiFillCaretLeft/>} onClick={back}>
 
                     </IconButton>
+                    <Text>{navInfo}</Text>
                     <IconButton rounded="full" icon={<AiFillCaretRight/>} onClick={next}>
 
                     </IconButton>

@@ -112,13 +112,22 @@ app.get('/deathball/games', (request, response) => {
     });
 })
 
-app.post('/deathball/games', (request, response) => {
+app.post('/deathball/games', (request, response) => { //TODO: really need to condense this chain of queries somehow
     let today = new Date();
-    client.query('INSERT INTO deathballplayers(name) SELECT $1::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1::varchar); INSERT INTO deathballplayers(name) SELECT $2::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$2::varchar); UPDATE deathballplayers SET wins=wins+1 WHERE name=$1; UPDATE deathballplayers SET losses=losses+1 WHERE name=$2', [request.body.winner, request.body.loser], (err, res) => {
+    client.query('INSERT INTO deathballplayers(name) SELECT $1::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1::varchar);', [request.body.winner], (err, res) => {
         if(err) console.log(err);
-        client.query("INSERT INTO deathballgames(winner, loser, winnerscore, loserscore, date) VALUES((SELECT id FROM deathballplayers WHERE name = $1::varchar), (SELECT id FROM deathballplayers WHERE name = $2::varchar), $3, $4, $5)", [request.body.winner, request.body.loser, request.body.winnerscore, request.body.loserscore, today], (err, res) => {
+        client.query('INSERT INTO deathballplayers(name) SELECT $1::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1::varchar);', [request.body.loser], (err, res) => {
             if(err) console.log(err);
-            response.sendStatus(200);
+            client.query(' UPDATE deathballplayers SET wins=wins+1 WHERE name=$1;', [request.body.winner], (err, res) => {
+                if(err) console.log(err);
+                client.query('UPDATE deathballplayers SET losses=losses+1 WHERE name=$1', [request.body.loser], (err, res) => {
+                    if(err) console.log(err);
+                    client.query("INSERT INTO deathballgames(winner, loser, winnerscore, loserscore, date) VALUES((SELECT id FROM deathballplayers WHERE name = $1::varchar), (SELECT id FROM deathballplayers WHERE name = $2::varchar), $3, $4, $5)", [request.body.winner, request.body.loser, request.body.winnerscore, request.body.loserscore, today], (err, res) => {
+                        if(err) console.log(err);
+                        response.sendStatus(200);
+                    });
+                });
+            });
         });
     });
 })
