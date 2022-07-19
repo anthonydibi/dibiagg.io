@@ -25,8 +25,8 @@ export default function DeathballLeaderboard(){
         return fetch(API_URL + '/deathball/standings?' + new URLSearchParams({start: startIn, stop: stopIn}))
             .then(response => response.json())
             .then(data => {
-                setNavInfo(`${standings.length == 0 ? 0 : start + 1} to ${standings.length < stop ? standings.length : stop + 1}`);
                 setStandings(data);
+                setNavInfo(`${start} to ${stop}`);
             })
     }
 
@@ -39,14 +39,13 @@ export default function DeathballLeaderboard(){
     }, [start, stop])
 
     const next = () => {
-        if(start < max){
+        if(stop < max){
             setStart(start + 15);
             setStop(stop + 15);
         }
     }
 
     const back = () => {
-        console.log(max);
         if(start - 15 >= 0){
             setStart(start - 15);
             setStop(stop - 15);
