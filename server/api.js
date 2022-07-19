@@ -89,6 +89,22 @@ app.post('/graffiti', (request, response) => {
     });
 })
 
+app.get('/deathball/standings', (request, response) => {
+    let start = parseInt(request.query.start);
+    let end = parseInt(request.query.end);
+    client.query("SELECT RANK () OVER (ORDER BY elo DESC) AS rank, name, elo FROM (SELECT name, wins::decimal + 5 + AVG(wins::decimal/(wins::decimal+losses::decimal))/(wins::decimal + losses::decimal + 5) as elo FROM deathballplayers GROUP BY name, wins, losses) as alias ORDER BY rank OFFSET $1 LIMIT $2;", [request.query.start, request.query.stop], (err, res) => { //ranks players by a simple elo calculation which weights each player's performance by their win ratio and number of games compared to the average global win ratio
+        if(err) console.log(err);
+        response.json(res.rows);
+    })
+})
+
+app.get('/deathball/standings/count', (request, response) => {
+    client.query("SELECT COUNT(*) as count FROM deathballplayers;", (err, res) => {
+        if(err) console.log(err);
+        response.json({count: res.rows[0].count});
+    })
+})
+
 app.get('/deathball/games', (request, response) => {
     client.query("SELECT * FROM deathballgames", (err, res) => {
         if(err) console.log(err);
@@ -98,15 +114,11 @@ app.get('/deathball/games', (request, response) => {
 
 app.post('/deathball/games', (request, response) => {
     let today = new Date();
-    console.log(request.body);
-    client.query('INSERT INTO deathballplayers(name) SELECT $1::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1::varchar);', [request.body.winner], (err, res) => {
+    client.query('INSERT INTO deathballplayers(name) SELECT $1::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1::varchar); INSERT INTO deathballplayers(name) SELECT $2::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$2::varchar); UPDATE deathballplayers SET wins=wins+1 WHERE name=$1; UPDATE deathballplayers SET losses=losses+1 WHERE name=$2', [request.body.winner, request.body.loser], (err, res) => {
         if(err) console.log(err);
-        client.query('INSERT INTO deathballplayers(name) SELECT $1::varchar WHERE NOT EXISTS(SELECT name FROM deathballplayers WHERE name=$1::varchar);', [request.body.loser], (err, res) => {
+        client.query("INSERT INTO deathballgames(winner, loser, winnerscore, loserscore, date) VALUES((SELECT id FROM deathballplayers WHERE name = $1::varchar), (SELECT id FROM deathballplayers WHERE name = $2::varchar), $3, $4, $5)", [request.body.winner, request.body.loser, request.body.winnerscore, request.body.loserscore, today], (err, res) => {
             if(err) console.log(err);
-            client.query("INSERT INTO deathballgames(winner, loser, winnerscore, loserscore, date) VALUES((SELECT id FROM deathballplayers WHERE name = $1::varchar), (SELECT id FROM deathballplayers WHERE name = $2::varchar), $3, $4, $5)", [request.body.winner, request.body.loser, request.body.winnerscore, request.body.loserscore, today], (err, res) => {
-                if(err) console.log(err);
-                response.sendStatus(200);
-            });
+            response.sendStatus(200);
         });
     });
 })

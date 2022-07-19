@@ -12,6 +12,7 @@ import About from "./routes/about";
 import Graffiti from "./routes/graffiti"
 import Nav from './components/Nav'
 import Resume from './routes/resume'
+import DeathballLeaderboard from './routes/deathballleaderboard';
 import theme from './theme'
 import ContactFooter from './components/ContactFooter';
 
@@ -28,6 +29,7 @@ root.render(
         <Route path="about" element={<About />} />
         <Route path="graffiti" element={<Graffiti />} />
         <Route path="resume" element={<Resume />} />
+        <Route path='deathball/leaderboard' element={<DeathballLeaderboard />} />
       </Routes>
       <ContactFooter/>
     </ChakraProvider>

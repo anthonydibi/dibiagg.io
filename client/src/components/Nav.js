@@ -76,6 +76,7 @@ export default function Nav() {
                   </MenuButton>
                   <MenuList>
                     <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}>Play</MenuItem>
+                    <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>Leaderboard</NavLink></RouteLink></MenuItem>
                   </MenuList>
                 </Menu>
               </HStack>
