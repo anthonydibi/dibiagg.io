@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Stack, Box, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton } from "@chakra-ui/react";
+import { Spacer, Stack, Box, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton } from "@chakra-ui/react";
 import { GiCrenelCrown } from 'react-icons/gi'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 
@@ -56,12 +56,16 @@ export default function DeathballLeaderboard(){
     return (
         <>
             <Box w="100%" h="100px"></Box>
-            <Center>
-                <Flex direction={"column"} mb="5" w="300px" h="200px" justify={"center"} align={"center"}>
+            <Flex>
+                <Spacer as={Flex} justify={"end"} align={"center"}>
+                    <Heading size="md">RANK 1</Heading>
+                </Spacer>
+                <Flex direction={"column"} mb="5" w="200px" h="200px" justify={"center"} align={"center"}>
                     <GiCrenelCrown size={100}/>
                     <Heading>{standings[0]?.name.toUpperCase()}</Heading>
                 </Flex>
-            </Center>
+                <Spacer />
+            </Flex>
             <Center>
             <Stack w={{base: "90%", md: "60%"}} border="1px solid" boxShadow={"xl"}>
                 <TableContainer>
@@ -76,7 +80,7 @@ export default function DeathballLeaderboard(){
                         {standings.slice(1).map((player) => {
                             return (
                                 <Tr>
-                                    <Td>{player.rank}</Td>
+                                    <Td>{player.rank == 1 ? 2 : player.rank}</Td>
                                     <Td>{player.name.toUpperCase()}</Td>
                                 </Tr>
                             );
