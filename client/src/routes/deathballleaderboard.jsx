@@ -85,11 +85,11 @@ export default function DeathballLeaderboard(){
                     </Table>
                 </TableContainer>
                 <Stack p={1} mt="5" direction={"row"} w="100%" justify={"right"} align={"center"}>
-                    <IconButton rounded='full' icon={<AiFillCaretLeft/>} onClick={back}>
+                    <IconButton size="sm" rounded='full' icon={<AiFillCaretLeft/>} onClick={back}>
 
                     </IconButton>
                     <Text>{navInfo}</Text>
-                    <IconButton rounded="full" icon={<AiFillCaretRight/>} onClick={next}>
+                    <IconButton size="sm" rounded="full" icon={<AiFillCaretRight/>} onClick={next}>
 
                     </IconButton>
                 </Stack>
