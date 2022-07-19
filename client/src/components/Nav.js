@@ -70,15 +70,15 @@ export default function Nav() {
                 {LeftLinks.map((link) => (
                   <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
                 ))}
-                <Menu>
-                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                    Deathball Clone
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>Play</NavLink></MenuItem>
-                    <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>Leaderboard</NavLink></RouteLink></MenuItem>
-                  </MenuList>
-                </Menu>
+               <Menu>
+                <MenuButton as={Button} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
+                  Deathball Clone
+                </MenuButton>
+                <MenuList>
+                  <MenuItem w="auto" onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>Play</NavLink></MenuItem>
+                  <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>Leaderboard</NavLink></RouteLink></MenuItem>
+                </MenuList>
+              </Menu>
               </HStack>
             </HStack>
           </Center>
@@ -108,14 +108,22 @@ export default function Nav() {
         <>
         <Box h="64px"></Box>
         <Box zIndex={"500"} position={"fixed"} w={"100%"} bg={bgColor} p={4} display={{ md: 'none' }}>
-          <Stack as={'nav'} spacing={4}>
+          <Stack as={'nav'} spacing={4} align={"start"}>
             {LeftLinks.map((link) => (
               <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
             ))}
             {RightLinks.map((link) => (
               <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
             ))}
-            <NavLink onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}>Deathball Clone</NavLink>
+            <Menu>
+              <MenuButton p={"0px 8px"} as={Button} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
+                Deathball Clone
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>Play</NavLink></MenuItem>
+                <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>Leaderboard</NavLink></RouteLink></MenuItem>
+              </MenuList>
+            </Menu>
             <Stack direction={"row"} justify={"center"}>
               <ContactButtons />
             </Stack>
