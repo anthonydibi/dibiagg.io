@@ -21,20 +21,21 @@ export default function DeathballLeaderboard(){
             })
     }
 
-    const fetchStandings = (startIn, stopIn) => {
-        return fetch(API_URL + '/deathball/standings?' + new URLSearchParams({start: startIn, stop: stopIn}))
-            .then(response => response.json())
-            .then(data => {
-                setStandings(data);
-                setNavInfo(`${start} to ${stop}`);
-            })
-    }
-
     useEffect(() => {
         fetchNumPlayers();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
+        const fetchStandings = (startIn, stopIn) => {
+            return fetch(API_URL + '/deathball/standings?' + new URLSearchParams({start: startIn, stop: stopIn}))
+                .then(response => response.json())
+                .then(data => {
+                    setStandings(data);
+                    setNavInfo(`${start} to ${stop}`);
+                })
+        }
+
         fetchStandings(start, stop);
     }, [start, stop])
 
@@ -50,10 +51,6 @@ export default function DeathballLeaderboard(){
             setStart(start - 15);
             setStop(stop - 15);
         }
-    }
-
-    const LeaderboardEntry = (player) => {
-
     }
      
     return (
