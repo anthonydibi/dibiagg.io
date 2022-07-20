@@ -61,7 +61,7 @@ export default function Nav() {
                 <Heading mx={{ base: "5", md: "0"}}
                 size="xl"
                 bgClip="text"
-                bgGradient='linear(to-l, #7928CA, #FF0080)'>
+                bgGradient='linear(to-l, #9AE6B4, teal.500)'>
                 dibiagg.io</Heading>
               </Box>
               <HStack

@@ -69,7 +69,7 @@ export default function DeathballLeaderboard(){
             <Center>
             <Stack w={{base: "90%", md: "60%"}} border="1px solid" boxShadow={"xl"}>
                 <TableContainer>
-                    <Table variant="striped" colorScheme="gray">
+                    <Table variant="striped" colorScheme="teal">
                         <Thead>
                             <Tr>
                                 <Th>Rank</Th>

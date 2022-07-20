@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
-import { Flex, Text, Box, IconButton } from '@chakra-ui/react'
+import { Flex, Text, Box, IconButton, useColorModeValue } from '@chakra-ui/react'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
 import './PdfStyle.css'
 
@@ -18,7 +18,7 @@ export default function PdfViewer(props){
     return (
         <>
             <Flex direction={"column"}>
-                <Box p={1} border={"solid"} borderRadius={"md"} id={"ResumeContainer"}>
+                <Box p={1} border={"2px solid"} borderColor={useColorModeValue("teal.100", "teal.300")} borderRadius={"md"} id={"ResumeContainer"}>
                     <Document file={props.filename} onLoadSuccess={onDocumentLoadSuccess}>
                         <Page pageNumber={pageNumber}/>
                     </Document>
