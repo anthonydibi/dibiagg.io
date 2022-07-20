@@ -80,7 +80,7 @@ export default function DeathballLeaderboard(){
                         {standings.slice(1).map((player) => {
                             return (
                                 <Tr>
-                                    <Td>{player.rank === 1 ? 2 : player.rank}</Td>
+                                    <Td>{parseInt(player.rank) === 1 ? 2 : player.rank}</Td>
                                     <Td>{player.name.toUpperCase()}</Td>
                                 </Tr>
                             );
