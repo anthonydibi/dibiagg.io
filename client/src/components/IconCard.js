@@ -5,6 +5,8 @@ export default function IconCard(props) {
     return (
         <Flex
         bg={useColorModeValue(props.color, "gray.800")}
+        border={"1px solid"}
+        borderColor={useColorModeValue("teal.300", "teal.100")}
         boxShadow={"xl"}
         rounded={"2xl"}
         width={"100%"}
