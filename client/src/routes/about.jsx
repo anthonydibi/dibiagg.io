@@ -1,4 +1,4 @@
-import {Grid, Heading, Center, Box, Text, Stack, useColorModeValue, GridItem, Tooltip, Image} from "@chakra-ui/react"
+import {Grid, Heading, Center, Box, Text, Stack, useColorModeValue, GridItem, Tooltip} from "@chakra-ui/react"
 import React from 'react';
 import Emoji from '../components/Emoji'
 import IconCard from '../components/IconCard'
