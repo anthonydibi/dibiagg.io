@@ -92,7 +92,7 @@ app.post('/graffiti', (request, response) => {
 app.get('/deathball/standings', (request, response) => {
     let start = parseInt(request.query.start);
     let end = parseInt(request.query.end);
-    client.query("SELECT RANK () OVER (ORDER BY elo DESC) AS rank, name, elo FROM (SELECT name, wins::decimal + 5 + AVG(wins::decimal/(wins::decimal+losses::decimal))/(wins::decimal + losses::decimal + 5) as elo FROM deathballplayers GROUP BY name, wins, losses) as alias ORDER BY rank OFFSET $1 LIMIT $2;", [request.query.start, request.query.stop], (err, res) => { //ranks players by a simple elo calculation which weights each player's performance by their win ratio and number of games compared to the average global win ratio
+    client.query("SELECT RANK () OVER (ORDER BY elo DESC) AS rank, name, wins, losses, elo FROM (SELECT name, wins, losses, wins::decimal + 5 + AVG(wins::decimal/(wins::decimal+losses::decimal))/(wins::decimal + losses::decimal + 5) as elo FROM deathballplayers GROUP BY name, wins, losses) as alias ORDER BY rank OFFSET $1 LIMIT $2;", [request.query.start, request.query.stop], (err, res) => { //ranks players by a simple elo calculation which weights each player's performance by their win ratio and number of games compared to the average global win ratio
         if(err) console.log(err);
         response.json(res.rows);
     })

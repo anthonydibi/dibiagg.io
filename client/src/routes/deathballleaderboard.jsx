@@ -74,6 +74,8 @@ export default function DeathballLeaderboard(){
                             <Tr>
                                 <Th>Rank</Th>
                                 <Th>Player</Th>
+                                <Th>Wins</Th>
+                                <Th>Losses</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
@@ -82,6 +84,8 @@ export default function DeathballLeaderboard(){
                                 <Tr>
                                     <Td>{parseInt(player.rank) === 1 ? 2 : player.rank}</Td>
                                     <Td>{player.name.toUpperCase()}</Td>
+                                    <Td>{player.wins}</Td>
+                                    <Td>{player.losses}</Td>
                                 </Tr>
                             );
                         })}

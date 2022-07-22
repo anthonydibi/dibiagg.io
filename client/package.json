@@ -19,6 +19,7 @@
     "react-icons": "^3.11.0",
     "react-konva": "^18.1.1",
     "react-pdf": "^5.7.2",
+    "react-player": "^2.10.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "serve": "^13.0.2",

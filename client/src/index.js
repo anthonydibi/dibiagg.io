@@ -15,6 +15,7 @@ import Resume from './routes/resume'
 import DeathballLeaderboard from './routes/deathballleaderboard';
 import theme from './theme'
 import ContactFooter from './components/ContactFooter';
+import DeathballAbout from './routes/deathballabout';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -30,6 +31,7 @@ root.render(
         <Route path="graffiti" element={<Graffiti />} />
         <Route path="resume" element={<Resume />} />
         <Route path='deathball/leaderboard' element={<DeathballLeaderboard />} />
+        <Route path='deathball/about' element={<DeathballAbout />} />
       </Routes>
       <ContactFooter/>
     </ChakraProvider>
