@@ -5,7 +5,6 @@ import {
     Box,
     Heading,
     Text,
-    Image,
     Link
   } from '@chakra-ui/react';
   import ReactPlayer from 'react-player'
