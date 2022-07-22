@@ -64,7 +64,9 @@ export default function DeathballLeaderboard(){
                     <GiCrenelCrown size={100}/>
                     <Heading>{standings[0]?.name.toUpperCase()}</Heading>
                 </Flex>
-                <Spacer />
+                <Spacer as={Flex} justify={"start"} align={"center"}>
+                    <Text>{`${standings[0]?.wins} WINS ${standings[0]?.losses} LOSSES`}</Text>
+                </Spacer>
             </Flex>
             <Center>
             <Stack w={{base: "90%", md: "60%"}} border="1px solid" boxShadow={"xl"}>
