@@ -58,9 +58,9 @@ import {
               position={'relative'}
               rounded={'2xl'}
               boxShadow={'2xl'}
-              width={'full'}
+              width={"full"}
               overflow={'hidden'}>
-              <ReactPlayer
+              <ReactPlayer width={"100%"}
                 url='https://www.youtube.com/watch?v=aeIkB0Uw2kM'
               />
             </Box>
