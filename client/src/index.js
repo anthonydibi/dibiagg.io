@@ -1,4 +1,4 @@
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript, Box } from '@chakra-ui/react';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
@@ -25,6 +25,7 @@ root.render(
     <ChakraProvider theme={theme}>
       <ColorModeScript />
       <Nav/>
+      <Box h="70px" w="100%"></Box> {/*spacer for sticky nav*/}
       <Routes>
         <Route path="/" element={<About />} />
         <Route path="about" element={<About />} />

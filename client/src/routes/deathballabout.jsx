@@ -12,7 +12,6 @@ import {
   export default function DeathballAbout() {
     return (
     <>
-      <Box w="100%" h="70px"></Box>
       <Container maxW={'7xl'}>
         <Stack
           align={'center'}

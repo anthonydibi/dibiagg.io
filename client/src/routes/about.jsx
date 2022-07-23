@@ -1,4 +1,4 @@
-import {Grid, Heading, Center, Box, Text, Stack, useColorModeValue, GridItem, Tooltip} from "@chakra-ui/react"
+import {Grid, Heading, Center, Text, Stack, useColorModeValue, GridItem, Tooltip} from "@chakra-ui/react"
 import React from 'react';
 import Emoji from '../components/Emoji'
 import IconCard from '../components/IconCard'
@@ -6,7 +6,6 @@ import IconCard from '../components/IconCard'
 export default function About(){
     return (
         <>
-            <Box h="70px" w="100%"></Box> {/*spacer for sticky nav*/}
             <Center>
                 <Stack align={"center"} p={{base: 5, md: 20}} bg={useColorModeValue('white', 'gray.800')} boxShadow="md" mt="4" w={"1300px"} transitionDuration="1000ms">
                     <Heading
