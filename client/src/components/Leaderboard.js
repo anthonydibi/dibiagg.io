@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Spacer, Stack, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton, Skeleton, Slide, SlideFade } from "@chakra-ui/react";
+import { Spacer, Stack, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton, Skeleton, SlideFade } from "@chakra-ui/react";
 import { GiCrenelCrown } from 'react-icons/gi'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 
