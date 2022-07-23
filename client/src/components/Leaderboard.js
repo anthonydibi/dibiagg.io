@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Spacer, Stack, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton, Skeleton } from "@chakra-ui/react";
+import { Spacer, Stack, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton, Skeleton, Slide, SlideFade } from "@chakra-ui/react";
 import { GiCrenelCrown } from 'react-icons/gi'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 
@@ -45,14 +45,16 @@ export default function Leaderboard(props){
         <>
             <Flex>
                 <Spacer as={Flex} justify={"end"} align={"center"}>
-                    <Skeleton isLoaded={isLoaded}><Heading size="md">RANK 1</Heading></Skeleton>
+                    <Heading ml="1" size="md">RANK 1</Heading>
                 </Spacer>
                 <Flex direction={"column"} mb="5" w="200px" h="200px" justify={"center"} align={"center"}>
-                    <GiCrenelCrown size={100}/>
-                    <Skeleton isLoaded={isLoaded}><Heading>{topPlayer?.name.toUpperCase()}</Heading></Skeleton>
+                    <SlideFade offsetY="-80px" in={isLoaded}>
+                        <GiCrenelCrown size={100}/>
+                    </SlideFade>
+                    <Heading>{topPlayer ? topPlayer.name.toUpperCase() : ""}</Heading>
                 </Flex>
                 <Spacer as={Flex} justify={"start"} align={"center"}>
-                    <Skeleton isLoaded={isLoaded}><Text>{`${topPlayer?.wins} WINS ${topPlayer?.losses} LOSSES`}</Text></Skeleton>
+                    <Text p="2">{`${topPlayer ? topPlayer.wins : ""} WINS ${topPlayer ? topPlayer.losses : ""} LOSSES`}</Text>
                 </Spacer>
             </Flex>
             <Center>

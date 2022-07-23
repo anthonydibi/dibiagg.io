@@ -5,18 +5,19 @@ import {
     Box,
     Heading,
     Text,
-    Link
+    Link,
+    useColorModeValue
   } from '@chakra-ui/react';
   import ReactPlayer from 'react-player'
   
   export default function DeathballAbout() {
     return (
     <>
-      <Container maxW={'7xl'}>
+      <Container my="40px" maxW={'8xl'} border="2px solid" rounded="xl" borderColor={useColorModeValue("teal.300", "teal.100")} boxShadow={"2xl"}>
         <Stack
           align={'center'}
           spacing={{ base: 8, md: 10 }}
-          py={{ base: 20, md: 28 }}
+          p={{ base: 20, md: 28 }}
           direction={{ base: 'column', md: 'row' }}>
           <Stack flex={1} spacing={{ base: 5, md: 10 }}>
             <Heading
@@ -29,7 +30,7 @@ import {
                 What is
               </Text>
               <br />
-              <Text as={Link} decoration={"underline"} href={"https://deathball.cab"} color={'red.400'}>
+              <Text as={Link} decoration={"underline"} href={"https://deathball.cab"} color={useColorModeValue("teal.300", "teal.100")}>
                 Deathball?
               </Text>
             </Heading>
@@ -57,7 +58,8 @@ import {
               position={'relative'}
               rounded={'2xl'}
               boxShadow={'2xl'}
-              width={"full"}
+              width={"100%"}
+              height={"100%"}
               overflow={'hidden'}>
               <ReactPlayer width={"100%"}
                 url='https://www.youtube.com/watch?v=aeIkB0Uw2kM'
