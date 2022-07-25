@@ -20,15 +20,9 @@ export default function GraffitiModal(props){
                     <Text fontSize={"lg"}>This is a canvas where whatever you draw will be visible to others who
                     visit this page. Use the buttons on the right of the canvas to select the pen and eraser tools. The wall is reset each day, and you can travel back in time using the arrow buttons above the canvas.</Text>
                     <br />
-                    <Text textColor={"red"} fontSize = {"md"}><b>Be warned:</b> this is just a prototype, so the user experience is buggy, especially
+                    <Text textColor={"accent.100"} fontSize = {"md"}><b>Be warned:</b> this is just a prototype, so the user experience is buggy, especially
                     when multiple users are drawing simultaneously. Your masterpiece may be overwritten or deleted. This is something I am working on!</Text>
                 </ModalBody>
-
-                <ModalFooter>
-                    <Button mr={3} onClick={onClose}>
-                    Close
-                    </Button>
-                </ModalFooter>
                 </ModalContent>
             </Modal>
         </>

@@ -1,13 +1,15 @@
 import { Stage, Layer, Line } from 'react-konva'
 import React from 'react'
-import { Flex, IconButton, Box, Center, Heading, Grid, GridItem, useBreakpointValue, Stack, Skeleton } from '@chakra-ui/react'
+import { Flex, IconButton, Box, Center, Heading, Grid, GridItem, useBreakpointValue, Stack, Skeleton, useToken, useColorModeValue } from '@chakra-ui/react'
 import { FaEraser, FaPen } from 'react-icons/fa'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { SliderPicker, SwatchesPicker } from 'react-color'
+import "./SwatchesStyle.css"
 
 export default function GraffitiCanvas() { //built off of free-draw template from react-konva docs
     let today = new Date();
     today.setHours(0, 0, 0, 0);
+    const modeValue=useColorModeValue("white", "black");
     const [maxStep, setMaxStep] = React.useState(0);
     const [step, setStep] = React.useState(0);
     const [tool, setTool] = React.useState('pen');
@@ -20,6 +22,10 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const [isLoaded, setIsLoaded] = React.useState(false);
 
     const API_URL = 'https://dibiaggdotio.herokuapp.com';
+
+    const swatchesStyle = {
+        backgroundColor: useColorModeValue("white", "black")
+    }
 
     const handleChangeComplete = (color) => {
         setColor(color);
@@ -131,22 +137,26 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    React.useEffect(() => {
+        document.querySelector(".swatches-picker div div").style.backgroundColor = modeValue;
+    });
+
   return (
-    <Box w="100%">
+    <Box className='GraffitiContainer' w="100%">
         <Center>
-            <IconButton size="sm" isRound="true" m="2" value="previousDay" variant="solid" icon={<AiFillCaretLeft/>} onClick={ back }>
+            <IconButton size="sm" isRound="true" m="2" value="previousDay" variant="interact" icon={<AiFillCaretLeft/>} onClick={ back }>
             </IconButton>
             <Heading my={"6"}>{day}</Heading>
-            <IconButton size="sm" isRound="true" m="2" value="nextDay" variant="solid" icon={<AiFillCaretRight/>} onClick={ forward }>
+            <IconButton size="sm" isRound="true" m="2" value="nextDay" variant="interact" icon={<AiFillCaretRight/>} onClick={ forward }>
             </IconButton>
         </Center>
         <Flex direction={{base: "column", md: "row"}}>
             <Box display={{base: "none", md: "block"}} flex={"1"} align={"right"}>
-                <SwatchesPicker color={color} height={1000 * stageScale}
+                <SwatchesPicker styles={{default: {border: "1px solid"}}} color={color} height={1002 * stageScale}
                 onChangeComplete={handleChangeComplete}
                 />
             </Box>
-            <Skeleton isLoaded={isLoaded} zIndex={"5"} mb={{base: 0, md: 6}} boxShadow="dark-lg" border="3px" borderColor="teal" borderRadius="md">
+            <Skeleton isLoaded={isLoaded} zIndex={"5"} border="1px solid">
                 <Stage
                     width={1000 * stageScale}
                     height={1000 * stageScale}
@@ -179,18 +189,18 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             <Box flex={"1"}>
                 <Grid display={{base: "none", md: "block"}}>
                     <GridItem>
-                        <IconButton size="lg" isRound="true" m="2" value="pen" variant="solid" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
+                        <IconButton size="lg" isRound="true" m="2" value="pen" variant="interact" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
                         </IconButton>
                     </GridItem>
                     <GridItem>
-                        <IconButton size="lg" isRound="true" m="2" value="eraser" variant="solid" icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
+                        <IconButton size="lg" isRound="true" m="2" value="eraser" variant="interact" icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
                         </IconButton>
                     </GridItem>
                 </Grid>
                 <Stack direction={"row"} display={{base: "block", md: "none"}}>
-                        <IconButton size="lg" my={2} isRound="true" value="pen" variant="solid" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
+                        <IconButton size="lg" my={2} isRound="true" value="pen" variant="interact" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
                         </IconButton>
-                        <IconButton size="lg" my={2} isRound="true" value="eraser" variant="solid" icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
+                        <IconButton size="lg" my={2} isRound="true" value="eraser" variant="interact" icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
                         </IconButton>
                         <Box w={"auto"}>
                         <SliderPicker color={color} onChangeComplete={handleChangeComplete}/>

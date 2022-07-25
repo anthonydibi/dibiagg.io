@@ -18,16 +18,16 @@ export default function PdfViewer(props){
     return (
         <>
             <Flex direction={"column"}>
-                <Box p={1} border={"2px solid"} borderColor={useColorModeValue("teal.300", "teal.100")} borderRadius={"md"} id={"ResumeContainer"}>
+                <Box p={1} id={"ResumeContainer"}>
                     <Document file={props.filename} onLoadSuccess={onDocumentLoadSuccess}>
                         <Page pageNumber={pageNumber}/>
                     </Document>
                 </Box>
-                <Flex justify={"center"} align={"center"}>
+                <Flex justify={"center"} align={"center"} my="2">
                     <IconButton size="xs" isRound="true" m="2" value="previousPage" variant="solid" icon={<AiFillCaretLeft/>}>
                     </IconButton>
                     <Text textAlign={"center"}>
-                        Page {pageNumber} of {numPages}
+                        PAGE {pageNumber} OF {numPages}
                     </Text>
                     <IconButton size="xs" isRound="true" m="2" value="nextPage" variant="solid" icon={<AiFillCaretRight/>}>
                     </IconButton>

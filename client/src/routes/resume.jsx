@@ -1,12 +1,14 @@
 import PdfViewer from '../components/PdfViewer'
-import { Center } from '@chakra-ui/react'
+import { Center, Box } from '@chakra-ui/react'
 
 export default function Resume(){
     return (
         <>
-            <Center>
+        <Center>
+            <Box border="1px solid">
                 <PdfViewer filename={"Anthony Di Biaggio Resume.pdf"} />
-            </Center>
+            </Box>
+        </Center>
         </>
     );
 }

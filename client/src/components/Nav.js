@@ -21,19 +21,19 @@ import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@c
 import { Link as RouteLink } from "react-router-dom";
 import ContactButtons from '../components/ContactButtons'
 
-const LeftLinks = [{display: 'About', href: '/About'}, {display: 'Graffiti', href: '/Graffiti'}];
-const RightLinks = [{display: 'Resume', href: '/Resume'}]
+const LeftLinks = [{display: 'ABOUT', href: '/About'}, {display: 'GRAFFITI', href: '/Graffiti'}];
+const RightLinks = [{display: 'RESUME', href: '/Resume'}]
 
 const NavLink = ({ onClick, children }) => (
   <Link
     onClick={onClick}
     fontWeight={"bold"}
+    border="1px solid transparent"
     px={2}
     py={1}
-    rounded={'md'}
     _hover={{
       textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
+      border: "1px solid"
     }}>
     {children}
   </Link>
@@ -42,11 +42,11 @@ const NavLink = ({ onClick, children }) => (
 export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = useColorModeValue("pink.50", "gray.900");
+  const bgColor = useColorModeValue("white", "black");
 
   return (
     <>
-        <Flex top="0" position="fixed" w="100%" zIndex="100" boxShadow="sm" bg={useColorModeValue('pink.50', 'gray.900')} px={4} h={16} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex top="0" position="fixed" w="100%" zIndex="100" borderBottom={"1px solid"} borderColor={useColorModeValue("black", "white")} bg={useColorModeValue('white', 'black')} px={4} h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Spacer />
           <IconButton
             size={'md'}
@@ -59,10 +59,8 @@ export default function Nav() {
             <HStack spacing={8} alignItems={'center'}>
               <Box>
                 <Heading mx={{ base: "5", md: "0"}}
-                size="xl"
-                bgClip="text"
-                bgGradient='linear(to-l, #9AE6B4, teal.500)'>
-                dibiagg.io</Heading>
+                size={"xl"}>
+                DB.<Heading as="span" color="#FF5F1F">IO</Heading></Heading>
               </Box>
               <HStack
                 as={'nav'}
@@ -71,13 +69,22 @@ export default function Nav() {
                   <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
                 ))}
                <Menu>
-                <MenuButton as={Button} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
-                  Deathball Clone
+                <MenuButton as={Button} 
+                  fontWeight={"bold"}
+                  border="1px solid transparent"
+                  px={2}
+                  py={1}
+                  rounded={"none"}
+                  _hover={{
+                    textDecoration: 'none',
+                    border: "1px solid"
+                  }} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
+                  DEATHBALL CLONE
                 </MenuButton>
-                <MenuList>
-                  <MenuItem><RouteLink to={"/deathball/about"} key={"about"}><NavLink key={"about"}>About</NavLink></RouteLink></MenuItem>
-                  <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>Play</NavLink></MenuItem>
-                  <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>Leaderboard</NavLink></RouteLink></MenuItem>
+                <MenuList bg={useColorModeValue("white", "black")} border={useColorModeValue("black", "white")} borderRadius="0px" border="1px solid">
+                  <MenuItem><RouteLink to={"/deathball/about"} key={"about"}><NavLink key={"about"}>ABOUT</NavLink></RouteLink></MenuItem>
+                  <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>PLAY</NavLink></MenuItem>
+                  <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>LEADERBOARD</NavLink></RouteLink></MenuItem>
                 </MenuList>
               </Menu>
               </HStack>
@@ -98,7 +105,7 @@ export default function Nav() {
               <ContactButtons />
             </HStack>
             <Button onClick={toggleColorMode}>
-                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+                {colorMode === 'light' ? <MoonIcon color="#FF5F1F" /> : <SunIcon color="#FF5F1F"/>}
               </Button>
             </Menu>
           </Flex>
@@ -117,15 +124,24 @@ export default function Nav() {
               <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
             ))}
             <Menu>
-              <MenuButton p={"0px 8px"} as={Button} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
-                Deathball Clone
-              </MenuButton>
-              <MenuList>
-                <MenuItem><RouteLink to={"/deathball/about"} key={"about"}><NavLink key={"about"}>About</NavLink></RouteLink></MenuItem>
-                <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>Play</NavLink></MenuItem>
-                <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>Leaderboard</NavLink></RouteLink></MenuItem>
-              </MenuList>
-            </Menu>
+                <MenuButton as={Button} 
+                  fontWeight={"bold"}
+                  border="1px solid transparent"
+                  px={2}
+                  py={1}
+                  rounded={"none"}
+                  _hover={{
+                    textDecoration: 'none',
+                    border: "1px solid"
+                  }} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
+                  DEATHBALL CLONE
+                </MenuButton>
+                <MenuList bg={bgColor} border={bgColor} borderRadius="0px" border="1px solid">
+                  <MenuItem><RouteLink to={"/deathball/about"} key={"about"}><NavLink key={"about"}>ABOUT</NavLink></RouteLink></MenuItem>
+                  <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>PLAY</NavLink></MenuItem>
+                  <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>LEADERBOARD</NavLink></RouteLink></MenuItem>
+                </MenuList>
+              </Menu>
             <Stack direction={"row"} justify={"center"}>
               <ContactButtons />
             </Stack>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Spacer, Stack, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton, Skeleton, SlideFade } from "@chakra-ui/react";
+import { Spacer, Stack, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton, Skeleton, SlideFade, useToken } from "@chakra-ui/react";
 import { GiCrenelCrown } from 'react-icons/gi'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 
@@ -21,7 +21,7 @@ export default function Leaderboard(props){
                 .then(data => {
                     setStandings(data);
                     if(page === 0) setTopPlayer(data[0]);
-                    setNavInfo(`${page * ENTRIES_PER_PAGE} to ${((page + 1) * ENTRIES_PER_PAGE) - 1}`);
+                    setNavInfo(`${page * ENTRIES_PER_PAGE} TO ${((page + 1) * ENTRIES_PER_PAGE) - 1}`);
                     setIsLoaded(true);
                 })
         }
@@ -49,7 +49,7 @@ export default function Leaderboard(props){
                 </Spacer>
                 <Flex direction={"column"} mb="5" w="200px" h="200px" justify={"center"} align={"center"}>
                     <SlideFade offsetY="-80px" in={isLoaded}>
-                        <GiCrenelCrown size={100}/>
+                        <GiCrenelCrown size={100} color={useToken("colors", "accent.100")}/>
                     </SlideFade>
                     <Heading>{topPlayer ? topPlayer.name.toUpperCase() : ""}</Heading>
                 </Flex>
@@ -58,10 +58,10 @@ export default function Leaderboard(props){
                 </Spacer>
             </Flex>
             <Center>
-            <Stack w={{base: "90%", md: "60%"}} border="1px solid" boxShadow={"xl"}>
+            <Stack w={{base: "90%", md: "60%"}} border="1px solid">
                 <Skeleton isLoaded={isLoaded}>
                 <TableContainer h="800px" overflowY="auto">
-                    <Table variant="striped" colorScheme="teal">
+                    <Table>
                         <Thead>
                             <Tr>
                                 <Th>Rank</Th>
