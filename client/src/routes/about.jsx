@@ -6,7 +6,7 @@ export default function About(){
     return (
         <>
             <Center>
-                <Stack align={"center"} p={{base: 5, md: 20}} mx="5" border="1px solid" w={"1300px"} transitionDuration="1000ms">
+                <Stack align={"center"} p={{base: 5, md: 20}} mx="5" border="1px solid" borderBottom="0px none" w={"1300px"} transitionDuration="1000ms">
                     <Heading
                         fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
                         mb={6}>

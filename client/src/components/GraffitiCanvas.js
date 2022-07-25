@@ -148,11 +148,11 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         </Center>
         <Flex direction={{base: "column", md: "row"}}>
             <Box display={{base: "none", md: "block"}} flex={"1"} align={"right"}>
-                <SwatchesPicker styles={{default: {border: "1px solid"}}} color={color} height={1002 * stageScale}
+                <SwatchesPicker color={color} height={1002 * stageScale}
                 onChangeComplete={handleChangeComplete}
                 />
             </Box>
-            <Skeleton isLoaded={isLoaded} zIndex={"5"} border="1px solid">
+            <Skeleton isLoaded={isLoaded} zIndex={"5"} border="1px solid" borderBottom={{base: "1px", md: "0px none"}}>
                 <Stage
                     width={1000 * stageScale}
                     height={1000 * stageScale}
@@ -193,7 +193,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                         </IconButton>
                     </GridItem>
                 </Grid>
-                <Stack direction={"row"} display={{base: "block", md: "none"}}>
+                <Stack direction={"row"} display={{base: "block", md: "none"}} p={1} mb={3}>
                         <IconButton size="lg" my={2} isRound="true" value="pen" variant="interact" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
                         </IconButton>
                         <IconButton size="lg" my={2} isRound="true" value="eraser" variant="interact" icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>

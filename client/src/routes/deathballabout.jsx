@@ -14,7 +14,7 @@ import {
     return (
     <>
       <Center>
-      <Container px={{base: 5, md: 30}} mx="5" maxW={'7xl'} border="1px solid">
+      <Container px={{base: 5, md: 30}} mx="5" maxW={'7xl'} border="1px solid" borderBottom="0px none">
         <Stack
           align={'center'}
           spacing={{ base: 8, md: 10 }}

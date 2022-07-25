@@ -1,7 +1,6 @@
 .swatches-picker {
     border-left: 1px solid;
     border-top: 1px solid;
-    border-bottom: 1px solid;
     overflow-y: hidden !important;
 } 
 * {

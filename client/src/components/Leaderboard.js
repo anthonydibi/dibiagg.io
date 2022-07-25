@@ -20,7 +20,7 @@ export default function Leaderboard(props){
                 .then(response => response.json())
                 .then(data => {
                     setStandings(data);
-                    if(page === 0) setTopPlayer(data[0]);
+                    if(page === 0) setTopPlayer({...data[0]});
                     setNavInfo(`${page * ENTRIES_PER_PAGE} TO ${((page + 1) * ENTRIES_PER_PAGE) - 1}`);
                     setIsLoaded(true);
                 })
@@ -41,24 +41,30 @@ export default function Leaderboard(props){
         }
     }
 
+    const LeaderboardTopRank = (props) => {
+        return (
+            <Flex direction={"column"} mb="5" w="200px" h="200px" justify={"center"} align={"center"}>
+                <SlideFade offsetY="-80px" in={isLoaded}>
+                    <GiCrenelCrown size={100} color={useToken("colors", "accent.100")}/>
+                </SlideFade>
+                <Heading>{props.player ? props.player.name.toUpperCase() : ""}</Heading>
+            </Flex>
+        );
+    }
+
     return (
         <>
             <Flex>
                 <Spacer as={Flex} justify={"end"} align={"center"}>
                     <Heading ml="1" size="md">RANK 1</Heading>
                 </Spacer>
-                <Flex direction={"column"} mb="5" w="200px" h="200px" justify={"center"} align={"center"}>
-                    <SlideFade offsetY="-80px" in={isLoaded}>
-                        <GiCrenelCrown size={100} color={useToken("colors", "accent.100")}/>
-                    </SlideFade>
-                    <Heading>{topPlayer ? topPlayer.name.toUpperCase() : ""}</Heading>
-                </Flex>
+                <LeaderboardTopRank player={topPlayer}/>
                 <Spacer as={Flex} justify={"start"} align={"center"}>
                     <Text p="2">{`${topPlayer ? topPlayer.wins : ""} WINS ${topPlayer ? topPlayer.losses : ""} LOSSES`}</Text>
                 </Spacer>
             </Flex>
             <Center>
-            <Stack w={{base: "90%", md: "60%"}} border="1px solid">
+            <Stack w={{base: "90%", md: "60%"}} border="1px solid" borderBottom="0px none">
                 <Skeleton isLoaded={isLoaded}>
                 <TableContainer h="800px" overflowY="auto">
                     <Table>
