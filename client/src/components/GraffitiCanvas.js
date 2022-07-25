@@ -1,6 +1,6 @@
 import { Stage, Layer, Line } from 'react-konva'
 import React from 'react'
-import { Flex, IconButton, Box, Center, Heading, Grid, GridItem, useBreakpointValue, Stack, Skeleton, useToken, useColorModeValue } from '@chakra-ui/react'
+import { Flex, IconButton, Box, Center, Heading, Grid, GridItem, useBreakpointValue, Stack, Skeleton, useColorModeValue } from '@chakra-ui/react'
 import { FaEraser, FaPen } from 'react-icons/fa'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { SliderPicker, SwatchesPicker } from 'react-color'
@@ -22,10 +22,6 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const [isLoaded, setIsLoaded] = React.useState(false);
 
     const API_URL = 'https://dibiaggdotio.herokuapp.com';
-
-    const swatchesStyle = {
-        backgroundColor: useColorModeValue("white", "black")
-    }
 
     const handleChangeComplete = (color) => {
         setColor(color);

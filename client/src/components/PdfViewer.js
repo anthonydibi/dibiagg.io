@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
-import { Flex, Text, Box, IconButton, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Text, Box, IconButton } from '@chakra-ui/react'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
 import './PdfStyle.css'
 

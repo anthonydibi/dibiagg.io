@@ -81,7 +81,7 @@ export default function Nav() {
                   }} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
                   DEATHBALL CLONE
                 </MenuButton>
-                <MenuList bg={useColorModeValue("white", "black")} border={useColorModeValue("black", "white")} borderRadius="0px" border="1px solid">
+                <MenuList bg={useColorModeValue("white", "black")} borderRadius="0px" border="1px solid">
                   <MenuItem><RouteLink to={"/deathball/about"} key={"about"}><NavLink key={"about"}>ABOUT</NavLink></RouteLink></MenuItem>
                   <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>PLAY</NavLink></MenuItem>
                   <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>LEADERBOARD</NavLink></RouteLink></MenuItem>
@@ -136,7 +136,7 @@ export default function Nav() {
                   }} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
                   DEATHBALL CLONE
                 </MenuButton>
-                <MenuList bg={bgColor} border={bgColor} borderRadius="0px" border="1px solid">
+                <MenuList bg={bgColor} borderRadius="0px" border="1px solid">
                   <MenuItem><RouteLink to={"/deathball/about"} key={"about"}><NavLink key={"about"}>ABOUT</NavLink></RouteLink></MenuItem>
                   <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>PLAY</NavLink></MenuItem>
                   <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>LEADERBOARD</NavLink></RouteLink></MenuItem>

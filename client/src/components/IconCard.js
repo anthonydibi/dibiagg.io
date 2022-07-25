@@ -1,5 +1,5 @@
 import React from 'react';
-import {Flex, useColorModeValue, Image, Text, Heading} from '@chakra-ui/react';
+import {Flex, useColorModeValue, Image, Heading} from '@chakra-ui/react';
 
 export default function IconCard(props) {
     return (
