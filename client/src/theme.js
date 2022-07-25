@@ -43,6 +43,15 @@ const theme = extendTheme({
           }
         }
       })
+    },
+    Menu: {
+      parts: ["item"],
+      baseStyle: {
+        item: {
+          _focus: "none",
+          _active: "none"
+        }
+      }
     }
   }
 })
