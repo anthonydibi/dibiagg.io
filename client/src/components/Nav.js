@@ -115,7 +115,7 @@ export default function Nav() {
       {isOpen ? (
         <>
         <Box h="64px"></Box>
-        <Box zIndex={"500"} position={"fixed"} w={"100%"} bg={bgColor} p={4} display={{ md: 'none' }}>
+        <Box border="1px solid" borderTop="0px none" zIndex={"500"} position={"fixed"} w={"100%"} bg={bgColor} p={4} display={{ md: 'none' }}>
           <Stack as={'nav'} spacing={4} align={"start"}>
             {LeftLinks.map((link) => (
               <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
