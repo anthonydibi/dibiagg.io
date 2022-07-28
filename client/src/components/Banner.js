@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Square, Icon, Button, useBreakpointValue, Text } from "@chakra-ui/react";
+import { Box, Container, Stack, Square, Icon, Button, useBreakpointValue, Text, Spacer } from "@chakra-ui/react";
 import { FiInfo } from 'react-icons/fi'
 
 
@@ -39,6 +39,7 @@ export default function Banner(props){
                     align={{ base: 'stretch', sm: 'center' }}
                     >
                     <Button variant="interact" rounded="none" border="1px solid" width="full" onClick={props.onClick}>
+                        <Box mr="2">{props.buttonIcon}</Box>
                         {props.buttonText}
                     </Button>
                     </Stack>

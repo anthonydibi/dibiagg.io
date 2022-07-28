@@ -17,6 +17,7 @@ import theme from './theme'
 import ContactFooter from './components/ContactFooter';
 import DeathballAbout from './routes/deathballabout';
 import Banner from './components/Banner';
+import { FaGithub } from 'react-icons/fa';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -25,7 +26,7 @@ root.render(
   <BrowserRouter>
     <ChakraProvider theme={theme}>
       <ColorModeScript />
-      <Banner header={"DIBIAGG.IO is open source!"} action={"Check it out on Github."} buttonText={"Go"} onClick={() => {window.location.assign("https://github.com/anthonydibi/dibiagg.io")}}/>
+      <Banner header={"DIBIAGG.IO is open source!"} action={"Check it out on Github."} buttonText={"Go"} buttonIcon={<FaGithub />} onClick={() => {window.location.assign("https://github.com/anthonydibi/dibiagg.io")}}/>
       <Nav />
       <Routes>
         <Route path="/" element={<About />} />
