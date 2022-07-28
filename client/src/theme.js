@@ -17,14 +17,34 @@ const theme = extendTheme({
   components: {
     Button: {
       variants: {
-        "interact": {
+        "interact": (props) => ({
           variant: "ghost",
           border: "1px solid transparent",
           _hover: {
             border: "1px solid"
+          },
+          _active: {
+            border: "1px solid",
+            bg: mode("gray.300", "gray.800")(props),
+            transform: 'scale(0.98)',
           }
-        }
+        })
       }
+    },
+    CloseButton: {
+      baseStyle: (props) => ({
+        variant: "ghost",
+        border: "1px solid transparent",
+        rounded: "none",
+        _hover: {
+          border: "1px solid"
+        },
+        _active: {
+          border: "1px solid",
+          bg: mode('gray.300', "gray.800")(props),
+          transform: 'scale(0.98)',
+      }
+      })
     },
     Modal: {
       parts: ["dialog", "closeButton"],

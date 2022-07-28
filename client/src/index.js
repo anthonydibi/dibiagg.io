@@ -16,6 +16,7 @@ import DeathballLeaderboard from './routes/deathballleaderboard';
 import theme from './theme'
 import ContactFooter from './components/ContactFooter';
 import DeathballAbout from './routes/deathballabout';
+import Banner from './components/Banner';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -24,8 +25,8 @@ root.render(
   <BrowserRouter>
     <ChakraProvider theme={theme}>
       <ColorModeScript />
-      <Nav/>
-      <Box h={"60px"} w="100%"></Box> {/*spacer for sticky nav*/}
+      <Banner header={"DIBIAGG.IO is open source!"} action={"Check it out on Github."} buttonText={"Go"} onClick={() => {window.location.assign("https://github.com/anthonydibi/dibiagg.io")}}/>
+      <Nav />
       <Routes>
         <Route path="/" element={<About />} />
         <Route path="about" element={<About />} />

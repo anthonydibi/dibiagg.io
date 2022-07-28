@@ -15,6 +15,7 @@ export default function IconCard(props) {
         gap={"15px"}>
             <Image 
             boxShadow={"sm"}
+            zIndex={1}
             src={props.src}
             boxSize={"70px"}
             borderRadius={props.rounded === "true" ? "full" : "none"}

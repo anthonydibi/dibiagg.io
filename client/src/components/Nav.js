@@ -46,7 +46,7 @@ export default function Nav() {
 
   return (
     <>
-        <Flex top="0" bg={useColorModeValue("pink.50", "black")} position="fixed" w="100%" zIndex="100" borderBottom={"1px solid"} borderColor={useColorModeValue("black", "white")} h={"60px"} align="center">
+        <Flex position="sticky" top="0" bg={useColorModeValue("pink.50", "black")} w="100%" zIndex="100" borderBottom={"1px solid"} borderColor={useColorModeValue("black", "white")} h={"60px"} align="center">
           <Spacer />
           <IconButton
             size={'md'}
