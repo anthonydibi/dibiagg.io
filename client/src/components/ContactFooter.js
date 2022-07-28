@@ -1,19 +1,17 @@
 import ContactButtons from "./ContactButtons";
-import { Flex, Heading, Stack, Center } from "@chakra-ui/react";
+import { Flex, Heading, Stack} from "@chakra-ui/react";
 
 export default function ContactFooter(){
     return (
         <>
-            <Center borderTop="1px solid">
-            <Stack p={10} w={"auto"}>
-                <Heading w={"100%"} align={"center"} justify={"center"}>
+            <Stack borderTop="1px solid" p={3} direction="row" align="center" justify={"center"} h={"60px"}>
+                <Heading mr="10" fontWeight="bold" size="md" align={"center"} justify={"center"} whiteSpace="nowrap">
                     GET IN TOUCH
                 </Heading>
-                <Flex w={"100%"} justify={'center'}>
+                <Flex justify={'center'} gap={3}>
                     <ContactButtons />
                 </Flex>
             </Stack>
-            </Center>
         </>
     );
 }

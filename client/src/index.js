@@ -25,7 +25,7 @@ root.render(
     <ChakraProvider theme={theme}>
       <ColorModeScript />
       <Nav/>
-      <Box h="60px" w="100%"></Box> {/*spacer for sticky nav*/}
+      <Box h={"60px"} w="100%"></Box> {/*spacer for sticky nav*/}
       <Routes>
         <Route path="/" element={<About />} />
         <Route path="about" element={<About />} />

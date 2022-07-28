@@ -142,7 +142,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         <Center>
             <IconButton size="sm" isRound="true" m="2" value="previousDay" variant="interact" icon={<AiFillCaretLeft/>} onClick={ back }>
             </IconButton>
-            <Heading my={"6"}>{day}</Heading>
+            <Heading my={"2"}>{day}</Heading>
             <IconButton size="sm" isRound="true" m="2" value="nextDay" variant="interact" icon={<AiFillCaretRight/>} onClick={ forward }>
             </IconButton>
         </Center>

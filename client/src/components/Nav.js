@@ -46,10 +46,12 @@ export default function Nav() {
 
   return (
     <>
-        <Flex top="0" position="fixed" w="100%" zIndex="100" borderBottom={"1px solid"} borderColor={useColorModeValue("black", "white")} bg={useColorModeValue('white', 'black')} px={4} h={16} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex top="0" bg={useColorModeValue("pink.50", "black")} position="fixed" w="100%" zIndex="100" borderBottom={"1px solid"} borderColor={useColorModeValue("black", "white")} h={"60px"} align="center">
           <Spacer />
           <IconButton
             size={'md'}
+            variant="interact"
+            rounded="none"
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
@@ -59,8 +61,8 @@ export default function Nav() {
             <HStack spacing={8} alignItems={'center'}>
               <Box>
                 <Heading mx={{ base: "5", md: "0"}}
-                size={"xl"}>
-                DB.<Heading as="span" color="#FF5F1F">IO</Heading></Heading>
+                size={"lg"}>
+                DB.<Heading as="span" color="accent.100" size="lg">IO</Heading></Heading>
               </Box>
               <HStack
                 as={'nav'}
@@ -73,15 +75,14 @@ export default function Nav() {
                   fontWeight={"bold"}
                   border="1px solid transparent"
                   px={2}
-                  py={1}
                   rounded={"none"}
                   _hover={{
                     textDecoration: 'none',
                     border: "1px solid"
-                  }} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
+                  }} variant={"interact"} rightIcon={<ChevronDownIcon />} h={"31px"}>
                   DEATHBALL CLONE
                 </MenuButton>
-                <MenuList bg={useColorModeValue("white", "black")} borderRadius="0px" border="1px solid">
+                <MenuList bg={useColorModeValue("white", "black")} borderRadius="0px" border="1px solid" offset>
                   <MenuItem><RouteLink to={"/deathball/about"} key={"about"}><NavLink key={"about"}>ABOUT</NavLink></RouteLink></MenuItem>
                   <MenuItem onClick={() => { window.location = "https://gilded-kulfi-c5ad94.netlify.app/" }}><NavLink>PLAY</NavLink></MenuItem>
                   <MenuItem><RouteLink to={"/deathball/leaderboard"} key={"leaderboard"}><NavLink key={"leaderboard"}>LEADERBOARD</NavLink></RouteLink></MenuItem>
@@ -104,9 +105,9 @@ export default function Nav() {
               ))}
               <ContactButtons />
             </HStack>
-            <Button onClick={toggleColorMode}>
+            <Button onClick={toggleColorMode} variant="interact" p="2" rounded="none">
                 {colorMode === 'light' ? <MoonIcon color="#FF5F1F" /> : <SunIcon color="#FF5F1F"/>}
-              </Button>
+            </Button>
             </Menu>
           </Flex>
           <Spacer />
@@ -114,8 +115,8 @@ export default function Nav() {
 
       {isOpen ? (
         <>
-        <Box h="64px"></Box>
-        <Box border="1px solid" borderTop="0px none" zIndex={"500"} position={"fixed"} w={"100%"} bg={bgColor} p={4} display={{ md: 'none' }}>
+        <Box h="60px"></Box>
+        <Box border="1px solid" borderTop="none" borderLeft="none" borderRight="none" zIndex={"500"} position={"fixed"} w={"100%"} bg={bgColor} p={4} display={{ md: 'none' }}>
           <Stack as={'nav'} spacing={4} align={"start"}>
             {LeftLinks.map((link) => (
               <RouteLink to={link.href} key={link.display}><NavLink key={link.display}>{link.display}</NavLink></RouteLink>
@@ -133,7 +134,7 @@ export default function Nav() {
                   _hover={{
                     textDecoration: 'none',
                     border: "1px solid"
-                  }} variant={"ghost"} rightIcon={<ChevronDownIcon />}>
+                  }} variant={"ghost"} rightIcon={<ChevronDownIcon />} h={"31px"}>
                   DEATHBALL CLONE
                 </MenuButton>
                 <MenuList bg={bgColor} borderRadius="0px" border="1px solid">

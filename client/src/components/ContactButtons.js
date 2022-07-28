@@ -31,13 +31,13 @@ export default function ContactButtons(){
 
     return (
         <>
-            <IconButton aria-label="discord" size="lg" variant="ghost" icon={<FaDiscord />} onClick={() => { copyToClipboardAndToast("Discord username", "boat boat#3913") }}>
+            <IconButton aria-label="discord" size="md" variant="interact" icon={<FaDiscord />} onClick={() => { copyToClipboardAndToast("Discord username", "boat boat#3913") }} rounded="none">
             </IconButton>
-            <IconButton aria-label="linkedin" size="lg" variant="ghost" icon={<FaLinkedin />} onClick={() => { window.location.assign("https://www.linkedin.com/in/anthony-di-biaggio-95524916b/") }}>
+            <IconButton aria-label="linkedin" size="md" variant="interact" icon={<FaLinkedin />} onClick={() => { window.location.assign("https://www.linkedin.com/in/anthony-di-biaggio-95524916b/") }} rounded="none">
             </IconButton>
-            <IconButton aria-label="email" size="lg" variant="ghost" icon={<MdEmail />} onClick={() => { copyToClipboardAndToast("e-mail", "anthony@dibiagg.io") }}>
+            <IconButton aria-label="email" size="md" variant="interact" icon={<MdEmail />} onClick={() => { copyToClipboardAndToast("e-mail", "anthony@dibiagg.io") }} rounded="none">
             </IconButton>
-            <IconButton aria-label="github" size="lg" variant="ghost" icon={<FaGithub />} onClick={() => { window.location.assign("https://github.com/anthonydibi") }}>
+            <IconButton aria-label="github" size="md" variant="interact" icon={<FaGithub />} onClick={() => { window.location.assign("https://github.com/anthonydibi") }} rounded="none">
             </IconButton>
         </>
     );
