@@ -68,8 +68,8 @@ const theme = extendTheme({
       parts: ["item", "list"],
       baseStyle: {
         item: {
-          _focus: {},
-          _active: {}
+          _focus: "none",
+          _active: "none"
         }
       }
     }
