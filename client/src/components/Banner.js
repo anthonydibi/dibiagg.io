@@ -8,7 +8,7 @@ export default function Banner(props){
 
     return (
         <>
-            <Box align="center" bg={useColorModeValue("blue.50", "gray.900")} w="100%" borderBottom="1px solid">
+            <Box align="center" bg="accent.100" w="100%" borderBottom="1px solid">
                 <Container align="center" maxW="container.lg" py={{ base: '4', md: '1' }} position="relative">
                 <Stack
                     direction={{ base: 'column', sm: 'row' }}
