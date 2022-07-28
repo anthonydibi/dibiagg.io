@@ -1,7 +1,6 @@
 import {Grid, Heading, Center, Text, Stack, GridItem, Tooltip, useColorModeValue} from "@chakra-ui/react"
 import React from 'react';
 import IconCard from '../components/IconCard'
-import Nav from "../components/Nav";
 
 export default function About(){
     return (
