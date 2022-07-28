@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Square, Icon, Button, useBreakpointValue, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Stack, Square, Icon, Button, useBreakpointValue, Text } from "@chakra-ui/react";
 import { FiInfo } from 'react-icons/fi'
 
 
