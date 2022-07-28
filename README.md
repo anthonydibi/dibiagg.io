@@ -4,7 +4,7 @@ Welcome to the dibiagg.io source code!
 │   ├── public | Assets
 │   └── src
 │       ├── components | Reusable UI components and logic
-│       ├── index.js
+│       ├── index.js | React-router routes, React initialization
 │       ├── logo.svg
 │       ├── reportWebVitals.js
 │       ├── routes | Webpages
