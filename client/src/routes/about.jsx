@@ -10,7 +10,7 @@ export default function About(){
                     <Heading
                         fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
                         mb={6}>
-                        HI! MY NAME IS ANTHONY <Tooltip label="(dee-bee-aw-jee-oh)" border="1px solid" px="2" borderRadius="0" bg={useColorModeValue("white", "black")} textColor={useColorModeValue("black", "white")} borderColor={useColorModeValue("black", "white")} fontSize={{base:"md", md: "lg"}}><Text textDecorationColor={"accent.100"} decoration={"underline dotted"} as="span">DI BIAGGIO</Text></Tooltip>.
+                        HI! MY NAME IS ANTHONY <Tooltip label="(dee-bee-aw-jee-oh)" border="1px solid" px="2" borderRadius="0" bg={useColorModeValue("white", "black")} textColor={useColorModeValue("black", "white")} borderColor={useColorModeValue("black", "white")} fontSize={{base:"md", md: "lg"}}><Text whiteSpace="nowrap"textDecorationColor={"accent.100"} decoration={"underline dotted"} as="span">DI BIAGGIO</Text></Tooltip>.
                     </Heading>
                     <Stack spacing={9} px={{base: 0, md: 20}}>
                         <Text px={6} fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
