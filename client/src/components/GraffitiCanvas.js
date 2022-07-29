@@ -154,6 +154,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             </Box>
             <Skeleton isLoaded={isLoaded} zIndex={"5"} border="1px solid" borderBottom={{base: "1px", md: "0px none"}}>
                 <Stage
+                    style={{backgroundColor: "white"}}
                     width={1000 * stageScale}
                     height={1000 * stageScale}
                     scaleX={stageScale}
