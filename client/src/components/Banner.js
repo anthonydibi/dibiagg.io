@@ -22,15 +22,15 @@ export default function Banner(props){
                     >
                     {!isMobile && (
                         <Square size="12" bg="bg-subtle" borderRadius="md">
-                        <Icon as={FiInfo} boxSize="6" />
+                        <Icon color="white" as={FiInfo} boxSize="6" />
                         </Square>
                     )}
                     <Stack
                         direction={{ base: 'column', md: 'row' }}
                         spacing={{ base: '0.5', md: '1.5' }}
                     >
-                        <Text whiteSpace={"nowrap"} fontWeight="bold">{props.header}</Text>
-                        <Text whiteSpace={"nowrap"} color="muted">{props.action}</Text>
+                        <Text color="white" whiteSpace={"nowrap"} fontWeight="bold">{props.header}</Text>
+                        <Text color="white" whiteSpace={"nowrap"}>{props.action}</Text>
                     </Stack>
                     </Stack>
                     <Stack
@@ -38,9 +38,9 @@ export default function Banner(props){
                     spacing={{ base: '3', sm: '2' }}
                     align={{ base: 'stretch', sm: 'center' }}
                     >
-                    <Button variant="interact" rounded="none" border="1px solid" width="full" onClick={props.onClick}>
-                        <Box mr="2">{props.buttonIcon}</Box>
-                        {props.buttonText}
+                    <Button variant="interact" rounded="none" border="1px solid" borderColor="white" width="full" onClick={props.onClick}>
+                        <Box mr="2" color="white">{props.buttonIcon}</Box>
+                        <Text color="white">{props.buttonText}</Text>
                     </Button>
                     </Stack>
                 </Stack>
