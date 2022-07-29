@@ -31,7 +31,7 @@ export default function DeathballAbout() {
               What is
             </Text>
             <br />
-            <Text as={Link} decoration={"underline"} href={"https://deathball.cab"} color={"accent.100"}>
+            <Text as={Link} decoration={"underline"} href={"https://deathball.cab"} color={"accent"}>
               Deathball?
             </Text>
           </Heading>

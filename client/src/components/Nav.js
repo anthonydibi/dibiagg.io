@@ -62,7 +62,7 @@ export default function Nav() {
               <Box>
                 <Heading mx={{ base: "5", md: "0"}}
                 size={"lg"}>
-                DB.<Heading as="span" color="accent.100" size="lg">IO</Heading></Heading>
+                DB.<Heading as="span" color="accent" size="lg">IO</Heading></Heading>
               </Box>
               <HStack
                 as={'nav'}
@@ -106,7 +106,7 @@ export default function Nav() {
               <ContactButtons />
             </HStack>
             <Button onClick={toggleColorMode} variant="interact" p="2" rounded="none">
-                {colorMode === 'light' ? <MoonIcon color="#FF5F1F" /> : <SunIcon color="#FF5F1F"/>}
+                {colorMode === 'light' ? <MoonIcon color="accent" /> : <SunIcon color="accent"/>}
             </Button>
             </Menu>
           </Flex>

@@ -45,7 +45,7 @@ export default function Leaderboard(props){
         return (
             <Flex direction={"column"} mb="5" w="200px" h="200px" justify={"center"} align={"center"}>
                 <SlideFade offsetY="-80px" in={isLoaded}>
-                    <GiCrenelCrown size={100} color={useToken("colors", "accent.100")}/>
+                    <GiCrenelCrown size={100} color={useToken("colors", "accent")}/>
                 </SlideFade>
                 <Heading>{props.player ? props.player.name.toUpperCase() : ""}</Heading>
             </Flex>

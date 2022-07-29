@@ -3,14 +3,15 @@ import { mode } from '@chakra-ui/theme-tools'
 
 const theme = extendTheme({
   colors: {
-    accent: {
-      100: "#FF5F1F"
-    }
+    accent: "var(--accent)"
   },
   styles: {
     global: (props) => ({
       body: {
         bg: mode("white", "black")(props)
+      },
+      ":root": {
+        "--accent": mode("#FF5F1F", "#38B2AC")(props)
       }
     })
   },
@@ -18,7 +19,6 @@ const theme = extendTheme({
     Button: {
       variants: {
         "interact": (props) => ({
-          variant: "ghost",
           border: "1px solid transparent",
           _hover: {
             border: "1px solid"
@@ -33,7 +33,6 @@ const theme = extendTheme({
     },
     CloseButton: {
       baseStyle: (props) => ({
-        variant: "ghost",
         border: "1px solid transparent",
         rounded: "none",
         _hover: {

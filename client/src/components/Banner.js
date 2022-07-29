@@ -8,7 +8,7 @@ export default function Banner(props){
 
     return (
         <>
-            <Box align="center" bg="accent.100" w="100%" borderBottom="1px solid">
+            <Box align="center" bg="accent" w="100%" borderBottom="1px solid">
                 <Container align="center" maxW="container.lg" py={{ base: '4', md: '1' }} position="relative">
                 <Stack
                     direction={{ base: 'column', sm: 'row' }}
@@ -38,7 +38,7 @@ export default function Banner(props){
                     spacing={{ base: '3', sm: '2' }}
                     align={{ base: 'stretch', sm: 'center' }}
                     >
-                    <Button variant="interact" rounded="none" border="1px solid" borderColor="white" width="full" onClick={props.onClick}>
+                    <Button variant="interact" rounded="none" borderColor="white" width="full" onClick={props.onClick}>
                         <Box mr="2" color="white">{props.buttonIcon}</Box>
                         <Text color="white">{props.buttonText}</Text>
                     </Button>
