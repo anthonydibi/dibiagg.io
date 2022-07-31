@@ -18,6 +18,7 @@ import ContactFooter from './components/ContactFooter';
 import DeathballAbout from './routes/deathballabout';
 import Banner from './components/Banner';
 import { FaGithub } from 'react-icons/fa';
+import '@fontsource/roboto'
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
