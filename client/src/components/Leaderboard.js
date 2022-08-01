@@ -2,10 +2,10 @@ import { useEffect, useState } from "react"
 import { Spacer, Stack, Th, Tr, Table, Thead, Center, Td, Tbody, TableContainer, Flex, Heading, Text, IconButton, Skeleton, SlideFade, useToken } from "@chakra-ui/react";
 import { GiCrenelCrown } from 'react-icons/gi'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
+import { fetchStandings } from "../services/DeathballApi";
 
 export default function Leaderboard(props){
 
-    const GET_STANDINGS = props.standingsUrl;
     const ENTRIES_PER_PAGE = props.entriesPerPage;
 
     const [standings, setStandings] = useState([]);
@@ -15,19 +15,14 @@ export default function Leaderboard(props){
     const [isLoaded, setIsLoaded] = useState(false); 
 
     useEffect(() => {
-        const fetchStandings = () => {
-            return fetch(`${GET_STANDINGS}?${new URLSearchParams({start: page * ENTRIES_PER_PAGE, stop: ((page + 1) * ENTRIES_PER_PAGE) - 1})}`)
-                .then(response => response.json())
-                .then(data => {
-                    setStandings(data);
-                    if(page === 0) setTopPlayer({...data[0]});
-                    setNavInfo(`${page * ENTRIES_PER_PAGE} TO ${((page + 1) * ENTRIES_PER_PAGE) - 1}`);
-                    setIsLoaded(true);
-                })
-        }
-
-        fetchStandings();
-    }, [page, ENTRIES_PER_PAGE, GET_STANDINGS])
+        fetchStandings(page, ENTRIES_PER_PAGE)
+            .then((data) => {
+                if(page === 0) setTopPlayer({...data[0]});
+                setNavInfo(`${page * ENTRIES_PER_PAGE} TO ${((page + 1) * ENTRIES_PER_PAGE) - 1}`);
+                setIsLoaded(true);
+                setStandings(data);
+            })
+    }, [page, ENTRIES_PER_PAGE])
 
     const next = () => {
         setIsLoaded(false);
@@ -66,7 +61,7 @@ export default function Leaderboard(props){
             <Center>
             <Stack w={{base: "90%", md: "60%"}} border="1px solid" borderBottom="0px none">
                 <Skeleton isLoaded={isLoaded}>
-                <TableContainer h="800px" overflowY="auto">
+                <TableContainer h="730px" overflowY="auto">
                     <Table>
                         <Thead>
                             <Tr>
@@ -91,7 +86,7 @@ export default function Leaderboard(props){
                     </Table>
                 </TableContainer>
                 </Skeleton>
-                <Stack p={1} mt="5" direction={"row"} w="100%" justify={"right"} align={"center"}>
+                <Stack borderTop="1px solid" p={1} mt="5" direction={"row"} w="100%" justify={"right"} align={"center"}>
                     <IconButton size="sm" rounded='full' icon={<AiFillCaretLeft/>} onClick={back}>
 
                     </IconButton>

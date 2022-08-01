@@ -5,6 +5,7 @@ import { FaEraser, FaPen } from 'react-icons/fa'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { SliderPicker, SwatchesPicker } from 'react-color'
 import "./SwatchesStyle.css"
+import { fetchCanvasState, fetchMaxStep, postCanvasLine } from '../services/GraffitiApi'
 
 export default function GraffitiCanvas() { //built off of free-draw template from react-konva docs
     let today = new Date();
@@ -21,42 +22,31 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const stageScale = useBreakpointValue({ base: window.innerWidth/1000, md: 1 })
     const [isLoaded, setIsLoaded] = React.useState(false);
 
-    const API_URL = 'https://dibiaggdotio.herokuapp.com';
-
     const handleChangeComplete = (color) => {
         setColor(color);
     };
 
-    const fetchCanvasState = (stepIn) => {
-        return fetch(API_URL + '/graffiti?' + new URLSearchParams({ step: stepIn }))
-            .then(response => response.json())
+    const getCanvasState = (step) => {
+        fetchCanvasState(step)
             .then(data => {
+                console.log(data);
                 setLines(data.lines);
                 setDay(data.day.split(' ')[0]);
                 setIsLoaded(true);
             })
     }
 
-    const fetchMaxStep = () => {
-        return fetch(API_URL + '/graffiti/maxstep')
-            .then(response => response.json())
+    const getMaxStep = () => {
+        fetchMaxStep()
             .then(data => {
                 let count = parseInt(data.count);
                 count === 0 ? setMaxStep(0) : setMaxStep(count - 1);
-            });
+            })
     }
 
-    const postCanvasState = (callback) => {
-        let data = {line: lines[lines.length - 1]};
-        if(data.line === null) return;
-        return fetch(API_URL + '/graffiti', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+    const updateCanvasState = () => {
+        let line = lines[lines.length - 1];
+        postCanvasLine(line)
     }
 
     const handleMouseDown = (e) => {
@@ -106,7 +96,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             return;
         }
         setIsLoaded(false);
-        fetchCanvasState(step + 1);
+        getCanvasState(step + 1);
         setStep(step + 1);
     }
 
@@ -115,7 +105,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             return;
         }
         setIsLoaded(false)
-        fetchCanvasState(step - 1);
+        getCanvasState(step - 1);
         setStep(step - 1);
     }
 
@@ -123,13 +113,13 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step !== 0){
             return;
         }
-        postCanvasState()
-            .then(result => callback());
+        updateCanvasState()
+            .then(res => callback());
     }
 
     React.useEffect(()=>{
-        fetchMaxStep();
-        fetchCanvasState(0);
+        getMaxStep();
+        getCanvasState(0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

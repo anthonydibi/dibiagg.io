@@ -33,11 +33,11 @@ export default function ContactButtons(){
         <>
             <IconButton aria-label="discord" size="md" variant="interact" icon={<FaDiscord />} onClick={() => { copyToClipboardAndToast("Discord username", "boat boat#3913") }} rounded="none">
             </IconButton>
-            <IconButton aria-label="linkedin" size="md" variant="interact" icon={<FaLinkedin />} onClick={() => { window.location.assign("https://www.linkedin.com/in/anthony-di-biaggio-95524916b/") }} rounded="none">
+            <IconButton aria-label="linkedin" size="md" variant="interact" icon={<FaLinkedin />} onClick={() => { window.open("https://www.linkedin.com/in/anthony-di-biaggio-95524916b/") }} rounded="none">
             </IconButton>
             <IconButton aria-label="email" size="md" variant="interact" icon={<MdEmail />} onClick={() => { copyToClipboardAndToast("e-mail", "anthony@dibiagg.io") }} rounded="none">
             </IconButton>
-            <IconButton aria-label="github" size="md" variant="interact" icon={<FaGithub />} onClick={() => { window.location.assign("https://github.com/anthonydibi") }} rounded="none">
+            <IconButton aria-label="github" size="md" variant="interact" icon={<FaGithub />} onClick={() => { window.open("https://github.com/anthonydibi") }} rounded="none">
             </IconButton>
         </>
     );
