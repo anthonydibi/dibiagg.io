@@ -130,7 +130,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     });
 
     React.useEffect(() => {
-        socket.current = io.connect('wss://graffiti-websockets.herokuapp.com:3386');
+        socket.current = io.connect('wss://graffiti-websockets.herokuapp.com');
 
         socket.current.on('line', (data) => {
             setLines(currentLines => ([...currentLines, data]));
