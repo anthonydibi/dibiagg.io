@@ -1,7 +1,16 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const http = require('http')
 const app = express()
+const server = http.createServer(app)
+const socketio = require('socket.io')(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+})
 const port = process.env.PORT || 3001;
+const io = socketio(server)
 var cors = require('cors')
 
 const { Client, types } = require('pg');
@@ -27,6 +36,12 @@ app.use(cors())
 types.setTypeParser(1114, function(stringValue) {
     return stringValue;
 });
+
+io.on('connection', (socket) => {
+    console.log('Client connected: ' + socket.id)
+    socket.on('line', (data) => { console.log(data); socket.broadcast.emit('line', data) })
+    socket.on('disconnect', () => console.log('Client has disconnected'))
+})
 
 app.get('/graffiti', (request, response) => {
     let today = new Date();
@@ -132,6 +147,6 @@ app.post('/deathball/games', (request, response) => { //TODO: really need to con
     });
 })
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })
