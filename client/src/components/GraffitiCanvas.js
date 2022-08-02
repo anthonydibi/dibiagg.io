@@ -6,6 +6,7 @@ import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { SliderPicker, SwatchesPicker } from 'react-color'
 import "./SwatchesStyle.css"
 import { fetchCanvasState, fetchMaxStep, postCanvasLine } from '../services/GraffitiApi'
+const io = require('socket.io-client')
 
 export default function GraffitiCanvas() { //built off of free-draw template from react-konva docs
     let today = new Date();
@@ -21,6 +22,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
     const stageScale = useBreakpointValue({ base: window.innerWidth/1000, md: 1 })
     const [isLoaded, setIsLoaded] = React.useState(false);
+    const socket = React.useRef();
 
     const handleChangeComplete = (color) => {
         setColor(color);
@@ -50,7 +52,6 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     }
 
     const handleMouseDown = (e) => {
-        console.log(color);
         if(step === 0){
             isDrawing.current = true;
             const pos = e.target.getStage().getPointerPosition();
@@ -78,7 +79,8 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step === 0){
             isDrawing.current = false;
             setNumSessionLines(numSessionLines + 1);
-            save(() => fetchCanvasState(step));
+            save();
+            socket.current.emit('line', lines[lines.length - 1]);
         }
     };
 
@@ -109,12 +111,12 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         setStep(step - 1);
     }
 
-    const save = (callback) => {
+    const save = () => {
         if(step !== 0){
             return;
         }
         updateCanvasState()
-            .then(res => callback());
+            //.then(res => callback());
     }
 
     React.useEffect(()=>{
@@ -126,6 +128,14 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     React.useEffect(() => {
         document.querySelector(".swatches-picker div div").style.backgroundColor = modeValue;
     });
+
+    React.useEffect(() => {
+        socket.current = io.connect('ws://graffiti-websockets.herokuapp.com:46411');
+
+        socket.current.on('line', (data) => {
+            setLines(currentLines => ([...currentLines, data]));
+        })
+    }, [])
 
   return (
     <Box className='GraffitiContainer' w="100%">
