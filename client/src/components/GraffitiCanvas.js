@@ -155,6 +155,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                 return {...lines};
             })
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
   return (
