@@ -6,7 +6,7 @@ import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { SliderPicker, SwatchesPicker } from 'react-color'
 import "./SwatchesStyle.css"
 import { fetchCanvasState, fetchMaxStep, postCanvasLine } from '../services/GraffitiApi'
-const io = require('socket.io-client')
+import useGraffitiSocket from '../hooks/useGraffitiSocket'
 
 export default function GraffitiCanvas() { //built off of free-draw template from react-konva docs
     let today = new Date();
@@ -22,7 +22,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
     const stageScale = useBreakpointValue({ base: window.innerWidth/1000, md: 1 })
     const [isLoaded, setIsLoaded] = React.useState(false);
-    const socket = React.useRef();
+    const socket = useGraffitiSocket(setLines);
 
     const handleChangeComplete = (color) => {
         setColor(color);
@@ -45,7 +45,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             })
     }
 
-    const updateCanvasState = () => {
+    const updateCanvasState = () => { //in the backend, the canvas state is updated line by line
         let line = lines["self"][lines["self"].length - 1];
         postCanvasLine(line)
     }
@@ -54,11 +54,8 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step === 0){
             isDrawing.current = true;
             const pos = e.target.getStage().getPointerPosition();
-            // if(!lines.hasOwnProperty("self")){
-            //     lines["self"] = [] ;
-            // }
             setLines({...lines, "self": [...lines["self"], { tool, color: color.hex ?? color, points: [pos.x/stageScale, pos.y/stageScale]} ] });
-            socket.current.emit('lineStarted', {peer: socket.current.id, line: {tool, color: color.hex ?? color, points: [pos.x/stageScale, pos.y/stageScale]}});
+            socket.emit('lineStarted', { peer: socket.id, line: {tool, color: color.hex ?? color, points: [pos.x/stageScale, pos.y/stageScale] }}); //send start of new line to peers
         }
     };
 
@@ -76,7 +73,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         // replace last
         lines["self"].splice(lines["self"].length - 1, 1, lastLine);
         setLines({...lines});
-        socket.current.emit('point', {peer: socket.current.id, point: {x: point.x/stageScale, y: point.y/stageScale}})
+        socket.emit('point', {peer: socket.id, point: {x: point.x/stageScale, y: point.y/stageScale}}) //send drawn point to peers
     };
 
     const handleMouseUp = () => {
@@ -105,7 +102,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         setStep(step + 1);
     }
 
-    const forward = () => {
+    const next = () => {
         if(step - 1 < 0){
             return;
         }
@@ -128,34 +125,9 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    React.useEffect(() => {
-        document.querySelector(".swatches-picker div div").style.backgroundColor = modeValue;
+    React.useEffect(() => { //my hacky way to set the color picker background to the correct color :( needs work
+        document.querySelector(".swatches-picker div div").style.backgroundColor = modeValue; 
     });
-
-    React.useEffect(() => {
-        socket.current = io.connect('wss://dibiaggdotio.herokuapp.com');
-
-        socket.current.on('lineStarted', (data) => {
-            setLines(lines => {
-                if(!lines.hasOwnProperty(data.peer)){
-                    lines[data.peer] = [];
-                }
-                lines[data.peer].push({...data.line, points: [data.line.points[0], data.line.points[1]]})
-                return {...lines};
-            })
-        })
-        
-        socket.current.on('point', (data) => {
-            setLines(lines => {
-                if(!lines.hasOwnProperty(data.peer)){
-                    lines[data.peer] = []
-                }
-                let lastLine = lines[data.peer][lines[data.peer].length - 1];
-                lastLine.points = lastLine.points.concat([data.point.x, data.point.y]);
-                return {...lines};
-            })
-        })
-    }, [])
 
   return (
     <Box className='GraffitiContainer' w="100%">
@@ -163,7 +135,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             <IconButton size="sm" isRound="true" m="2" value="previousDay" variant="interact" icon={<AiFillCaretLeft/>} onClick={ back }>
             </IconButton>
             <Heading my={"2"}>{day}</Heading>
-            <IconButton size="sm" isRound="true" m="2" value="nextDay" variant="interact" icon={<AiFillCaretRight/>} onClick={ forward }>
+            <IconButton size="sm" isRound="true" m="2" value="nextDay" variant="interact" icon={<AiFillCaretRight/>} onClick={ next }>
             </IconButton>
         </Center>
         <Flex direction={{base: "column", md: "row"}}>
@@ -187,7 +159,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                     onTouchEnd={handleMouseUp}
                 >
                     <Layer>
-                    {Object.entries(lines).map(([, list]) => (
+                    {step === 0 ? Object.entries(lines).map(([, list]) => ( //if on latest wall, draw the lines for self AND peers, otherwise just draw lines for self since that's where the fetched wall state is placed
                         list.map((line, i) => {
                             return (
                             <Line
@@ -202,7 +174,20 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                             }
                         />);
                         })
-                    ))}
+                    )) : lines["self"].map((line, i) => {
+                        return (
+                            <Line
+                            key={i}
+                            points={line.points}
+                            stroke={line.color}
+                            strokeWidth={line.tool === 'eraser' ? 15 : 5}
+                            tension={0.5}
+                            lineCap="round"
+                            globalCompositeOperation={
+                                line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                            }
+                        />);
+                    })}
                     </Layer>
                 </Stage>
             </Skeleton>
