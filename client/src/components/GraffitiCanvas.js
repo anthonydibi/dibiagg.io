@@ -58,7 +58,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             //     lines["self"] = [] ;
             // }
             setLines({...lines, "self": [...lines["self"], { tool, color: color.hex ?? color, points: [pos.x/stageScale, pos.y/stageScale]} ] });
-            socket.current.emit('lineStarted', {peer: socket.current.id, line: {tool, color: color.hex ?? color, points: [pos.x, pos.y]}});
+            socket.current.emit('lineStarted', {peer: socket.current.id, line: {tool, color: color.hex ?? color, points: [pos.x/stageScale, pos.y/stageScale]}});
         }
     };
 
@@ -76,7 +76,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         // replace last
         lines["self"].splice(lines["self"].length - 1, 1, lastLine);
         setLines({...lines});
-        socket.current.emit('point', {peer: socket.current.id, point: point})
+        socket.current.emit('point', {peer: socket.current.id, point: {x: point.x/stageScale, y: point.y/stageScale}})
     };
 
     const handleMouseUp = () => {
@@ -140,7 +140,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                 if(!lines.hasOwnProperty(data.peer)){
                     lines[data.peer] = [];
                 }
-                lines[data.peer].push({...data.line, points: [data.line.points[0], data.line.points[1]]})
+                lines[data.peer].push({...data.line, points: [data.line.points[0]/stageScale, data.line.points[1]/stageScale]})
                 return {...lines};
             })
         })
