@@ -16,7 +16,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const [step, setStep] = React.useState(0);
     const [tool, setTool] = React.useState('pen');
     const [numSessionLines, setNumSessionLines] = React.useState(0);
-    const [lines, setLines] = React.useState([]);
+    const [lines, setLines] = React.useState({"self": []});
     const [color, setColor] = React.useState("#000000")
     const isDrawing = React.useRef(false);
     const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
@@ -31,8 +31,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     const getCanvasState = (step) => {
         fetchCanvasState(step)
             .then(data => {
-                console.log(data);
-                setLines(data.lines);
+                setLines({...lines, "self": data.lines});
                 setDay(data.day.split(' ')[0]);
                 setIsLoaded(true);
             })
@@ -47,7 +46,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     }
 
     const updateCanvasState = () => {
-        let line = lines[lines.length - 1];
+        let line = lines["self"][lines.length - 1];
         postCanvasLine(line)
     }
 
@@ -55,7 +54,11 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step === 0){
             isDrawing.current = true;
             const pos = e.target.getStage().getPointerPosition();
-            setLines([...lines, { tool, color: color.hex ?? color, points: [pos.x/stageScale, pos.y/stageScale] }]);
+            if(!lines.hasOwnProperty("self")){
+                lines["self"] = [] ;
+            }
+            setLines({...lines, "self": [...lines["self"], { tool, color: color.hex ?? color, points: [pos.x/stageScale, pos.y/stageScale]} ] });
+            socket.current.emit('lineStarted', {peer: socket.current.id, line: {tool, color: color.hex ?? color, points: [pos.x, pos.y]}});
         }
     };
 
@@ -66,21 +69,22 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             return;
         }
         const point = e.target.getStage().getPointerPosition();
-        let lastLine = lines[lines.length - 1];
+        let lastLine = lines["self"][lines["self"].length - 1];
         // add point
         lastLine.points = lastLine.points.concat([point.x/stageScale, point.y/stageScale]);
 
         // replace last
-        lines.splice(lines.length - 1, 1, lastLine);
-        setLines(lines.concat());
+        lines["self"].splice(lines["self"].length - 1, 1, lastLine);
+        setLines({...lines});
+        socket.current.emit('point', {peer: socket.current.id, point: point})
     };
 
     const handleMouseUp = () => {
         if(step === 0){
             isDrawing.current = false;
             setNumSessionLines(numSessionLines + 1);
-            save();
-            socket.current.emit('line', lines[lines.length - 1]);
+            //save();
+            console.log(lines);
         }
     };
 
@@ -132,8 +136,25 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     React.useEffect(() => {
         socket.current = io.connect('wss://dibiaggdotio.herokuapp.com');
 
-        socket.current.on('line', (data) => {
-            setLines(currentLines => ([...currentLines, data]));
+        socket.current.on('lineStarted', (data) => {
+            console.log("line started");
+            let json = JSON.parse(data);
+            if(!lines.hasOwnProperty(data.peer)){
+                lines[data.peer] = [];
+            }
+            lines[json.peer].push({...json.line, points: [json.line.points[0]/stageScale, json.lines.points[1]/stageScale]})
+            setLines({...lines});
+        })
+        
+        socket.current.on('point', (data) => {
+            console.log("point");
+            let json = JSON.parse(data);
+            if(!lines.hasOwnProperty(json.peer)){
+                lines[json.peer] = []
+            }
+            let lastLine = lines[json.peer][lines[json.peer].length - 1];
+            lastLine.points = lastLine.points.concat([json.point.x/stageScale, json.point.y/stageScale]);
+            setLines({...lines});
         })
     }, [])
 
@@ -167,7 +188,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                     onTouchEnd={handleMouseUp}
                 >
                     <Layer>
-                    {lines.map((line, i) => (
+                    {lines["self"].map((line, i) => (
                         <Line
                         key={i}
                         points={line.points}

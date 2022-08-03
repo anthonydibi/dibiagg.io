@@ -39,7 +39,8 @@ types.setTypeParser(1114, function(stringValue) {
 
 io.on('connection', (socket) => {
     console.log('Client connected: ' + socket.id)
-    socket.on('line', (data) => { console.log(data); socket.broadcast.emit('line', data) })
+    socket.on('lineStarted', (data) => socket.broadcast.emit('lineStarted', data))
+    socket.on('point', (data) => socket.broadcast.emit('point', data))
     socket.on('disconnect', () => console.log('Client has disconnected'))
 })
 
