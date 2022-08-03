@@ -46,7 +46,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     }
 
     const updateCanvasState = () => {
-        let line = lines["self"][lines.length - 1];
+        let line = lines["self"][lines["self"].length - 1];
         postCanvasLine(line)
     }
 
@@ -54,9 +54,9 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step === 0){
             isDrawing.current = true;
             const pos = e.target.getStage().getPointerPosition();
-            if(!lines.hasOwnProperty("self")){
-                lines["self"] = [] ;
-            }
+            // if(!lines.hasOwnProperty("self")){
+            //     lines["self"] = [] ;
+            // }
             setLines({...lines, "self": [...lines["self"], { tool, color: color.hex ?? color, points: [pos.x/stageScale, pos.y/stageScale]} ] });
             socket.current.emit('lineStarted', {peer: socket.current.id, line: {tool, color: color.hex ?? color, points: [pos.x, pos.y]}});
         }
@@ -83,8 +83,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step === 0){
             isDrawing.current = false;
             setNumSessionLines(numSessionLines + 1);
-            //save();
-            console.log(lines);
+            save();
         }
     };
 
@@ -137,24 +136,24 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         socket.current = io.connect('wss://dibiaggdotio.herokuapp.com');
 
         socket.current.on('lineStarted', (data) => {
-            console.log("line started");
-            let json = JSON.parse(data);
-            if(!lines.hasOwnProperty(data.peer)){
-                lines[data.peer] = [];
-            }
-            lines[json.peer].push({...json.line, points: [json.line.points[0]/stageScale, json.lines.points[1]/stageScale]})
-            setLines({...lines});
+            setLines(lines => {
+                if(!lines.hasOwnProperty(data.peer)){
+                    lines[data.peer] = [];
+                }
+                lines[data.peer].push({...data.line, points: [data.line.points[0], data.line.points[1]]})
+                return {...lines};
+            })
         })
         
         socket.current.on('point', (data) => {
-            console.log("point");
-            let json = JSON.parse(data);
-            if(!lines.hasOwnProperty(json.peer)){
-                lines[json.peer] = []
-            }
-            let lastLine = lines[json.peer][lines[json.peer].length - 1];
-            lastLine.points = lastLine.points.concat([json.point.x/stageScale, json.point.y/stageScale]);
-            setLines({...lines});
+            setLines(lines => {
+                if(!lines.hasOwnProperty(data.peer)){
+                    lines[data.peer] = []
+                }
+                let lastLine = lines[data.peer][lines[data.peer].length - 1];
+                lastLine.points = lastLine.points.concat([data.point.x, data.point.y]);
+                return {...lines};
+            })
         })
     }, [])
 
@@ -188,18 +187,21 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                     onTouchEnd={handleMouseUp}
                 >
                     <Layer>
-                    {lines["self"].map((line, i) => (
-                        <Line
-                        key={i}
-                        points={line.points}
-                        stroke={line.color}
-                        strokeWidth={line.tool === 'eraser' ? 15 : 5}
-                        tension={0.5}
-                        lineCap="round"
-                        globalCompositeOperation={
-                            line.tool === 'eraser' ? 'destination-out' : 'source-over'
-                        }
-                        />
+                    {Object.entries(lines).map(([, list]) => (
+                        list.map((line, i) => {
+                            return (
+                            <Line
+                            key={i}
+                            points={line.points}
+                            stroke={line.color}
+                            strokeWidth={line.tool === 'eraser' ? 15 : 5}
+                            tension={0.5}
+                            lineCap="round"
+                            globalCompositeOperation={
+                                line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                            }
+                        />);
+                        })
                     ))}
                     </Layer>
                 </Stage>
