@@ -27,7 +27,7 @@ root.render(
   <BrowserRouter>
     <ChakraProvider theme={theme}>
       <ColorModeScript />
-      <Banner header={"DIBIAGG.IO is open source!"} action={"Check it out on Github."} buttonText={"Go"} buttonIcon={<FaGithub />} onClick={() => {window.location.assign("https://github.com/anthonydibi/dibiagg.io")}}/>
+      <Banner header={"DIBIAGG.IO is open source!"} action={"Check it out on Github."} buttonText={"Go"} buttonIcon={<FaGithub />} onClick={() => {window.open("https://github.com/anthonydibi/dibiagg.io")}}/>
       <Nav />
       <Routes>
         <Route path="/" element={<About />} />
