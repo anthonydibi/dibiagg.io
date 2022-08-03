@@ -140,7 +140,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                 if(!lines.hasOwnProperty(data.peer)){
                     lines[data.peer] = [];
                 }
-                lines[data.peer].push({...data.line, points: [data.line.points[0]/stageScale, data.line.points[1]/stageScale]})
+                lines[data.peer].push({...data.line, points: [data.line.points[0], data.line.points[1]]})
                 return {...lines};
             })
         })
@@ -155,7 +155,6 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                 return {...lines};
             })
         })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
   return (
