@@ -52,16 +52,14 @@ export default function DeathballAbout() {
               With Phaser I can give someone a link and they can play on any desktop device instantly without any setup. I like Phaser
               because it gives well-documented implementations for conventional game features like tilemaps, collision, scenes, etc.
               and since it is open-source if there is something about the API that I don't like I can just write something myself. It's also surprisingly
-              performant for a web framework - with graphics acceleration enabled the game runs upwards of 200 fps. One disadvantage of hosting
+              performant for a web framework - with graphics acceleration enabled the game runs upwards of 200 fps on my machine.
+          </Text>
+          <Text fontSize={"xl"}>
+              One disadvantage of hosting
               the game on the web is that the only well-supported communication API is WebSocket, and WebSocket only supports TCP so the prospect
               of making Deathball a remote multiplayer experience isn't great. <Link href="https://webrtc.org/" isExternal>WebRTC</Link> allows
               peer-to-peer UDP connections and seems to be pretty supported these days, it is not supported in Internet Explorer but IE has been
-              discontinued <Emoji label={"celebration"} symbol={"🎉"} /> so maybe that is a sign that I should add multiplayer. We will see.
-          </Text>
-          <Text fontSize={"xl"}>
-              The only fault I have found with Phaser is that the physics can be pretty buggy. I had to write one collider from scratch
-              and it was pretty seamless with the API so I hope to have a fully custom physics system at some point rather than using the
-              built-in arcade physics, and hopefully integrate features that I implement into the Phaser codebase.
+              discontinued <Emoji label={"celebration"} symbol={"🎉"} /> so maybe that is a sign that I should add multiplayer. We shall see.
           </Text>
           <Text fontSize={"xs"}>
               All credit goes to the original creator, Tony Hauber.
