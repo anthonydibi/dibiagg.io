@@ -9,6 +9,7 @@ import {
   Center
 } from '@chakra-ui/react';
 import ReactPlayer from 'react-player'
+import Emoji from '../components/Emoji';
 
 export default function DeathballAbout() {
   return (
