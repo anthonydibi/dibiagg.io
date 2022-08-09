@@ -16,8 +16,8 @@ export default function DeathballAbout() {
     <Center>
     <Container px={{base: 5, md: 30}} mx="5" maxW={'7xl'} border="1px solid" borderBottom="0px none" borderTop="0px none">
       <Stack
-        align={'center'}
         spacing={{ base: 8, md: 10 }}
+        align="start"
         p={{ base: 5, md: 20 }}
         direction={{ base: 'column', md: 'row' }}>
         <Stack flex={1} spacing={{ base: 5, md: 10 }}>
@@ -45,7 +45,20 @@ export default function DeathballAbout() {
               version doesn't touch the insane visual and mechanical polish of the original, I can only hope that
               someone plays it and says <em>"hey, that was kind of fun."</em>
           </Text>
-          <Text>
+          <Text fontSize={"xl"}>
+              I built this game using Phaser 3, which is a JavaScript game framework. Originally I planned to develop the game in
+              Unity, but I decided that it would be really inconvenient to have to download and install the game in order to play it.
+              With Phaser I can give someone a link and they can play on any desktop device instantly without any setup. I like Phaser
+              because it gives well-documented implementations for conventional game features like tilemaps, collision, scenes, etc.
+              and since it is open-source if there is something about the API that I don't like I can just write something myself. It's also surprisingly
+              performant for a web framework - with graphics acceleration enabled the game runs upwards of 200 fps.
+          </Text>
+          <Text fontSize={"xl"}>
+              The only fault I have found with Phaser is that the physics can be pretty buggy. I had to write one collider from scratch
+              and it was pretty seamless with the API so I hope to have a fully custom physics system at some point rather than using the
+              built-in arcade physics, and hopefully integrate features that I implement into the Phaser codebase.
+          </Text>
+          <Text fontSize={"xs"}>
               All credit goes to the original creator, Tony Hauber.
           </Text>
         </Stack>
@@ -53,7 +66,8 @@ export default function DeathballAbout() {
           flex={1}
           justify={'center'}
           align={'center'}
-          position={'relative'}
+          position={{base: "relative", md: "sticky"}}
+          top={{base: "0", md: "80px"}}
           w={'full'}>
           <Box
             position={'relative'}
