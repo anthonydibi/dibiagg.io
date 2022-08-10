@@ -6,24 +6,24 @@ export default function About(){
     return (
         <>
             <Center>
-                <Stack h="100%" align={"center"} p={{base: 5, md: 20}} mx="5" border="1px solid" borderBottom="0px none" borderTop="0px none" w={"1300px"} transitionDuration="1000ms">
+                <Stack h="100%" align={"center"} p={{base: 5, lg: 20}} mx={{base: 1, md: 5}} border="1px solid" borderBottom="0px none" borderTop="0px none" w={"1300px"} transitionDuration="1000ms">
                     <Heading
                         fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
                         mb={6}>
                         HI! MY NAME IS ANTHONY <Tooltip label="(dee-bee-aw-jee-oh)" border="1px solid" px="2" borderRadius="0" bg={useColorModeValue("white", "black")} textColor={useColorModeValue("black", "white")} borderColor={useColorModeValue("black", "white")} fontSize={{base:"md", md: "lg"}}><Text whiteSpace="nowrap"textDecorationColor={"accent"} decoration={"underline dotted"} as="span">DI BIAGGIO</Text></Tooltip>.
                     </Heading>
                     <Stack spacing={9} px={{base: 0, md: 20}}>
-                        <Text px={6} fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
+                        <Text px={{base: 3, md: 6}} fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
                             Welcome to DIBIAGG.<Text as="span" color="accent">IO</Text>! 
                             I'm studying computer science at the University of Minnesota with a focus in software engineering. This is my personal website which functions as a little sandbox for whatever 
                             projects I decide to whip up as well as a hub for my portfolio, resume, contact links, etc.
                         </Text>
-                        <Text px={6} fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
+                        <Text px={{base: 3, md: 6}} fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
                             Here is the stuff I used to build this website.
                         </Text>
                         <Text fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
                         </Text>
-                        <Grid flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}>
+                        <Grid align={"center"} flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}>
                             <GridItem>
                                 <IconCard src={"https://pbs.twimg.com/profile_images/1244925541448286208/rzylUjaf_400x400.jpg"}
                                 color={"white"}

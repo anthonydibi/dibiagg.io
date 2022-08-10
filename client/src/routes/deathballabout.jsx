@@ -15,7 +15,7 @@ export default function DeathballAbout() {
   return (
   <>
     <Center>
-    <Container px={{base: 5, md: 30}} mx="5" maxW={'7xl'} border="1px solid" borderBottom="0px none" borderTop="0px none">
+    <Container px={{base: 0, md: 30}} mx={{base: 1, md: 5}} maxW={'7xl'} border="1px solid" borderBottom="0px none" borderTop="0px none">
       <Stack
         spacing={{ base: 8, md: 10 }}
         align="start"
