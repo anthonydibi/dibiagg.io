@@ -73,19 +73,23 @@ export default function Leaderboard(props){
                         </Thead>
                         <Tbody>
                             {page === 0 ? standings.slice(1).map((player) => { //if on first page take off first player in the result since they are displayed above the table
-                                    <Tr>
-                                        <Td>{parseInt(player.rank) === 1 ? 2 : player.rank}</Td>
-                                        <Td>{player.name.toUpperCase()}</Td>
-                                        <Td>{player.wins}</Td>
-                                        <Td>{player.losses}</Td>
-                                    </Tr>
+                                    return (
+                                        <Tr>
+                                            <Td>{parseInt(player.rank) === 1 ? 2 : player.rank}</Td>
+                                            <Td>{player.name.toUpperCase()}</Td>
+                                            <Td>{player.wins}</Td>
+                                            <Td>{player.losses}</Td>
+                                        </Tr>
+                                    );
                             }) : standings.map((player) => {
-                                    <Tr>
-                                        <Td>{parseInt(player.rank) === 1 ? 2 : player.rank}</Td>
-                                        <Td>{player.name.toUpperCase()}</Td>
-                                        <Td>{player.wins}</Td>
-                                        <Td>{player.losses}</Td>
-                                    </Tr>
+                                    return (
+                                        <Tr>
+                                            <Td>{parseInt(player.rank) === 1 ? 2 : player.rank}</Td>
+                                            <Td>{player.name.toUpperCase()}</Td>
+                                            <Td>{player.wins}</Td>
+                                            <Td>{player.losses}</Td>
+                                        </Tr>
+                                    );
                             })}
                         </Tbody>
                     </Table>
