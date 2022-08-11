@@ -1,6 +1,6 @@
 Welcome to the dibiagg.io source code!  
   
-##Project Structure
+## Project Structure
 ```
 ├── client | Static files  
 │   ├── public | Assets  
