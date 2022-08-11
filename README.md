@@ -1,5 +1,7 @@
 Welcome to the dibiagg.io source code!  
   
+##Project Structure
+```
 ├── client | Static files  
 │   ├── public | Assets  
 │   └── src  
@@ -21,3 +23,4 @@ Welcome to the dibiagg.io source code!
 ├── README.md  
 └── server  
 |   └── api.js | Node.js API for deathball and graffiti  
+```
