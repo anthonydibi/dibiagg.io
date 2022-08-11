@@ -1,5 +1,5 @@
 import React from 'react';
-import {Flex, useColorModeValue, Image, Heading} from '@chakra-ui/react';
+import {Flex, useColorModeValue, Image, Heading, Text} from '@chakra-ui/react';
 
 export default function IconCard(props) {
     return (
@@ -8,10 +8,12 @@ export default function IconCard(props) {
         border={"1px solid"}
         borderColor={useColorModeValue("black", "white")}
         width={"100%"}
+        maxW={"450px"}
         height={"100%"}
         p={"10"}
         flexDirection={"column"}
         justify={"start"}
+        align={"start"}
         gap={"15px"}>
             <Image 
             boxShadow={"sm"}
@@ -21,10 +23,12 @@ export default function IconCard(props) {
             borderRadius={props.rounded === "true" ? "full" : "none"}
             pos={"relative"}>
             </Image>
-            <Heading size={"md"}>
+            <Heading size={"md"} align="start">
                 {props.heading}
             </Heading>
-            {props.text}
+            <Text align="start">
+                {props.text}
+            </Text>
         </Flex>
     );
 }
