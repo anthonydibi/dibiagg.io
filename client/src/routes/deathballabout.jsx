@@ -8,7 +8,7 @@ import {
   Link,
   Center
 } from '@chakra-ui/react';
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player/youtube'
 import Emoji from '../components/Emoji';
 
 export default function DeathballAbout() {

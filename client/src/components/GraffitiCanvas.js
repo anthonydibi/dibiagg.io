@@ -60,7 +60,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     };
 
     const handleMouseMove = (e) => {
-        e.evt.preventDefault();
+        e.evt.preventDefault(); //prevent scrolling when drawing on mobile
         // not drawing or not on current day - skipping
         if (!isDrawing.current || step !== 0) {
             return;
@@ -115,7 +115,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step !== 0){
             return;
         }
-        updateCanvasState()
+        updateCanvasState();
             //.then(res => callback());
     }
 
@@ -194,18 +194,18 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             <Box flex={"1"}>
                 <Grid display={{base: "none", md: "block"}}>
                     <GridItem>
-                        <IconButton size="lg" isRound="true" m="2" value="pen" variant="interact" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
+                        <IconButton size="lg" isRound="true" m="2" value="pen" variant="interact" border={tool === 'pen' ? "1px solid" : "1px solid transparent"} icon={<FaPen/>} onClick={() => { setTool("pen") }}>
                         </IconButton>
                     </GridItem>
                     <GridItem>
-                        <IconButton size="lg" isRound="true" m="2" value="eraser" variant="interact" icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
+                        <IconButton size="lg" isRound="true" m="2" value="eraser" variant="interact" border={tool === 'eraser' ? "1px solid" : "1px solid transparent"} icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
                         </IconButton>
                     </GridItem>
                 </Grid>
                 <Stack direction={"row"} display={{base: "block", md: "none"}} p={1} mb={3}>
-                        <IconButton size="lg" my={2} isRound="true" value="pen" variant="interact" icon={<FaPen/>} onClick={() => { setTool("pen") }}>
+                        <IconButton size="lg" my={2} isRound="true" value="pen" variant="interact" border={tool === 'pen' ? "1px solid" : "1px solid transparent"} icon={<FaPen/>} onClick={() => { setTool("pen") }}>
                         </IconButton>
-                        <IconButton size="lg" my={2} isRound="true" value="eraser" variant="interact" icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
+                        <IconButton size="lg" my={2} isRound="true" value="eraser" variant="interact" border={tool === 'eraser' ? "1px solid" : "1px solid transparent"} icon={<FaEraser/>} onClick={() => { setTool("eraser") }}>
                         </IconButton>
                         <Box w={"auto"}>
                         <SliderPicker color={color} onChangeComplete={handleChangeComplete}/>

@@ -1,6 +1,6 @@
 import {Box, Heading, Center, Text, Stack} from "@chakra-ui/react"
 import React from 'react';
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/youtube";
 
 export default function ThreeSharp(){
     return (
