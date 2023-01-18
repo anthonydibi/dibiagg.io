@@ -21,8 +21,8 @@ import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@c
 import { Link as RouteLink } from "react-router-dom";
 import ContactButtons from '../components/ContactButtons'
 
-const LeftLinks = [{display: 'ABOUT', href: '/About'}, {display: 'GRAFFITI', href: '/Graffiti'}];
-const RightLinks = [{display: 'RESUME', href: '/Resume'}]
+const LeftLinks = [{display: 'ABOUT', href: '/about'}, {display: 'GRAFFITI', href: '/graffiti'}, {display: 'THREESHARP', href: '/threesharp'}];
+const RightLinks = [{display: 'RESUME', href: '/resume'}]
 
 const NavLink = ({ onClick, children }) => (
   <Link

@@ -19,6 +19,7 @@ import DeathballAbout from './routes/deathballabout';
 import Banner from './components/Banner';
 import { FaGithub } from 'react-icons/fa';
 import '@fontsource/roboto'
+import ThreeSharp from './routes/threesharp';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -36,6 +37,7 @@ root.render(
         <Route path="resume" element={<Resume />} />
         <Route path='deathball/leaderboard' element={<DeathballLeaderboard />} />
         <Route path='deathball/about' element={<DeathballAbout />} />
+        <Route path='threesharp' element={<ThreeSharp />} />
       </Routes>
       <ContactFooter/>
     </ChakraProvider>
