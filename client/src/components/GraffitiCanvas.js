@@ -47,7 +47,9 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
 
     const updateCanvasState = () => { //in the backend, the canvas state is updated line by line
         let line = lines["self"][lines["self"].length - 1];
-        postCanvasLine(line)
+        if(line != null){
+            postCanvasLine(line)
+        }
     }
 
     const handleMouseDown = (e) => {
@@ -161,6 +163,9 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                     <Layer>
                     {step === 0 ? Object.entries(lines).map(([, list]) => ( //if on latest wall, draw the lines for self AND peers, otherwise just draw lines for self since that's where the fetched wall state is placed
                         list.map((line, i) => {
+                            if(line == null){
+                                return;
+                            }
                             return (
                             <Line
                             key={i}
@@ -175,6 +180,9 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                         />);
                         })
                     )) : lines["self"].map((line, i) => {
+                        if(line == null){
+                            return;
+                        }
                         return (
                             <Line
                             key={i}
