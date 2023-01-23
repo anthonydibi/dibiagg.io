@@ -164,7 +164,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                     {step === 0 ? Object.entries(lines).map(([, list]) => ( //if on latest wall, draw the lines for self AND peers, otherwise just draw lines for self since that's where the fetched wall state is placed
                         list.map((line, i) => {
                             if(line == null){
-                                return;
+                                return null;
                             }
                             return (
                             <Line
@@ -181,7 +181,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
                         })
                     )) : lines["self"].map((line, i) => {
                         if(line == null){
-                            return;
+                            return null;
                         }
                         return (
                             <Line
