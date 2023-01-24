@@ -1,8 +1,8 @@
 import { Stage, Layer, Line } from 'react-konva'
-import React from 'react'
-import { Flex, IconButton, Box, Center, Heading, Grid, GridItem, useBreakpointValue, Stack, Skeleton, useColorModeValue } from '@chakra-ui/react'
+import React, { useCallback } from 'react'
+import { Flex, IconButton, Box, Heading, Grid, GridItem, useBreakpointValue, Stack, Skeleton, useColorModeValue } from '@chakra-ui/react'
 import { FaEraser, FaPen } from 'react-icons/fa'
-import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
+import { AiFillCaretLeft, AiFillCaretRight, AiFillFastForward } from 'react-icons/ai'
 import { SliderPicker, SwatchesPicker } from 'react-color'
 import "./SwatchesStyle.css"
 import { fetchCanvasState, fetchMaxStep, postCanvasLine } from '../services/GraffitiApi'
@@ -28,29 +28,29 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         setColor(color);
     };
 
-    const getCanvasState = (step) => {
+    const getCanvasState = useCallback(step => {
         fetchCanvasState(step)
             .then(data => {
                 setLines({...lines, "self": data.lines});
                 setDay(data.day.split(' ')[0]);
                 setIsLoaded(true);
             })
-    }
+    }, [lines])
 
-    const getMaxStep = () => {
+    const getMaxStep = useCallback(() => {
         fetchMaxStep()
             .then(data => {
                 let count = parseInt(data.count);
                 count === 0 ? setMaxStep(0) : setMaxStep(count - 1);
             })
-    }
+    }, [])
 
-    const updateCanvasState = () => { //in the backend, the canvas state is updated line by line
+    const updateCanvasState = useCallback(() => { //in the backend, the canvas state is updated line by line
         let line = lines["self"][lines["self"].length - 1];
         if(line != null){
             postCanvasLine(line)
         }
-    }
+    }, [lines])
 
     const handleMouseDown = (e) => {
         if(step === 0){
@@ -99,8 +99,6 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step + 1 > maxStep){
             return;
         }
-        setIsLoaded(false);
-        getCanvasState(step + 1);
         setStep(step + 1);
     }
 
@@ -108,9 +106,11 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         if(step - 1 < 0){
             return;
         }
-        setIsLoaded(false)
-        getCanvasState(step - 1);
         setStep(step - 1);
+    }
+
+    const fastForward = () => {
+        setStep(0);
     }
 
     const save = () => {
@@ -121,11 +121,17 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
             //.then(res => callback());
     }
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         getMaxStep();
         getCanvasState(0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    React.useEffect(() => {
+        setIsLoaded(false)
+        getCanvasState(step);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [step])
 
     React.useEffect(() => { //my hacky way to set the color picker background to the correct color :( needs work
         document.querySelector(".swatches-picker div div").style.backgroundColor = modeValue; 
@@ -133,13 +139,22 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
 
   return (
     <Box className='GraffitiContainer' w="100%">
-        <Center>
-            <IconButton size="sm" isRound="true" m="2" value="previousDay" variant="interact" icon={<AiFillCaretLeft/>} onClick={ back }>
+        <Flex alignItems={"center"}>
+            <Box flex={"1"} align={"right"}>
+            <IconButton size="sm" isRound="true" mr="2" value="previousDay" variant="interact" icon={<AiFillCaretLeft/>} onClick={ back }>
             </IconButton>
+            </Box>
             <Heading my={"2"}>{day}</Heading>
-            <IconButton size="sm" isRound="true" m="2" value="nextDay" variant="interact" icon={<AiFillCaretRight/>} onClick={ next }>
+            <Box flex={"1"}>
+            <IconButton size="sm" isRound="true" ml="2" value="nextDay" variant="interact" icon={<AiFillCaretRight/>} onClick={ next }>
             </IconButton>
-        </Center>
+            {
+                step > 0 ?
+                <IconButton position={"relative"} left={"0"} size="sm" isRound="true" value="fastForward" variant="interact" icon={<AiFillFastForward/>} onClick={ fastForward }>
+                </IconButton> : null
+            }
+            </Box>
+        </Flex>
         <Flex direction={{base: "column", md: "row"}}>
             <Box display={{base: "none", md: "block"}} flex={"1"} align={"right"}>
                 <SwatchesPicker color={color} height={1002 * stageScale}
