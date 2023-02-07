@@ -1,11 +1,7 @@
 const API_URL = 'https://dibiaggdotio.herokuapp.com';
 
 export const fetchCanvasState = (step) => {
-    return fetch(API_URL + '/graffiti?' + new URLSearchParams({ step: step }))
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
+    return fetch(API_URL + '/graffiti?' + new URLSearchParams({ step: step }));
 }
 
 export const fetchMaxStep = () => {

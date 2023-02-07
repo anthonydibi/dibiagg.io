@@ -5,14 +5,13 @@ import { FaEraser, FaPen } from 'react-icons/fa'
 import { AiFillCaretLeft, AiFillCaretRight, AiFillFastForward } from 'react-icons/ai'
 import { SliderPicker, SwatchesPicker } from 'react-color'
 import "./SwatchesStyle.css"
-import { fetchCanvasState, fetchMaxStep, postCanvasLine } from '../services/GraffitiApi'
+import { fetchCanvasState, postCanvasLine } from '../services/GraffitiApi'
 import useGraffitiSocket from '../hooks/useGraffitiSocket'
 
 export default function GraffitiCanvas() { //built off of free-draw template from react-konva docs
     let today = new Date();
     today.setHours(0, 0, 0, 0);
     const modeValue=useColorModeValue("white", "black");
-    const [maxStep, setMaxStep] = React.useState(0);
     const [step, setStep] = React.useState(0);
     const [tool, setTool] = React.useState('pen');
     const [numSessionLines, setNumSessionLines] = React.useState(0);
@@ -30,20 +29,18 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
 
     const getCanvasState = useCallback(step => {
         fetchCanvasState(step)
-            .then(data => {
+            .then(async (response) => {
+              if(response.status !== 200){ //if we didn't find a wall, then go back to the previous step
+                setStep(step - 1);
+              }
+              else{
+                let data = await response.json();
                 setLines({...lines, "self": data.lines});
                 setDay(data.day.split(' ')[0]);
                 setIsLoaded(true);
-            })
+              }
+            });
     }, [lines])
-
-    const getMaxStep = useCallback(() => {
-        fetchMaxStep()
-            .then(data => {
-                let count = parseInt(data.count);
-                count === 0 ? setMaxStep(0) : setMaxStep(count - 1);
-            })
-    }, [])
 
     const updateCanvasState = useCallback(() => { //in the backend, the canvas state is updated line by line
         let line = lines["self"][lines["self"].length - 1];
@@ -96,9 +93,6 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     // }
 
     const back = () => {
-        if(step + 1 > maxStep){
-            return;
-        }
         setStep(step + 1);
     }
 
@@ -122,7 +116,6 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
     }
 
     React.useEffect(() => {
-        getMaxStep();
         getCanvasState(0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

@@ -44,33 +44,45 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => console.log('Client has disconnected'))
 })
 
+const getLatest = (callback) => {
+  client.query("SELECT * FROM graffiti ORDER BY day DESC LIMIT 1", (err, res) => {
+    if(err) console.log(err);
+    callback(res);
+  });
+}
+
 app.get('/graffiti', (request, response) => {
-    let today = new Date();
-    today.setHours(0, 0, 0, 0);
     let step = parseInt(request.query.step);
-    client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1 OFFSET $1', [step], (err, res) => {
+    client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1 OFFSET $1', [step], (err, res1) => {
         if(err) console.log(error);
-        if(res.rows.length == 0){
-            response.json({day: today.toISOString().split('T')[0], lines: []});
-        }
-        else{
-            let latestDate = new Date(res.rows[0].day);
-            latestDate.setHours(0, 0, 0, 0);
-            if(step === 0 && latestDate.getTime() !== today.getTime()){
-                response.json({day: today.toISOString().split('T')[0], lines: []});
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        getLatest((latestRes) => {
+          let latest = new Date(latestRes.rows[0].day.replace(' ', 'T'));
+          if(latest < today){
+            if(step === 0){
+              response.json({day: today.toISOString().split('T')[0], lines: []});
             }
             else{
-                response.json(res.rows[0]);
+              client.query('SELECT * FROM graffiti ORDER BY day DESC LIMIT 1 OFFSET $1', [step - 1], (err, res2) => {
+                if(err) console.log(err);
+                if(res2.rows.length === 0){
+                  response.sendStatus(404);
+                }
+                response.json(res2.rows[0]);
+              });
             }
-        }
+          }
+          else{
+            if(res1.rows.length === 0){
+               response.sendStatus(404);
+            }
+            else{
+              response.json(res1.rows[0]);
+            }
+          }
+        });
     });
-})
-
-app.get('/graffiti/maxstep', (request, response) => {
-    client.query('SELECT COUNT(*) as count from graffiti', (err, res) => {
-        if(err) console.log(err);
-        response.json({count: parseInt(res.rows[0].count)});
-    })
 })
 
 app.post('/graffiti', (request, response) => {
