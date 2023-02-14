@@ -75,6 +75,27 @@ const theme = extendTheme({
           _active: "none"
         }
       }
+    },
+    Input: {
+      baseStyle: (props) => ({
+        field: {
+          border: "1px solid",
+          borderRadius: "0px",
+          rounded: "none",
+          bg: mode("white", "black")(props),
+          ':focus': {
+            bg: mode("white", "black")(props)
+          },
+          '_placeholder': {
+            color: mode("gray.400", "gray.500")(props)
+          }
+        }
+      }),
+      sizes: {},
+      variants: {},
+      defaultProps: {
+        variant: null
+      }
     }
   }
 })
