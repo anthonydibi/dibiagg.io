@@ -177,7 +177,7 @@ export default function GraffitiCanvas() { //built off of free-draw template fro
         </InputGroup>
         <Flex alignItems={"center"} w={"100%"}>
             <Stack flex={"1"} justify={"right"} align={"center"} direction={"row"}>
-                <InputGroup size='md' w="400px" display={{base: "none", md: "block"}}>
+                <InputGroup size='md' w="400px" mr="10rem" display={{base: "none", md: "block"}}>
                     <Input
                         pr='4.5rem'
                         type={'text'}
