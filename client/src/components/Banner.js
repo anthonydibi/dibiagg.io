@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Square, Icon, Button, useBreakpointValue, Text } from "@chakra-ui/react";
+import { Box, Heading, Container, Stack, Square, Icon, Button, useBreakpointValue, Text } from "@chakra-ui/react";
 import { FiInfo } from 'react-icons/fi'
 
 
@@ -28,8 +28,9 @@ export default function Banner(props){
                     <Stack
                         direction={{ base: 'column', md: 'row' }}
                         spacing={{ base: '0.5', md: '1.5' }}
+                        align={"center"}
                     >
-                        <Text color="white" whiteSpace={"nowrap"} fontWeight="bold">{props.header}</Text>
+                        <Heading color="white" size={"sm"} whiteSpace={"nowrap"}>{props.header}</Heading>
                         <Text color="white" whiteSpace={"nowrap"}>{props.action}</Text>
                     </Stack>
                     </Stack>

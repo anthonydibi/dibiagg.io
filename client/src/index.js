@@ -18,7 +18,8 @@ import ContactFooter from './components/ContactFooter';
 import DeathballAbout from './routes/deathballabout';
 import Banner from './components/Banner';
 import { FaGithub } from 'react-icons/fa';
-import '@fontsource/roboto'
+import '@fontsource/roboto';
+import './fonts.css';
 import ThreeSharp from './routes/threesharp';
 
 const container = document.getElementById('root');

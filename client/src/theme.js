@@ -3,7 +3,7 @@ import { mode } from '@chakra-ui/theme-tools'
 
 const theme = extendTheme({
   fonts: {
-    heading: `'Roboto', sans-serif`,
+    heading: `'Atami'`,
     body: `'Roboto', sans-serif`,
   },
   colors: {
