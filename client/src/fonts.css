@@ -2,3 +2,8 @@
     font-family: "Atami";
     src: url("/public/Atami-Bold.otf");
 }
+
+@font-face {
+    font-family: "SangoStatic";
+    src: url("/public/SangoStatic.otf");
+}

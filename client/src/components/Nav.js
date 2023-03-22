@@ -61,8 +61,9 @@ export default function Nav() {
             <HStack spacing={8} alignItems={'center'}>
               <Box>
                 <Heading mx={{ base: "5", md: "0"}}
-                size={"lg"}>
-                DB.<Heading as="span" color="accent" size="lg">IO</Heading></Heading>
+                size={"xl"}
+                fontFamily={"SangoStatic"}>
+                DB.<Heading as="span" color="accent" size="xl" fontFamily={"SangoStatic"}>IO</Heading></Heading>
               </Box>
               <HStack
                 as={'nav'}

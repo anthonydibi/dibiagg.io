@@ -31,7 +31,7 @@ export default function Banner(props){
                         align={"center"}
                     >
                         <Heading color="white" size={"sm"} whiteSpace={"nowrap"}>{props.header}</Heading>
-                        <Text color="white" whiteSpace={"nowrap"}>{props.action}</Text>
+                        <Text color="white" whiteSpace={"nowrap"} m="0">{props.action}</Text>
                     </Stack>
                     </Stack>
                     <Stack
