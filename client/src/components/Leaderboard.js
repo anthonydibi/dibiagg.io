@@ -53,7 +53,7 @@ export default function Leaderboard(props){
                 <Spacer as={Flex} justify={"end"} align={"center"}>
                     <Heading ml="1" size="md">RANK 1</Heading>
                 </Spacer>
-                <LeaderboardTopRank player={topPlayer}/>
+                {/* <LeaderboardTopRank player={topPlayer}/> */}
                 <Spacer as={Flex} justify={"start"} align={"center"}>
                     <Text p="2">{`${topPlayer ? topPlayer.wins : ""} WINS ${topPlayer ? topPlayer.losses : ""} LOSSES`}</Text>
                 </Spacer>

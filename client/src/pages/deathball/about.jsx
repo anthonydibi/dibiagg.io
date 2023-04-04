@@ -5,11 +5,11 @@ import {
   Box,
   Heading,
   Text,
-  Link,
   Center
 } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js'
 import ReactPlayer from 'react-player/youtube'
-import Emoji from '../components/Emoji';
+import Emoji from '../../components/Emoji';
 
 export default function DeathballAbout() {
   return (

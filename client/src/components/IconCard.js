@@ -26,9 +26,7 @@ export default function IconCard(props) {
             <Heading size={"md"} align="start">
                 {props.heading}
             </Heading>
-            <Text align="start">
-                {props.text}
-            </Text>
+            {props.text}
         </Flex>
     );
 }

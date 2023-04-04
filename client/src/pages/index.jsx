@@ -1,4 +1,4 @@
-import {Grid, Heading, Center, Text, Stack, GridItem, Tooltip, useColorModeValue} from "@chakra-ui/react"
+import {Grid, Heading, Center, Text, Stack, GridItem, Tooltip, Box, useColorModeValue} from "@chakra-ui/react"
 import React from 'react';
 import IconCard from '../components/IconCard'
 
@@ -14,14 +14,12 @@ export default function About(){
                     </Heading>
                     <Stack spacing={9} px={{base: 0, md: 20}}>
                         <Text px={{base: 3, md: 6}} fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
-                            Welcome to DIBIAGG.<Text as="span" color="accent">IO</Text>! 
+                            Welcome to DIBIAGG.! 
                             I'm studying computer science at the University of Minnesota with a focus in software engineering. This is my personal website which functions as a little sandbox for whatever 
                             projects I decide to whip up as well as a hub for my portfolio, resume, contact links, etc.
                         </Text>
                         <Text px={{base: 3, md: 6}} fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
                             Here is the stuff I used to build this website.
-                        </Text>
-                        <Text fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
                         </Text>
                         <Grid align={"center"} flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}>
                             <GridItem>
