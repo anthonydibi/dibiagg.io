@@ -1,7 +1,7 @@
 import React from 'react';
 import {Flex, useColorModeValue, Heading, Text} from '@chakra-ui/react';
 import { ChakraNextImage } from './ChakraNextImage';
-
+//
 export default function IconCard(props) {
     return (
         <Flex
