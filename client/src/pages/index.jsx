@@ -28,6 +28,7 @@ export default function About(){
                         <Grid align={"center"} flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}>
                             <GridItem>
                                 <IconCard src={"/chakralogo.jpg"}
+                                alt={"ChakraUI logo"}
                                 color={"white"}
                                 text={"Style primitives, color mode helpers"}
                                 heading={"ChakraUI"}
@@ -36,6 +37,7 @@ export default function About(){
                             </GridItem>
                             <GridItem>
                                 <IconCard src={"/reactlogo.png"}
+                                alt={"React logo"}
                                 color={"white"}
                                 text={"Frontend logic"}
                                 heading={"React.js"}
@@ -44,6 +46,7 @@ export default function About(){
                             </GridItem>
                             <GridItem>
                                 <IconCard src={"/postgrelogo.png"}
+                                alt={"PostgreSQL logo"}
                                 color={"white"}
                                 text={"Persistent data storage for Graffiti, Deathball"}
                                 heading={"PostgreSQL"}
@@ -52,6 +55,7 @@ export default function About(){
                             </GridItem>
                             <GridItem>
                                 <IconCard src={"/herokulogo.png"}
+                                alt={"Heroku logo"}
                                 color={"white"}
                                 text={"Deployment for backend - Graffiti API, Deathball API"}
                                 heading={"Heroku"}
@@ -60,6 +64,7 @@ export default function About(){
                             </GridItem>
                             <GridItem>
                                 <IconCard src={"/nodelogo.png"}
+                                alt={"Nodejs logo"}
                                 color={"white"}
                                 text={"Backend logic"}
                                 heading={"Node.js"}
@@ -68,6 +73,7 @@ export default function About(){
                             </GridItem>
                             <GridItem>
                                 <IconCard src={"/vercellogo.png"}
+                                alt={"Vercel logo"}
                                 color={"white"}
                                 text={"Frontend hosting"}
                                 heading={"Vercel"}
@@ -75,7 +81,8 @@ export default function About(){
                                 </IconCard>
                             </GridItem>
                             <GridItem>
-                                <IconCard src={"/nextlogo.jpg"}
+                                <IconCard src={"/nextlogo.png"}
+                                alt={"Nextjs logo"}
                                 color={"white"}
                                 text={"React framework"}
                                 heading={"Next.js"}

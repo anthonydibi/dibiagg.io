@@ -18,6 +18,7 @@ export default function IconCard(props) {
         gap={"15px"}>
         <ChakraNextImage 
         boxShadow={"sm"}
+        alt={props.alt}
         zIndex={1}
         src={props.src}
         boxSize={"70px"}

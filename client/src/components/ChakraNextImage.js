@@ -10,8 +10,8 @@ export const ChakraNextImage = (props) => {
             {...rest}
         >
             <Image
-                objectFit="cover"
-                layout="fill"
+                width="70"
+                height="70"
                 src={src}
                 alt={alt}
                 style={{borderRadius: "50%"}}
