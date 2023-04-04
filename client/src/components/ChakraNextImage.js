@@ -6,6 +6,7 @@ export const ChakraNextImage = (props) => {
     return (
         <Box
             position="relative"
+            rounded = "true"
             {...rest}
         >
             <Image
@@ -13,6 +14,7 @@ export const ChakraNextImage = (props) => {
                 layout="fill"
                 src={src}
                 alt={alt}
+                style={{borderRadius: "50%"}}
             />
         </Box>
     )
