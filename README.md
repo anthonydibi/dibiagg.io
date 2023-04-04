@@ -6,7 +6,7 @@ This is a repository which holds all of the code related to dibiagg.io, my perso
   
 ## Project Structure
 ```
-├── client --> Static files  
+├── client --> Next.js front end 
 │   ├── public --> Assets  
 │   └── src  
 │       ├── components --> Reusable UI components and logic  
