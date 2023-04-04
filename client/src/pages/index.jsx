@@ -1,10 +1,14 @@
 import {Grid, Heading, Center, Text, Stack, GridItem, Tooltip, Box, useColorModeValue} from "@chakra-ui/react"
 import React from 'react';
 import IconCard from '../components/IconCard'
+import SEO from "../components/seo";
 
 export default function About(){
     return (
         <>
+            <SEO description="About dibiagg.io"
+            title="About"
+            siteTitle="dibiagg.io"/>
             <Center>
                 <Stack h="100%" align={"center"} p={{base: 5, lg: 20}} mx={{base: 1, md: 5}} border="1px solid" borderBottom="0px none" borderTop="0px none" w={"1300px"} transitionDuration="1000ms">
                     <Heading

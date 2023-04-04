@@ -1,10 +1,14 @@
 import {Box, Heading, Center, Text, Stack} from "@chakra-ui/react"
 import React from 'react';
 import ReactPlayer from "react-player/youtube";
+import SEO from "../components/seo";
 
 export default function ThreeSharp(){
     return (
         <>
+            <SEO description="ThreeSharp - a virtual reality code visualization tool"
+            title="ThreeSharp"
+            siteTitle="dibiagg.io"/>
             <Center>
                 <Box h="100%" mx={{base: 1, md: 5}} border="1px solid" borderBottom="0px none" borderTop="0px none" w={"1300px"}>
                     <ReactPlayer width={"100%"} style={{height: "min-content"}} url='https://youtu.be/JaxGmNPOdZM'/>

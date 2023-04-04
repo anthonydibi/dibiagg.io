@@ -10,10 +10,14 @@ import {
 import { Link } from '@chakra-ui/next-js'
 import ReactPlayer from 'react-player/youtube'
 import Emoji from '../../components/Emoji';
+import SEO from '../../components/seo';
 
 export default function DeathballAbout() {
   return (
   <>
+    <SEO description="About Anthony Di Biaggio's Deathball clone"
+    title="About Deathball clone"
+    siteTitle="dibiagg.io"/>
     <Center>
     <Container px={{base: 0, md: 30}} mx={{base: 1, md: 5}} maxW={'7xl'} border="1px solid" borderBottom="0px none" borderTop="0px none">
       <Stack
