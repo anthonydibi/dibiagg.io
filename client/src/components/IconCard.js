@@ -1,5 +1,6 @@
 import React from 'react';
-import {Flex, useColorModeValue, Image, Heading, Text} from '@chakra-ui/react';
+import {Flex, useColorModeValue, Heading, Text} from '@chakra-ui/react';
+import { ChakraNextImage } from './ChakraNextImage';
 
 export default function IconCard(props) {
     return (
@@ -15,14 +16,14 @@ export default function IconCard(props) {
         justify={"start"}
         align={"start"}
         gap={"15px"}>
-            <Image 
+            <ChakraNextImage 
             boxShadow={"sm"}
             zIndex={1}
             src={props.src}
             boxSize={"70px"}
             borderRadius={props.rounded === "true" ? "full" : "none"}
             pos={"relative"}>
-            </Image>
+            </ChakraNextImage>
             <Heading size={"md"} align="start">
                 {props.heading}
             </Heading>
