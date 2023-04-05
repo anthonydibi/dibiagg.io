@@ -4,10 +4,10 @@ import { Flex, IconButton, Box, Heading, Grid, GridItem, useBreakpointValue, Sta
 import { FaEraser, FaPen } from 'react-icons/fa'
 import { AiFillCaretLeft, AiFillCaretRight, AiFillFastForward, AiOutlineQuestion } from 'react-icons/ai'
 import { SliderPicker, SwatchesPicker } from 'react-color'
-import "./SwatchesStyle.css"
 import { fetchCanvasState, postCanvasLine } from '../services/GraffitiApi'
 import useGraffitiSocket from '../hooks/useGraffitiSocket'
 import TaggingModal from './TaggingModal.js'
+
 
 export default function GraffitiCanvas() { //built off of free-draw template from react-konva docs
     let today = new Date();

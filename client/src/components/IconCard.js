@@ -1,6 +1,7 @@
 import React from 'react';
-import {Flex, useColorModeValue, Image, Heading, Text} from '@chakra-ui/react';
-
+import {Flex, useColorModeValue, Heading, Text} from '@chakra-ui/react';
+import { ChakraNextImage } from './ChakraNextImage';
+//
 export default function IconCard(props) {
     return (
         <Flex
@@ -10,25 +11,23 @@ export default function IconCard(props) {
         width={"100%"}
         maxW={"450px"}
         height={"100%"}
-        p={"10"}
+        p={"5"}
         flexDirection={"column"}
         justify={"start"}
         align={"start"}
         gap={"15px"}>
-            <Image 
-            boxShadow={"sm"}
-            zIndex={1}
-            src={props.src}
-            boxSize={"70px"}
-            borderRadius={props.rounded === "true" ? "full" : "none"}
-            pos={"relative"}>
-            </Image>
+        <ChakraNextImage 
+        boxShadow={"sm"}
+        alt={props.alt}
+        zIndex={1}
+        src={props.src}
+        boxSize={"70px"}
+        borderRadius={props.rounded === "true" ? "full" : "none"}>
+            </ChakraNextImage>
             <Heading size={"md"} align="start">
                 {props.heading}
             </Heading>
-            <Text align="start">
-                {props.text}
-            </Text>
+            <Text w="80%" fontSize={{ base: "md", sm: "lg", md: "xl" }} align="start">{props.text}</Text>
         </Flex>
     );
 }

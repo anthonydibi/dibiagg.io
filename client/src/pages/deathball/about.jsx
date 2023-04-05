@@ -5,15 +5,20 @@ import {
   Box,
   Heading,
   Text,
-  Link,
   Center
 } from '@chakra-ui/react';
-import ReactPlayer from 'react-player/youtube'
-import Emoji from '../components/Emoji';
+import { Link } from '@chakra-ui/next-js'
+import dynamic from 'next/dynamic';
+const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
+import Emoji from '../../components/Emoji';
+import SEO from '../../components/seo';
 
 export default function DeathballAbout() {
   return (
   <>
+    <SEO description="About Anthony Di Biaggio's Deathball clone"
+    title="About Deathball clone"
+    siteTitle="dibiagg.io"/>
     <Center>
     <Container px={{base: 0, md: 30}} mx={{base: 1, md: 5}} maxW={'7xl'} border="1px solid" borderBottom="0px none" borderTop="0px none">
       <Stack
@@ -57,7 +62,7 @@ export default function DeathballAbout() {
           <Text fontSize={"xl"}>
               One disadvantage of hosting
               the game on the web is that the only well-supported communication API is WebSocket, and WebSocket only supports TCP so the prospect
-              of making Deathball a remote multiplayer experience isn't great. <Link href="https://webrtc.org/" isExternal>WebRTC</Link> allows
+              of making Deathball a remote multiplayer experience isn't great. <Link href="https://webrtc.org/">WebRTC</Link> allows
               peer-to-peer UDP connections and seems to be pretty supported these days, it is not supported in Internet Explorer but IE has been
               discontinued <Emoji label={"celebration"} symbol={"🎉"} /> so maybe that is a sign that I should add multiplayer. We shall see.
           </Text>
@@ -71,16 +76,26 @@ export default function DeathballAbout() {
           align={'center'}
           position={{base: "relative", md: "sticky"}}
           top={{base: "0", md: "80px"}}
-          w={'full'}>
+          w={'full'}
+          p="1"
+          border={"1px"}>
           <Box
             position={'relative'}
-            rounded={'2xl'}
             boxShadow={'2xl'}
             width={"100%"}
             height={"100%"}
             overflow={'hidden'}>
             <ReactPlayer width={"100%"} url='https://www.youtube.com/watch?v=aeIkB0Uw2kM'/>
           </Box>
+          <Box
+          position="absolute"
+          right="-7rem"
+          w="7rem"
+          h="0px"
+          borderTop="1px"
+          display={{base: "none", md: "block"}}>
+          </Box>
+
         </Flex>
       </Stack>
     </Container>

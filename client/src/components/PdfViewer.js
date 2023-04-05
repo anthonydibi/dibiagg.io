@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { Document, Page, pdfjs } from 'react-pdf'
+import dynamic from 'next/dynamic';
+const Document = dynamic(() => import('react-pdf').then(module => module.Document));
+const Page = dynamic(() => import('react-pdf').then(module => module.Page));
+const pdfjs = await import('react-pdf').then(module => module.pdfjs);
 import { Flex, Text, Box, IconButton } from '@chakra-ui/react'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
-import './PdfStyle.css'
 
 
 export default function PdfViewer(props){  
