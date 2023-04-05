@@ -75,16 +75,26 @@ export default function DeathballAbout() {
           align={'center'}
           position={{base: "relative", md: "sticky"}}
           top={{base: "0", md: "80px"}}
-          w={'full'}>
+          w={'full'}
+          p="1"
+          border={"1px"}>
           <Box
             position={'relative'}
-            rounded={'2xl'}
             boxShadow={'2xl'}
             width={"100%"}
             height={"100%"}
             overflow={'hidden'}>
             <ReactPlayer width={"100%"} url='https://www.youtube.com/watch?v=aeIkB0Uw2kM'/>
           </Box>
+          <Box
+          position="absolute"
+          right="-7rem"
+          w="7rem"
+          h="0px"
+          borderTop="1px"
+          display={{base: "none", md: "block"}}>
+          </Box>
+
         </Flex>
       </Stack>
     </Container>
