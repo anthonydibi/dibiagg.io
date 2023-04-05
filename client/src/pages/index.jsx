@@ -18,8 +18,7 @@ export default function About(){
                     </Heading>
                     <Stack spacing={9} px={{base: 0, md: 20}}>
                         <Text px={{base: 3, md: 6}} fontSize={{base: "lg", sm: "xl", md: "2xl" }}>
-                            Welcome to DIBIAGG.<Text as="span" color="accent" fontSize={{base: "lg", sm: "xl", md: "2xl" }}>IO</Text>! 
-                            I'm studying computer science at the University of Minnesota with a focus in software engineering. This is my personal website which functions as a little sandbox for whatever 
+                            I'm studying computer science at the University of Minnesota with a focus in software engineering. This is my personal website which functions as a sandbox for whatever 
                             projects I decide to whip up as well as a hub for my portfolio, resume, contact links, etc.
                         </Text>
                         <Text px={{base: 3, md: 6}} fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
