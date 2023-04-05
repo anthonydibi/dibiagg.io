@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { Link } from '@chakra-ui/next-js'
 import dynamic from 'next/dynamic';
-const ReactPlayer = dynamic(() => import("react-player/youtube"), { ssr: false });
+const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 import Emoji from '../../components/Emoji';
 import SEO from '../../components/seo';
 

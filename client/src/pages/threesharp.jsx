@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { Box, Heading, Center, Text, Stack, Flex } from "@chakra-ui/react"
 import React from 'react';
-const ReactPlayer = dynamic(() => import("react-player/youtube"), { ssr: false });
+const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 import SEO from "../components/seo";
 import Image from "next/image";
 
