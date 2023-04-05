@@ -8,7 +8,8 @@ import {
   Center
 } from '@chakra-ui/react';
 import { Link } from '@chakra-ui/next-js'
-import ReactPlayer from 'react-player/youtube'
+import dynamic from 'next/dynamic';
+const ReactPlayer = dynamic(() => import("react-player/youtube"), { ssr: false });
 import Emoji from '../../components/Emoji';
 import SEO from '../../components/seo';
 
@@ -61,7 +62,7 @@ export default function DeathballAbout() {
           <Text fontSize={"xl"}>
               One disadvantage of hosting
               the game on the web is that the only well-supported communication API is WebSocket, and WebSocket only supports TCP so the prospect
-              of making Deathball a remote multiplayer experience isn't great. <Link href="https://webrtc.org/" isExternal>WebRTC</Link> allows
+              of making Deathball a remote multiplayer experience isn't great. <Link href="https://webrtc.org/">WebRTC</Link> allows
               peer-to-peer UDP connections and seems to be pretty supported these days, it is not supported in Internet Explorer but IE has been
               discontinued <Emoji label={"celebration"} symbol={"🎉"} /> so maybe that is a sign that I should add multiplayer. We shall see.
           </Text>
