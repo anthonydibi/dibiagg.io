@@ -30,7 +30,7 @@ export default function About(){
                                 <IconCard src={"/chakralogo.jpg"}
                                 alt={"ChakraUI logo"}
                                 color={"white"}
-                                text={"Style primitives, color mode helpers"}
+                                text={"Style primitives, color mode helpers, accessibility"}
                                 heading={"ChakraUI"}
                                 rounded={"true"}>
                                 </IconCard>
@@ -48,7 +48,7 @@ export default function About(){
                                 <IconCard src={"/postgrelogo.png"}
                                 alt={"PostgreSQL logo"}
                                 color={"white"}
-                                text={"Persistent data storage for Graffiti, Deathball"}
+                                text={"SQL data storage for Graffiti and Deathball"}
                                 heading={"PostgreSQL"}
                                 rounded={"true"}>
                                 </IconCard>
@@ -66,7 +66,7 @@ export default function About(){
                                 <IconCard src={"/nodelogo.png"}
                                 alt={"Nodejs logo"}
                                 color={"white"}
-                                text={"Backend logic"}
+                                text={"Backend logic - handles database queries, WebSocket communications"}
                                 heading={"Node.js"}
                                 rounded={"true"}>
                                 </IconCard>
@@ -75,7 +75,7 @@ export default function About(){
                                 <IconCard src={"/vercellogo.png"}
                                 alt={"Vercel logo"}
                                 color={"white"}
-                                text={"Frontend hosting"}
+                                text={"Frontend hosting and domain configuration"}
                                 heading={"Vercel"}
                                 rounded={"true"}>
                                 </IconCard>
@@ -84,7 +84,7 @@ export default function About(){
                                 <IconCard src={"/nextlogo.png"}
                                 alt={"Nextjs logo"}
                                 color={"white"}
-                                text={"React framework"}
+                                text={"React framework that makes routing, bundle optimization, etc. easier"}
                                 heading={"Next.js"}
                                 rounded={"true"}>
                                 </IconCard>

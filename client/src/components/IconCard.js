@@ -22,13 +22,12 @@ export default function IconCard(props) {
         zIndex={1}
         src={props.src}
         boxSize={"70px"}
-        borderRadius={props.rounded === "true" ? "full" : "none"}
-        pos={"relative"}>
-        </ChakraNextImage>
-        <Heading size={"md"} align="start">
-            {props.heading}
-        </Heading>
-        <Text w="80%" fontSize={{ base: "md", sm: "lg", md: "xl" }} align="start">{props.text}</Text>
+        borderRadius={props.rounded === "true" ? "full" : "none"}>
+            </ChakraNextImage>
+            <Heading size={"md"} align="start">
+                {props.heading}
+            </Heading>
+            <Text w="80%" fontSize={{ base: "md", sm: "lg", md: "xl" }} align="start">{props.text}</Text>
         </Flex>
     );
 }
