@@ -15,7 +15,7 @@ export default function IconCard(props) {
         justify={"start"}
         align={"start"}
         gap={"15px"}>
-        <Icon as={props.icon} boxSize={"70px"} color={"accent"}/>
+        <Icon as={props.icon} boxSize={"60px"} color={"accent"}/>
             <Heading size={"md"} align="start">
                 {props.heading}
             </Heading>
