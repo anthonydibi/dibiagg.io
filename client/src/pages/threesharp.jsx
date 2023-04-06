@@ -9,7 +9,7 @@ const LeftBox = (props) => {
     return (
         <Flex direction="row" align="center">
             <Box borderTop="1px" w="6vw" h="0px"></Box>
-            <Box border="1px" w={props.width} p="3">
+            <Box border="1px" w={props.width} maxW={props.maxWidth || "650px"} p="3">
                 {props.children}
             </Box>
         </Flex>
