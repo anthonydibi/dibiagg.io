@@ -46,6 +46,33 @@ export default function About(){
                                 </IconCard>
                             </GridItem>
                             <GridItem>
+                                <IconCard icon={SiNextDotJs}
+                                alt={"Nextjs logo"}
+                                color={"white"}
+                                text={"React framework that makes routing, bundle optimization, etc. easier"}
+                                heading={"Next.js"}
+                                rounded={"true"}>
+                                </IconCard>
+                            </GridItem>
+                            <GridItem>
+                                <IconCard icon={BsTriangleFill}
+                                alt={"Vercel logo"}
+                                color={"white"}
+                                text={"Frontend hosting and domain configuration"}
+                                heading={"Vercel"}
+                                rounded={"true"}>
+                                </IconCard>
+                            </GridItem>
+                            <GridItem>
+                                <IconCard icon={SiNodeDotJs}
+                                alt={"Nodejs logo"}
+                                color={"white"}
+                                text={"Backend logic - handles database queries, WebSocket communications"}
+                                heading={"Node.js"}
+                                rounded={"true"}>
+                                </IconCard>
+                            </GridItem>
+                            <GridItem>
                                 <IconCard icon={SiPostgresql}
                                 alt={"PostgreSQL logo"}
                                 color={"white"}
@@ -60,33 +87,6 @@ export default function About(){
                                 color={"white"}
                                 text={"Deployment for backend - Graffiti API, Deathball API"}
                                 heading={"Heroku"}
-                                rounded={"true"}>
-                                </IconCard>
-                            </GridItem>
-                            <GridItem>
-                                <IconCard icon={SiNodeDotJs}
-                                alt={"Nodejs logo"}
-                                color={"white"}
-                                text={"Backend logic - handles database queries, WebSocket communications"}
-                                heading={"Node.js"}
-                                rounded={"true"}>
-                                </IconCard>
-                            </GridItem>
-                            <GridItem>
-                                <IconCard icon={BsTriangleFill}
-                                alt={"Vercel logo"}
-                                color={"white"}
-                                text={"Frontend hosting and domain configuration"}
-                                heading={"Vercel"}
-                                rounded={"true"}>
-                                </IconCard>
-                            </GridItem>
-                            <GridItem>
-                                <IconCard icon={SiNextDotJs}
-                                alt={"Nextjs logo"}
-                                color={"white"}
-                                text={"React framework that makes routing, bundle optimization, etc. easier"}
-                                heading={"Next.js"}
                                 rounded={"true"}>
                                 </IconCard>
                             </GridItem>
