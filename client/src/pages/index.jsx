@@ -2,6 +2,8 @@ import {Grid, Heading, Center, Text, Stack, GridItem, Tooltip, Box, useColorMode
 import React from 'react';
 import IconCard from '../components/IconCard'
 import SEO from "../components/seo";
+import { SiReact, SiPostgresql, SiHeroku, SiNodeDotJs, SiNextDotJs } from "react-icons/si"
+import { BsLightningFill, BsTriangleFill } from "react-icons/bs"
 
 export default function About(){
     return (
@@ -26,7 +28,7 @@ export default function About(){
                         </Text>
                         <Grid align={"center"} flex={"1"} autoColumns={"1fr"} gap={"3"} templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}>
                             <GridItem>
-                                <IconCard src={"/chakralogo.jpg"}
+                                <IconCard icon={BsLightningFill}
                                 alt={"ChakraUI logo"}
                                 color={"white"}
                                 text={"Style primitives, color mode helpers, accessibility"}
@@ -35,7 +37,7 @@ export default function About(){
                                 </IconCard>
                             </GridItem>
                             <GridItem>
-                                <IconCard src={"/reactlogo.png"}
+                                <IconCard icon={SiReact}
                                 alt={"React logo"}
                                 color={"white"}
                                 text={"Frontend logic"}
@@ -44,7 +46,7 @@ export default function About(){
                                 </IconCard>
                             </GridItem>
                             <GridItem>
-                                <IconCard src={"/postgrelogo.png"}
+                                <IconCard icon={SiPostgresql}
                                 alt={"PostgreSQL logo"}
                                 color={"white"}
                                 text={"SQL data storage for Graffiti and Deathball"}
@@ -53,7 +55,7 @@ export default function About(){
                                 </IconCard>
                             </GridItem>
                             <GridItem>
-                                <IconCard src={"/herokulogo.png"}
+                                <IconCard icon={SiHeroku}
                                 alt={"Heroku logo"}
                                 color={"white"}
                                 text={"Deployment for backend - Graffiti API, Deathball API"}
@@ -62,7 +64,7 @@ export default function About(){
                                 </IconCard>
                             </GridItem>
                             <GridItem>
-                                <IconCard src={"/nodelogo.png"}
+                                <IconCard icon={SiNodeDotJs}
                                 alt={"Nodejs logo"}
                                 color={"white"}
                                 text={"Backend logic - handles database queries, WebSocket communications"}
@@ -71,7 +73,7 @@ export default function About(){
                                 </IconCard>
                             </GridItem>
                             <GridItem>
-                                <IconCard src={"/vercellogo.png"}
+                                <IconCard icon={BsTriangleFill}
                                 alt={"Vercel logo"}
                                 color={"white"}
                                 text={"Frontend hosting and domain configuration"}
@@ -80,7 +82,7 @@ export default function About(){
                                 </IconCard>
                             </GridItem>
                             <GridItem>
-                                <IconCard src={"/nextlogo.png"}
+                                <IconCard icon={SiNextDotJs}
                                 alt={"Nextjs logo"}
                                 color={"white"}
                                 text={"React framework that makes routing, bundle optimization, etc. easier"}
