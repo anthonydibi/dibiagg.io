@@ -9,7 +9,7 @@ const LeftBox = (props) => {
     return (
         <Flex direction="row" align="center">
             <Box borderTop="1px" w="6vw" h="0px"></Box>
-            <Box border="1px" w={props.width} maxW={props.maxWidth || "650px"} p="3">
+            <Box border="1px" w={props.width} maxW={props.maxWidth || "600px"} p="3">
                 {props.children}
             </Box>
         </Flex>
@@ -19,7 +19,7 @@ const LeftBox = (props) => {
 const RightBox = (props) => {
     return (
         <Flex direction="row" align="center" justify={"end"}>
-            <Box border="1px" w={props.width} p="3">
+            <Box border="1px" w={props.width} maxW={props.maxWidth || "600px"} p="3">
                 {props.children}
             </Box>
             <Box borderTop="1px" w="6vw" h="0px"></Box>
@@ -29,12 +29,12 @@ const RightBox = (props) => {
 
 const MidBox = (props) => {
     return (
-        <Flex direction="row" align="center" width={"100%"}>
-            <Box borderTop="1px" w={{base: "7vw", md: "25%"}} h="0px"></Box>
-            <Box border="1px" w={{base: "100%", md: "50%"}} p="3">
+        <Flex direction="row" align="center" w={"100%"}>
+            <Box borderTop="1px" h="0px" flexGrow={"1"}></Box>
+            <Box border="1px" flexGrow={"1"}  p="3" maxW={{base: "90%", md: "600px"}}>
                 {props.children}
             </Box>
-            <Box borderTop="1px" w={{base: "7vw", md: "25%"}}  h="0px"></Box>
+            <Box borderTop="1px" h="0px" flexGrow={"1"}></Box>
         </Flex>
     )
 }
@@ -103,14 +103,14 @@ export default function ThreeSharp() {
                         You can watch it in action below:
                     </Text>
                 </RightBox>
-                <MidBox width={{base: "90%", md: "60%"}}>
+                <MidBox>
                     <Flex
+                        direction={"row"}
                         align={'center'}
                         p="1"
                         border={"1px"}>
                             <ReactPlayer width={"100%"} url='https://youtu.be/JaxGmNPOdZM' />
                     </Flex>
-                    <Box borderTop="1px" w="4rem" h="0px"></Box>
                 </MidBox>
             </Stack>
         </>
