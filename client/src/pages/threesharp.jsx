@@ -8,7 +8,7 @@ import Image from "next/image";
 const LeftBox = (props) => {
     return (
         <Flex direction="row" align="center">
-            <Box borderTop="1px" w="6vw" h="0px"></Box>
+            <Box borderTop="1px" w={{base: "5vw", md: "15vw"}} h="0px"></Box>
             <Box border="1px" w={props.width} maxW={props.maxWidth || "600px"} p="3">
                 {props.children}
             </Box>
@@ -22,7 +22,7 @@ const RightBox = (props) => {
             <Box border="1px" w={props.width} maxW={props.maxWidth || "600px"} p="3">
                 {props.children}
             </Box>
-            <Box borderTop="1px" w="6vw" h="0px"></Box>
+            <Box borderTop="1px" w={{base: "5vw", md: "15vw"}} h="0px"></Box>
         </Flex>
     );
 }
@@ -109,7 +109,7 @@ export default function ThreeSharp() {
                         align={'center'}
                         p="1"
                         border={"1px"}>
-                            <ReactPlayer width={reactPlayerWidth} height={reactPlayerHeight} url='https://youtu.be/JaxGmNPOdZM' />
+                            <ReactPlayer width={reactPlayerWidth} height={reactPlayerHeight} url='https://youtu.be/JaxGmNPOdZM'/>
                     </Flex>
                 </MidBox>
             </Stack>
