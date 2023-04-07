@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { Box, Heading, Center, Text, Stack, Flex } from "@chakra-ui/react"
-import React from 'react';
+import React, { useState } from 'react';
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 import SEO from "../components/seo";
 import Image from "next/image";
@@ -31,15 +31,24 @@ const MidBox = (props) => {
     return (
         <Flex direction="row" align="center" w={"100%"}>
             <Box borderTop="1px" h="0px" flexGrow={"1"}></Box>
-            <Box border="1px" flexGrow={"1"}  p="3" maxW={{base: "90%", md: "600px"}}>
                 {props.children}
-            </Box>
             <Box borderTop="1px" h="0px" flexGrow={"1"}></Box>
         </Flex>
     )
 }
 
+
+
 export default function ThreeSharp() {
+    const [reactPlayerWidth, setWidth] = useState(0);
+    const [reactPlayerHeight, setHeight] = useState(0);
+
+    React.useEffect(() => {
+        setWidth(window.innerWidth * 0.8); //TODO: make this less hacky, have tried so many css tricks though...
+        setHeight((window.innerWidth * 0.8) * 0.5625); //this causes 2 rerenders but not really a big deal
+    }, []);
+
+
     return (
         <>
             <SEO description="ThreeSharp - a virtual reality code visualization tool"
@@ -109,7 +118,7 @@ export default function ThreeSharp() {
                         align={'center'}
                         p="1"
                         border={"1px"}>
-                            <ReactPlayer width={"100%"} url='https://youtu.be/JaxGmNPOdZM' />
+                            <ReactPlayer width={reactPlayerWidth} height={reactPlayerHeight} url='https://youtu.be/JaxGmNPOdZM' />
                     </Flex>
                 </MidBox>
             </Stack>
