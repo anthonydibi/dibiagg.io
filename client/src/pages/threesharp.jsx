@@ -95,6 +95,11 @@ export default function ThreeSharp() {
                     </Text>
                 </RightBox>
                 <MidBox>
+                    <Heading align={"center"} size={"xl"} border={"1px"} px={"10"} py={"2"}>
+                        DEMO
+                    </Heading>
+                </MidBox>
+                <MidBox>
                     <Flex
                         direction={"row"}
                         align={'center'}
