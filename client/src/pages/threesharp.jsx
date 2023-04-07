@@ -56,9 +56,11 @@ export default function ThreeSharp() {
                 siteTitle="dibiagg.io" />
             <Stack direction="column" h="100%" w="100%" my="10" gap="8">
                 <MidBox>
-                    <Heading align={"center"} size={"xl"} border={"1px"} px={"10"} py={"2"}>
-                        THREESHARP
-                    </Heading>
+                    <Box align={"center"} w={"90%"} border={"1px"} px={"10"} py={"2"}>
+                        <Heading size={"xl"}>
+                            THREESHARP
+                        </Heading>
+                    </Box>
                 </MidBox>
                 <LeftBox width={{base: "80%", md: "40%"}}>
                     <Text fontSize={"xl"}>
@@ -95,9 +97,11 @@ export default function ThreeSharp() {
                     </Text>
                 </RightBox>
                 <MidBox>
-                    <Heading align={"center"} size={"xl"} border={"1px"} px={"10"} py={"2"}>
-                        DEMO
-                    </Heading>
+                    <Box align={"center"} w={"90%"} border={"1px"} px={"10"} py={"2"}>
+                        <Heading size={"xl"}>
+                            DEMO
+                        </Heading>
+                    </Box>
                 </MidBox>
                 <MidBox>
                     <Flex
