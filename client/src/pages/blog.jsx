@@ -7,7 +7,7 @@ export default function Blog({ allPosts }) {
     return (
       <>    
             <SEO title="Blog" siteTitle="dibiagg.io" description="Anthony Di Biaggio's blog posts"/>
-            <Container maxW={"2xl"} minH={"100vh"} align="center" borderX={"1px"}>
+            <Container maxW={"2xl"} minH={"100vh"} align="center" borderX={"1px"} py={"4"}>
                 {allPosts.map((post) => (
                     <BlogEntry post={post}/>
                 ))}
