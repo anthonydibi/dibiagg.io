@@ -21,7 +21,7 @@ import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@c
 import ContactButtons from '../components/ContactButtons'
 
 const LeftLinks = [{display: 'ABOUT', href: '/'}, {display: 'GRAFFITI', href: '/graffiti'}, {display: 'THREESHARP', href: '/threesharp'}];
-const RightLinks = [{display: 'RESUME', href: '/resume'}]
+const RightLinks = [{display: 'BLOG', href: '/blog'}, {display: 'RESUME', href: '/resume'}]
 
 const NavLink = (props) => (
   <Link
