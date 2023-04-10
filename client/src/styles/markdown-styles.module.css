@@ -1,27 +1,27 @@
 .markdown {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
-  
+
 .markdown p,
 .markdown ul,
 .markdown ol,
 .markdown blockquote {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .markdown h2 {
-    margin-top: 3rem;
-    margin-bottom: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
 }
 
 .markdown h3 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .markdown a {
-    text-decoration: underline;
-    color: var(--accent);
+  text-decoration: underline;
+  color: var(--accent);
 }

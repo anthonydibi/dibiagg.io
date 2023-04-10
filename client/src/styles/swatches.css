@@ -1,11 +1,11 @@
 .swatches-picker {
-    border-left: 1px solid;
-    border-top: 1px solid;
-    overflow-y: hidden !important;
-} 
-* {
-    box-shadow: none !important;
+  border-left: 1px solid;
+  border-top: 1px solid;
+  overflow-y: hidden !important;
 }
-.swatches-picker div{
-    overflow-y: hidden !important;
+* {
+  box-shadow: none !important;
+}
+.swatches-picker div {
+  overflow-y: hidden !important;
 }

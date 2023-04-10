@@ -1,14 +1,15 @@
 ---
-title: 'Building a blog with Next.js'
-coverImage: '/nextjs.png'
-date: '2023-05-07'
+title: "Building a blog with Next.js"
+excerpt: "I decided to start the feared BlenderGuru donut tutorial, and I realized, what’s the point of going through all of this trouble to make a donut if I can’t brag about it to people on the internet?"
+coverImage: "/nextjs.png"
+date: "2023-05-07"
 ---
 
 I decided to start the feared BlenderGuru donut tutorial, and I realized, what’s the point of going through all of this trouble to make a donut if I can’t brag about it to people on the internet?
 
 So I have a blog now. This site used to be a create-react-app mess, but I migrated to NextJS and now it’s a much shinier mess. It is so much easier to perform dynamic build-time tasks with `getStaticProps` and `getStaticPaths` so it wouldn't feel like pulling teeth to get a comfortable blog setup like it would have been with CRA.
 
-To accomplish this, I referenced the NextJS [blog starter](https://github.com/vercel/next.js/tree/canary/examples/blog-starter). When my website is built I have it set to open the _posts directory in my git repo and collect all of the blog posts from there. It then converts all of these posts to html using `remark` and passes the html as a prop to each blog post page. Another thing about Next, is that routing is so much easier. Instead of fiddling with `react-router` component-based routing, everything is file based, which means to add a new page you can just create a new `jsx` file, and you don't have to have some manifest of all of your routes. Dynamic routing is just as easy, because you can just denote a dynamic path using `[slug]` and Next automatically will recognize it as a dynamic path. Haha, slug 🐌.
+To accomplish this, I referenced the NextJS [blog starter](https://github.com/vercel/next.js/tree/canary/examples/blog-starter). When my website is built I have it set to open the \_posts directory in my git repo and collect all of the blog posts from there. It then converts all of these posts to html using `remark` and passes the html as a prop to each blog post page. Another thing about Next, is that routing is so much easier. Instead of fiddling with `react-router` component-based routing, everything is file based, which means to add a new page you can just create a new `jsx` file, and you don't have to have some manifest of all of your routes. Dynamic routing is just as easy, because you can just denote a dynamic path using `[slug]` and Next automatically will recognize it as a dynamic path. Haha, slug 🐌.
 
 Anyway, I'll probably use this blog for a bunch of stuff. I'm definitely going to post my donut once I finish it. There will also probably be a bunch of random hobby-related stuff like cooking and board games. And maybe some programming tutorials if I feel like there isn't a good tutorial for something that I do.
 
