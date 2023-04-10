@@ -40,7 +40,7 @@ export default function Post({ post }) {
         )}
         <Stack direction={{ base: "column", md: "row" }} justify={"center"}>
           {post.olderPost && (
-            <Box align={"center"} maxW={{ base: "100%", md: "70%" }}>
+            <Box align={"center"} minW={"50%"} maxW={{ base: "100%", md: "70%" }}>
               <Heading size={"lg"} mb={"4"} textDecoration={"underline"}>
                 Older post
               </Heading>
@@ -48,7 +48,7 @@ export default function Post({ post }) {
             </Box>
           )}
           {post.newerPost && (
-            <Box align={"center"} maxW={{ base: "100%", md: "70%" }}>
+            <Box align={"center"} minW={"50%"} maxW={{ base: "100%", md: "70%" }}>
               <Heading size={"lg"} mb={"4"} textDecoration={"underline"}>
                 Newer post
               </Heading>

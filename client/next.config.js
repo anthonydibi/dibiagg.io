@@ -15,17 +15,6 @@ module.exports = withBundleAnalyzer({
         destination: "/",
         permanent: true,
       },
-      {
-        source: "/Deathball/Leaderboard",
-        destination: "/deathball/leaderboard",
-        permanent: true,
-      },
-      {
-        source: "/Resume",
-        destination: "/resume",
-        permanent: true,
-      },
-      
     ];
   },
 });
