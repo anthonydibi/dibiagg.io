@@ -8,6 +8,7 @@ import markdownToHtml from "../../services/MarkdownToHtml";
 import { Box, Heading, Container, Stack } from "@chakra-ui/react";
 import SEO from "../../components/seo";
 import { BlogEntry } from "../../components/blog/BlogEntry";
+import Head from "next/head";
 
 export default function Post({ post }) {
   const router = useRouter();
@@ -18,6 +19,9 @@ export default function Post({ post }) {
   return (
     <>
       <SEO siteTitle="dibiagg.io" title={title} />
+      <Head>
+        <meta property="og:image" content={post.ogImage.url} />
+      </Head>
       <Container size="lg" borderX="1px" maxW={"4xl"} py={"6"}>
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
