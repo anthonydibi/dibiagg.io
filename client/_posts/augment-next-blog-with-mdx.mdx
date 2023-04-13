@@ -133,6 +133,48 @@ the client side `MDXRemote` component, it just works. And then you can customize
 show up in your Markdown however you like - heck, replace `<pre><code>` with a full-fledged development
 environment if you want. You can even embed a `THREE.js` canvas with `react-three-fiber`:
 
+```jsx
+function SpinnyCube(props){
+    const mesh = useRef();
+    const accentColor = useRef();
+    const [hovered, setHovered] = useState(false);
+    const [active, setActive] = useState(false);
+    useFrame((state, delta) => {
+        mesh.current.rotation.x += delta;
+        mesh.current.rotation.z += delta;
+    });
+
+    useEffect(() => {
+        accentColor.current = getComputedStyle(document.body).getPropertyValue('--accent');
+    }, []);
+
+    return (
+        <mesh
+            {...props}
+            ref={mesh}
+            scale = {active ? 1 : 1.2}
+            onClick={(event) => setActive(!active)}
+            onPointerOver={(event) => setHovered(true)}
+            onPointerOut={(event) => setHovered(false)}
+            >
+            <boxGeometry args={[2, 2, 2]} />
+            <meshStandardMaterial color={hovered ? accentColor.current : "purple"} />
+        </mesh>
+    )
+}
+
+export default function ReactThreeFiberExample(props){
+    return (
+        <Canvas>
+            <ambientLight />
+            <pointLight position={[10, 10, 10]} />
+            <SpinnyCube position={[-3, 0.5, 0]} />
+            <SpinnyCube position={[3, -0.7, 0]} />
+        </Canvas>
+    )
+}
+```
+
 <ReactThreeFiberExample />
 
 Cool.
