@@ -3,6 +3,7 @@ import { MDXRemote } from 'next-mdx-remote'
 import { Box, Button } from "@chakra-ui/react";
 import Image from 'next/image'
 import CodeBlock from "./CodeBlock";
+import ReactThreeFiberExample from "./ReactThreeFiberExample";
 
 const NextImage = (props) => (
   <Image alt={props.alt} fill={"true"} {...props} />
@@ -16,7 +17,8 @@ const components = {
     return className ? (
       <CodeBlock className={className}>{children}</CodeBlock>
     ) : <code className="language-text">{children}</code>
-  }
+  },
+  ReactThreeFiberExample: ReactThreeFiberExample
 }
 
 const PostBody = ({ content }) => {

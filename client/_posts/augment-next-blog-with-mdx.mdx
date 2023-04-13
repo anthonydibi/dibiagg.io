@@ -127,10 +127,13 @@ const fileContents = fs.readFileSync(fullPath, "utf8");
 const content = await serialize(fileContents, { parseFrontmatter: true });
 const data = content.frontmatter;
 ```
-
 I am using `frontmatter`, so I passed an additional option to `serialize`, but you can just leave that out
 and only pass the file contents. It's really that simple - as long as you feed `serialize`'s output into
 the client side `MDXRemote` component, it just works. And then you can customize the `components` that will
 show up in your Markdown however you like - heck, replace `<pre><code>` with a full-fledged development
-environment if you want. It just works.
+environment if you want. You can even embed a `THREE.js` canvas with `react-three-fiber`:
+
+<ReactThreeFiberExample />
+
+Cool.
 

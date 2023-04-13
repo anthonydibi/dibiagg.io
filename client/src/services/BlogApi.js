@@ -31,7 +31,6 @@ export async function getPostBySlug(slug, fields = [], nav = false) {
     }
   });
   if (nav) {
-    console.log("navy")
     //if we care about navigating to older/newer posts
     const allPosts = await getAllPosts(["slug", "title", "date", "excerpt"]);
     for (let i = 0; i < allPosts.length; i++) {
