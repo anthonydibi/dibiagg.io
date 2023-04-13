@@ -1,6 +1,6 @@
 import fs from "fs";
 import { join } from "path";
-import matter from "gray-matter";
+import { serialize } from 'next-mdx-remote/serialize'
 
 const postsDirectory = join(process.cwd(), "_posts");
 
@@ -8,11 +8,12 @@ export function getPostSlugs() {
   return fs.readdirSync(postsDirectory);
 }
 
-export function getPostBySlug(slug, fields = [], nav = false) {
-  const realSlug = slug.replace(/\.md$/, "");
-  const fullPath = join(postsDirectory, `${realSlug}.md`);
+export async function getPostBySlug(slug, fields = [], nav = false) {
+  const realSlug = slug.replace(/\.mdx$/, "");
+  const fullPath = join(postsDirectory, `${realSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
+  const content = await serialize(fileContents, { parseFrontmatter: true });
+  const data = content.frontmatter;
 
   const items = {};
 
@@ -30,8 +31,9 @@ export function getPostBySlug(slug, fields = [], nav = false) {
     }
   });
   if (nav) {
+    console.log("navy")
     //if we care about navigating to older/newer posts
-    const allPosts = getAllPosts(["slug", "title", "date", "excerpt"]);
+    const allPosts = await getAllPosts(["slug", "title", "date", "excerpt"]);
     for (let i = 0; i < allPosts.length; i++) {
       let curPost = allPosts[i];
       if (curPost.slug == realSlug) {
@@ -61,11 +63,14 @@ export function getPostBySlug(slug, fields = [], nav = false) {
   return items;
 }
 
-export function getAllPosts(fields = []) {
+export async function getAllPosts(fields = []) {
   const slugs = getPostSlugs();
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+  let posts = [];
+  for(let slug of slugs){
+    let post = await getPostBySlug(slug, fields);
+    posts.push(post);
+  }
+  // sort posts by date in descending order
+  posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;
 }

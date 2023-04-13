@@ -1,0 +1,136 @@
+---
+title: "Augmenting Next.js Blog Starter with MDX"
+excerpt: "Markdown is cool, but I thought it would be nice to add more potential for interactivity to my blog
+posts without making them more complicated to write, so I explored extending my current setup with MDX, which allows
+you to include React components in Markdown."
+coverImage: "/mdx.png"
+date: "2023-05-09"
+ogImage:
+  url: '/mdx.png'
+---
+
+Markdown is cool, but I thought it would be nice to add more potential for interactivity to my blog
+posts without making them more complicated to write, so I explored extending my current setup with MDX.
+MDX is a superset of Markdown that gives it JSX support.
+
+This is pretty powerful because it allows you to put anything you could build in React into a Markdown file.
+The Markdown gets converted to static HTML like usual on the server side, and then any React components in
+Markdown files are [hydrated](https://www.gatsbyjs.com/docs/conceptual/react-hydration/) on the client side.
+You can also pass in a component mapping to the MDX provider:
+```jsx
+const components = {
+  img: NextImage,
+  Button: Button,
+  pre: ({children, className}) => { return (<pre>{children}</pre>) },
+  code: ({children, className}) => {
+    return className ? (
+      <CodeBlock className={className}>{children}</CodeBlock>
+    ) : <code className="language-text">{children}</code>
+  }
+}
+```
+
+which basically will take any JSX tags on the left from MDX files and replace them with those on the right.
+This means you can take Markdown elements and replace them with something richer.
+For example, the base `<code>` element in Markdown doesn't do very sophisticated syntax highlighting, and
+looks kind of boring. You may have noticed that in the above component mapping I have `<code>` tags being
+replaced with a CodeBlock component:
+
+```jsx
+const LineNumber = (props) => (
+    <Box 
+    color={"accent"} 
+    paddingRight={"0.75rem"} 
+    userSelect={"none"} 
+    display={"table-cell"}>
+        {props.number}
+    </Box>
+);
+
+const CodeBlock = ({ children, className }) => {
+
+  const language = className ? className.replace(/language-/, "") : "javascript";
+
+  return (
+    <Highlight
+      {...defaultProps}
+      code={children}
+      language={language}
+      theme={theme}
+    >
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <Box
+          as={'pre'}
+          className={className}
+          style={{ ...style, 
+            padding: "10px", 
+            marginBottom: "32px", 
+            overflow: "scroll", 
+            marginLeft: "-70px", 
+            marginRight: "-70px", 
+            textAlign: "left" 
+          }}
+        >
+          {tokens.map((line, i) => (
+            <Box verticalAlign={"center"} display={"table-row"} key={i} {...getLineProps({ line, key: i })}>
+              <LineNumber number={i + 1}/>
+              {line.map((token, key) => (
+                <Box as={'span'} key={key} {...getTokenProps({ token, key })} />
+              ))}
+            </Box>
+          ))}
+        </Box>
+      )}
+    </Highlight>
+  )
+}
+```
+
+which uses `prism-react-renderer` to render a more interesting environment for code to live in.
+It looks messy, but the way prism-react-renderer works gives a lot of flexibility with how you
+want your code blocks to look. I was able to add line numbers that match the accent color of my 
+site just by throwing in a component.
+
+And, since all Markdown `<code>` elements are replaced with this CodeBlock component, I can keep
+using the easy Markdown syntax for writing code.
+
+If you want to do this with your Next.js blog, it's actually pretty easy. Just `npm i next-mdx-remote`,
+import the `MDXRemote` component,
+
+```jsx
+import { MDXRemote } from 'next-mdx-remote'
+```
+
+and then place `MDXRemote` wherever you want your compiled MDX to show up. For my site, I have a `PostBody`
+element that represents the content of each blog post, so I put it there:
+
+```jsx
+const PostBody = ({ content }) => {
+  return (
+    <Box maxW={"2xl"} mx={"auto"}>
+      <Box
+        className={markdownStyles["markdown"]}>
+          <MDXRemote {...content} components={components} lazy/>
+        </Box>
+    </Box>
+  );
+};
+```
+
+`content` is just the return value of `next-mdx-remote`'s serialize function, which takes in an MDX
+string and performs the compilation:
+
+```jsx
+import { serialize } from 'next-mdx-remote/serialize'
+
+const fileContents = fs.readFileSync(fullPath, "utf8");
+const content = await serialize(fileContents, { parseFrontmatter: true });
+const data = content.frontmatter;
+```
+
+I am using `frontmatter`, so I passed an additional option to `serialize`, but you can just leave that out
+and only pass the file contents. It's really that simple - as long as you feed `serialize`'s output into
+the client side `MDXRemote` component, it just works. And then you can customize the `components` that will
+show up in your Markdown however you like - heck, replace `<pre><code>` with a full-fledged development
+environment if you want. It just works.
+

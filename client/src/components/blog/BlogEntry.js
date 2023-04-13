@@ -12,6 +12,7 @@ export const BlogEntry = (props) => {
         p={"8"}
         border="1px"
         textAlign={"start"}
+        mb={"8"}
       >
         <LinkOverlay as={NextLink} href={`/posts/${props.post.slug}`}>
           <Heading display={"block"}>{props.post.title}</Heading>
