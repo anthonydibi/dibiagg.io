@@ -8,6 +8,6 @@ ThreeSharp aims to deliver a better development experience by bringing it into v
 `
 
 export const HowItWorks = `
-ThreeSharp uses Microsft's Roslyn API to generate syntax trees from C# code. These syntax trees are used to derive insights like inheritance relationships
+ThreeSharp uses Microsoft's Roslyn API to generate syntax trees from C# code. These syntax trees are used to derive insights like inheritance relationships
 so that they can be applied to the visualization. The environment is built in Unity, and motion controls are implemented using Unity's Oculus XR plugin.
 `
