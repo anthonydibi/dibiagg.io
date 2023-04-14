@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Box, Heading, Stack, Text as ChakraText, Flex, useColorMode, useColorModeValue } from "@chakra-ui/react";
-import { Text, OrbitControls, Line, PerspectiveCamera } from '@react-three/drei'
+import { Text, OrbitControls, Line, PerspectiveCamera, Center } from '@react-three/drei'
 import React, { useState, useRef, useEffect } from "react";
 import SEO from "../components/seo";
 import { WhatIsThreeSharp } from "../components/ThreeSharpStrings";
@@ -54,7 +54,7 @@ function NodeText(props){
   })
 
   return (
-    <Text ref={mesh} scale={[0.2, 0.2, 0.2]} color={textColor} position={[0, 0.4, 0]}>
+    <Text ref={mesh} scale={[0.2, 0.2, 0.2]} color={textColor} position={[0, 0.6, 0]}>
       {props.text}
     </Text>
   )
@@ -106,12 +106,13 @@ function CollapseContext(props){
           <OrbitControls />
           <PerspectiveCamera
             makeDefault
-            position={[2.5, 1, 2.5]}
+            position={[4, 2, -1]}
             fov={60}
             zoom={0.9}
           />
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
+          <Center>
           <Node setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"why-threesharp"} position={[0, 1, 0]} heading={"Why ThreeSharp?"} text={WhyThreeSharp} selected={selectedNode} box/>
           <Node setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"what-is-threesharp"} position={[1/2.0, -0.5, Math.sqrt(3)/2]} heading={"What is ThreeSharp?"} text={WhatIsThreeSharp} selected={selectedNode} />
           <Node setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"how-it-works"} position={[-1, -1.5, 0]} heading={"How it works"} text={HowItWorks} selected={selectedNode} />
@@ -136,6 +137,7 @@ function CollapseContext(props){
                             // If true, renders a THREE.LineSegments2. Otherwise, renders a THREE.Line2
             dashed={false}                  // Default
           />
+          </Center>
         </Canvas>
       </Box>
     </Stack>
