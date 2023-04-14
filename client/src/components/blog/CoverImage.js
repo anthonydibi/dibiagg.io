@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Box } from "@chakra-ui/react";
+import Link from 'next/link'
+import Image from 'next/image'
+import { Box } from '@chakra-ui/react'
 
 const CoverImage = ({ title, src, slug }) => {
   const image = (
@@ -10,9 +10,9 @@ const CoverImage = ({ title, src, slug }) => {
       width={1300}
       height={630}
     />
-  );
+  )
   return (
-    <Box mt={"6"} align={"center"}>
+    <Box mt={'6'} align={'center'}>
       {slug ? (
         <Link as={`/posts/${slug}`} href="/posts/[slug]" aria-label={title}>
           {image}
@@ -21,7 +21,7 @@ const CoverImage = ({ title, src, slug }) => {
         image
       )}
     </Box>
-  );
-};
+  )
+}
 
-export default CoverImage;
+export default CoverImage

@@ -15,107 +15,107 @@ import {
   Menu,
   MenuList,
   MenuItem,
-} from "@chakra-ui/react";
-import { Link } from "@chakra-ui/next-js";
+} from '@chakra-ui/react'
+import { Link } from '@chakra-ui/next-js'
 import {
   SunIcon,
   MoonIcon,
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
-} from "@chakra-ui/icons";
-import ContactButtons from "../components/ContactButtons";
+} from '@chakra-ui/icons'
+import ContactButtons from '../components/ContactButtons'
 
 const LeftLinks = [
-  { display: "ABOUT", href: "/" },
-  { display: "GRAFFITI", href: "/graffiti" },
-  { display: "THREESHARP", href: "/threesharp" },
-];
+  { display: 'ABOUT', href: '/' },
+  { display: 'GRAFFITI', href: '/graffiti' },
+  { display: 'THREESHARP', href: '/threesharp' },
+]
 const RightLinks = [
-  { display: "BLOG", href: "/blog" },
-  { display: "RESUME", href: "/resume" },
-];
+  { display: 'BLOG', href: '/blog' },
+  { display: 'RESUME', href: '/resume' },
+]
 
 const NavLink = (props) => (
   <Link
     href={props.href}
     onClick={props.onClick}
-    fontWeight={"bold"}
+    fontWeight={'bold'}
     border="1px solid transparent"
     px={2}
     py={1}
     _hover={{
-      textDecoration: "none",
-      border: "1px solid",
+      textDecoration: 'none',
+      border: '1px solid',
     }}
   >
     {props.children}
   </Link>
-);
+)
 
 const FakeLink = (props) => (
   <Box
-    fontWeight={"bold"}
+    fontWeight={'bold'}
     border="1px solid transparent"
     px={2}
     py={1}
     _hover={{
-      textDecoration: "none",
-      border: "1px solid",
+      textDecoration: 'none',
+      border: '1px solid',
     }}
   >
     {props.children}
   </Box>
-);
+)
 
 export default function Nav() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = useColorModeValue("white", "black");
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { colorMode, toggleColorMode } = useColorMode()
+  const bgColor = useColorModeValue('white', 'black')
 
   return (
     <>
       <Flex
         position="sticky"
         top="0"
-        bg={useColorModeValue("pink.50", "black")}
+        bg={useColorModeValue('pink.50', 'black')}
         w="100%"
         zIndex="100"
-        borderBottom={"1px solid"}
-        borderColor={useColorModeValue("black", "white")}
-        h={"60px"}
+        borderBottom={'1px solid'}
+        borderColor={useColorModeValue('black', 'white')}
+        h={'60px'}
         align="center"
       >
         <Spacer />
         <IconButton
-          size={"md"}
+          size={'md'}
           variant="interact"
           rounded="none"
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          aria-label={"Open Menu"}
-          display={{ md: "none" }}
+          aria-label={'Open Menu'}
+          display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
         <Center>
-          <HStack spacing={8} alignItems={"center"}>
+          <HStack spacing={8} alignItems={'center'}>
             <Box>
               <Heading
-                mx={{ base: "5", md: "0" }}
-                fontFamily={"SangoStatic"}
-                size={"xl"}
+                mx={{ base: '5', md: '0' }}
+                fontFamily={'SangoStatic'}
+                size={'xl'}
               >
                 DB.
                 <Heading
                   as="span"
                   color="accent"
                   size="xl"
-                  fontFamily={"SangoStatic"}
+                  fontFamily={'SangoStatic'}
                 >
                   IO
                 </Heading>
               </Heading>
             </Box>
-            <HStack as={"nav"} display={{ base: "none", md: "flex" }}>
+            <HStack as={'nav'} display={{ base: 'none', md: 'flex' }}>
               {LeftLinks.map((link) => (
                 <NavLink href={`${link.href}`} key={link.display}>
                   {link.display}
@@ -124,39 +124,39 @@ export default function Nav() {
               <Menu>
                 <MenuButton
                   as={Button}
-                  fontWeight={"bold"}
+                  fontWeight={'bold'}
                   border="1px solid transparent"
                   px={2}
-                  rounded={"none"}
+                  rounded={'none'}
                   _hover={{
-                    textDecoration: "none",
-                    border: "1px solid",
+                    textDecoration: 'none',
+                    border: '1px solid',
                   }}
-                  variant={"interact"}
+                  variant={'interact'}
                   rightIcon={<ChevronDownIcon />}
-                  h={"31px"}
+                  h={'31px'}
                 >
                   DEATHBALL CLONE
                 </MenuButton>
                 <MenuList
-                  bg={useColorModeValue("white", "black")}
+                  bg={useColorModeValue('white', 'black')}
                   borderRadius="0px"
                   border="1px solid"
                 >
                   <MenuItem>
-                    <NavLink href="/deathball/about" key={"about"}>
+                    <NavLink href="/deathball/about" key={'about'}>
                       ABOUT
                     </NavLink>
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      window.open("https://gilded-kulfi-c5ad94.netlify.app/");
+                      window.open('https://gilded-kulfi-c5ad94.netlify.app/')
                     }}
                   >
                     <FakeLink>PLAY</FakeLink>
                   </MenuItem>
                   <MenuItem>
-                    <NavLink href="/deathball/leaderboard" key={"leaderboard"}>
+                    <NavLink href="/deathball/leaderboard" key={'leaderboard'}>
                       LEADERBOARD
                     </NavLink>
                   </MenuItem>
@@ -165,15 +165,15 @@ export default function Nav() {
             </HStack>
           </HStack>
         </Center>
-        <Spacer display={{ base: "none", md: "block" }} />
-        <Spacer display={{ base: "none", md: "block" }} />
-        <Flex alignItems={"center"}>
+        <Spacer display={{ base: 'none', md: 'block' }} />
+        <Spacer display={{ base: 'none', md: 'block' }} />
+        <Flex alignItems={'center'}>
           <Menu>
             <HStack
-              mr={"32px"}
-              as={"nav"}
+              mr={'32px'}
+              as={'nav'}
               spacing={4}
-              display={{ base: "none", md: "flex" }}
+              display={{ base: 'none', md: 'flex' }}
             >
               {RightLinks.map((link) => (
                 <NavLink href={`${link.href}`} key={link.display}>
@@ -188,7 +188,7 @@ export default function Nav() {
               p="2"
               rounded="none"
             >
-              {colorMode === "light" ? (
+              {colorMode === 'light' ? (
                 <MoonIcon color="accent" />
               ) : (
                 <SunIcon color="accent" />
@@ -206,15 +206,15 @@ export default function Nav() {
             borderTop="none"
             borderLeft="none"
             borderRight="none"
-            zIndex={"500"}
+            zIndex={'500'}
             position="sticky"
             top="60px"
-            w={"100%"}
+            w={'100%'}
             bg={bgColor}
             p={4}
-            display={{ md: "none" }}
+            display={{ md: 'none' }}
           >
-            <Stack as={"nav"} spacing={4} align={"start"}>
+            <Stack as={'nav'} spacing={4} align={'start'}>
               {LeftLinks.map((link) => (
                 <NavLink href={`${link.href}`} key={link.display}>
                   {link.display}
@@ -228,42 +228,42 @@ export default function Nav() {
               <Menu>
                 <MenuButton
                   as={Button}
-                  fontWeight={"bold"}
+                  fontWeight={'bold'}
                   border="1px solid transparent"
                   px={2}
                   py={1}
-                  rounded={"none"}
+                  rounded={'none'}
                   _hover={{
-                    textDecoration: "none",
-                    border: "1px solid",
+                    textDecoration: 'none',
+                    border: '1px solid',
                   }}
-                  variant={"ghost"}
+                  variant={'ghost'}
                   rightIcon={<ChevronDownIcon />}
-                  h={"31px"}
+                  h={'31px'}
                 >
                   DEATHBALL CLONE
                 </MenuButton>
                 <MenuList bg={bgColor} borderRadius="0px" border="1px solid">
                   <MenuItem>
-                    <NavLink href="/deathball/about" key={"about"}>
+                    <NavLink href="/deathball/about" key={'about'}>
                       ABOUT
                     </NavLink>
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      window.open("https://gilded-kulfi-c5ad94.netlify.app/");
+                      window.open('https://gilded-kulfi-c5ad94.netlify.app/')
                     }}
                   >
                     <FakeLink>PLAY</FakeLink>
                   </MenuItem>
                   <MenuItem>
-                    <NavLink href="/deathball/leaderboard" key={"leaderboard"}>
+                    <NavLink href="/deathball/leaderboard" key={'leaderboard'}>
                       LEADERBOARD
                     </NavLink>
                   </MenuItem>
                 </MenuList>
               </Menu>
-              <Stack direction={"row"} justify={"center"}>
+              <Stack direction={'row'} justify={'center'}>
                 <ContactButtons />
               </Stack>
             </Stack>
@@ -271,5 +271,5 @@ export default function Nav() {
         </>
       ) : null}
     </>
-  );
+  )
 }

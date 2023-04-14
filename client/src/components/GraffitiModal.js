@@ -7,15 +7,15 @@ import {
   ModalBody,
   Text,
   useDisclosure,
-} from "@chakra-ui/react";
-import React from "react";
+} from '@chakra-ui/react'
+import React from 'react'
 
 export default function GraffitiModal(props) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   React.useEffect(() => {
-    onOpen();
-  }, [onOpen]);
+    onOpen()
+  }, [onOpen])
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function GraffitiModal(props) {
           <ModalHeader>Welcome to Graffiti!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text fontSize={"lg"}>
+            <Text fontSize={'lg'}>
               This is a canvas where whatever you draw will be visible to others
               who visit this page. Use the buttons on the right of the canvas to
               select the pen and eraser tools. The wall is reset each day, and
@@ -33,7 +33,7 @@ export default function GraffitiModal(props) {
               canvas.
             </Text>
             <br />
-            <Text textColor={"accent"} fontSize={"md"}>
+            <Text textColor={'accent'} fontSize={'md'}>
               <b>Be warned:</b> this is just a prototype, so the user experience
               is buggy, especially when multiple users are drawing
               simultaneously. Your masterpiece may be overwritten or deleted.
@@ -43,5 +43,5 @@ export default function GraffitiModal(props) {
         </ModalContent>
       </Modal>
     </>
-  );
+  )
 }

@@ -6,7 +6,5 @@
     "main.b65cc08e.js.map": "/static/js/main.b65cc08e.js.map",
     "377.5cac65fc.chunk.js.map": "/static/js/377.5cac65fc.chunk.js.map"
   },
-  "entrypoints": [
-    "static/js/main.b65cc08e.js"
-  ]
+  "entrypoints": ["static/js/main.b65cc08e.js"]
 }

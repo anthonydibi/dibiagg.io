@@ -1,11 +1,11 @@
-import Layout from "../components/layout.js";
-import "../styles/fonts.css";
-import "../styles/swatches.css";
-import "../styles/pdf.css";
-import { ChakraProvider } from "@chakra-ui/react";
-import theme from "../styles/theme.js";
-import Head from "next/head";
-import Script from "next/script";
+import Layout from '../components/layout.js'
+import '../styles/fonts.css'
+import '../styles/swatches.css'
+import '../styles/pdf.css'
+import { ChakraProvider } from '@chakra-ui/react'
+import theme from '../styles/theme.js'
+import Head from 'next/head'
+import Script from 'next/script'
 
 export default function App({ Component, pageProps }) {
   return (
@@ -26,5 +26,5 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
     </ChakraProvider>
-  );
+  )
 }

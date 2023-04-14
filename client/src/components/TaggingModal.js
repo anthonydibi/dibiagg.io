@@ -6,8 +6,8 @@ import {
   ModalCloseButton,
   ModalBody,
   Text,
-} from "@chakra-ui/react";
-import React from "react";
+} from '@chakra-ui/react'
+import React from 'react'
 
 export default function GraffitiModal(props) {
   return (
@@ -18,13 +18,13 @@ export default function GraffitiModal(props) {
           <ModalHeader>What is tagging?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text fontSize={"lg"}>
+            <Text fontSize={'lg'}>
               Tagging is a way to attach your name to your drawings. Just enter
               your name, and when someone hovers over any of your future
               drawings your name will be shown.
             </Text>
             <br />
-            <Text fontSize={"lg"}>
+            <Text fontSize={'lg'}>
               You may notice that no password is required. I think that
               everything requiring an account is a plague to the internet, so
               cherish the fact that you don't have to think of a password and
@@ -37,12 +37,12 @@ export default function GraffitiModal(props) {
               left, besides your very skin and bones?
             </Text>
             <br />
-            <Text fontSize={"lg"}>
+            <Text fontSize={'lg'}>
               Just some food for thought. Have fun! ｡^‿^｡
             </Text>
           </ModalBody>
         </ModalContent>
       </Modal>
     </>
-  );
+  )
 }

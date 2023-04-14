@@ -8,11 +8,11 @@ import {
   Button,
   useBreakpointValue,
   Text,
-} from "@chakra-ui/react";
-import { FiInfo } from "react-icons/fi";
+} from '@chakra-ui/react'
+import { FiInfo } from 'react-icons/fi'
 
 export default function Banner(props) {
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const isMobile = useBreakpointValue({ base: true, md: false })
 
   return (
     <>
@@ -20,17 +20,17 @@ export default function Banner(props) {
         <Container
           align="center"
           maxW="container.lg"
-          py={{ base: "4", md: "1" }}
+          py={{ base: '4', md: '1' }}
           position="relative"
         >
           <Stack
-            direction={{ base: "column", sm: "row" }}
-            spacing={{ base: "3", md: "2" }}
+            direction={{ base: 'column', sm: 'row' }}
+            spacing={{ base: '3', md: '2' }}
             justify="space-between"
           >
             <Stack
               spacing="4"
-              direction={{ base: "column", md: "row" }}
+              direction={{ base: 'column', md: 'row' }}
               align="center"
             >
               {!isMobile && (
@@ -39,22 +39,22 @@ export default function Banner(props) {
                 </Square>
               )}
               <Stack
-                direction={{ base: "column", md: "row" }}
-                spacing={{ base: "0.5", md: "1.5" }}
-                align={"center"}
+                direction={{ base: 'column', md: 'row' }}
+                spacing={{ base: '0.5', md: '1.5' }}
+                align={'center'}
               >
-                <Heading color="white" size={"sm"} whiteSpace={"nowrap"}>
+                <Heading color="white" size={'sm'} whiteSpace={'nowrap'}>
                   {props.header}
                 </Heading>
-                <Text color="white" whiteSpace={"nowrap"} m="0">
+                <Text color="white" whiteSpace={'nowrap'} m="0">
                   {props.action}
                 </Text>
               </Stack>
             </Stack>
             <Stack
-              direction={{ base: "column", sm: "row" }}
-              spacing={{ base: "3", sm: "2" }}
-              align={{ base: "stretch", sm: "center" }}
+              direction={{ base: 'column', sm: 'row' }}
+              spacing={{ base: '3', sm: '2' }}
+              align={{ base: 'stretch', sm: 'center' }}
             >
               <Button
                 variant="interact"
@@ -73,5 +73,5 @@ export default function Banner(props) {
         </Container>
       </Box>
     </>
-  );
+  )
 }

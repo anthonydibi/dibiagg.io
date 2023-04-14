@@ -17,16 +17,21 @@ This is pretty powerful because it allows you to put anything you could build in
 The Markdown gets converted to static HTML like usual on the server side, and then any React components in
 Markdown files are [hydrated](https://www.gatsbyjs.com/docs/conceptual/react-hydration/) on the client side.
 You can also pass in a component mapping to the MDX provider:
+
 ```jsx
 const components = {
   img: NextImage,
   Button: Button,
-  pre: ({children, className}) => { return (<pre>{children}</pre>) },
-  code: ({children, className}) => {
+  pre: ({ children, className }) => {
+    return <pre>{children}</pre>
+  },
+  code: ({ children, className }) => {
     return className ? (
       <CodeBlock className={className}>{children}</CodeBlock>
-    ) : <code className="language-text">{children}</code>
-  }
+    ) : (
+      <code className="language-text">{children}</code>
+    )
+  },
 }
 ```
 
@@ -38,18 +43,18 @@ replaced with a CodeBlock component:
 
 ```jsx
 const LineNumber = (props) => (
-    <Box 
-    color={"accent"} 
-    paddingRight={"0.75rem"} 
-    userSelect={"none"} 
-    display={"table-cell"}>
-        {props.number}
-    </Box>
-);
+  <Box
+    color={'accent'}
+    paddingRight={'0.75rem'}
+    userSelect={'none'}
+    display={'table-cell'}
+  >
+    {props.number}
+  </Box>
+)
 
 const CodeBlock = ({ children, className }) => {
-
-  const language = className ? className.replace(/language-/, "") : "javascript";
+  const language = className ? className.replace(/language-/, '') : 'javascript'
 
   return (
     <Highlight
@@ -62,18 +67,24 @@ const CodeBlock = ({ children, className }) => {
         <Box
           as={'pre'}
           className={className}
-          style={{ ...style, 
-            padding: "10px", 
-            marginBottom: "32px", 
-            overflow: "scroll", 
-            marginLeft: "-70px", 
-            marginRight: "-70px", 
-            textAlign: "left" 
+          style={{
+            ...style,
+            padding: '10px',
+            marginBottom: '32px',
+            overflow: 'scroll',
+            marginLeft: '-70px',
+            marginRight: '-70px',
+            textAlign: 'left',
           }}
         >
           {tokens.map((line, i) => (
-            <Box verticalAlign={"center"} display={"table-row"} key={i} {...getLineProps({ line, key: i })}>
-              <LineNumber number={i + 1}/>
+            <Box
+              verticalAlign={'center'}
+              display={'table-row'}
+              key={i}
+              {...getLineProps({ line, key: i })}
+            >
+              <LineNumber number={i + 1} />
               {line.map((token, key) => (
                 <Box as={'span'} key={key} {...getTokenProps({ token, key })} />
               ))}
@@ -88,7 +99,7 @@ const CodeBlock = ({ children, className }) => {
 
 which uses `prism-react-renderer` to render a more interesting environment for code to live in.
 It looks messy, but the way prism-react-renderer works gives a lot of flexibility with how you
-want your code blocks to look. I was able to add line numbers that match the accent color of my 
+want your code blocks to look. I was able to add line numbers that match the accent color of my
 site just by throwing in a component.
 
 And, since all Markdown `<code>` elements are replaced with this CodeBlock component, I can keep
@@ -107,14 +118,13 @@ element that represents the content of each blog post, so I put it there:
 ```jsx
 const PostBody = ({ content }) => {
   return (
-    <Box maxW={"2xl"} mx={"auto"}>
-      <Box
-        className={markdownStyles["markdown"]}>
-          <MDXRemote {...content} components={components} lazy/>
-        </Box>
+    <Box maxW={'2xl'} mx={'auto'}>
+      <Box className={markdownStyles['markdown']}>
+        <MDXRemote {...content} components={components} lazy />
+      </Box>
     </Box>
-  );
-};
+  )
+}
 ```
 
 `content` is just the return value of `next-mdx-remote`'s serialize function, which takes in an MDX
@@ -123,10 +133,11 @@ string and performs the compilation:
 ```jsx
 import { serialize } from 'next-mdx-remote/serialize'
 
-const fileContents = fs.readFileSync(fullPath, "utf8");
-const content = await serialize(fileContents, { parseFrontmatter: true });
-const data = content.frontmatter;
+const fileContents = fs.readFileSync(fullPath, 'utf8')
+const content = await serialize(fileContents, { parseFrontmatter: true })
+const data = content.frontmatter
 ```
+
 I am using `frontmatter`, so I passed an additional option to `serialize`, but you can just leave that out
 and only pass the file contents. It's really that simple - as long as you feed `serialize`'s output into
 the client side `MDXRemote` component, it just works. And then you can customize the `components` that will
@@ -134,50 +145,49 @@ show up in your Markdown however you like - heck, replace `<pre><code>` with a f
 environment if you want. You can even embed a `THREE.js` canvas with `react-three-fiber`:
 
 ```jsx
-function SpinnyCube(props){
-    const mesh = useRef();
-    const [hovered, setHovered] = useState(false);
-    const [active, setActive] = useState(false);
-    const [accentColor, setAccentColor] = useState("");
-    const { colorMode, toggleColorMode } = useColorMode();
+function SpinnyCube(props) {
+  const mesh = useRef()
+  const [hovered, setHovered] = useState(false)
+  const [active, setActive] = useState(false)
+  const [accentColor, setAccentColor] = useState('')
+  const { colorMode, toggleColorMode } = useColorMode()
 
-    useEffect(() => {
-        setAccentColor(getComputedStyle(document.body).getPropertyValue('--accent'));
-    }, [colorMode]);
+  useEffect(() => {
+    setAccentColor(getComputedStyle(document.body).getPropertyValue('--accent'))
+  }, [colorMode])
 
-    useFrame((state, delta) => {
-        mesh.current.rotation.x += delta;
-        mesh.current.rotation.z += delta;
-    });
+  useFrame((state, delta) => {
+    mesh.current.rotation.x += delta
+    mesh.current.rotation.z += delta
+  })
 
-    return (
-        <mesh
-            {...props}
-            ref={mesh}
-            scale = {active ? 1 : 1.2}
-            onClick={(event) => setActive(!active)}
-            onPointerOver={(event) => setHovered(true)}
-            onPointerOut={(event) => setHovered(false)}
-            >
-            <boxGeometry args={[2, 2, 2]} />
-            <meshStandardMaterial color={hovered ? "darkgreen" : accentColor} />
-        </mesh>
-    )
+  return (
+    <mesh
+      {...props}
+      ref={mesh}
+      scale={active ? 1 : 1.2}
+      onClick={(event) => setActive(!active)}
+      onPointerOver={(event) => setHovered(true)}
+      onPointerOut={(event) => setHovered(false)}
+    >
+      <boxGeometry args={[2, 2, 2]} />
+      <meshStandardMaterial color={hovered ? 'darkgreen' : accentColor} />
+    </mesh>
+  )
 }
 
-export default function ReactThreeFiberExample(props){
-    return (
-        <Canvas>
-            <ambientLight />
-            <pointLight position={[10, 10, 10]} />
-            <SpinnyCube position={[-3, 0.5, 0]} />
-            <SpinnyCube position={[3, -0.7, 0]} />
-        </Canvas>
-    )
+export default function ReactThreeFiberExample(props) {
+  return (
+    <Canvas>
+      <ambientLight />
+      <pointLight position={[10, 10, 10]} />
+      <SpinnyCube position={[-3, 0.5, 0]} />
+      <SpinnyCube position={[3, -0.7, 0]} />
+    </Canvas>
+  )
 }
 ```
 
 <ReactThreeFiberExample />
 
 Cool.
-

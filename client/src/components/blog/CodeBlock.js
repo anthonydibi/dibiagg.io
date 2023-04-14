@@ -1,21 +1,21 @@
-import React from "react"
-import Highlight, { defaultProps } from "prism-react-renderer"
-import { Box } from "@chakra-ui/react"
-import theme from "prism-react-renderer/themes/nightOwl"
+import React from 'react'
+import Highlight, { defaultProps } from 'prism-react-renderer'
+import { Box } from '@chakra-ui/react'
+import theme from 'prism-react-renderer/themes/nightOwl'
 
 const LineNumber = (props) => (
-    <Box 
-    color={"accent"} 
-    paddingRight={"0.75rem"} 
-    userSelect={"none"} 
-    display={"table-cell"}>
-        {props.number}
-    </Box>
-);
+  <Box
+    color={'accent'}
+    paddingRight={'0.75rem'}
+    userSelect={'none'}
+    display={'table-cell'}
+  >
+    {props.number}
+  </Box>
+)
 
 const CodeBlock = ({ children, className }) => {
-
-  const language = className ? className.replace(/language-/, "") : "javascript";
+  const language = className ? className.replace(/language-/, '') : 'javascript'
 
   return (
     <Highlight
@@ -28,17 +28,23 @@ const CodeBlock = ({ children, className }) => {
         <Box
           as={'pre'}
           className={className}
-          style={{ ...style, 
-            padding: "10px", 
-            marginBottom: "32px", 
-            overflow: "scroll", 
-            textAlign: "left" 
+          style={{
+            ...style,
+            padding: '10px',
+            marginBottom: '32px',
+            overflow: 'scroll',
+            textAlign: 'left',
           }}
-          fontSize={"sm"}
+          fontSize={'sm'}
         >
           {tokens.map((line, i) => (
-            <Box verticalAlign={"center"} display={"table-row"} key={i} {...getLineProps({ line, key: i })}>
-              <LineNumber number={i + 1}/>
+            <Box
+              verticalAlign={'center'}
+              display={'table-row'}
+              key={i}
+              {...getLineProps({ line, key: i })}
+            >
+              <LineNumber number={i + 1} />
               {line.map((token, key) => (
                 <Box as={'span'} key={key} {...getTokenProps({ token, key })} />
               ))}

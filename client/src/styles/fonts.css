@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "Atami";
+  font-family: 'Atami';
   font-display: swap;
-  src: url("/Atami-Bold.otf");
+  src: url('/Atami-Bold.otf');
 }
 
 @font-face {
-  font-family: "SangoStatic";
+  font-family: 'SangoStatic';
   font-display: swap;
-  src: url("/SangoStatic.otf");
+  src: url('/SangoStatic.otf');
 }
