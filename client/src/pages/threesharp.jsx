@@ -113,24 +113,24 @@ function CollapseContext(props){
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
           <Node setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"why-threesharp"} position={[0, 1, 0]} heading={"Why ThreeSharp?"} text={WhyThreeSharp} selected={selectedNode} box/>
-          <Node setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"what-is-threesharp"} position={[1/2.0, -1, Math.sqrt(3)/2]} heading={"What is ThreeSharp?"} text={WhatIsThreeSharp} selected={selectedNode} />
-          <Node setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"how-it-works"} position={[-1, -1, 0]} heading={"How it works"} text={HowItWorks} selected={selectedNode} />
-          <Node onClick={() => window.open("https://youtu.be/JaxGmNPOdZM")} setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"demo"} position={[1/2.0, -1, -Math.sqrt(3)/2]} heading={"Demo on YouTube"} text={HowItWorks} selected={selectedNode} />
+          <Node setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"what-is-threesharp"} position={[1/2.0, -0.5, Math.sqrt(3)/2]} heading={"What is ThreeSharp?"} text={WhatIsThreeSharp} selected={selectedNode} />
+          <Node setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"how-it-works"} position={[-1, -1.5, 0]} heading={"How it works"} text={HowItWorks} selected={selectedNode} />
+          <Node onClick={() => window.open("https://youtu.be/JaxGmNPOdZM")} setSelectedNode={setSelectedNode} setBlurb={setBlurb} name={"demo"} position={[1/2.0, -2.5, -Math.sqrt(3)/2]} heading={"Demo on YouTube"} text={HowItWorks} selected={selectedNode} />
           <Line
-            points={[[0, 1, 0], [0, -1, 0], [-1, -1, 0]]}       // Array of points, Array<Vector3 | Vector2 | [number, number, number] | [number, number] | number>
+            points={[[0, 1, 0], [0, -1.5, 0], [-1, -1.5, 0]]}       // Array of points, Array<Vector3 | Vector2 | [number, number, number] | [number, number] | number>
             color="white"
             lineWidth={5}
             dashed={false}
           />
           <Line
-            points={[[0, 1, 0], [0, -1, 0], [1/2.0, -1, Math.sqrt(3)/2]]}       // Array of points, Array<Vector3 | Vector2 | [number, number, number] | [number, number] | number>
+            points={[[0, 1, 0], [0, -0.5, 0], [1/2.0, -0.5, Math.sqrt(3)/2]]}       // Array of points, Array<Vector3 | Vector2 | [number, number, number] | [number, number] | number>
             color="white"                   // Default
             lineWidth={5}                   // In pixels (default)
                             // If true, renders a THREE.LineSegments2. Otherwise, renders a THREE.Line2
             dashed={false}                  // Default
           />
           <Line
-            points={[[0, 1, 0], [0, -1, 0], [1/2.0, -1, -Math.sqrt(3)/2]]}       // Array of points, Array<Vector3 | Vector2 | [number, number, number] | [number, number] | number>
+            points={[[0, 1, 0], [0, -2.5, 0], [1/2.0, -2.5, -Math.sqrt(3)/2]]}       // Array of points, Array<Vector3 | Vector2 | [number, number, number] | [number, number] | number>
             color="white"                   // Default
             lineWidth={5}                   // In pixels (default)
                             // If true, renders a THREE.LineSegments2. Otherwise, renders a THREE.Line2
