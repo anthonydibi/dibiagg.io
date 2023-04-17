@@ -8,6 +8,17 @@ import {
   Flex,
   useColorMode,
   useColorModeValue,
+  useBreakpointValue,
+  Modal,
+  ModalOverlay,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  Button,
+  Center as ChakraCenter,
 } from '@chakra-ui/react'
 import {
   Text,
@@ -88,29 +99,60 @@ function NodeText(props) {
 }
 
 function Blurb(props) {
+
+  const isMobile = useBreakpointValue({base: true, md: false})
+
   return (
     <>
-      <Box>
+      {!isMobile ? 
+      <Box align={"center"}>
         <Heading
-          size={{ base: 'lg', md: 'xl', lg: '2xl' }}
+          justify={"left"}
+          size={{ base: 'lg', md: 'xl', lg: '4xl' }}
           mb={'8'}
           display={'inline-block'}
         >
           {props.heading ? props.heading : 'THREESHARP'}
         </Heading>
-        <ChakraText fontSize={{ base: 'lg', md: 'xl' }} maxW={'500px'}>
-          {props.text
-            ? props.text
-            : `
-          The old showcase I had kind of sucked so I built a new one that
+        <ChakraText textAlign={"left"} fontSize={{ base: 'xl', md: '2xl' }} maxW={'40vw'}>
+          { props.text ? props.text :  `The old showcase I had kind of sucked so I built a new one that
           is more on-theme. I made this using react-three-fiber. You can pan around,
           rotate, and zoom with right click, left click, and mouse wheel, respectively, on desktop.
           If you're on mobile, you can use a two-finger drag, one-finger drag, and pinch. In the future
           I am planning on adding a 3D demonstration at some point once I get a better hang of
           react-three-fiber. Click the nodes on the right to learn more!
-          `}
+          ` }
         </ChakraText>
-      </Box>
+      </Box> : 
+      <ThreeSharpModal isOpen={props.isOpen} onClose={props.onClose} text={props.text} heading={props.heading} />
+    } 
+    </>
+  )
+}
+
+function ThreeSharpModal(props) {
+  console.log(props.isOpen);
+  return (
+    <>
+      <Modal
+        onClose={props.onClose}
+        isOpen={props.isOpen}
+        scrollBehavior={"inside"}
+        size={"lg"}
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{props.heading}</ModalHeader>
+          <ModalCloseButton variant={"interact"}/>
+          <ModalBody>
+            {props.text}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={props.onClose} variant={"interact"} rounded={"none"}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   )
 }
@@ -119,35 +161,39 @@ function ThreeSharpShowcase(props) {
   const [selectedNode, setSelectedNode] = useState('')
   const [text, setText] = useState('')
   const [heading, setHeading] = useState('')
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const setBlurb = (heading, text) => {
     setHeading(heading)
     setText(text)
+    onOpen()
   }
 
   return (
     <Stack
       minW={'100%'}
-      height={'100%'}
+      height={'80vh'}
       position={'relative'}
+      margin={"0"}
       direction={{ base: 'column', md: 'row' }}
+      justify={"center"}
     >
       <Flex
+        display={{base: "none", md: "block"}}
         align={'center'}
-        verticalAlign={'center'}
         width={{ base: '100%', md: '50%' }}
         height={'100%'}
-        style={{ marginLeft: 0 }}
-        p={'8'}
+        style={{ marginLeft: 0, marginTop: 0 }}
+        p={{base: "0", md: '8'}}
         direction={'column'}
+        alignItems={"center"}
       >
-        <Blurb heading={heading} text={text} />
+        <Blurb isOpen={isOpen} onClose={onClose} heading={heading} text={text} />
       </Flex>
       <Box
         borderLeft={{ base: '0px', md: '1px' }}
-        borderTop={{ base: '1px', md: '0px' }}
         width={{ base: '100%', md: '50%' }}
-        height={'60vh'}
+        height={'100%'}
       >
         <Canvas>
           <OrbitControls />
@@ -189,7 +235,7 @@ function ThreeSharpShowcase(props) {
               selected={selectedNode}
             />
             <Node
-              onClick={() => window.open('https://youtu.be/JaxGmNPOdZM')}
+              onClick={() => { if(typeof window !== undefined) window.open('https://youtu.be/JaxGmNPOdZM') }}
               setSelectedNode={setSelectedNode}
               setBlurb={setBlurb}
               name={'demo'}
