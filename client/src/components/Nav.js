@@ -15,6 +15,7 @@ import {
   Menu,
   MenuList,
   MenuItem,
+  Collapse
 } from '@chakra-ui/react'
 import { Link } from '@chakra-ui/next-js'
 import {
@@ -198,10 +199,10 @@ export default function Nav() {
         </Flex>
         <Spacer />
       </Flex>
-
-      {isOpen ? (
-        <>
           <Box
+            as={Collapse}
+            in={isOpen}
+            animateOpacity={false}
             border="1px solid"
             borderTop="none"
             borderLeft="none"
@@ -268,8 +269,6 @@ export default function Nav() {
               </Stack>
             </Stack>
           </Box>
-        </>
-      ) : null}
     </>
   )
 }
