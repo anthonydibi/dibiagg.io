@@ -19,7 +19,7 @@ export default function GraffitiModal(props) {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={props.isOpen} onClose={props.onClose}>
         <ModalOverlay />
         <ModalContent p={{ base: 2, md: 4 }}>
           <ModalHeader>Welcome to Graffiti!</ModalHeader>

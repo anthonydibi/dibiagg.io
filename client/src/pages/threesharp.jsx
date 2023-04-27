@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic'
+
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import {
   Box,
@@ -105,12 +105,10 @@ function Blurb(props) {
   return (
     <>
       {!isMobile ? 
-      <Box align={"center"}>
+      <>
         <Heading
-          justify={"left"}
           size={{ base: 'lg', md: 'xl', lg: '4xl' }}
           mb={'8'}
-          display={'inline-block'}
         >
           {props.heading ? props.heading : 'THREESHARP'}
         </Heading>
@@ -122,8 +120,7 @@ function Blurb(props) {
           I am planning on adding a 3D demonstration at some point once I get a better hang of
           react-three-fiber. Click the nodes on the right to learn more!
           ` }
-        </ChakraText>
-      </Box> : 
+        </ChakraText> </> : 
       <ThreeSharpModal isOpen={props.isOpen} onClose={props.onClose} text={props.text} heading={props.heading} />
     } 
     </>
@@ -131,7 +128,6 @@ function Blurb(props) {
 }
 
 function ThreeSharpModal(props) {
-  console.log(props.isOpen);
   return (
     <>
       <Modal
@@ -171,22 +167,17 @@ function ThreeSharpShowcase(props) {
 
   return (
     <Stack
-      minW={'100%'}
       height={'80vh'}
-      position={'relative'}
-      margin={"0"}
       direction={{ base: 'column', md: 'row' }}
-      justify={"center"}
     >
       <Flex
-        display={{base: "none", md: "block"}}
-        align={'center'}
+        display={{base: "none", md: "flex"}}
         width={{ base: '100%', md: '50%' }}
         height={'100%'}
         style={{ marginLeft: 0, marginTop: 0 }}
-        p={{base: "0", md: '8'}}
-        direction={'column'}
-        alignItems={"center"}
+        p={{base: "0", md: '10'}}
+        direction={"column"}
+        justifyContent={"center"}
       >
         <Blurb isOpen={isOpen} onClose={onClose} heading={heading} text={text} />
       </Flex>

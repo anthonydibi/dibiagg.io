@@ -1,14 +1,9 @@
 import { Center } from '@chakra-ui/react'
 import GraffitiModal from '../components/GraffitiModal'
-import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 import SEO from '../components/seo'
 import Script from 'next/script'
-
-const GraffitiCanvas = dynamic(() => import('../components/GraffitiCanvas'), {
-  //ssr has to be disabled for konva-react
-  ssr: false,
-})
+import GraffitiCanvas from '../components/GraffitiCanvas'
 
 export default function Graffiti() {
   let showModal = false

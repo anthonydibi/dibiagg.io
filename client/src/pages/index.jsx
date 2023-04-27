@@ -84,7 +84,7 @@ export default function About() {
               align={'center'}
               flex={'1'}
               autoColumns={'1fr'}
-              gap={'3'}
+              gap={'10'}
               templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}
             >
               <GridItem>
