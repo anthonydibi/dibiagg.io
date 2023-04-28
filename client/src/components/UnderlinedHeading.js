@@ -6,7 +6,7 @@ export default function UnderlinedHeading(props){
             <Heading display={"inline-block"} size={"2xl"} >
                 {props.children}
             </Heading>
-            <Box position={"absolute"} bottom={"-10%"} left={"-3%"} zIndex={"-1"} width={"125%"} height={"30%"} backgroundColor={"accent"}></Box>
+            <Box position={"absolute"} bottom={"0"} left={"-3%"} zIndex={"-1"} width={"130%"} height={"20%"} backgroundColor={"accent"}></Box>
         </Box>
     )
 }

@@ -66,7 +66,7 @@ export default function About() {
             </Tooltip>
             .
           </Heading>
-          <Stack spacing={9} px={{ base: 0, md: 20 }}>
+          <Stack spacing={9} px={{ base: 4, md: 20 }}>
             <UnderlinedHeading>
               Who?
             </UnderlinedHeading>
@@ -74,26 +74,19 @@ export default function About() {
               px={{ base: 3, md: 6 }}
               fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
             >
-              Anthony... it's me? From your dreams?
-            </Text>
-            <Text
-              px={{ base: 3, md: 6 }}
-              fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
-            >
               I'm a computer science graduate from the University of Minnesota. I know a lot of things -
               virtual reality, graphics, UI/UX, backend, <span style={{textDecoration: "line-through"}}>crying</span>, etc.,
-              but most importantly I care about writing quality software that is easy to use, easy to understand, and easy
-              to extend.
+              but most importantly I care about writing quality software that is easy to use, understand, and extend.
             </Text>
             <Text
               px={{ base: 3, md: 6 }}
               fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
             >
               Learning new things keeps me happy, and I am always trying to broaden my horizons while also becoming more
-              well-versed in the areas that I am confident in.
+              well-versed in the areas that I am experienced in.
             </Text>
-            <UnderlinedHeading mb={"100"}>
-              Built With
+            <UnderlinedHeading>
+              Built with
             </UnderlinedHeading>
             <Grid
               pt={"10"}
