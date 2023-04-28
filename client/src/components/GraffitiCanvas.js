@@ -184,8 +184,7 @@ export default function GraffitiCanvas() {
           >
             <InputGroup
               size="md"
-              w="400px"
-              m="auto"
+              w="300px"
               display={{ base: 'none', md: 'block' }}
             >
               <Input
@@ -244,7 +243,7 @@ export default function GraffitiCanvas() {
         </Flex>
       </Stack>
       <Flex direction={{ base: 'column', md: 'row' }}>
-        <Box display={{ base: 'none', md: 'block' }} flex={'1'} align={'right'}>
+        <Box visibility={{base: "hidden", md: step === 0 ? "visible" : "hidden"}} display={{base: "none", md: "block"}} flex={'1'} align={'right'}>
           <SwatchesPicker
             color={color}
             height={1002 * stageScale}
