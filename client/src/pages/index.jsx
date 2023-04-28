@@ -58,7 +58,7 @@ export default function About() {
                 whiteSpace="nowrap"
                 textDecorationColor={'accent'}
                 decoration={'underline dotted'}
-                textDecorationThickness={"6px"}
+                textDecorationThickness={{base: "4px", md: "8px"}}
                 as="span"
               >
                 DI BIAGGIO
