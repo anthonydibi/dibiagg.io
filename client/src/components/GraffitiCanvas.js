@@ -255,7 +255,7 @@ export default function GraffitiCanvas() {
         <GraffitiDrawArea lines={lines} setLines={setLines} tool={tool} isLoaded={isLoaded} color={color} userTag={userTag} stageScale={stageScale} step={step} save={save}/>
         </Box>
         <Box flex={'1'}>
-          <Grid display={{ base: 'none', md: 'block' }}>
+          <Grid display={{ base: 'none', md: step === 0 ? "block" : "none" }}>
             <GridItem>
               <IconButton
                 size="lg"
@@ -289,7 +289,7 @@ export default function GraffitiCanvas() {
           </Grid>
           <Stack
             direction={'row'}
-            display={{ base: 'block', md: 'none' }}
+            display={{ base: step === 0 ? "block" : "none", md: 'none' }}
             p={1}
             mb={3}
           >
