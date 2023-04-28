@@ -42,7 +42,7 @@ export default function About() {
           w={'1300px'}
           transitionDuration="1000ms"
         >
-          <Heading fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }} mb={6}>
+          <Heading size={{base: "2xl", md: "4xl"}} mb={6}>
             HI! MY NAME IS ANTHONY{' '}
             <Tooltip
               label="(dee-bee-aw-jee-oh)"
