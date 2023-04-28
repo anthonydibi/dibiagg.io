@@ -20,6 +20,7 @@ import {
   SiNextDotJs,
 } from 'react-icons/si'
 import { BsLightningFill, BsTriangleFill } from 'react-icons/bs'
+import UnderlinedHeading from '../components/UnderlinedHeading'
 
 export default function About() {
   return (
@@ -57,6 +58,7 @@ export default function About() {
                 whiteSpace="nowrap"
                 textDecorationColor={'accent'}
                 decoration={'underline dotted'}
+                textDecorationThickness={"6px"}
                 as="span"
               >
                 DI BIAGGIO
@@ -65,24 +67,37 @@ export default function About() {
             .
           </Heading>
           <Stack spacing={9} px={{ base: 0, md: 20 }}>
+            <UnderlinedHeading>
+              Who?
+            </UnderlinedHeading>
             <Text
               px={{ base: 3, md: 6 }}
               fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
             >
-              I'm studying computer science at the University of Minnesota with
-              a focus in software engineering. This is my personal website which
-              functions as a sandbox for whatever projects I decide to whip up
-              as well as a hub for my portfolio, resume, contact links, etc.
+              Anthony... it's me? From your dreams?
             </Text>
             <Text
               px={{ base: 3, md: 6 }}
               fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
             >
-              Here is the stuff I used to build this website.
+              I'm a computer science graduate from the University of Minnesota. I know a lot of things -
+              virtual reality, graphics, UI/UX, backend, <span style={{textDecoration: "line-through"}}>crying</span>, etc.,
+              but most importantly I care about writing quality software that is easy to use, easy to understand, and easy
+              to extend.
             </Text>
+            <Text
+              px={{ base: 3, md: 6 }}
+              fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
+            >
+              Learning new things keeps me happy, and I am always trying to broaden my horizons while also becoming more
+              well-versed in the areas that I am confident in.
+            </Text>
+            <UnderlinedHeading mb={"100"}>
+              Built With
+            </UnderlinedHeading>
             <Grid
+              pt={"10"}
               align={'center'}
-              flex={'1'}
               autoColumns={'1fr'}
               gap={'10'}
               templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}

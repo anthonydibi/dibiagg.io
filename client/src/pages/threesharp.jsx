@@ -32,6 +32,7 @@ import SEO from '../components/seo'
 import { WhatIsThreeSharp } from '../components/ThreeSharpStrings'
 import { WhyThreeSharp } from '../components/ThreeSharpStrings'
 import { HowItWorks } from '../components/ThreeSharpStrings'
+import UnderlinedHeading from '../components/UnderlinedHeading'
 
 //TODO: this code is really ugly, kind of just manically hacked it up but definitely need to clean up components
 
@@ -106,12 +107,12 @@ function Blurb(props) {
     <>
       {!isMobile ? 
       <>
-        <Heading
+        <UnderlinedHeading
           size={{ base: 'lg', md: 'xl', lg: '4xl' }}
           mb={'8'}
         >
           {props.heading ? props.heading : 'THREESHARP'}
-        </Heading>
+        </UnderlinedHeading>
         <ChakraText textAlign={"left"} fontSize={{ base: 'xl', md: '2xl' }} maxW={'40vw'}>
           { props.text ? props.text :  `The old showcase I had kind of sucked so I built a new one that
           is more on-theme. I made this using react-three-fiber. You can pan around,
