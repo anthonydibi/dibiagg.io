@@ -175,12 +175,15 @@ function ThreeSharpShowcase(props) {
         display={{base: "none", md: "flex"}}
         width={{ base: '100%', md: '50%' }}
         height={'100%'}
+        align={"center"}
         style={{ marginLeft: 0, marginTop: 0 }}
         p={{base: "0", md: '10'}}
         direction={"column"}
         justifyContent={"center"}
       >
+        <Box width={"75%"}>
         <Blurb isOpen={isOpen} onClose={onClose} heading={heading} text={text} />
+        </Box>
       </Flex>
       <Box
         borderLeft={{ base: '0px', md: '1px' }}
