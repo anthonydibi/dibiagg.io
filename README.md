@@ -8,7 +8,7 @@ This is a repository which holds all of the code related to **[dibiagg.io]**, my
 ## Project Structure
 ```
 dibiagg.io
-├── client
+├── client | Front end
 │   ├── next.config.js | Next.js settings
 │   ├── _posts | Blog post content as MDX
 │   ├── public | Static assets
@@ -24,6 +24,6 @@ dibiagg.io
 │       ├── styles | ChakraUI theme and CSS modules
 │       └── test-utils.js
 ├── README.md
-└── server
-    └── api.js | Backend for Deathball, Graffiti - handles database queries/WebSocket comms
+└── server | Backend
+    └── api.js | Server logic for Deathball, Graffiti - handles database queries/WebSocket comms
 ```
