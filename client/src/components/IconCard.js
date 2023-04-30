@@ -33,9 +33,21 @@ export default function IconCard(props) {
       </Text>
       <Box
         zIndex={'-1'}
+        background={"white"}
         position={'absolute'}
-        left={'-12px'}
-        top={'-12px'}
+        left={'-11.5px'}
+        top={'-11.5px'}
+        width={'100%'}
+        height={'100%'}
+        border={'3px solid'}
+        borderColor={'accent'}
+        pointerEvents={'none'}
+      />
+      <Box
+        zIndex={'-2'}
+        position={'absolute'}
+        left={'-20px'}
+        top={'-20px'}
         width={'100%'}
         height={'100%'}
         border={'3px solid'}
