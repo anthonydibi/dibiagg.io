@@ -3,7 +3,6 @@ import {
   Flex,
   HStack,
   IconButton,
-  Heading,
   Button,
   useDisclosure,
   useColorModeValue,
@@ -104,7 +103,7 @@ export default function Nav() {
         <Center>
           <HStack spacing={8} alignItems={'center'}>
             <Box mx={{base: 4, md: 0}}>
-              <Image alt={"A logo with a circle, two vertical lines, and another circle, representing the letters db"} width={90} height={60} loading={"eager"} src={logo}/>
+              <Image alt={"A logo with a circle, two vertical lines, and another circle, representing the letters db"} width={90} height={60} src={logo} priority/>
             </Box>
             <HStack as={'nav'} display={{ base: 'none', md: 'flex' }}>
               {LeftLinks.map((link) => (
