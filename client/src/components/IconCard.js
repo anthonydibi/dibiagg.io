@@ -33,7 +33,7 @@ export default function IconCard(props) {
       </Text>
       <Box
         zIndex={'-1'}
-        background={"white"}
+        bg={useColorModeValue(props.color, 'black')}
         position={'absolute'}
         left={'-11.5px'}
         top={'-11.5px'}
