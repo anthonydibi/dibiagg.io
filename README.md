@@ -7,19 +7,23 @@ This is a repository which holds all of the code related to **[dibiagg.io]**, my
   
 ## Project Structure
 ```
-├── client --> Next.js front end 
-│   ├── public --> Assets  
-│   └── src  
-│       ├── components --> Reusable UI components and logic  
-│       ├── index.js --> React-router routes, React initialization  
-│       ├── reportWebVitals.js  
-│       ├── routes --> Webpages  
-|       ├── hooks --> Custom React hooks
-│       ├── serviceWorker.js  
-│       ├── setupTests.js  
-│       ├── test-utils.js  
-│       └── theme.js --> Theming for Chakra components  
-├── server  
-|    └── api.js --> Node.js API for deathball and graffiti, and WebSocket server
-└── README.md  
+dibiagg.io
+├── client
+│   ├── next.config.js | Next.js settings
+│   ├── _posts | Blog post content as MDX
+│   ├── public | Static assets
+│   └── src
+│       ├── ColorModeSwitcher.js
+│       ├── components | Reusable React components
+│       ├── hooks | Custom React hooks
+│       ├── pages | Webpage routes
+│       ├── reportWebVitals.js
+│       ├── services | APIs
+│       ├── serviceWorker.js
+│       ├── setupTests.js
+│       ├── styles | ChakraUI theme and CSS modules
+│       └── test-utils.js
+├── README.md
+└── server
+    └── api.js | Backend for Deathball, Graffiti - handles database queries/WebSocket comms
 ```
