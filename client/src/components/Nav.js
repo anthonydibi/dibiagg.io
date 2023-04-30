@@ -27,6 +27,8 @@ import {
 } from '@chakra-ui/icons'
 import ContactButtons from '../components/ContactButtons'
 import Image from 'next/image'
+import lightModeLogo from '../../public/lightmodelogo.png'
+import darkModeLogo from '../../public/darkmodelogo.png'
 
 const LeftLinks = [
   { display: 'ABOUT', href: '/' },
@@ -74,7 +76,7 @@ export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode()
   const bgColor = useColorModeValue('white', 'black')
-  const logoSrc = useColorModeValue('/lightmodelogo.png', '/darkmodelogo.png')
+  const logo = useColorModeValue(lightModeLogo, darkModeLogo)
 
   return (
     <>
@@ -101,8 +103,8 @@ export default function Nav() {
         />
         <Center>
           <HStack spacing={8} alignItems={'center'}>
-            <Box>
-              <Image width={90} height={50} src={logoSrc}/>
+            <Box mx={{base: 4, md: 0}}>
+              <Image alt={"A logo with a circle, two vertical lines, and another circle, representing the letters db"} width={90} height={60} loading={"eager"} src={logo}/>
             </Box>
             <HStack as={'nav'} display={{ base: 'none', md: 'flex' }}>
               {LeftLinks.map((link) => (
