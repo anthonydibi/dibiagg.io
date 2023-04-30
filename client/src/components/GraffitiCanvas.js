@@ -46,12 +46,12 @@ export default function GraffitiCanvas() {
   const [day, setDay] = React.useState(today.toISOString().split('T')[0])
   const [isLoaded, setIsLoaded] = React.useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  let [stageScale, setStageScale] = React.useState(1);
-  const {width, height} = useWindowDimensions();
+  let [stageScale, setStageScale] = React.useState(1)
+  const { width, height } = useWindowDimensions()
 
   React.useEffect(() => {
-    if(width <= 1000){
-      setStageScale(width / 1000.0);
+    if (width <= 1000) {
+      setStageScale(width / 1000.0)
     }
   }, [width, height])
 
@@ -243,7 +243,12 @@ export default function GraffitiCanvas() {
         </Flex>
       </Stack>
       <Flex direction={{ base: 'column', md: 'row' }}>
-        <Box visibility={{base: "hidden", md: step === 0 ? "visible" : "hidden"}} display={{base: "none", md: "block"}} flex={'1'} align={'right'}>
+        <Box
+          visibility={{ base: 'hidden', md: step === 0 ? 'visible' : 'hidden' }}
+          display={{ base: 'none', md: 'block' }}
+          flex={'1'}
+          align={'right'}
+        >
           <SwatchesPicker
             color={color}
             height={1002 * stageScale}
@@ -251,10 +256,20 @@ export default function GraffitiCanvas() {
           />
         </Box>
         <Box width={stageScale * 1000} height={stageScale * 1000}>
-        <GraffitiDrawArea lines={lines} setLines={setLines} tool={tool} isLoaded={isLoaded} color={color} userTag={userTag} stageScale={stageScale} step={step} save={save}/>
+          <GraffitiDrawArea
+            lines={lines}
+            setLines={setLines}
+            tool={tool}
+            isLoaded={isLoaded}
+            color={color}
+            userTag={userTag}
+            stageScale={stageScale}
+            step={step}
+            save={save}
+          />
         </Box>
         <Box flex={'1'}>
-          <Grid display={{ base: 'none', md: step === 0 ? "block" : "none" }}>
+          <Grid display={{ base: 'none', md: step === 0 ? 'block' : 'none' }}>
             <GridItem>
               <IconButton
                 size="lg"
@@ -288,7 +303,7 @@ export default function GraffitiCanvas() {
           </Grid>
           <Stack
             direction={'row'}
-            display={{ base: step === 0 ? "block" : "none", md: 'none' }}
+            display={{ base: step === 0 ? 'block' : 'none', md: 'none' }}
             p={1}
             mb={3}
           >

@@ -1,4 +1,3 @@
-
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import {
   Box,
@@ -100,30 +99,42 @@ function NodeText(props) {
 }
 
 function Blurb(props) {
-
-  const isMobile = useBreakpointValue({base: true, md: false})
+  const isMobile = useBreakpointValue({ base: true, md: false })
 
   return (
     <>
-      {!isMobile ? 
-      <>
-        <UnderlinedHeading
-          size={{ base: 'lg', md: 'xl', lg: '4xl' }}
-          mb={'8'}
-        >
-          {props.heading ? props.heading : 'THREESHARP'}
-        </UnderlinedHeading>
-        <ChakraText textAlign={"left"} fontSize={{ base: 'xl', md: '2xl' }} maxW={'40vw'}>
-          { props.text ? props.text :  `The old showcase I had kind of sucked so I built a new one that
+      {!isMobile ? (
+        <>
+          <UnderlinedHeading
+            size={{ base: 'lg', md: 'xl', lg: '4xl' }}
+            mb={'8'}
+          >
+            {props.heading ? props.heading : 'THREESHARP'}
+          </UnderlinedHeading>
+          <ChakraText
+            textAlign={'left'}
+            fontSize={{ base: 'xl', md: '2xl' }}
+            maxW={'40vw'}
+          >
+            {props.text
+              ? props.text
+              : `The old showcase I had kind of sucked so I built a new one that
           is more on-theme. I made this using react-three-fiber. You can pan around,
           rotate, and zoom with right click, left click, and mouse wheel, respectively, on desktop.
           If you're on mobile, you can use a two-finger drag, one-finger drag, and pinch. In the future
           I am planning on adding a 3D demonstration at some point once I get a better hang of
           react-three-fiber. Click the nodes on the right to learn more!
-          ` }
-        </ChakraText> </> : 
-      <ThreeSharpModal isOpen={props.isOpen} onClose={props.onClose} text={props.text} heading={props.heading} />
-    } 
+          `}
+          </ChakraText>{' '}
+        </>
+      ) : (
+        <ThreeSharpModal
+          isOpen={props.isOpen}
+          onClose={props.onClose}
+          text={props.text}
+          heading={props.heading}
+        />
+      )}
     </>
   )
 }
@@ -134,19 +145,23 @@ function ThreeSharpModal(props) {
       <Modal
         onClose={props.onClose}
         isOpen={props.isOpen}
-        scrollBehavior={"inside"}
-        size={"lg"}
+        scrollBehavior={'inside'}
+        size={'lg'}
         isCentered
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{props.heading}</ModalHeader>
-          <ModalCloseButton variant={"interact"}/>
-          <ModalBody>
-            {props.text}
-          </ModalBody>
+          <ModalCloseButton variant={'interact'} />
+          <ModalBody>{props.text}</ModalBody>
           <ModalFooter>
-            <Button onClick={props.onClose} variant={"interact"} rounded={"none"}>Close</Button>
+            <Button
+              onClick={props.onClose}
+              variant={'interact'}
+              rounded={'none'}
+            >
+              Close
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -167,22 +182,24 @@ function ThreeSharpShowcase(props) {
   }
 
   return (
-    <Stack
-      height={'80vh'}
-      direction={{ base: 'column', md: 'row' }}
-    >
+    <Stack height={'80vh'} direction={{ base: 'column', md: 'row' }}>
       <Flex
-        display={{base: "none", md: "flex"}}
+        display={{ base: 'none', md: 'flex' }}
         width={{ base: '100%', md: '50%' }}
         height={'100%'}
-        align={"center"}
+        align={'center'}
         style={{ marginLeft: 0, marginTop: 0 }}
-        p={{base: "0", md: '10'}}
-        direction={"column"}
-        justifyContent={"center"}
+        p={{ base: '0', md: '10' }}
+        direction={'column'}
+        justifyContent={'center'}
       >
-        <Box width={"75%"}>
-        <Blurb isOpen={isOpen} onClose={onClose} heading={heading} text={text} />
+        <Box width={'75%'}>
+          <Blurb
+            isOpen={isOpen}
+            onClose={onClose}
+            heading={heading}
+            text={text}
+          />
         </Box>
       </Flex>
       <Box
@@ -230,7 +247,10 @@ function ThreeSharpShowcase(props) {
               selected={selectedNode}
             />
             <Node
-              onClick={() => { if(typeof window !== undefined) window.open('https://youtu.be/JaxGmNPOdZM') }}
+              onClick={() => {
+                if (typeof window !== undefined)
+                  window.open('https://youtu.be/JaxGmNPOdZM')
+              }}
               setSelectedNode={setSelectedNode}
               setBlurb={setBlurb}
               name={'demo'}
@@ -279,7 +299,6 @@ function ThreeSharpShowcase(props) {
 }
 
 export default function ThreeSharp() {
-
   return (
     <>
       <SEO

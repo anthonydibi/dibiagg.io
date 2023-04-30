@@ -14,7 +14,7 @@ import {
   Menu,
   MenuList,
   MenuItem,
-  Collapse
+  Collapse,
 } from '@chakra-ui/react'
 import { Link } from '@chakra-ui/next-js'
 import {
@@ -102,8 +102,16 @@ export default function Nav() {
         />
         <Center>
           <HStack spacing={8} alignItems={'center'}>
-            <Box mx={{base: 4, md: 0}}>
-              <Image alt={"A logo with a circle, two vertical lines, and another circle, representing the letters db"} width={90} height={60} src={logo} priority/>
+            <Box mx={{ base: 4, md: 0 }}>
+              <Image
+                alt={
+                  'A logo with a circle, two vertical lines, and another circle, representing the letters db'
+                }
+                width={90}
+                height={60}
+                src={logo}
+                priority
+              />
             </Box>
             <HStack as={'nav'} display={{ base: 'none', md: 'flex' }}>
               {LeftLinks.map((link) => (
@@ -188,76 +196,76 @@ export default function Nav() {
         </Flex>
         <Spacer />
       </Flex>
-          <Box
-            as={Collapse}
-            in={isOpen}
-            animateOpacity={false}
-            border="1px solid"
-            borderTop="none"
-            borderLeft="none"
-            borderRight="none"
-            zIndex={'500'}
-            position="sticky"
-            top="60px"
-            w={'100%'}
-            bg={bgColor}
-            p={4}
-            display={{ md: 'none' }}
-          >
-            <Stack as={'nav'} spacing={4} align={'start'}>
-              {LeftLinks.map((link) => (
-                <NavLink href={`${link.href}`} key={link.display}>
-                  {link.display}
+      <Box
+        as={Collapse}
+        in={isOpen}
+        animateOpacity={false}
+        border="1px solid"
+        borderTop="none"
+        borderLeft="none"
+        borderRight="none"
+        zIndex={'500'}
+        position="sticky"
+        top="60px"
+        w={'100%'}
+        bg={bgColor}
+        p={4}
+        display={{ md: 'none' }}
+      >
+        <Stack as={'nav'} spacing={4} align={'start'}>
+          {LeftLinks.map((link) => (
+            <NavLink href={`${link.href}`} key={link.display}>
+              {link.display}
+            </NavLink>
+          ))}
+          {RightLinks.map((link) => (
+            <NavLink href={`${link.href}`} key={link.display}>
+              {link.display}
+            </NavLink>
+          ))}
+          <Menu>
+            <MenuButton
+              as={Button}
+              fontWeight={'bold'}
+              border="1px solid transparent"
+              px={2}
+              py={1}
+              rounded={'none'}
+              _hover={{
+                textDecoration: 'none',
+                border: '1px solid',
+              }}
+              variant={'ghost'}
+              rightIcon={<ChevronDownIcon />}
+              h={'31px'}
+            >
+              DEATHBALL CLONE
+            </MenuButton>
+            <MenuList bg={bgColor} borderRadius="0px" border="1px solid">
+              <MenuItem>
+                <NavLink href="/deathball/about" key={'about'}>
+                  ABOUT
                 </NavLink>
-              ))}
-              {RightLinks.map((link) => (
-                <NavLink href={`${link.href}`} key={link.display}>
-                  {link.display}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  window.open('https://gilded-kulfi-c5ad94.netlify.app/')
+                }}
+              >
+                <FakeLink>PLAY</FakeLink>
+              </MenuItem>
+              <MenuItem>
+                <NavLink href="/deathball/leaderboard" key={'leaderboard'}>
+                  LEADERBOARD
                 </NavLink>
-              ))}
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  fontWeight={'bold'}
-                  border="1px solid transparent"
-                  px={2}
-                  py={1}
-                  rounded={'none'}
-                  _hover={{
-                    textDecoration: 'none',
-                    border: '1px solid',
-                  }}
-                  variant={'ghost'}
-                  rightIcon={<ChevronDownIcon />}
-                  h={'31px'}
-                >
-                  DEATHBALL CLONE
-                </MenuButton>
-                <MenuList bg={bgColor} borderRadius="0px" border="1px solid">
-                  <MenuItem>
-                    <NavLink href="/deathball/about" key={'about'}>
-                      ABOUT
-                    </NavLink>
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      window.open('https://gilded-kulfi-c5ad94.netlify.app/')
-                    }}
-                  >
-                    <FakeLink>PLAY</FakeLink>
-                  </MenuItem>
-                  <MenuItem>
-                    <NavLink href="/deathball/leaderboard" key={'leaderboard'}>
-                      LEADERBOARD
-                    </NavLink>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-              <Stack direction={'row'} justify={'center'}>
-                <ContactButtons />
-              </Stack>
-            </Stack>
-          </Box>
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          <Stack direction={'row'} justify={'center'}>
+            <ContactButtons />
+          </Stack>
+        </Stack>
+      </Box>
     </>
   )
 }
