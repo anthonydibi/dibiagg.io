@@ -26,6 +26,7 @@ import {
   ChevronDownIcon,
 } from '@chakra-ui/icons'
 import ContactButtons from '../components/ContactButtons'
+import Image from 'next/image'
 
 const LeftLinks = [
   { display: 'ABOUT', href: '/' },
@@ -73,6 +74,7 @@ export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode()
   const bgColor = useColorModeValue('white', 'black')
+  const logoSrc = useColorModeValue('/lightmodelogo.png', '/darkmodelogo.png')
 
   return (
     <>
@@ -100,21 +102,7 @@ export default function Nav() {
         <Center>
           <HStack spacing={8} alignItems={'center'}>
             <Box>
-              <Heading
-                mx={{ base: '5', md: '0' }}
-                fontFamily={'SangoStatic'}
-                size={'xl'}
-              >
-                DB.
-                <Heading
-                  as="span"
-                  color="accent"
-                  size="xl"
-                  fontFamily={'SangoStatic'}
-                >
-                  IO
-                </Heading>
-              </Heading>
+              <Image width={90} height={50} src={logoSrc}/>
             </Box>
             <HStack as={'nav'} display={{ base: 'none', md: 'flex' }}>
               {LeftLinks.map((link) => (
