@@ -28,6 +28,6 @@ dibiagg.io
     └── api.js | Server logic for Deathball, Graffiti - handles database queries/WebSocket comms
 ```
 
-## Codebase visualization
+## Codebase Visualization
 
 ![Codebase visualization](./diagram.svg)
