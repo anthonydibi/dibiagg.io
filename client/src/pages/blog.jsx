@@ -12,10 +12,10 @@ export default function Blog({ allPosts }) {
         description="Anthony Di Biaggio's blog posts"
       />
       <Container
-        maxW={'2xl'}
+        maxW={'4xl'}
+        borderX={"1px"}
         minH={'100vh'}
         align="center"
-        borderX={'1px'}
         py={'4'}
       >
         {allPosts.map((post) => (

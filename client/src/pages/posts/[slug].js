@@ -22,7 +22,7 @@ export default function Post({ post }) {
       <Head>
         <meta property="og:image" content={post.ogImage.url} />
       </Head>
-      <Container size="lg" borderX="1px" maxW={'4xl'} py={'6'}>
+      <Container borderX="1px" maxW={'6xl'} py={'6'}>
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
