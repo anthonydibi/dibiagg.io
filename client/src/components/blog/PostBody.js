@@ -4,6 +4,7 @@ import { Box, Button } from '@chakra-ui/react'
 import Image from 'next/image'
 import CodeBlock from './CodeBlock'
 import ReactThreeFiberExample from './ReactThreeFiberExample'
+import FrequentlyUsedEmojiExample from './FrequentlyUsedEmojiExample'
 
 const NextImage = (props) => <Image alt={props.alt} fill={'true'} {...props} />
 
@@ -21,6 +22,7 @@ const components = {
     )
   },
   ReactThreeFiberExample: ReactThreeFiberExample,
+  FrequentlyUsedEmojiExample: FrequentlyUsedEmojiExample,
 }
 
 const PostBody = ({ content }) => {

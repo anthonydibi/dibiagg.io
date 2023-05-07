@@ -1,0 +1,200 @@
+---
+title: 'Implementing Frequently Used Emojis'
+excerpt: 'While typing on my phone, I started getting curious about how the frequently used emojis feature is implemented. I was surprised that there was no some information out there about the implementation (well, it is Apple, so not really), so it is time to put it out there!'
+coverImage: '/emoji.jpg'
+date: '2023-05-03'
+ogImage:
+    url: '/nextjs.png'
+---
+
+While typing on my phone, I started getting curious about how the frequently used emojis feature is implemented. I was surprised
+that there wasn't some information out there about it (well, it is Apple, so not really), so it's time to put it out there!
+
+The idea is that we have some set of `n` emojis, and we want to cache a subset of those emojis that are used the most. We could imagine attaching
+a usage count to each emoji, and saying that we want the `k` emojis with the highest count to be stored in this cache, with `k <= n`. Ideally, we want
+to be able to add to this cache and get elements from it in constant time.
+
+Luckily for us, this is pretty trivial since this exact problem gets brought up in operating systems and there are a million solutions for it - see
+[here](https://en.wikipedia.org/wiki/Cache_replacement_policies).
+
+First, we will implement an LFU cache in JavaScript. It will keep track of a few things. It will keep track of `min`, which is the smallest usage count
+currently in the cache. It has a `capacity`, which is the maximum amount of items that can exist in the cache. `values` is a `Map` that stores the key
+value pairs, `counts` stores each key and its respective usage count, and `sets` keeps track of each count and which keys have that count.
+
+```js
+class LFUCache {
+    constructor(capacity){
+        this.min = -1;
+        this.capacity = capacity;
+        this.values = new Map(); //stores keys and values
+        this.counts = new Map(); //stores keys and access counts
+        this.sets = new Map(); //Map<number, Set> - stores counts and a set of keys with that count
+        this.sets.set(0, new Set());
+    }
+```
+
+To get an element from the cache, we need to do a bit of bookkeeping each time.
+
+```js
+get(key){
+    if(!this.values.has(key)){
+        return -1;
+    }
+    let count = this.counts.get(key);
+    if(count === undefined){
+        throw new Error(`A key ${key} exists but has no count.`);
+    }
+    this.counts.set(key, count + 1);
+    let set = this.sets.get(count);
+    if(set === undefined){
+        throw new Error(`A key ${key} exists but is not in a count set.`);
+    }
+    set.delete(key);
+    if(count == this.min && set.size <= 0){
+        this.min++;
+    }
+    if(!this.sets.has(count + 1)){
+        this.sets.set(count + 1, new Set());
+    }
+    let newCountSet = this.sets.get(count + 1);
+    newCountSet.add(key);
+    return this.values.get(key);
+}
+```
+
+We check that `key` exists in the cache, and continue accordingly. Then we update the count, and grab the count set that `key`
+is currently in. We move the element from that set to the set of one count higher, and create that set if needed. We also update
+the min, since we are changing the count of `key`. Finally, we return the value of `key`. Adding is about as simple:
+
+```js
+set(key, value){
+    if(this.values.has(key)){
+        this.values.set(key, value);
+        this.get(key); //maintain ordering
+        return;
+    }
+    if(this.values.size >= this.capacity){
+        let evictSet = this.sets.get(this.min);
+        let evictedKey = [...evictSet][0]; //get first element of set
+        evictSet.delete(evictedKey);
+        this.values.delete(evictedKey);
+        this.counts.delete(evictedKey);
+    }
+    this.values.set(key, value);
+    this.counts.set(key, 0);
+    this.min = 0;
+    let zeroCountSet = this.sets.get(0);
+    zeroCountSet.add(key);
+}
+```
+If `key` already exists in the cache, then we update the value and `get` the key, to reflect that it has been used again.
+Otherwise, if the cache is full, we have to figure out which element to evict. This is why we are keeping track of `min` -
+we can just get the count set that has the minimum count, since we are evicting the least frequently used item. We just
+take the first element from that set and remove it to make room for the new item. The nice thing about `Set` in JavaScript is
+that it maintains insertion order, so we are guaranteed that the first element in `evictSet` is the oldest. We also delete the 
+evicted item from `values` and `counts`. Then, we initialize the new item in the cache, adding it to `values` and `counts`, 
+and resetting `min` to 0, since the new item hasn't been accessed yet. Then, we add it to the count set of zero, and we are done!
+We have a data structure which maintains its elements in order of usage frequency, where items can both be added and retrieved
+in `O(1)` time.
+
+Now, if we are going to use this in React, we are going to need to be able to get the elements as a list, so here is a short function to do that:
+
+```js
+toList(ascending){
+    let res = [];
+    for(let set of this.sets.values()){
+        if(ascending){
+            res = res.concat([...set]);
+        }
+        else{
+            res = res.concat([...set].reverse());
+        }
+    }
+    if(ascending){
+        return res;
+    }
+    return res.reverse();
+}
+```
+
+This function simply iterates over `sets` and `concat`s them onto a list. We pass in a parameter `ascending` to determine whether we want the list
+in ascending or descending order in terms of usage count.
+
+Now that we have the data structure figured out, we can get to the emoji part. I'll make a simple React component to demonstrate.
+
+```jsx
+function FrequentlyUsedEmojiExample() {
+    const cache = useRef(new LFUCache(20));
+    const [cachedEmojis, setCachedEmojis] = useState([]);
+    const [emojiInputs, setEmojiInputs] = useState("");
+```
+
+For hooks, we will just have two pieces of state - `cachedEmojis`, which are the emojis present in the cache, e.g. the most frequently used emojis. Also,
+we have `emojiInputs` which is just all of the emojis that have been inputted. `cache` is a `LFUCache` ref - it would be a good idea to abstract the cache
+away into a hook, but for simplicity we will just hold it in that ref.
+
+```jsx
+const onEmojiInput = (emoji) => {
+    setEmojiInputs(emojiInputs + emoji);
+    cache.current.set(emoji, emoji); //emojis are just text so we don't need an identifier as the key
+    setCachedEmojis(cache.current.toList(false));
+}
+
+const ClickableEmoji = (props) => {
+    return (
+        <>
+            <Box userSelect={"none"} as={'span'} cursor={"pointer"} fontSize={"2xl"} onClick={() => onEmojiInput(props.emoji)} aria-label={"A clickable emoji - emojis in this dataset are not tagged, so further information about the content is unavailable."}>
+                {props.emoji}
+            </Box>
+        </>
+    );
+}
+```
+
+Here we have the emojis that can be used to add to the input. When an emoji is clicked, it just adds to `emojiInputs`, adds to `cache`, and refreshes the frequently used
+emojis stored in `cachedEmojis`. The rest of the component renders all of this stuff and looks like this:
+
+```jsx
+return ( 
+    <>
+        <Grid maxW={"800px"} h={"200px"} gridTemplateColumns={"1fr 2fr"} gap={"1"} border={"1px"} p={"2"} mx={"auto"}>
+            <GridItem textAlign={"center"}>
+                <Heading as={"text"} size={"md"}>
+                    Frequently Used
+                </Heading>
+            </GridItem>
+            <GridItem textAlign={"center"}>
+                <Heading as={"text"} size={"md"}>
+                    Emojis
+                </Heading>
+            </GridItem>
+            <GridItem overflowY={"scroll"} p={"2"}>
+                {cachedEmojis.map((emoji) => (
+                    <ClickableEmoji emoji={emoji}/>
+                ))}
+            </GridItem>
+            <GridItem overflowY={"scroll"} letterSpacing={"1px"} p={'2'}>
+                {emojis.map((emoji) => (
+                    <ClickableEmoji emoji={emoji}/>
+                ))}
+            </GridItem>
+        </Grid>
+        <InputGroup maxW={"800px"} mt={"4"} mb={'8'} mx={"auto"}>
+            <Input value={emojiInputs} fontSize={"20px"} />
+            <InputRightElement cursor={"pointer"} onClick={ () => setEmojiInputs("") } children={<IoMdSend />} />
+        </InputGroup>
+    </>
+);
+```
+
+It just creates a ChakraUI `Grid` which holds the frequently used emojis and the entire list of emojis, as well as a 
+`Input` for the emoji input. And here it is in action!
+
+<FrequentlyUsedEmojiExample />
+
+Note that this doesn't behave exactly the same way as iOS or Android's frequently used emoji feature does. There are some UX
+enhancements that can be made - for example, if this emoji picker was put in a keyboard or a popup, deferring the cache
+refresh until it is closed so that the emojis don't move around while you are typing. The algorithm for determining what
+gets cached is also certainly more complex than this, but this is just meant to be a straightforward tutorial that shows
+how you can design a data structure and implement it in an interface. Hopefully you learned something, and if you made it
+all the way to the end, congratulations!!
