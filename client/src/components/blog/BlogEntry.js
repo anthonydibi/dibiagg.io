@@ -13,7 +13,7 @@ export const BlogEntry = (props) => {
         p={'8'}
         textAlign={'start'}
         mb={'8'}
-        position={"relative"}
+        position={'relative'}
       >
         <LinkOverlay as={NextLink} href={`/posts/${props.post.slug}`}>
           <Heading display={'block'}>{props.post.title}</Heading>
@@ -22,14 +22,23 @@ export const BlogEntry = (props) => {
           <DateFormatter dateString={props.post.date} />
         </Box>
         <Image
-          style={{marginTop: 8}}
+          style={{ marginTop: 8 }}
           src={props.post.coverImage}
           alt={`Cover Image for ${props.post.title}`}
           width={1300}
           height={630}
         />
-        <Text mt={'6'} fontSize={"xl"}>{props.post.excerpt}</Text>
-        <Box position={"absolute"} left={"0"} top={"0"} width={"10px"} height={"100%"} background={"accent"}/>
+        <Text mt={'6'} fontSize={'xl'}>
+          {props.post.excerpt}
+        </Text>
+        <Box
+          position={'absolute'}
+          left={'0'}
+          top={'0'}
+          width={'10px'}
+          height={'100%'}
+          background={'accent'}
+        />
       </LinkBox>
     </>
   )

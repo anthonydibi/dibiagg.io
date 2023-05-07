@@ -32,7 +32,13 @@ export async function getPostBySlug(slug, fields = [], nav = false) {
   })
   if (nav) {
     //if we care about navigating to older/newer posts
-    const allPosts = await getAllPosts(['slug', 'title', 'date', 'excerpt', 'coverImage'])
+    const allPosts = await getAllPosts([
+      'slug',
+      'title',
+      'date',
+      'excerpt',
+      'coverImage',
+    ])
     for (let i = 0; i < allPosts.length; i++) {
       let curPost = allPosts[i]
       if (curPost.slug == realSlug) {
@@ -43,7 +49,7 @@ export async function getPostBySlug(slug, fields = [], nav = false) {
             title: olderPost.title,
             date: olderPost.date,
             excerpt: olderPost.excerpt,
-            coverImage: olderPost.coverImage
+            coverImage: olderPost.coverImage,
           }
         }
         if (i > 0) {
@@ -53,7 +59,7 @@ export async function getPostBySlug(slug, fields = [], nav = false) {
             title: newerPost.title,
             date: newerPost.date,
             excerpt: newerPost.excerpt,
-            coverImage: newerPost.coverImage
+            coverImage: newerPost.coverImage,
           }
         }
         break

@@ -4,7 +4,7 @@ excerpt: 'While typing on my phone, I started getting curious about how the freq
 coverImage: '/emoji.jpg'
 date: '2023-05-03'
 ogImage:
-    url: '/emoji.jpg'
+  url: '/emoji.jpg'
 ---
 
 While typing on my phone, I started getting curious about how the frequently used emojis feature is implemented. I was surprised
@@ -87,12 +87,13 @@ set(key, value){
     zeroCountSet.add(key);
 }
 ```
+
 If `key` already exists in the cache, then we update the value and `get` the key, to reflect that it has been used again.
 Otherwise, if the cache is full, we have to figure out which element to evict. This is why we are keeping track of `min` -
 we can just get the count set that has the minimum count, since we are evicting the least frequently used item. We just
 take the first element from that set and remove it to make room for the new item. The nice thing about `Set` in JavaScript is
-that it maintains insertion order, so we are guaranteed that the first element in `evictSet` is the oldest. We also delete the 
-evicted item from `values` and `counts`. Then, we initialize the new item in the cache, adding it to `values` and `counts`, 
+that it maintains insertion order, so we are guaranteed that the first element in `evictSet` is the oldest. We also delete the
+evicted item from `values` and `counts`. Then, we initialize the new item in the cache, adding it to `values` and `counts`,
 and resetting `min` to 0, since the new item hasn't been accessed yet. Then, we add it to the count set of zero, and we are done!
 We have a data structure which maintains its elements in order of usage frequency, where items can both be added and retrieved
 in `O(1)` time.
@@ -135,19 +136,28 @@ away into a hook, but for simplicity we will just hold it in that ref.
 
 ```jsx
 const onEmojiInput = (emoji) => {
-    setEmojiInputs(emojiInputs + emoji);
-    cache.current.set(emoji, emoji); //emojis are just text so we don't need an identifier as the key
-    setCachedEmojis(cache.current.toList(false));
+  setEmojiInputs(emojiInputs + emoji)
+  cache.current.set(emoji, emoji) //emojis are just text so we don't need an identifier as the key
+  setCachedEmojis(cache.current.toList(false))
 }
 
 const ClickableEmoji = (props) => {
-    return (
-        <>
-            <Box userSelect={"none"} as={'span'} cursor={"pointer"} fontSize={"2xl"} onClick={() => onEmojiInput(props.emoji)} aria-label={"A clickable emoji - emojis in this dataset are not tagged, so further information about the content is unavailable."}>
-                {props.emoji}
-            </Box>
-        </>
-    );
+  return (
+    <>
+      <Box
+        userSelect={'none'}
+        as={'span'}
+        cursor={'pointer'}
+        fontSize={'2xl'}
+        onClick={() => onEmojiInput(props.emoji)}
+        aria-label={
+          'A clickable emoji - emojis in this dataset are not tagged, so further information about the content is unavailable.'
+        }
+      >
+        {props.emoji}
+      </Box>
+    </>
+  )
 }
 ```
 
@@ -155,39 +165,51 @@ Here we have the emojis that can be used to add to the input. When an emoji is c
 emojis stored in `cachedEmojis`. The rest of the component renders all of this stuff and looks like this:
 
 ```jsx
-return ( 
-    <>
-        <Grid maxW={"800px"} h={"200px"} gridTemplateColumns={"1fr 2fr"} gap={"1"} border={"1px"} p={"2"} mx={"auto"}>
-            <GridItem textAlign={"center"}>
-                <Heading as={"text"} size={"md"}>
-                    Frequently Used
-                </Heading>
-            </GridItem>
-            <GridItem textAlign={"center"}>
-                <Heading as={"text"} size={"md"}>
-                    Emojis
-                </Heading>
-            </GridItem>
-            <GridItem overflowY={"scroll"} p={"2"}>
-                {cachedEmojis.map((emoji) => (
-                    <ClickableEmoji emoji={emoji}/>
-                ))}
-            </GridItem>
-            <GridItem overflowY={"scroll"} letterSpacing={"1px"} p={'2'}>
-                {emojis.map((emoji) => (
-                    <ClickableEmoji emoji={emoji}/>
-                ))}
-            </GridItem>
-        </Grid>
-        <InputGroup maxW={"800px"} mt={"4"} mb={'8'} mx={"auto"}>
-            <Input value={emojiInputs} fontSize={"20px"} />
-            <InputRightElement cursor={"pointer"} onClick={ () => setEmojiInputs("") } children={<IoMdSend />} />
-        </InputGroup>
-    </>
-);
+return (
+  <>
+    <Grid
+      maxW={'800px'}
+      h={'200px'}
+      gridTemplateColumns={'1fr 2fr'}
+      gap={'1'}
+      border={'1px'}
+      p={'2'}
+      mx={'auto'}
+    >
+      <GridItem textAlign={'center'}>
+        <Heading as={'text'} size={'md'}>
+          Frequently Used
+        </Heading>
+      </GridItem>
+      <GridItem textAlign={'center'}>
+        <Heading as={'text'} size={'md'}>
+          Emojis
+        </Heading>
+      </GridItem>
+      <GridItem overflowY={'scroll'} p={'2'}>
+        {cachedEmojis.map((emoji) => (
+          <ClickableEmoji emoji={emoji} />
+        ))}
+      </GridItem>
+      <GridItem overflowY={'scroll'} letterSpacing={'1px'} p={'2'}>
+        {emojis.map((emoji) => (
+          <ClickableEmoji emoji={emoji} />
+        ))}
+      </GridItem>
+    </Grid>
+    <InputGroup maxW={'800px'} mt={'4'} mb={'8'} mx={'auto'}>
+      <Input value={emojiInputs} fontSize={'20px'} />
+      <InputRightElement
+        cursor={'pointer'}
+        onClick={() => setEmojiInputs('')}
+        children={<IoMdSend />}
+      />
+    </InputGroup>
+  </>
+)
 ```
 
-It just creates a ChakraUI `Grid` which holds the frequently used emojis and the entire list of emojis, as well as a 
+It just creates a ChakraUI `Grid` which holds the frequently used emojis and the entire list of emojis, as well as a
 `Input` for the emoji input. And here it is in action!
 
 <FrequentlyUsedEmojiExample />

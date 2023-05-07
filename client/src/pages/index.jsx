@@ -43,7 +43,7 @@ export default function About() {
           w={'1300px'}
           transitionDuration="1000ms"
         >
-          <Heading size={{base: "2xl", md: "4xl"}} mb={6}>
+          <Heading size={{ base: '2xl', md: '4xl' }} mb={6}>
             HI! MY NAME IS ANTHONY{' '}
             <Tooltip
               label="(dee-bee-aw-jee-oh)"
@@ -59,7 +59,7 @@ export default function About() {
                 whiteSpace="nowrap"
                 textDecorationColor={'accent'}
                 decoration={'underline dotted'}
-                textDecorationThickness={{base: "4px", md: "8px"}}
+                textDecorationThickness={{ base: '4px', md: '8px' }}
                 as="span"
               >
                 DI BIAGGIO
@@ -68,9 +68,7 @@ export default function About() {
             .
           </Heading>
           <Stack spacing={9} px={{ base: 4, md: 20 }}>
-            <UnderlinedHeading>
-              Who?
-            </UnderlinedHeading>
+            <UnderlinedHeading>Who?</UnderlinedHeading>
             <Text
               px={{ base: 3, md: 6 }}
               fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
@@ -81,29 +79,32 @@ export default function About() {
               px={{ base: 3, md: 6 }}
               fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
             >
-              Learning new things keeps me happy, and I am always trying to broaden my horizons while also becoming more
-              well-versed in the areas that I am experienced in.
+              Learning new things keeps me happy, and I am always trying to
+              broaden my horizons while also becoming more well-versed in the
+              areas that I am experienced in.
             </Text>
             <Text
               px={{ base: 3, md: 6 }}
               fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
             >
-              I love building things that live on the web, but I am interested in lots of things! I have dabbled in virtual reality, graphics,
+              I love building things that live on the web, but I am interested
+              in lots of things! I have dabbled in virtual reality, graphics,
               distributed systems, natural language processing, and more.
             </Text>
             <Text
               px={{ base: 3, md: 6 }}
               fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
             >
-              Enjoy poking around - I like to put my projects on here, and you can also find information about me, like my socials and resume.
-              I also started a blog on here, where I like to put educational stuff, my thoughts, and just general events in my life. If you don't
-              care about that, that is ok! I just like writing and it clears my head a bit.
+              Enjoy poking around - I like to put my projects on here, and you
+              can also find information about me, like my socials and resume. I
+              also started a blog on here, where I like to put educational
+              stuff, my thoughts, and just general events in my life. If you
+              don't care about that, that is ok! I just like writing and it
+              clears my head a bit.
             </Text>
-            <UnderlinedHeading>
-              Built with
-            </UnderlinedHeading>
+            <UnderlinedHeading>Built with</UnderlinedHeading>
             <Grid
-              pt={"10"}
+              pt={'10'}
               align={'center'}
               autoColumns={'1fr'}
               gap={'10'}

@@ -3,11 +3,11 @@
   line-height: 1.75rem;
 }
 
-.markdown pre{
+.markdown pre {
   font-size: 1.2rem;
 }
 
-.markdown code{
+.markdown code {
   border: 1px solid;
   white-space: nowrap;
   padding-left: 3px;
