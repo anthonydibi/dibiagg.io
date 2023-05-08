@@ -47,7 +47,7 @@ function FrequentlyUsedEmojiExample() {
   return (
     <>
       <Grid
-        w={'600px'}
+        maxW={'600px'}
         h={'100%'}
         gridTemplateColumns={'1fr 1fr'}
         gap={'1'}
