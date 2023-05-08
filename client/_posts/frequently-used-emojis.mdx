@@ -212,9 +212,10 @@ return (
   </>
 )
 ```
-
 It just creates a ChakraUI `Grid` which holds the frequently used emojis and the entire list of emojis, as well as a
 `Input` for the emoji input. And here it is in action!
+> Note: since this component just renders the emojis as text, it may look very janky depending on the browser and/or device you are viewing from.
+> A better approach would be to render the emojis as `<img>` so that the width/height can be fixed.
 
 <FrequentlyUsedEmojiExample />
 

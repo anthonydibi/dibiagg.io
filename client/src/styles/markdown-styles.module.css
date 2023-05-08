@@ -36,3 +36,12 @@
   text-decoration: underline;
   color: var(--accent);
 }
+
+.markdown blockquote {
+  border-left: 8px solid var(--accent);
+  padding-left: 10px;
+}
+
+.markdown blockquote p {
+  margin: 0 !important;
+}
