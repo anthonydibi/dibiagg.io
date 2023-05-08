@@ -56,11 +56,7 @@ export default class LFUCache {
   toList(ascending) {
     let res = []
     for (let set of this.sets.values()) {
-      if (ascending) {
-        res = res.concat([...set])
-      } else {
-        res = res.concat([...set].reverse())
-      }
+      res = res.concat([...set])
     }
     if (ascending) {
       return res

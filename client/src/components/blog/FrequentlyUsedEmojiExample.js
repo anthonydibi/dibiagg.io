@@ -12,10 +12,10 @@ import {
 } from '@chakra-ui/react'
 import { IoMdSend } from 'react-icons/io'
 
-const emojis = allEmojis.slice(0, 400)
+const emojis = allEmojis.slice(100, 500)
 
 function FrequentlyUsedEmojiExample() {
-  const cache = useRef(new LFUCache(21))
+  const cache = useRef(new LFUCache(30))
   const [cachedEmojis, setCachedEmojis] = useState([])
   const [emojiInputs, setEmojiInputs] = useState('')
 
@@ -47,36 +47,48 @@ function FrequentlyUsedEmojiExample() {
   return (
     <>
       <Grid
-        maxW={'800px'}
-        h={'200px'}
-        gridTemplateColumns={'1fr 1.5fr'}
+        w={'600px'}
+        h={'100%'}
+        gridTemplateColumns={'1fr 1fr'}
         gap={'1'}
         border={'1px'}
         p={'2'}
         mx={'auto'}
+        overflowX={'scroll'}
       >
         <GridItem textAlign={'center'}>
           <Heading as={'text'} size={'md'}>
             Frequently Used
           </Heading>
         </GridItem>
-        <GridItem textAlign={'center'}>
+        <GridItem textAlign={'center'} w={'300px'}>
           <Heading as={'text'} size={'md'}>
             Emojis
           </Heading>
         </GridItem>
-        <GridItem overflowY={'scroll'} p={'2'}>
+        <GridItem
+          overflow={'scroll'}
+          p={'2'}
+          letterSpacing={'15px'}
+          w={'300px'}
+        >
           {cachedEmojis.map((emoji) => (
             <ClickableEmoji key={emoji} emoji={emoji} />
           ))}
         </GridItem>
-        <GridItem overflowY={'scroll'} letterSpacing={'1px'} p={'2'}>
+        <GridItem
+          overflowY={'scroll'}
+          letterSpacing={'15px'}
+          p={'2'}
+          w={'4000px'}
+          h={'220px'}
+        >
           {emojis.map((emoji) => (
             <ClickableEmoji key={emoji} emoji={emoji} />
           ))}
         </GridItem>
       </Grid>
-      <InputGroup maxW={'800px'} mt={'4'} mb={'8'} mx={'auto'}>
+      <InputGroup maxW={'600px'} mt={'4'} mb={'8'} mx={'auto'}>
         <Input value={emojiInputs} fontSize={'2xl'} />
         <InputRightElement
           cursor={'pointer'}
