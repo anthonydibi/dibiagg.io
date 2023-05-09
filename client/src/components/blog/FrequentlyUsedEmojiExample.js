@@ -69,7 +69,7 @@ function FrequentlyUsedEmojiExample() {
         <GridItem overflow={'scroll'} p={'2'}>
           <Grid templateColumns={'1fr 1fr 1fr 1fr'} gap={'10px'}>
             {cachedEmojis.map((emoji) => (
-              <GridItem>
+              <GridItem key={emoji}>
                 <ClickableEmoji key={emoji} emoji={emoji} />
               </GridItem>
             ))}
@@ -78,7 +78,7 @@ function FrequentlyUsedEmojiExample() {
         <GridItem overflowY={'scroll'} p={'2'}>
           <Grid templateColumns={'1fr 1fr 1fr 1fr 1fr'} gap={'10px'}>
             {emojis.map((emoji) => (
-              <GridItem>
+              <GridItem key={emoji}>
                 <ClickableEmoji key={emoji} emoji={emoji} />
               </GridItem>
             ))}
