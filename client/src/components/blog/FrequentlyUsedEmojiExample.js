@@ -49,12 +49,12 @@ function FrequentlyUsedEmojiExample() {
       <Grid
         h={'100%'}
         gridTemplateColumns={'1fr 1fr'}
-        gap={"0px 20px"}
+        gap={'0px 20px'}
         border={'1px'}
         p={'2'}
         mx={'auto'}
-        overflowX={"scroll"}
-        h={"300px"}
+        overflowX={'scroll'}
+        h={'300px'}
       >
         <GridItem textAlign={'center'}>
           <Heading as={'text'} size={'md'}>
@@ -67,21 +67,21 @@ function FrequentlyUsedEmojiExample() {
           </Heading>
         </GridItem>
         <GridItem overflow={'scroll'} p={'2'}>
-          <Grid templateColumns={"1fr 1fr 1fr 1fr"} gap={"10px"}>
-          {cachedEmojis.map((emoji) => (
-            <GridItem>
-              <ClickableEmoji key={emoji} emoji={emoji} />
-            </GridItem>
-          ))}
+          <Grid templateColumns={'1fr 1fr 1fr 1fr'} gap={'10px'}>
+            {cachedEmojis.map((emoji) => (
+              <GridItem>
+                <ClickableEmoji key={emoji} emoji={emoji} />
+              </GridItem>
+            ))}
           </Grid>
         </GridItem>
         <GridItem overflowY={'scroll'} p={'2'}>
-        <Grid templateColumns={"1fr 1fr 1fr 1fr 1fr"} gap={"10px"}>
-          {emojis.map((emoji) => (
-            <GridItem>
-              <ClickableEmoji key={emoji} emoji={emoji} />
-            </GridItem>
-          ))}
+          <Grid templateColumns={'1fr 1fr 1fr 1fr 1fr'} gap={'10px'}>
+            {emojis.map((emoji) => (
+              <GridItem>
+                <ClickableEmoji key={emoji} emoji={emoji} />
+              </GridItem>
+            ))}
           </Grid>
         </GridItem>
       </Grid>

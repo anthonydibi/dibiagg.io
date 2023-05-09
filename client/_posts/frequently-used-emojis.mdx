@@ -162,57 +162,57 @@ emojis stored in `cachedEmojis`. The rest of the component renders all of this s
 
 ```jsx
 return (
-    <>
-      <Grid
-        h={'100%'}
-        gridTemplateColumns={'1fr 1fr'}
-        gap={"0px 20px"}
-        border={'1px'}
-        p={'2'}
-        mx={'auto'}
-        overflowX={"scroll"}
-        h={"300px"}
-      >
-        <GridItem textAlign={'center'}>
-          <Heading as={'text'} size={'md'}>
-            Frequently Used
-          </Heading>
-        </GridItem>
-        <GridItem textAlign={'center'}>
-          <Heading as={'text'} size={'md'}>
-            All Emojis
-          </Heading>
-        </GridItem>
-        <GridItem overflow={'scroll'} p={'2'}>
-          <Grid templateColumns={"1fr 1fr 1fr 1fr"} gap={"10px"}>
+  <>
+    <Grid
+      h={'100%'}
+      gridTemplateColumns={'1fr 1fr'}
+      gap={'0px 20px'}
+      border={'1px'}
+      p={'2'}
+      mx={'auto'}
+      overflowX={'scroll'}
+      h={'300px'}
+    >
+      <GridItem textAlign={'center'}>
+        <Heading as={'text'} size={'md'}>
+          Frequently Used
+        </Heading>
+      </GridItem>
+      <GridItem textAlign={'center'}>
+        <Heading as={'text'} size={'md'}>
+          All Emojis
+        </Heading>
+      </GridItem>
+      <GridItem overflow={'scroll'} p={'2'}>
+        <Grid templateColumns={'1fr 1fr 1fr 1fr'} gap={'10px'}>
           {cachedEmojis.map((emoji) => (
             <GridItem>
               <ClickableEmoji key={emoji} emoji={emoji} />
             </GridItem>
           ))}
-          </Grid>
-        </GridItem>
-        <GridItem overflowY={'scroll'} p={'2'}>
-        <Grid templateColumns={"1fr 1fr 1fr 1fr 1fr"} gap={"10px"}>
+        </Grid>
+      </GridItem>
+      <GridItem overflowY={'scroll'} p={'2'}>
+        <Grid templateColumns={'1fr 1fr 1fr 1fr 1fr'} gap={'10px'}>
           {emojis.map((emoji) => (
             <GridItem>
               <ClickableEmoji key={emoji} emoji={emoji} />
             </GridItem>
           ))}
-          </Grid>
-        </GridItem>
-      </Grid>
-      <InputGroup maxW={'800px'} mt={'4'} mb={'8'} mx={'auto'}>
-        <Input value={emojiInputs} fontSize={'2xl'} />
-        <InputRightElement
-          cursor={'pointer'}
-          onClick={() => setEmojiInputs('')}
-          readonly
-        >
-          <IoMdSend />
-        </InputRightElement>
-      </InputGroup>
-    </>
+        </Grid>
+      </GridItem>
+    </Grid>
+    <InputGroup maxW={'800px'} mt={'4'} mb={'8'} mx={'auto'}>
+      <Input value={emojiInputs} fontSize={'2xl'} />
+      <InputRightElement
+        cursor={'pointer'}
+        onClick={() => setEmojiInputs('')}
+        readonly
+      >
+        <IoMdSend />
+      </InputRightElement>
+    </InputGroup>
+  </>
 )
 ```
 
