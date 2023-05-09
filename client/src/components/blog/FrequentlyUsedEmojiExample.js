@@ -47,7 +47,6 @@ function FrequentlyUsedEmojiExample() {
   return (
     <>
       <Grid
-        h={'100%'}
         gridTemplateColumns={'1fr 1fr'}
         gap={'0px 20px'}
         border={'1px'}
@@ -70,7 +69,7 @@ function FrequentlyUsedEmojiExample() {
           <Grid templateColumns={'1fr 1fr 1fr 1fr'} gap={'10px'}>
             {cachedEmojis.map((emoji) => (
               <GridItem key={emoji}>
-                <ClickableEmoji key={emoji} emoji={emoji} />
+                <ClickableEmoji emoji={emoji} />
               </GridItem>
             ))}
           </Grid>
@@ -79,7 +78,7 @@ function FrequentlyUsedEmojiExample() {
           <Grid templateColumns={'1fr 1fr 1fr 1fr 1fr'} gap={'10px'}>
             {emojis.map((emoji) => (
               <GridItem key={emoji}>
-                <ClickableEmoji key={emoji} emoji={emoji} />
+                <ClickableEmoji emoji={emoji} />
               </GridItem>
             ))}
           </Grid>
@@ -90,7 +89,6 @@ function FrequentlyUsedEmojiExample() {
         <InputRightElement
           cursor={'pointer'}
           onClick={() => setEmojiInputs('')}
-          readonly
         >
           <IoMdSend />
         </InputRightElement>
