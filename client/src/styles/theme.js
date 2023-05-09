@@ -97,6 +97,20 @@ const theme = extendTheme({
         variant: null,
       },
     },
+    Tag: {
+      baseStyle: (props) => ({
+        container: {
+          border: '0px',
+          borderRadius: '0px',
+          background: 'accent',
+        },
+      }),
+      sizes: {},
+      variants: {},
+      defaultProps: {
+        variant: null,
+      },
+    },
   },
 })
 

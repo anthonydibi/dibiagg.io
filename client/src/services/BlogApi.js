@@ -14,6 +14,7 @@ export async function getPostBySlug(slug, fields = [], nav = false) {
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const content = await serialize(fileContents, { parseFrontmatter: true })
   const data = content.frontmatter
+  console.log(data.tags)
 
   const items = {}
 
@@ -37,6 +38,7 @@ export async function getPostBySlug(slug, fields = [], nav = false) {
       'title',
       'date',
       'excerpt',
+      'tags',
       'coverImage',
     ])
     for (let i = 0; i < allPosts.length; i++) {
@@ -49,6 +51,7 @@ export async function getPostBySlug(slug, fields = [], nav = false) {
             title: olderPost.title,
             date: olderPost.date,
             excerpt: olderPost.excerpt,
+            tags: olderPost.tags,
             coverImage: olderPost.coverImage,
           }
         }
@@ -59,6 +62,7 @@ export async function getPostBySlug(slug, fields = [], nav = false) {
             title: newerPost.title,
             date: newerPost.date,
             excerpt: newerPost.excerpt,
+            tags: newerPost.tags,
             coverImage: newerPost.coverImage,
           }
         }

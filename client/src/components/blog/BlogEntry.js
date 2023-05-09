@@ -1,7 +1,18 @@
-import { Heading, Text, Box, LinkOverlay, LinkBox } from '@chakra-ui/react'
+import {
+  Heading,
+  Text,
+  Box,
+  LinkOverlay,
+  LinkBox,
+  HStack,
+  Tag,
+  TagLeftIcon,
+  TagLabel,
+} from '@chakra-ui/react'
 import NextLink from 'next/link'
 import DateFormatter from './DateFormatter'
 import Image from 'next/image'
+import BlogTag from './BlogTag'
 
 export const BlogEntry = (props) => {
   return (
@@ -18,6 +29,10 @@ export const BlogEntry = (props) => {
         <LinkOverlay as={NextLink} href={`/posts/${props.post.slug}`}>
           <Heading display={'block'}>{props.post.title}</Heading>
         </LinkOverlay>
+        <HStack my={'1'} wrap={'wrap'} gap={'4px'}>
+          {props.post.tags &&
+            props.post.tags.map((tag) => <BlogTag label={tag} />)}
+        </HStack>
         <Box mt={'1'}>
           <DateFormatter dateString={props.post.date} />
         </Box>

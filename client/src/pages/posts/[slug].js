@@ -33,6 +33,7 @@ export default function Post({ post }) {
                 coverImage={post.coverImage}
                 date={post.date}
                 author={post.author}
+                tags={post.tags}
               />
               <PostBody content={post.content} />
             </article>
@@ -72,7 +73,16 @@ export default function Post({ post }) {
 export async function getStaticProps({ params }) {
   const post = await getPostBySlug(
     params.slug,
-    ['title', 'date', 'slug', 'author', 'content', 'ogImage', 'coverImage'],
+    [
+      'title',
+      'date',
+      'slug',
+      'author',
+      'content',
+      'tags',
+      'ogImage',
+      'coverImage',
+    ],
     true,
   )
 

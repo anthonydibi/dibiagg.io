@@ -1,10 +1,11 @@
-import { Avatar, Box, Stack, Heading } from '@chakra-ui/react'
+import { Avatar, Box, Stack, Heading, HStack } from '@chakra-ui/react'
+import BlogTag from './BlogTag'
 import DateFormatter from './DateFormatter'
 import CoverImage from './CoverImage'
 import PostTitle from './PostTitle'
 import UnderlinedHeading from '../UnderlinedHeading'
 
-const PostHeader = ({ title, coverImage, date }) => {
+const PostHeader = ({ title, coverImage, date, tags }) => {
   const authorName = 'Anthony Di Biaggio'
   const authorPicture = '../me.png'
 
@@ -38,6 +39,11 @@ const PostHeader = ({ title, coverImage, date }) => {
             </UnderlinedHeading>
           </Stack>
         </Box>
+        <HStack mb={'5'} gap={'4px'}>
+          {tags.map((tag) => (
+            <BlogTag label={tag} />
+          ))}
+        </HStack>
         <Box mb={'6'}>
           <DateFormatter dateString={date} />
         </Box>
