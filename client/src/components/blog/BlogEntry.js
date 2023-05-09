@@ -31,7 +31,7 @@ export const BlogEntry = (props) => {
         </LinkOverlay>
         <HStack my={'1'} wrap={'wrap'} gap={'4px'}>
           {props.post.tags &&
-            props.post.tags.map((tag) => <BlogTag label={tag} />)}
+            props.post.tags.map((tag) => <BlogTag key={tag} label={tag} />)}
         </HStack>
         <Box mt={'1'}>
           <DateFormatter dateString={props.post.date} />

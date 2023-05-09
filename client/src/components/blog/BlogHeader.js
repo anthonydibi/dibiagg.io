@@ -41,7 +41,7 @@ const PostHeader = ({ title, coverImage, date, tags }) => {
         </Box>
         <HStack mb={'5'} gap={'4px'}>
           {tags.map((tag) => (
-            <BlogTag label={tag} />
+            <BlogTag key={tag} label={tag} />
           ))}
         </HStack>
         <Box mb={'6'}>
