@@ -11,7 +11,7 @@ export default function UnderlinedHeading(props) {
         bottom={'-10px'}
         left={'-3%'}
         zIndex={'-1'}
-        width={'130%'}
+        width={'118%'}
         height={'20%'}
         backgroundColor={'accent'}
       ></Box>

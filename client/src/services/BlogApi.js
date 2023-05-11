@@ -14,7 +14,6 @@ export async function getPostBySlug(slug, fields = [], nav = false) {
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const content = await serialize(fileContents, { parseFrontmatter: true })
   const data = content.frontmatter
-  console.log(data.tags)
 
   const items = {}
 
