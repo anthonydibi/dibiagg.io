@@ -74,7 +74,7 @@ const FakeLink = (props) => (
 export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode()
-  const bgColor = useColorModeValue('white', 'black')
+  const bgColor = useColorModeValue('var(--light)', 'var(--dark)')
   const logo = useColorModeValue(lightModeLogo, darkModeLogo)
 
   return (
@@ -200,10 +200,7 @@ export default function Nav() {
         as={Collapse}
         in={isOpen}
         animateOpacity={false}
-        border="1px solid"
-        borderTop="none"
-        borderLeft="none"
-        borderRight="none"
+        boxShadow={"md"}
         zIndex={'500'}
         position="sticky"
         top="60px"
