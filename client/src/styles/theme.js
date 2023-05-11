@@ -84,12 +84,12 @@ const theme = extendTheme({
           border: '1px solid',
           borderRadius: '0px',
           rounded: 'none',
-          bg: mode('white', 'black')(props),
+          bg: mode('var(--light)', 'var(--dark)')(props),
           ':focus': {
             bg: mode('white', 'black')(props),
           },
           _placeholder: {
-            color: mode('gray.400', 'gray.500')(props),
+            color: mode('gray.600', 'gray.300')(props),
           },
         },
       }),

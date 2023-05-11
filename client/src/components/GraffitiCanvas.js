@@ -37,7 +37,7 @@ export default function GraffitiCanvas() {
   //built off of free-draw template from react-konva docs
   let today = new Date()
   today.setHours(0, 0, 0, 0)
-  const modeValue = useColorModeValue('#f0f0f0', '#0e1111')
+  const modeValue = useColorModeValue('var(--light)', 'var(--dark)')
   const [step, setStep] = React.useState(0)
   const [tool, setTool] = React.useState('pen')
   const [lines, setLines] = React.useState({ self: [] })
