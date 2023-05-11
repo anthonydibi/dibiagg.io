@@ -11,12 +11,7 @@ export default function Blog({ allPosts }) {
         siteTitle="dibiagg.io"
         description="Anthony Di Biaggio's blog posts"
       />
-      <Container
-        maxW={'4xl'}
-        minH={'100vh'}
-        align="center"
-        py={'4'}
-      >
+      <Container maxW={'4xl'} minH={'100vh'} align="center" py={'4'}>
         {allPosts.map((post) => (
           <BlogEntry key={post.slug} post={post} />
         ))}

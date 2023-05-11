@@ -12,9 +12,12 @@ export default function IconCard(props) {
   return (
     <Flex
       position={'relative'}
-      borderRadius={"46px"}
-      background= {useColorModeValue("light", "dark")}
-      boxShadow={useColorModeValue("20px 20px 40px #cccccc, -20px -20px 40px #ffffff", "20px 20px 40px #1b1b1b, -20px -20px 40px #252525")}
+      borderRadius={'46px'}
+      background={useColorModeValue('light', 'dark')}
+      boxShadow={useColorModeValue(
+        '20px 20px 40px #cccccc, -20px -20px 40px #ffffff',
+        '20px 20px 40px #1b1b1b, -20px -20px 40px #252525',
+      )}
       width={'100%'}
       maxW={'450px'}
       height={'100%'}

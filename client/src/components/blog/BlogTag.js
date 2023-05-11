@@ -27,9 +27,12 @@ function BlogTag(props) {
     <Tag
       size={'lg'}
       marginInlineStart={'0 !important'}
-      borderRadius={"46px"}
-      background= {useColorModeValue("#f0f0f0", "dark")}
-      boxShadow={useColorModeValue("5px 5px 10px #b2b2b2, -5px -5px 10px #ffffff", "5px 5px 9px #0f0f0f,-5px -5px 9px #313131")}
+      borderRadius={'46px'}
+      background={useColorModeValue('#f0f0f0', 'dark')}
+      boxShadow={useColorModeValue(
+        '5px 5px 10px #b2b2b2, -5px -5px 10px #ffffff',
+        '5px 5px 9px #0f0f0f,-5px -5px 9px #313131',
+      )}
       {...TagConfig[props.label]['props']}
     >
       <TagLeftIcon boxSize={'20px'} as={TagConfig[props.label]['icon']} />
