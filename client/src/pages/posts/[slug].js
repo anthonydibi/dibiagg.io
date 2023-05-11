@@ -22,7 +22,7 @@ export default function Post({ post }) {
       <Head>
         <meta property="og:image" content={post.ogImage.url} />
       </Head>
-      <Container borderX="1px" maxW={'6xl'} py={'6'}>
+      <Container maxW={'6xl'} py={'6'}>
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
@@ -46,7 +46,7 @@ export default function Post({ post }) {
               minW={'50%'}
               maxW={{ base: '100%', md: '70%' }}
             >
-              <Heading size={'lg'} mb={'4'} textDecoration={'underline'}>
+              <Heading size={'lg'} mb={'10'} textDecoration={'underline'}>
                 Older post
               </Heading>
               <BlogEntry post={post.olderPost} />
@@ -58,7 +58,7 @@ export default function Post({ post }) {
               minW={'50%'}
               maxW={{ base: '100%', md: '70%' }}
             >
-              <Heading size={'lg'} mb={'4'} textDecoration={'underline'}>
+              <Heading size={'lg'} mb={'10'} textDecoration={'underline'}>
                 Newer post
               </Heading>
               <BlogEntry post={post.newerPost} />

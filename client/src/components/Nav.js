@@ -82,7 +82,7 @@ export default function Nav() {
       <Flex
         position="sticky"
         top="0"
-        bg={useColorModeValue('pink.50', 'black')}
+        bg={useColorModeValue('#f3f3f3', '#181818')}
         w="100%"
         zIndex="100"
         borderBottom={'1px solid'}

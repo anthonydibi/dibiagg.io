@@ -12,9 +12,9 @@ export default function IconCard(props) {
   return (
     <Flex
       position={'relative'}
-      bg={useColorModeValue(props.color, 'black')}
-      border={'2px solid'}
-      borderColor={useColorModeValue('black', 'white')}
+      borderRadius={"46px"}
+      background= {useColorModeValue("light", "dark")}
+      boxShadow={useColorModeValue("20px 20px 40px #cccccc, -20px -20px 40px #ffffff", "20px 20px 40px #1b1b1b, -20px -20px 40px #252525")}
       width={'100%'}
       maxW={'450px'}
       height={'100%'}
@@ -31,29 +31,6 @@ export default function IconCard(props) {
       <Text w="80%" fontSize={{ base: 'md', sm: 'lg', md: 'xl' }} align="start">
         {props.text}
       </Text>
-      <Box
-        zIndex={'-1'}
-        bg={useColorModeValue(props.color, 'black')}
-        position={'absolute'}
-        left={'-11.5px'}
-        top={'-11.5px'}
-        width={'100%'}
-        height={'100%'}
-        border={'3px solid'}
-        borderColor={'accent'}
-        pointerEvents={'none'}
-      />
-      <Box
-        zIndex={'-2'}
-        position={'absolute'}
-        left={'-20px'}
-        top={'-20px'}
-        width={'100%'}
-        height={'100%'}
-        border={'3px solid'}
-        borderColor={'accent'}
-        pointerEvents={'none'}
-      />
     </Flex>
   )
 }

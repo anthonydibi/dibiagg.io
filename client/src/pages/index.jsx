@@ -37,7 +37,6 @@ export default function About() {
           align={'center'}
           p={{ base: 5, lg: 20 }}
           mx={{ base: 1, md: 5 }}
-          border="1px solid"
           borderBottom="0px none"
           borderTop="0px none"
           w={'1300px'}

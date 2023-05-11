@@ -13,7 +13,6 @@ export default function Blog({ allPosts }) {
       />
       <Container
         maxW={'4xl'}
-        borderX={'1px'}
         minH={'100vh'}
         align="center"
         py={'4'}

@@ -12,10 +12,12 @@ const theme = extendTheme({
   styles: {
     global: (props) => ({
       body: {
-        bg: mode('white', 'black')(props),
+        bg: mode('var(--light)', 'var(--dark)')(props),
       },
       ':root': {
         '--accent': mode('#FF5F1F', '#38B2AC')(props),
+        '--dark': mode('#202020', '#202020')(props),
+        '--light': mode('#f0f0f0', '#f0f0f0')(props),
       },
     }),
   },

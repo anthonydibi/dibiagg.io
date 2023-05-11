@@ -100,7 +100,7 @@ export default function GraffitiDrawArea(props) {
         {hoveredTag}
       </Text>
       <Stage
-        style={{ backgroundColor: 'white' }}
+        style={{ backgroundColor: "#f0f0f0" }}
         width={1000 * stageScale}
         height={1000 * stageScale}
         scaleX={stageScale}
