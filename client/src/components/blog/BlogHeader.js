@@ -34,6 +34,7 @@ const PostHeader = ({ title, coverImage, date, tags }) => {
 
   return (
     <>
+    <Box maxW={'4xl'} mx={'auto'} mt={'6'}>
       <PostTitle>{title}</PostTitle>
       <Box display={{ base: 'block', md: 'none' }} mt={'6'}>
         <Stack direction={'row'} gap={'15px'} align={'center'}>
@@ -42,6 +43,7 @@ const PostHeader = ({ title, coverImage, date, tags }) => {
         </Stack>
       </Box>
       <CoverImage title={title} src={coverImage} />
+      </Box>
       <Box maxW={'4xl'} mx={'auto'} mt={'6'}>
         <Box mb={'6'} display={{ base: 'none', md: 'block' }}>
           <Stack direction={'row'} gap={'15px'} align={'center'}>
@@ -51,7 +53,7 @@ const PostHeader = ({ title, coverImage, date, tags }) => {
             </UnderlinedHeading>
           </Stack>
         </Box>
-        <HStack mb={'5'} gap={'15px'}>
+        <HStack mb={'5'} gap={'15px'} wrap={"wrap"}>
           {tags.map((tag) => (
             <BlogTag key={tag} label={tag} />
           ))}

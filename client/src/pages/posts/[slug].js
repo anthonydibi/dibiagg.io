@@ -39,7 +39,7 @@ export default function Post({ post }) {
             </article>
           </>
         )}
-        <Stack direction={{ base: 'column', md: 'row' }} justify={'center'}>
+        <Stack direction={{ base: 'column', md: 'row' }} justify={'center'} gap={"80px"}>
           {post.olderPost && (
             <Box
               align={'center'}

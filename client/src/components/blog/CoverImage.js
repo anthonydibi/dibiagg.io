@@ -12,7 +12,7 @@ const CoverImage = ({ title, src, slug }) => {
     />
   )
   return (
-    <Box mt={'6'} align={'center'}>
+    <Box mt={'6'}>
       {slug ? (
         <Link as={`/posts/${slug}`} href="/posts/[slug]" aria-label={title}>
           {image}

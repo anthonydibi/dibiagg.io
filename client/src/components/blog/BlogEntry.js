@@ -37,7 +37,7 @@ export const BlogEntry = (props) => {
         <LinkOverlay as={NextLink} href={`/posts/${props.post.slug}`}>
           <Heading display={'block'}>{props.post.title}</Heading>
         </LinkOverlay>
-        <HStack wrap={'wrap'} gap={'15px'} my={'15px'}>
+        <HStack wrap={'wrap'} gap={'15px'} my={'15px'} wrap={"wrap"}>
           {props.post.tags &&
             props.post.tags.map((tag) => <BlogTag key={tag} label={tag} />)}
         </HStack>

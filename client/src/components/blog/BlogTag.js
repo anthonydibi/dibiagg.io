@@ -46,6 +46,7 @@ function BlogTag(props) {
         ' 5px 5px 8px #b2b2b2, -5px -5px 8px #ffffff',
         ' 5px 5px 5px #0f0f0f, -5px -5px 5px #313131',
       )}
+      marginInlineStart={'0 !important'}
     >
       <Box
         p={'0.35rem'}
@@ -60,7 +61,6 @@ function BlogTag(props) {
           bg={TagConfig[props.label]['color']}
           borderRadius={'46px'}
           size={'lg'}
-          marginInlineStart={'0 !important'}
           {...TagConfig[props.label].props}
         >
           <TagLeftIcon
