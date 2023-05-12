@@ -83,7 +83,7 @@ export default function Nav() {
         position="sticky"
         top="0"
         bg={useColorModeValue('var(--light)', 'var(--dark)')}
-        boxShadow={"md"}
+        boxShadow={'md'}
         w="100%"
         zIndex="100"
         borderColor={useColorModeValue('black', 'white')}
@@ -200,7 +200,7 @@ export default function Nav() {
         as={Collapse}
         in={isOpen}
         animateOpacity={false}
-        boxShadow={"md"}
+        boxShadow={'md'}
         zIndex={'500'}
         position="sticky"
         top="60px"

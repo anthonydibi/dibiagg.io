@@ -15,8 +15,8 @@ export default function IconCard(props) {
       borderRadius={'46px'}
       background={useColorModeValue('light', 'dark')}
       boxShadow={useColorModeValue(
-        '20px 20px 40px #cccccc, -20px -20px 40px #ffffff',
-        '20px 20px 40px #1b1b1b, -20px -20px 40px #252525',
+        '20px 20px 30px #cccccc, -20px -20px 30px #ffffff',
+        '20px 20px 30px #1b1b1b, -20px -20px 30px #252525',
       )}
       width={'100%'}
       maxW={'450px'}
@@ -27,8 +27,22 @@ export default function IconCard(props) {
       align={'start'}
       gap={'15px'}
     >
-      <Icon as={props.icon} boxSize={'60px'} color={'accent'} />
-      <Heading size={'md'} align="start">
+      <Box
+        p={'5'}
+        borderRadius={'50%'}
+        boxShadow={useColorModeValue(
+          'inset 20px 20px 30px #cccccc, inset -20px -20px 30px #ffffff',
+          'inset 20px 20px 30px #1b1b1b, inset -20px -20px 30px #252525',
+        )}
+      >
+        <Icon
+          verticalAlign={'middle'}
+          as={props.icon}
+          boxSize={'75px'}
+          color={'accent'}
+        />
+      </Box>
+      <Heading size={'md'} align="start" mt={'2'}>
         {props.heading}
       </Heading>
       <Text w="80%" fontSize={{ base: 'md', sm: 'lg', md: 'xl' }} align="start">

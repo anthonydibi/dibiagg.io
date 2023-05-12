@@ -105,16 +105,13 @@ function Blurb(props) {
     <>
       {!isMobile ? (
         <>
-          <UnderlinedHeading
-            size={{ base: 'lg', md: 'xl', lg: '4xl' }}
-            mb={'8'}
-          >
+          <Heading size={{ base: 'lg', md: 'xl', lg: '4xl' }} mb={'8'}>
             {props.heading ? props.heading : 'THREESHARP'}
-          </UnderlinedHeading>
+          </Heading>
           <ChakraText
             textAlign={'left'}
             fontSize={{ base: 'xl', md: '2xl' }}
-            maxW={'40vw'}
+            maxW={'60ch'}
           >
             {props.text
               ? props.text
@@ -202,11 +199,7 @@ function ThreeSharpShowcase(props) {
           />
         </Box>
       </Flex>
-      <Box
-        borderLeft={{ base: '0px', md: '1px' }}
-        width={{ base: '100%', md: '50%' }}
-        height={'100%'}
-      >
+      <Box width={{ base: '100%', md: '50%' }} height={'100%'}>
         <Canvas>
           <OrbitControls />
           <PerspectiveCamera

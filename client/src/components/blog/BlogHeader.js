@@ -1,4 +1,11 @@
-import { Avatar, Box, Stack, Heading, HStack, useColorModeValue } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  Stack,
+  Heading,
+  HStack,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import BlogTag from './BlogTag'
 import DateFormatter from './DateFormatter'
 import CoverImage from './CoverImage'
@@ -6,7 +13,6 @@ import PostTitle from './PostTitle'
 import UnderlinedHeading from '../UnderlinedHeading'
 
 const PostHeader = ({ title, coverImage, date, tags }) => {
-
   const BlogAvatar = () => {
     return (
       <Avatar
@@ -14,8 +20,14 @@ const PostHeader = ({ title, coverImage, date, tags }) => {
         bg="accent"
         name="Anthony Di Biaggio"
         src="/me.png"
-        border={useColorModeValue("6px solid var(--light)", "6px solid var(--dark)")}
-        boxShadow={useColorModeValue("11px 11px 22px #b6b6b6, -11px -11px 22px #ffffff", "11px 11px 22px #111111, -11px -11px 22px #2f2f2f")}
+        border={useColorModeValue(
+          '6px solid var(--light)',
+          '6px solid var(--dark)',
+        )}
+        boxShadow={useColorModeValue(
+          '10px 10px 15px #b6b6b6, -10px -10px 15px #ffffff',
+          '11px 11px 22px #111111, -11px -11px 22px #2f2f2f',
+        )}
       />
     )
   }
