@@ -12,28 +12,48 @@ import { GrTree } from 'react-icons/gr'
 const TagConfig = {
   tutorial: {
     icon: MdSchool,
-    color: 'lightgreen',
+    color: '#90ee90',
     fontColor: 'black',
     iconColor: 'black',
   },
   'coding stuff': {
     icon: MdComputer,
-    color: 'blue.400',
+    color: '#4299e1',
     fontColor: 'black',
     iconColor: 'black',
   },
   next: {
     icon: SiNextDotJs,
-    color: 'gray.800',
+    color: '#1A202C',
     fontColor: 'white',
     iconColor: 'white',
   },
   dsa: {
     icon: GrTree,
-    color: 'cyan.200',
+    color: '#9DECF9',
     fontColor: 'black',
     iconColor: 'black',
   },
+}
+
+const lightShadow = (baseColor) => {
+  const floorMultiply = (n) => {
+    return Math.floor(Math.min(parseInt(n, 16) * .85, 255)).toString(16);
+  }
+  const r = baseColor.substring(1, 3);
+  const g = baseColor.substring(3, 5);
+  const b = baseColor.substring(5, 7);
+  return `#${floorMultiply(r)}${floorMultiply(g)}${floorMultiply(b)}`;
+}
+
+const darkShadow = (baseColor) => {
+  const floorMultiply = (n) => {
+    return Math.floor(Math.min(parseInt(n, 16) * 1.15, 255)).toString(16);
+  }
+  const r = baseColor.substring(1, 3);
+  const g = baseColor.substring(3, 5);
+  const b = baseColor.substring(5, 7);
+  return `#${floorMultiply(r)}${floorMultiply(g)}${floorMultiply(b)}`;
 }
 
 function BlogTag(props) {
@@ -49,7 +69,7 @@ function BlogTag(props) {
       marginInlineStart={'0 !important'}
     >
       <Box
-        p={'0.35rem'}
+        p={'.2rem'}
         borderRadius={'46px'}
         background={useColorModeValue('#f0f0f0', 'dark')}
         boxShadow={useColorModeValue(
@@ -61,6 +81,7 @@ function BlogTag(props) {
           bg={TagConfig[props.label]['color']}
           borderRadius={'46px'}
           size={'lg'}
+          boxShadow={`inset 5px 5px 8px ${lightShadow(TagConfig[props.label]['color'])}, inset -5px -5px 8px ${darkShadow(TagConfig[props.label]['color'])}`}
           {...TagConfig[props.label].props}
         >
           <TagLeftIcon
