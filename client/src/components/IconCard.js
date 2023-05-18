@@ -11,7 +11,7 @@ import {
 export default function IconCard(props) {
   return (
     <Flex
-      border={"2px solid var(--accent)"}
+      border={"5px solid var(--accent)"}
       position={'relative'}
       borderRadius={'46px'}
       background={useColorModeValue('light', 'dark')}
