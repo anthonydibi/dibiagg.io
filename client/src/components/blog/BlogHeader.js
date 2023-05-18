@@ -21,8 +21,8 @@ const PostHeader = ({ title, coverImage, date, tags }) => {
         name="Anthony Di Biaggio"
         src="/me.png"
         border={useColorModeValue(
-          '6px solid var(--light)',
-          '6px solid var(--dark)',
+          '4px solid var(--light)',
+          '4px solid var(--dark)',
         )}
         boxShadow={useColorModeValue(
           '10px 10px 15px #b6b6b6, -10px -10px 15px #ffffff',

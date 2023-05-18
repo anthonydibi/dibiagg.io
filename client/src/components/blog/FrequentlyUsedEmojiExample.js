@@ -84,7 +84,7 @@ function FrequentlyUsedEmojiExample() {
           </Grid>
         </GridItem>
       </Grid>
-      <InputGroup maxW={'800px'} mt={'4'} mb={'8'} mx={'auto'}>
+      <InputGroup mt={'4'} mb={'8'} mx={'auto'}>
         <Input value={emojiInputs} fontSize={'2xl'} />
         <InputRightElement
           cursor={'pointer'}

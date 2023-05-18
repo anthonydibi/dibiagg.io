@@ -5,9 +5,12 @@ import {
   useColorModeValue,
   Box,
 } from '@chakra-ui/react'
-import { MdSchool, MdComputer } from 'react-icons/md'
+import { MdSchool } from 'react-icons/md'
 import { SiNextDotJs } from 'react-icons/si'
 import { GrTree } from 'react-icons/gr'
+import { VscFileBinary } from 'react-icons/vsc'
+import { BsPhone } from 'react-icons/bs'
+import { BiNews } from 'react-icons/bi'
 
 const TagConfig = {
   tutorial: {
@@ -16,8 +19,8 @@ const TagConfig = {
     fontColor: 'black',
     iconColor: 'black',
   },
-  'coding stuff': {
-    icon: MdComputer,
+  'coding-stuff': {
+    icon: VscFileBinary,
     color: '#4299e1',
     fontColor: 'black',
     iconColor: 'black',
@@ -34,6 +37,24 @@ const TagConfig = {
     fontColor: 'black',
     iconColor: 'black',
   },
+  dsa: {
+    icon: GrTree,
+    color: '#9DECF9',
+    fontColor: 'black',
+    iconColor: 'black',
+  },
+  'ui-ux': {
+    icon: BsPhone,
+    color: '#FEB2B2',
+    fontColor: 'black',
+    iconColor: 'black',
+  },
+  opinion: {
+    icon: BiNews,
+    color: "#FAF089",
+    fontColor: "black",
+    iconColor: "black",
+  }
 }
 
 const lightShadow = (baseColor) => {

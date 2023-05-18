@@ -1,6 +1,6 @@
 export const WhyThreeSharp = `
 I've always wanted to be able to physically explore code. Sitting in a chair, staring at a screen, typing on a keyboard and wrecking my wrists has made me think about
-how development could be more fun.
+ways to make development more engaging.
 `
 
 export const WhatIsThreeSharp = `
@@ -9,5 +9,5 @@ ThreeSharp aims to deliver a better development experience by bringing it into v
 
 export const HowItWorks = `
 ThreeSharp uses Microsoft's Roslyn API to generate syntax trees from C# code. These syntax trees are used to derive insights like inheritance relationships
-so that they can be applied to the visualization. The environment is built in Unity, and motion controls are implemented using Unity's Oculus XR plugin.
+so that they can be applied to the visualization. The environment is built in Unity, and motion controls are implemented using Unity's XR plugin.
 `

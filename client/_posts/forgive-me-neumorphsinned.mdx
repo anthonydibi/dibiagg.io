@@ -1,0 +1,57 @@
+---
+title: "Lord Forgive Me, For I Have Neumorphsinned"
+excerpt: "I'm going to hell anyway, so why not?"
+coverImage: "/elmohell.webp"
+date: "2023-05-15"
+tags: [ui-ux, opinion]
+ogImage:
+  url: '/elmohell.webp'
+---
+
+I'm going to hell anyway, so why not?
+
+In all seriousness (no, I am definitely going to hell, I meant the sinning part) neumorphism isn't *that* bad. In fact, I like it quite a lot and have been slowly
+making my site more necromorphic - err, neumorphic. To defend myself, I'll say why I think neumorphism is terrible and why that didn't stop me from using it.
+
+Full disclosure, I am not a UI/UX specialist or web designer - this is just my hobbyist opinion.
+
+# What is neumorphism?
+
+Neumorphism is a design trend which exists between skeumorphism and flat design. Skeumorphism means using real-world representations of objects in a design/interface.
+For example, if you had an old iPhone, you can probably picture the home screen and its icons.
+The Voice Memos app shows a three-dimensional, metallic studio microphone. The Settings app looks like a window into the internal gears of the phone. The calculator app
+has the glossy buttons of one of those old devices your math teacher would pull out when you forgot to bring your calculator for a test. In contrast, flat
+design simplifies real world objects as much as possible and is more minimalist.
+
+![test](/morphism.avif "Test")
+
+Neumorphism is like flat design, but augmented with the use of shadows. Hard, contrasting borders are replaced with soft shadows which create the illusion that elements
+pop out of the page. This illusion is achieved by giving components the same color as their background, and applying two box shadows to a component - one that is slightly
+lighter, and one that is slightly darker. The light shadows are where edges face the pseudo light source, and dark shadows are surfaces that face away from the light.
+This technique is fairly cheap to apply, since it just relies on clever usage of box shadows.
+
+# Why it sucks
+
+Neumorphism looks great, but it compromises on accessibility. While simple borders aren't the most aesthetically pleasing thing, they are essential for maintaining contrast
+in an interface. Without contrast, elements blend together and it is difficult to understand where things begin and end. This is especially true for users who are 
+visually impaired. Soft shadows are insufficient in establishing boundaries for objects. This becomes a major problem wben shadows are used for functional aspects
+of an interface.
+
+For example, many designs attempt to use soft shadows to signify the state of a button. A regular box shadow, making the button appear to jump out of the page, could
+signal that the button is inactive, while an inset box shadow, making the button appear embossed in the page, could signal that the button is pressed and active. For
+visually impaired users who may not be able to see the shadow, the button does not appear to change at all - and this is where neumorphism is dangerous. In the hands
+of someone who doesn't care about accessibility, very terrible designs will emerge.
+
+However, this doesn't that mean neumorphism is dead in the water. I see neumorphism as flat design without the training wheels - it is much easier to make mistakes,
+you just have to do a bit of thinking and planning to avoid them. My heuristic is to pretend that the shadows aren't there - does the interface still make sense?
+If not, you need to change something. A button that uses the above technique could combine shadows with a colored background and icon which communicate state. You
+can also have a border on an element as well as a box shadow, so that if the user cannot see the shadow there is a border as a fallback for contrast.
+
+# Why I love it anyway
+
+Despite all of its flaws, neumorphism is still one of my favorite design trends. It's the perfect mix of beauty and ugliness. A neumorphic interface with its bumps and
+curves is sexy, but also evokes the feeling of looking at a raised skin rash. Like many retro designs, it has a little bit of nastiness that gives it edge and intrigue.
+I also think that it encapsulates the desire for an interface to feel like part of a device, like it has been grafted into the screen, rather than sitting behind a piece
+of glass. We all want to feel like an interface is real, and not some arrangement of pixels masquerading as something that we can touch. I feel like neumorphism delivers
+better in this aspect than any other trend that I have seen, and that is why I have chosen to implement it here. Skeumorphism is too clunky for me, and even a perfectly
+executed flat design makes me yawn, but neumorphism takes the best (and worst) of both worlds to create a face only a programmer with vague knowledge of design could love.

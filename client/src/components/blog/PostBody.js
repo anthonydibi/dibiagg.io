@@ -9,7 +9,7 @@ import FrequentlyUsedEmojiExample from './FrequentlyUsedEmojiExample'
 const NextImage = (props) => <Image alt={props.alt} fill={'true'} {...props} />
 
 const components = {
-  img: NextImage,
+  img: (props) => <NextImage width={1200} height={800} {...props} fill={false}/>,
   Button: Button,
   pre: ({ children, className }) => {
     return <pre>{children}</pre>
@@ -29,7 +29,7 @@ const PostBody = ({ content }) => {
   return (
     <Box maxW={'4xl'} mx={'auto'}>
       <Box className={markdownStyles['markdown']}>
-        <MDXRemote {...content} components={components} lazy />
+        <MDXRemote {...content} components={components} />
       </Box>
     </Box>
   )
