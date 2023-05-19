@@ -6,9 +6,10 @@ import theme from 'prism-react-renderer/themes/nightOwl'
 const LineNumber = (props) => (
   <Box
     color={'accent'}
-    paddingRight={'0.75rem'}
+    paddingRight={'0.5rem'}
     userSelect={'none'}
     display={'table-cell'}
+    borderRight={"1px solid var(--accent)"}
   >
     {props.number}
   </Box>
@@ -56,7 +57,7 @@ const CodeBlock = ({ children, className }) => {
               >
                 <LineNumber number={i + 1} />
                 {line.map((token, key) => (
-                  <Box as={'span'} key={key} {...getTokenProps({ token, key })} />
+                  <Box as={'span'} ml={key === 0 ? "10px" : "0px"} key={key} {...getTokenProps({ token, key })} />
                 ))}
               </Box>
             ))}
