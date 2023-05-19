@@ -27,7 +27,7 @@ const CodeBlock = ({ children, className }) => {
       theme={theme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <Box p={"10px 10px 10px 10px"} borderRadius={"2px"} boxShadow={
+        <Box p={"10px"} borderRadius={"2px"} boxShadow={
           colorMode === "light" ? '20px 20px 30px #cccccc, -20px -20px 30px #ffffff'
           : '20px 20px 30px #1b1b1b, -20px -20px 30px #252525'
         }>
@@ -44,8 +44,7 @@ const CodeBlock = ({ children, className }) => {
               padding: '10px',
               overflow: 'scroll',
               textAlign: 'left',
-              background: "var(--dark)",
-            }}
+              background: "linear-gradient(145deg, #2e2e2e, #181818)",}}
             fontSize={'sm'}
           >
             {tokens.map((line, i) => (
