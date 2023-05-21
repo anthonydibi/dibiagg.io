@@ -23,6 +23,7 @@ currently in the cache. It has a `capacity`, which is the maximum amount of item
 value pairs, `counts` stores each key and its respective usage count, and `sets` keeps track of each count and which keys have that count.
 
 ```js
+LFUCache constructor
 class LFUCache {
     constructor(capacity){
         this.min = -1;
@@ -37,6 +38,7 @@ class LFUCache {
 To get an element from the cache, we need to do a bit of bookkeeping each time.
 
 ```js
+Get an item
 get(key){
     if(!this.values.has(key)){
         return -1;
@@ -68,6 +70,7 @@ is currently in. We move the element from that set to the set of one count highe
 the min, since we are changing the count of `key`. Finally, we return the value of `key`. Adding is about as simple:
 
 ```js
+Set an item
 set(key, value){
     if(this.values.has(key)){
         this.values.set(key, value);
@@ -99,9 +102,10 @@ and resetting `min` to 0, since the new item hasn't been accessed yet. Then, we 
 We have a data structure which maintains its elements in order of usage frequency, where items can both be added and retrieved
 in `O(1)` time.
 
-Now, if we are going to use this in React, we are going to need to be able to get the elements as a list, so here is a short function to do that:
+Now, if we are going to use this in React, we are going to need to be able to get the elements as an array, so here is a short function to do that:
 
 ```js
+Convert to array
 toList(ascending) {
   let res = []
   for (let set of this.sets.values()) {
@@ -120,6 +124,7 @@ in ascending or descending order in terms of usage count.
 Now that we have the data structure figured out, we can get to the emoji part. I'll make a simple React component to demonstrate.
 
 ```jsx
+Component state
 function FrequentlyUsedEmojiExample() {
   const cache = useRef(new LFUCache(30))
   const [cachedEmojis, setCachedEmojis] = useState([])
@@ -131,6 +136,7 @@ we have `emojiInputs` which is just all of the emojis that have been inputted. `
 away into a hook, but for simplicity we will just hold it in that ref.
 
 ```jsx
+Emoji component
 const onEmojiInput = (emoji) => {
   setEmojiInputs(emojiInputs + emoji)
   cache.current.set(emoji, emoji) //emojis are just text so we don't need an identifier as the key
@@ -161,6 +167,7 @@ Here we have the emojis that can be used to add to the input. When an emoji is c
 emojis stored in `cachedEmojis`. The rest of the component renders all of this stuff and looks like this:
 
 ```jsx
+Render the emojis
 return (
   <>
     <Grid

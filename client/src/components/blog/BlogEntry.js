@@ -31,13 +31,13 @@ export const BlogEntry = (props) => {
         background={useColorModeValue('#f0f0f0', 'dark')}
         boxShadow={useColorModeValue(
           '20px 20px 30px #cccccc, -20px -20px 30px #ffffff',
-          '20px 20px 30px #1b1b1b, -20px -20px 30px #252525',
+          '20px 20px 40px #1b1b1b, -20px -20px 40px #252525',
         )}
       >
         <LinkOverlay as={NextLink} href={`/posts/${props.post.slug}`}>
           <Heading display={'block'}>{props.post.title}</Heading>
         </LinkOverlay>
-        <HStack gap={'15px'} my={'15px'} wrap={"wrap"}>
+        <HStack wrap={'wrap'} gap={'15px'} my={'15px'}>
           {props.post.tags &&
             props.post.tags.map((tag) => <BlogTag key={tag} label={tag} />)}
         </HStack>
@@ -45,7 +45,7 @@ export const BlogEntry = (props) => {
           <DateFormatter dateString={props.post.date} />
         </Box>
         <Image
-          style={{ marginTop: 8 }}
+          style={{ marginTop: 8, borderRadius: "10px" }}
           src={props.post.coverImage}
           alt={`Cover Image for ${props.post.title}`}
           width={1300}

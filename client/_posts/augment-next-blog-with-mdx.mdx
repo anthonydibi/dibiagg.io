@@ -20,6 +20,7 @@ Markdown files are [hydrated](https://www.gatsbyjs.com/docs/conceptual/react-hyd
 You can also pass in a component mapping to the MDX provider:
 
 ```jsx
+MDXRemote component mapping
 const components = {
   img: NextImage,
   Button: Button,
@@ -43,6 +44,7 @@ looks kind of boring. You may have noticed that in the above component mapping I
 replaced with a CodeBlock component:
 
 ```jsx
+Component for syntax highlighting
 const LineNumber = (props) => (
   <Box
     color={'accent'}
@@ -110,6 +112,7 @@ If you want to do this with your Next.js blog, it's actually pretty easy. Just `
 import the `MDXRemote` component,
 
 ```jsx
+MDXRemote import
 import { MDXRemote } from 'next-mdx-remote'
 ```
 
@@ -117,6 +120,7 @@ and then place `MDXRemote` wherever you want your compiled MDX to show up. For m
 element that represents the content of each blog post, so I put it there:
 
 ```jsx
+PostBody component
 const PostBody = ({ content }) => {
   return (
     <Box maxW={'2xl'} mx={'auto'}>
@@ -132,6 +136,7 @@ const PostBody = ({ content }) => {
 string and performs the compilation:
 
 ```jsx
+Serializing markdown
 import { serialize } from 'next-mdx-remote/serialize'
 
 const fileContents = fs.readFileSync(fullPath, 'utf8')
@@ -146,6 +151,7 @@ show up in your Markdown however you like - heck, replace `<pre><code>` with a f
 environment if you want. You can even embed a `THREE.js` canvas with `react-three-fiber`:
 
 ```jsx
+react-three-fiber example
 function SpinnyCube(props) {
   const mesh = useRef()
   const [hovered, setHovered] = useState(false)

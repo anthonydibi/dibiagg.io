@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Box } from '@chakra-ui/react'
+import { Box, useColorModeValue } from '@chakra-ui/react'
 
 const CoverImage = ({ title, src, slug }) => {
   const image = (
     <Image
+      style={{borderRadius: "10px"}}
       src={src}
       alt={`Cover Image for ${title}`}
       width={1300}
