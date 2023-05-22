@@ -16,6 +16,7 @@ import {
   InputRightElement,
   useColorModeValue,
   useDisclosure,
+  HStack,
 } from '@chakra-ui/react'
 import { FaEraser, FaPen } from 'react-icons/fa'
 import {
@@ -175,7 +176,7 @@ export default function GraffitiCanvas() {
             ></IconButton>
           </InputRightElement>
         </InputGroup>
-        <Flex alignItems={'center'} w={'100%'}>
+        <Flex w={'100%'}>
           <Stack
             flex={'1'}
             justify={'right'}
@@ -206,19 +207,25 @@ export default function GraffitiCanvas() {
                 ></IconButton>
               </InputRightElement>
             </InputGroup>
-            <IconButton
+          </Stack>
+          <Box m={"2"} borderRadius={"20px"} >
+          <HStack m={"1"} px={"2"} py={"1"} borderRadius={"20px"}
+      >
+          <IconButton
               size="sm"
               isRound="true"
               value="previousDay"
               variant="interact"
               icon={<AiFillCaretLeft />}
               onClick={back}
+              boxShadow={useColorModeValue(
+                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
             ></IconButton>
-          </Stack>
           <Heading my={'2'} mx={'2'}>
             {day}
           </Heading>
-          <Box flex={'1'}>
+          <Box>
             <IconButton
               size="sm"
               isRound="true"
@@ -226,20 +233,33 @@ export default function GraffitiCanvas() {
               variant="interact"
               icon={<AiFillCaretRight />}
               onClick={next}
+              boxShadow={useColorModeValue(
+                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
             ></IconButton>
-            {step > 0 ? (
+          </Box>
+          </HStack>
+          </Box>
+          <Stack flex={"1"} justify={'left'}
+            align={'center'}
+            direction={'row'}>
+          {step > 0 ? (
               <IconButton
                 position={'relative'}
                 left={'0'}
+                ml={"-3"}
                 size="sm"
                 isRound="true"
                 value="fastForward"
                 variant="interact"
                 icon={<AiFillFastForward />}
                 onClick={fastForward}
+                boxShadow={useColorModeValue(
+                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
               ></IconButton>
             ) : null}
-          </Box>
+          </Stack>
         </Flex>
       </Stack>
       <Flex direction={{ base: 'column', md: 'row' }}>
@@ -282,6 +302,9 @@ export default function GraffitiCanvas() {
                 onClick={() => {
                   setTool('pen')
                 }}
+                boxShadow={useColorModeValue(
+                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
               ></IconButton>
             </GridItem>
             <GridItem>
@@ -294,6 +317,9 @@ export default function GraffitiCanvas() {
                 border={
                   tool === 'eraser' ? '1px solid' : '1px solid transparent'
                 }
+                boxShadow={useColorModeValue(
+                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
                 icon={<FaEraser />}
                 onClick={() => {
                   setTool('eraser')
@@ -314,6 +340,9 @@ export default function GraffitiCanvas() {
               value="pen"
               variant="interact"
               border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
+              boxShadow={useColorModeValue(
+                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
               icon={<FaPen />}
               onClick={() => {
                 setTool('pen')
@@ -326,16 +355,24 @@ export default function GraffitiCanvas() {
               value="eraser"
               variant="interact"
               border={tool === 'eraser' ? '1px solid' : '1px solid transparent'}
+              boxShadow={useColorModeValue(
+                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
               icon={<FaEraser />}
               onClick={() => {
                 setTool('eraser')
               }}
             ></IconButton>
-            <Box w={'auto'}>
+            <Box w={'100%'} margin={"0 !important"}>
+                    <Box w={"100%"} h={"100%"} boxShadow={useColorModeValue(
+                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')} p={"4"} borderRadius={"20px"}>
               <SliderPicker
+                
                 color={color}
                 onChangeComplete={handleChangeComplete}
               />
+              </Box>
             </Box>
           </Stack>
         </Box>
