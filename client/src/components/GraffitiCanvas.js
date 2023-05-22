@@ -49,6 +49,7 @@ export default function GraffitiCanvas() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   let [stageScale, setStageScale] = React.useState(1)
   const { width, height } = useWindowDimensions()
+  const colorMode = useColorModeValue("light", "dark")
 
   React.useEffect(() => {
     if (width <= 1000) {
@@ -254,9 +255,9 @@ export default function GraffitiCanvas() {
                 variant="interact"
                 icon={<AiFillFastForward />}
                 onClick={fastForward}
-                boxShadow={useColorModeValue(
-                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
+                boxShadow={colorMode === "light" ? 
+                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff'
+                  : '5px 5px 7px #1b1b1b, -5px -5px 7px #252525'}
               ></IconButton>
             ) : null}
           </Stack>
