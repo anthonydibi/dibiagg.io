@@ -26,7 +26,7 @@ const CodeBlock = ({ children, className }) => {
     const title = codeLines[0];
     setTitle(title);
     setCode(codeLines.slice(1, -1).join('\n'));
-  }, [])
+  }, [children])
 
   return (
     <Highlight
