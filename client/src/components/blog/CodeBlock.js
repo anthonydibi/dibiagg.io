@@ -1,6 +1,6 @@
 import React from 'react'
 import Highlight, { defaultProps } from 'prism-react-renderer'
-import { Box, useColorModeValue, Text } from '@chakra-ui/react'
+import { Box, useColorModeValue, Text, HStack } from '@chakra-ui/react'
 import theme from 'prism-react-renderer/themes/nightOwl'
 
 const LineNumber = (props) => (
@@ -36,23 +36,27 @@ const CodeBlock = ({ children, className }) => {
       theme={theme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <Box p={"10px"} borderRadius={"2px"} boxShadow={
-          colorMode === "light" ? '20px 20px 30px #cccccc, -20px -20px 30px #ffffff'
-          : '20px 20px 30px #1b1b1b, -20px -20px 30px #252525'
-        }>
-           <Text align={"center"} whiteSpace={"pre-line"} mb={"3 !important"} mt={"3 !important"}>
-            {title}
-          </Text>
-        <Box p={"4"} borderRadius={"20px"} boxShadow={
-          colorMode === "light" ? 'inset 20px 20px 30px #cccccc, inset -20px -20px 30px #ffffff'
+        <Box>
+          <HStack align={"center"} p={"1"} bg={"linear-gradient(145deg, #222222, #1d1d1d)"} borderRadius={"10px 10px 0px 0px"} boxShadow={
+          colorMode === "light" ? '15px 15px 10px #cccccc, -15px -15px 10px #ffffff'
           : 'inset 20px 20px 30px #1b1b1b, inset -20px -20px 30px #252525'
         }>
+          <HStack flex={"1"}>
+           <Box ml={"2"} bg={"red"} borderRadius={"100%"} w={"12px"} h={"12px"}></Box>
+           <Box bg={"yellow"} borderRadius={"100%"} w={"12px"} h={"12px"}></Box>
+           <Box bg={"green"} borderRadius={"100%"} w={"12px"} h={"12px"}></Box>
+           </HStack>
+           <Text color={"white"} align={"center"} whiteSpace={"pre-line"}>
+            {title}
+          </Text>
+          <Box flex={"1"} />
+          </HStack>
+        <Box>
           <Box
             as={'pre'}
             className={className}
             style={{
               ...style,
-              borderRadius: "10px",
               padding: '10px',
               overflow: 'scroll',
               textAlign: 'left',
