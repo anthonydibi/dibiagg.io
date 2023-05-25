@@ -16,7 +16,7 @@ export default function Banner(props) {
 
   return (
     <>
-      <Box align="center" bg="accent" w="100%" borderBottom="1px solid">
+      <Box align="center" bg="accent" w="100%">
         <Container
           align="center"
           maxW="container.lg"

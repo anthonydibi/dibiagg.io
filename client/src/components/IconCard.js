@@ -39,7 +39,7 @@ export default function IconCard(props) {
           verticalAlign={'middle'}
           as={props.icon}
           boxSize={'60px'}
-          color={'accent'}
+          color={'accent2'}
         />
       </Box>
       <Heading size={'md'} align="start" mt={'2'}>

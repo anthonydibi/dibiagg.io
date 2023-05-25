@@ -8,6 +8,7 @@ const theme = extendTheme({
   },
   colors: {
     accent: 'var(--accent)',
+    accent2: 'var(--accent2)',
   },
   styles: {
     global: (props) => ({
@@ -16,6 +17,7 @@ const theme = extendTheme({
       },
       ':root': {
         '--accent': mode('#FF5F1F', '#38B2AC')(props),
+        '--accent2': mode('#4d602a', '#8e008e')(props),
         '--dark': mode('#202020', '#202020')(props),
         '--light': mode('#f0f0f0', '#f0f0f0')(props),
       },
