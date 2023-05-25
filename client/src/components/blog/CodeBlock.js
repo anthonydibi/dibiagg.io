@@ -61,6 +61,7 @@ const CodeBlock = ({ children, className }) => {
               overflow: 'scroll',
               textAlign: 'left',
               boxShadow: 'inset 10px 10px 15px #1b1b1b, inset -10px -10px 15px #252525',
+              borderRadius: "0px 0px 10px 10px",
               background: "var(--dark)",}}
             fontSize={'sm'}
           >
