@@ -17,7 +17,7 @@ const theme = extendTheme({
       },
       ':root': {
         '--accent': mode('#FF5F1F', '#38B2AC')(props),
-        '--accent2': mode('#4d602a', '#fb6f92')(props),
+        '--accent2': mode('#708747', '#fb6f92')(props),
         '--dark': mode('#202020', '#202020')(props),
         '--light': mode('#f0f0f0', '#f0f0f0')(props),
       },
