@@ -58,11 +58,12 @@ const CodeBlock = ({ children, className }) => {
             style={{
               ...style,
               padding: '10px',
-              overflow: 'scroll',
+              overflow: 'auto',
               textAlign: 'left',
               boxShadow: 'inset 10px 10px 15px #1b1b1b, inset -10px -10px 15px #252525',
               borderRadius: "0px 0px 10px 10px",
-              background: "var(--dark)",}}
+              background: "var(--dark)",
+              maxHeight: '500px',}}
             fontSize={'sm'}
           >
             {tokens.map((line, i) => (
