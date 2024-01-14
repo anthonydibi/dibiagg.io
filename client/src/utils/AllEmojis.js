@@ -1790,6 +1790,6 @@ const allEmojis = [
   '🇿🇦',
   '🇿🇲',
   '🇿🇼',
-]
+];
 
-export default allEmojis
+export default allEmojis;

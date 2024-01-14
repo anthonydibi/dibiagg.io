@@ -8,19 +8,19 @@ import {
   Tooltip,
   Box,
   useColorModeValue,
-} from '@chakra-ui/react'
-import React from 'react'
-import IconCard from '../components/IconCard'
-import SEO from '../components/seo'
+} from '@chakra-ui/react';
+import React from 'react';
+import IconCard from '../components/IconCard';
+import SEO from '../components/seo';
 import {
   SiReact,
   SiPostgresql,
   SiHeroku,
   SiNodeDotJs,
   SiNextDotJs,
-} from 'react-icons/si'
-import { BsLightningFill, BsTriangleFill } from 'react-icons/bs'
-import { UnderlinedHeading } from '../components/UnderlinedHeading'
+} from 'react-icons/si';
+import { BsLightningFill, BsTriangleFill } from 'react-icons/bs';
+import { UnderlinedHeading } from '../components/UnderlinedHeading';
 
 export default function About() {
   return (
@@ -187,5 +187,5 @@ export default function About() {
         </Stack>
       </Center>
     </>
-  )
+  );
 }

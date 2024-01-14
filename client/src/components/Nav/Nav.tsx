@@ -15,26 +15,26 @@ import {
   MenuList,
   MenuItem,
   Collapse,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import {
   SunIcon,
   MoonIcon,
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
-} from '@chakra-ui/icons'
-import ContactButtons from '../ContactButtons'
-import Image from 'next/image'
-import lightModeLogo from '../../../public/lightmodelogo.png'
-import darkModeLogo from '../../../public/darkmodelogo.png'
-import NavLink from './NavLink'
-import { NavLeftLinks, NavRightLinks } from './constants'
+} from '@chakra-ui/icons';
+import ContactButtons from '../ContactButtons';
+import Image from 'next/image';
+import lightModeLogo from '../../../public/lightmodelogo.png';
+import darkModeLogo from '../../../public/darkmodelogo.png';
+import NavLink from './NavLink';
+import { NavLeftLinks, NavRightLinks } from './constants';
 
 export default function Nav() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const { colorMode, toggleColorMode } = useColorMode()
-  const bgColor = useColorModeValue('var(--light)', 'var(--dark)')
-  const logo = useColorModeValue(lightModeLogo, darkModeLogo)
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bgColor = useColorModeValue('var(--light)', 'var(--dark)');
+  const logo = useColorModeValue(lightModeLogo, darkModeLogo);
 
   return (
     <>
@@ -106,7 +106,12 @@ export default function Nav() {
                     </NavLink>
                   </MenuItem>
                   <MenuItem>
-                    <NavLink key='play-deathball' href='https://gilded-kulfi-c5ad94.netlify.app/'>PLAY</NavLink>
+                    <NavLink
+                      key="play-deathball"
+                      href="https://gilded-kulfi-c5ad94.netlify.app/"
+                    >
+                      PLAY
+                    </NavLink>
                   </MenuItem>
                   <MenuItem>
                     <NavLink href="/deathball/leaderboard" key={'leaderboard'}>
@@ -200,7 +205,9 @@ export default function Nav() {
                 </NavLink>
               </MenuItem>
               <MenuItem>
-                <NavLink href='https://gilded-kulfi-c5ad94.netlify.app/'>PLAY</NavLink>
+                <NavLink href="https://gilded-kulfi-c5ad94.netlify.app/">
+                  PLAY
+                </NavLink>
               </MenuItem>
               <MenuItem>
                 <NavLink href="/deathball/leaderboard" key={'leaderboard'}>
@@ -215,5 +222,5 @@ export default function Nav() {
         </Stack>
       </Box>
     </>
-  )
+  );
 }

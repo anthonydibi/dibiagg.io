@@ -1,5 +1,5 @@
-import Leaderboard from '../../components/Leaderboard'
-import SEO from '../../components/seo'
+import Leaderboard from '../../components/Leaderboard';
+import SEO from '../../components/seo';
 
 export default function DeathballLeaderboard() {
   return (
@@ -11,5 +11,5 @@ export default function DeathballLeaderboard() {
       />
       <Leaderboard entriesPerPage={15} />
     </>
-  )
+  );
 }

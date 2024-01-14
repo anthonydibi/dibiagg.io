@@ -1,6 +1,6 @@
-import PdfViewer from '../components/PdfViewer'
-import { Center, Box } from '@chakra-ui/react'
-import SEO from '../components/seo'
+import PdfViewer from '../components/PdfViewer';
+import { Center, Box } from '@chakra-ui/react';
+import SEO from '../components/seo';
 
 export default function Resume() {
   return (
@@ -16,5 +16,5 @@ export default function Resume() {
         </Box>
       </Center>
     </>
-  )
+  );
 }

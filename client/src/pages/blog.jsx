@@ -1,7 +1,7 @@
-import { Container } from '@chakra-ui/react'
-import { getAllPosts } from '../services/BlogApi'
-import SEO from '../components/seo'
-import { BlogEntry } from '../components/blog/BlogEntry'
+import { Container } from '@chakra-ui/react';
+import { getAllPosts } from '../services/BlogApi';
+import SEO from '../components/seo';
+import { BlogEntry } from '../components/blog/BlogEntry';
 
 export default function Blog({ allPosts }) {
   return (
@@ -17,7 +17,7 @@ export default function Blog({ allPosts }) {
         ))}
       </Container>
     </>
-  )
+  );
 }
 
 export const getStaticProps = async () => {
@@ -29,9 +29,9 @@ export const getStaticProps = async () => {
     'tags',
     'coverImage',
     'excerpt',
-  ])
+  ]);
 
   return {
     props: { allPosts },
-  }
-}
+  };
+};

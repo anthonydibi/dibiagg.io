@@ -1,12 +1,16 @@
-import { Heading, Box, BoxProps } from '@chakra-ui/react'
-import { FC, PropsWithChildren } from 'react'
+import { Heading, Box, BoxProps } from '@chakra-ui/react';
+import { FC, PropsWithChildren } from 'react';
 
 interface UnderlinedHeadingProps extends PropsWithChildren {
-  containerProps?: BoxProps
-  size?: string
+  containerProps?: BoxProps;
+  size?: string;
 }
 
-export const UnderlinedHeading: FC<UnderlinedHeadingProps> = ({ children, containerProps = {}, size = '2xl'}) => {
+export const UnderlinedHeading: FC<UnderlinedHeadingProps> = ({
+  children,
+  containerProps = {},
+  size = '2xl',
+}) => {
   return (
     <Box position={'relative'} width={'fit-content'} {...containerProps}>
       <Heading display={'inline-block'} size={size}>
@@ -22,5 +26,5 @@ export const UnderlinedHeading: FC<UnderlinedHeadingProps> = ({ children, contai
         backgroundColor={'accent'}
       ></Box>
     </Box>
-  )
-}
+  );
+};

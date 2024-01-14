@@ -1,44 +1,44 @@
-import { Stage, Layer, Line } from 'react-konva'
-import useGraffitiSocket from '../hooks/useGraffitiSocket'
-import React from 'react'
-import { Skeleton, Text } from '@chakra-ui/react'
+import { Stage, Layer, Line } from 'react-konva';
+import useGraffitiSocket from '../hooks/useGraffitiSocket';
+import React from 'react';
+import { Skeleton, Text } from '@chakra-ui/react';
 
 export default function GraffitiDrawArea(props) {
-  const lines = props.lines
-  const setLines = props.setLines
-  const tool = props.tool
-  const isLoaded = props.isLoaded
-  const userTag = props.userTag
-  const color = props.color
-  const stageScale = props.stageScale
-  const step = props.step
-  const save = props.save
-  const [numSessionLines, setNumSessionLines] = React.useState(0)
-  const [hoveredTag, setHoveredTag] = React.useState('')
-  const isDrawing = React.useRef(false)
-  const socket = useGraffitiSocket(setLines)
+  const lines = props.lines;
+  const setLines = props.setLines;
+  const tool = props.tool;
+  const isLoaded = props.isLoaded;
+  const userTag = props.userTag;
+  const color = props.color;
+  const stageScale = props.stageScale;
+  const step = props.step;
+  const save = props.save;
+  const [numSessionLines, setNumSessionLines] = React.useState(0);
+  const [hoveredTag, setHoveredTag] = React.useState('');
+  const isDrawing = React.useRef(false);
+  const socket = useGraffitiSocket(setLines);
 
   const handleMouseDown = (e) => {
     if (step === 0) {
-      isDrawing.current = true
-      const pos = e.target.getStage().getPointerPosition()
+      isDrawing.current = true;
+      const pos = e.target.getStage().getPointerPosition();
       const newLine = {
         tool,
         color: color.hex ?? color,
         points: [pos.x / stageScale, pos.y / stageScale],
         who: userTag,
-      }
-      setLines({ ...lines, self: [...lines['self'], newLine] })
-      socket.emit('lineStarted', { peer: socket.id, line: newLine }) //send start of new line to peers
+      };
+      setLines({ ...lines, self: [...lines['self'], newLine] });
+      socket.emit('lineStarted', { peer: socket.id, line: newLine }); //send start of new line to peers
     }
-  }
+  };
 
   const handleMouseMove = (e) => {
-    e.evt.preventDefault() //prevent scrolling when drawing on mobile
+    e.evt.preventDefault(); //prevent scrolling when drawing on mobile
     // not drawing or not on current day - skipping
-    const stage = e.target.getStage()
-    const point = stage.getPointerPosition()
-    const intersection = stage.getIntersection(point)
+    const stage = e.target.getStage();
+    const point = stage.getPointerPosition();
+    const intersection = stage.getIntersection(point);
     if (
       intersection &&
       intersection.attrs.globalCompositeOperation !== 'destination-out'
@@ -47,39 +47,39 @@ export default function GraffitiDrawArea(props) {
         intersection.attrs.hasOwnProperty('who') &&
         intersection.attrs.who !== ''
       ) {
-        setHoveredTag(intersection.attrs.who)
+        setHoveredTag(intersection.attrs.who);
       } else {
-        setHoveredTag('anonymous')
+        setHoveredTag('anonymous');
       }
     } else {
-      setHoveredTag('')
+      setHoveredTag('');
     }
     if (!isDrawing.current || step !== 0) {
-      return
+      return;
     }
-    let lastLine = lines['self'][lines['self'].length - 1]
+    let lastLine = lines['self'][lines['self'].length - 1];
     // add point
     lastLine.points = lastLine.points.concat([
       point.x / stageScale,
       point.y / stageScale,
-    ])
+    ]);
 
     // replace last
-    lines['self'].splice(lines['self'].length - 1, 1, lastLine)
-    setLines({ ...lines })
+    lines['self'].splice(lines['self'].length - 1, 1, lastLine);
+    setLines({ ...lines });
     socket.emit('point', {
       peer: socket.id,
       point: { x: point.x / stageScale, y: point.y / stageScale },
-    }) //send drawn point to peers
-  }
+    }); //send drawn point to peers
+  };
 
   const handleMouseUp = () => {
     if (step === 0) {
-      isDrawing.current = false
-      setNumSessionLines(numSessionLines + 1)
-      save()
+      isDrawing.current = false;
+      setNumSessionLines(numSessionLines + 1);
+      save();
     }
-  }
+  };
 
   return (
     <Skeleton
@@ -120,7 +120,7 @@ export default function GraffitiDrawArea(props) {
                 ) =>
                   list.map((line, i) => {
                     if (line == null) {
-                      return null
+                      return null;
                     }
                     return (
                       <Line
@@ -137,12 +137,12 @@ export default function GraffitiDrawArea(props) {
                         }
                         who={line.who}
                       />
-                    )
+                    );
                   }),
               )
             : lines['self'].map((line, i) => {
                 if (line == null) {
-                  return null
+                  return null;
                 }
                 return (
                   <Line
@@ -157,10 +157,10 @@ export default function GraffitiDrawArea(props) {
                     }
                     who={line.who}
                   />
-                )
+                );
               })}
         </Layer>
       </Stage>
     </Skeleton>
-  )
+  );
 }

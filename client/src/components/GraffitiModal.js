@@ -7,15 +7,15 @@ import {
   ModalBody,
   Text,
   useDisclosure,
-} from '@chakra-ui/react'
-import React from 'react'
+} from '@chakra-ui/react';
+import React from 'react';
 
 export default function GraffitiModal(props) {
-  const { isOpen, onOpen } = useDisclosure()
+  const { isOpen, onOpen } = useDisclosure();
 
   React.useEffect(() => {
-    onOpen()
-  }, [onOpen])
+    onOpen();
+  }, [onOpen]);
 
   return (
     <>
@@ -43,5 +43,5 @@ export default function GraffitiModal(props) {
         </ModalContent>
       </Modal>
     </>
-  )
+  );
 }

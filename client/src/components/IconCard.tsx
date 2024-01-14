@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 import {
   Flex,
   useColorModeValue,
@@ -6,15 +6,15 @@ import {
   Text,
   Icon,
   Box,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 
 interface IconCardProps {
-  icon: any
-  heading: string
-  text: string
+  icon: any;
+  heading: string;
+  text: string;
 }
 
-const IconCard: FC<IconCardProps> = ({icon, heading, text}) => {
+const IconCard: FC<IconCardProps> = ({ icon, heading, text }) => {
   return (
     <Flex
       position={'relative'}
@@ -55,7 +55,7 @@ const IconCard: FC<IconCardProps> = ({icon, heading, text}) => {
         {text}
       </Text>
     </Flex>
-  )
-}
+  );
+};
 
 export default IconCard;

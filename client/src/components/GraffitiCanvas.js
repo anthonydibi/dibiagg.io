@@ -1,5 +1,5 @@
-import dynamic from 'next/dynamic'
-import React, { useCallback } from 'react'
+import dynamic from 'next/dynamic';
+import React, { useCallback } from 'react';
 import {
   Flex,
   IconButton,
@@ -17,123 +17,123 @@ import {
   useColorModeValue,
   useDisclosure,
   HStack,
-} from '@chakra-ui/react'
-import { FaEraser, FaPen } from 'react-icons/fa'
+} from '@chakra-ui/react';
+import { FaEraser, FaPen } from 'react-icons/fa';
 import {
   AiFillCaretLeft,
   AiFillCaretRight,
   AiFillFastForward,
   AiOutlineQuestion,
-} from 'react-icons/ai'
-import { SliderPicker, SwatchesPicker } from 'react-color'
-import { fetchCanvasState, postCanvasLine } from '../services/GraffitiApi'
-import TaggingModal from './TaggingModal.js'
-import useWindowDimensions from '../hooks/useWindowDimensions'
+} from 'react-icons/ai';
+import { SliderPicker, SwatchesPicker } from 'react-color';
+import { fetchCanvasState, postCanvasLine } from '../services/GraffitiApi';
+import TaggingModal from './TaggingModal.js';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 const GraffitiDrawArea = dynamic(() => import('./GraffitiDrawArea'), {
   //ssr has to be disabled for konva-react
   ssr: false,
-})
+});
 
 export default function GraffitiCanvas() {
   //built off of free-draw template from react-konva docs
-  let today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const modeValue = useColorModeValue('var(--light)', 'var(--dark)')
-  const [step, setStep] = React.useState(0)
-  const [tool, setTool] = React.useState('pen')
-  const [lines, setLines] = React.useState({ self: [] })
-  const [color, setColor] = React.useState('#000000')
-  const [userTag, setUserTag] = React.useState('')
-  const [day, setDay] = React.useState(today.toISOString().split('T')[0])
-  const [isLoaded, setIsLoaded] = React.useState(false)
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  let [stageScale, setStageScale] = React.useState(1)
-  const { width, height } = useWindowDimensions()
-  const colorMode = useColorModeValue("light", "dark")
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const modeValue = useColorModeValue('var(--light)', 'var(--dark)');
+  const [step, setStep] = React.useState(0);
+  const [tool, setTool] = React.useState('pen');
+  const [lines, setLines] = React.useState({ self: [] });
+  const [color, setColor] = React.useState('#000000');
+  const [userTag, setUserTag] = React.useState('');
+  const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  let [stageScale, setStageScale] = React.useState(1);
+  const { width, height } = useWindowDimensions();
+  const colorMode = useColorModeValue('light', 'dark');
 
   React.useEffect(() => {
     if (width <= 1000) {
-      setStageScale(width / 1000.0)
+      setStageScale(width / 1000.0);
     }
-  }, [width, height])
+  }, [width, height]);
 
   const handleChangeComplete = (color) => {
-    setColor(color)
-  }
+    setColor(color);
+  };
 
   const getCanvasState = useCallback(
     (step) => {
       fetchCanvasState(step).then(async (response) => {
         if (response.status !== 200) {
           //if we didn't find a wall, then go back to the previous step
-          setStep(step - 1)
+          setStep(step - 1);
         } else {
-          let data = await response.json()
-          setLines({ ...lines, self: data.lines })
-          setDay(data.day.split(' ')[0])
-          setIsLoaded(true)
+          let data = await response.json();
+          setLines({ ...lines, self: data.lines });
+          setDay(data.day.split(' ')[0]);
+          setIsLoaded(true);
         }
-      })
+      });
     },
     [lines],
-  )
+  );
 
   const updateCanvasState = useCallback(() => {
     //the canvas state is updated line by line
-    let line = lines['self'][lines['self'].length - 1]
+    let line = lines['self'][lines['self'].length - 1];
     if (line != null) {
-      postCanvasLine(line)
+      postCanvasLine(line);
     }
-  }, [lines])
+  }, [lines]);
 
   const handleTagChange = (e) => {
-    const newTag = e.target.value
-    setUserTag(newTag)
-    localStorage.setItem('graffitiTag', newTag)
-  }
+    const newTag = e.target.value;
+    setUserTag(newTag);
+    localStorage.setItem('graffitiTag', newTag);
+  };
 
   const back = () => {
-    setStep(step + 1)
-  }
+    setStep(step + 1);
+  };
 
   const next = () => {
     if (step - 1 < 0) {
-      return
+      return;
     }
-    setStep(step - 1)
-  }
+    setStep(step - 1);
+  };
 
   const fastForward = () => {
-    setStep(0)
-  }
+    setStep(0);
+  };
 
   const save = () => {
     if (step !== 0) {
-      return
+      return;
     }
-    updateCanvasState()
-  }
+    updateCanvasState();
+  };
 
   React.useEffect(() => {
-    getCanvasState(0)
-    let savedUserTag = localStorage.getItem('graffitiTag')
+    getCanvasState(0);
+    let savedUserTag = localStorage.getItem('graffitiTag');
     if (savedUserTag) {
-      setUserTag(savedUserTag)
+      setUserTag(savedUserTag);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   React.useEffect(() => {
-    setIsLoaded(false)
-    getCanvasState(step)
+    setIsLoaded(false);
+    getCanvasState(step);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step])
+  }, [step]);
 
   React.useEffect(() => {
     //my hacky way to set the color picker background to the correct color :( needs work
     document.querySelector('.swatches-picker div div').style.backgroundColor =
-      modeValue
-  })
+      modeValue;
+  });
 
   return (
     <Box className="GraffitiContainer" w="100%">
@@ -200,55 +200,56 @@ export default function GraffitiCanvas() {
               </InputRightElement>
             </InputGroup>
           </Stack>
-          <Box m={"2"} borderRadius={"20px"} >
-          <HStack m={"1"} px={"2"} py={"1"} borderRadius={"20px"}
-      >
-          <IconButton
-              size="sm"
-              isRound="true"
-              value="previousDay"
-              variant="interact"
-              icon={<AiFillCaretLeft />}
-              onClick={back}
-              boxShadow={useColorModeValue(
-                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
-            ></IconButton>
-          <Heading my={'2'} mx={'2'}>
-            {day}
-          </Heading>
-          <Box>
-            <IconButton
-              size="sm"
-              isRound="true"
-              value="nextDay"
-              variant="interact"
-              icon={<AiFillCaretRight />}
-              onClick={next}
-              boxShadow={useColorModeValue(
-                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
-            ></IconButton>
+          <Box m={'2'} borderRadius={'20px'}>
+            <HStack m={'1'} px={'2'} py={'1'} borderRadius={'20px'}>
+              <IconButton
+                size="sm"
+                isRound="true"
+                value="previousDay"
+                variant="interact"
+                icon={<AiFillCaretLeft />}
+                onClick={back}
+                boxShadow={useColorModeValue(
+                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+                )}
+              ></IconButton>
+              <Heading my={'2'} mx={'2'}>
+                {day}
+              </Heading>
+              <Box>
+                <IconButton
+                  size="sm"
+                  isRound="true"
+                  value="nextDay"
+                  variant="interact"
+                  icon={<AiFillCaretRight />}
+                  onClick={next}
+                  boxShadow={useColorModeValue(
+                    '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                    '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+                  )}
+                ></IconButton>
+              </Box>
+            </HStack>
           </Box>
-          </HStack>
-          </Box>
-          <Stack flex={"1"} justify={'left'}
-            align={'center'}
-            direction={'row'}>
-          {step > 0 ? (
+          <Stack flex={'1'} justify={'left'} align={'center'} direction={'row'}>
+            {step > 0 ? (
               <IconButton
                 position={'relative'}
                 left={'0'}
-                ml={"-3"}
+                ml={'-3'}
                 size="sm"
                 isRound="true"
                 value="fastForward"
                 variant="interact"
                 icon={<AiFillFastForward />}
                 onClick={fastForward}
-                boxShadow={colorMode === "light" ? 
-                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff'
-                  : '5px 5px 7px #1b1b1b, -5px -5px 7px #252525'}
+                boxShadow={
+                  colorMode === 'light'
+                    ? '5px 5px 7px #cccccc, -5px -5px 7px #ffffff'
+                    : '5px 5px 7px #1b1b1b, -5px -5px 7px #252525'
+                }
               ></IconButton>
             ) : null}
           </Stack>
@@ -292,11 +293,12 @@ export default function GraffitiCanvas() {
                 border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
                 icon={<FaPen />}
                 onClick={() => {
-                  setTool('pen')
+                  setTool('pen');
                 }}
                 boxShadow={useColorModeValue(
                   '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+                )}
               ></IconButton>
             </GridItem>
             <GridItem>
@@ -311,10 +313,11 @@ export default function GraffitiCanvas() {
                 }
                 boxShadow={useColorModeValue(
                   '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+                )}
                 icon={<FaEraser />}
                 onClick={() => {
-                  setTool('eraser')
+                  setTool('eraser');
                 }}
               ></IconButton>
             </GridItem>
@@ -334,10 +337,11 @@ export default function GraffitiCanvas() {
               border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
               boxShadow={useColorModeValue(
                 '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
+                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+              )}
               icon={<FaPen />}
               onClick={() => {
-                setTool('pen')
+                setTool('pen');
               }}
             ></IconButton>
             <IconButton
@@ -349,26 +353,33 @@ export default function GraffitiCanvas() {
               border={tool === 'eraser' ? '1px solid' : '1px solid transparent'}
               boxShadow={useColorModeValue(
                 '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')}
+                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+              )}
               icon={<FaEraser />}
               onClick={() => {
-                setTool('eraser')
+                setTool('eraser');
               }}
             ></IconButton>
-            <Box w={'100%'} margin={"0 !important"}>
-                    <Box w={"100%"} h={"100%"} boxShadow={useColorModeValue(
+            <Box w={'100%'} margin={'0 !important'}>
+              <Box
+                w={'100%'}
+                h={'100%'}
+                boxShadow={useColorModeValue(
                   '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525')} p={"4"} borderRadius={"20px"}>
-              <SliderPicker
-                
-                color={color}
-                onChangeComplete={handleChangeComplete}
-              />
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+                )}
+                p={'4'}
+                borderRadius={'20px'}
+              >
+                <SliderPicker
+                  color={color}
+                  onChangeComplete={handleChangeComplete}
+                />
               </Box>
             </Box>
           </Stack>
         </Box>
       </Flex>
     </Box>
-  )
+  );
 }

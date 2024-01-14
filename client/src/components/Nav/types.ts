@@ -1,4 +1,4 @@
 export interface NavLink {
-    display: string;
-    href: string;
+  display: string;
+  href: string;
 }

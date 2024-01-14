@@ -6,12 +6,12 @@ import {
   Heading,
   Text,
   Center,
-} from '@chakra-ui/react'
-import { Link } from '@chakra-ui/next-js'
-import dynamic from 'next/dynamic'
-const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false })
-import Emoji from '../../components/Emoji'
-import SEO from '../../components/seo'
+} from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js';
+import dynamic from 'next/dynamic';
+const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
+import Emoji from '../../components/Emoji';
+import SEO from '../../components/seo';
 
 export default function DeathballAbout() {
   return (
@@ -136,5 +136,5 @@ export default function DeathballAbout() {
         </Container>
       </Center>
     </>
-  )
+  );
 }

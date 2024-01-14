@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react'
-import LFUCache from '../../utils/LFUCache'
-import allEmojis from '../../utils/AllEmojis'
+import { useRef, useState } from 'react';
+import LFUCache from '../../utils/LFUCache';
+import allEmojis from '../../utils/AllEmojis';
 import {
   Box,
   Grid,
@@ -9,21 +9,21 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-} from '@chakra-ui/react'
-import { IoMdSend } from 'react-icons/io'
+} from '@chakra-ui/react';
+import { IoMdSend } from 'react-icons/io';
 
-const emojis = allEmojis.slice(100, 500)
+const emojis = allEmojis.slice(100, 500);
 
 function FrequentlyUsedEmojiExample() {
-  const cache = useRef(new LFUCache(28))
-  const [cachedEmojis, setCachedEmojis] = useState([])
-  const [emojiInputs, setEmojiInputs] = useState('')
+  const cache = useRef(new LFUCache(28));
+  const [cachedEmojis, setCachedEmojis] = useState([]);
+  const [emojiInputs, setEmojiInputs] = useState('');
 
   const onEmojiInput = (emoji) => {
-    setEmojiInputs(emojiInputs + emoji)
-    cache.current.set(emoji, emoji) //emojis are just text so we don't need an identifier as the key
-    setCachedEmojis(cache.current.toList(false))
-  }
+    setEmojiInputs(emojiInputs + emoji);
+    cache.current.set(emoji, emoji); //emojis are just text so we don't need an identifier as the key
+    setCachedEmojis(cache.current.toList(false));
+  };
 
   const ClickableEmoji = (props) => {
     return (
@@ -41,8 +41,8 @@ function FrequentlyUsedEmojiExample() {
           {props.emoji}
         </Box>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -94,7 +94,7 @@ function FrequentlyUsedEmojiExample() {
         </InputRightElement>
       </InputGroup>
     </>
-  )
+  );
 }
 
-export default FrequentlyUsedEmojiExample
+export default FrequentlyUsedEmojiExample;

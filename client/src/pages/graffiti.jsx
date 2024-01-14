@@ -1,20 +1,20 @@
-import { Center } from '@chakra-ui/react'
-import GraffitiModal from '../components/GraffitiModal'
-import { useEffect } from 'react'
-import SEO from '../components/seo'
-import Script from 'next/script'
-import GraffitiCanvas from '../components/GraffitiCanvas'
+import { Center } from '@chakra-ui/react';
+import GraffitiModal from '../components/GraffitiModal';
+import { useEffect } from 'react';
+import SEO from '../components/seo';
+import Script from 'next/script';
+import GraffitiCanvas from '../components/GraffitiCanvas';
 
 export default function Graffiti() {
-  let showModal = false
+  let showModal = false;
 
   useEffect(() => {
-    let hasVisitedGraffiti = localStorage.getItem('hasVisitedGraffiti')
+    let hasVisitedGraffiti = localStorage.getItem('hasVisitedGraffiti');
     if (hasVisitedGraffiti !== '1') {
-      localStorage.setItem('hasVisitedGraffiti', '1')
-      showModal = true
+      localStorage.setItem('hasVisitedGraffiti', '1');
+      showModal = true;
     }
-  }, [])
+  }, []);
 
   return (
     <>
@@ -33,5 +33,5 @@ export default function Graffiti() {
         <GraffitiCanvas />
       </Center>
     </>
-  )
+  );
 }

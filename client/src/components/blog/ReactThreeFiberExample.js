@@ -1,22 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { useColorMode } from '@chakra-ui/react'
+import React, { useEffect, useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useColorMode } from '@chakra-ui/react';
 
 function SpinnyCube(props) {
-  const mesh = useRef()
-  const [hovered, setHovered] = useState(false)
-  const [active, setActive] = useState(false)
-  const [accentColor, setAccentColor] = useState('')
-  const { colorMode, toggleColorMode } = useColorMode()
+  const mesh = useRef();
+  const [hovered, setHovered] = useState(false);
+  const [active, setActive] = useState(false);
+  const [accentColor, setAccentColor] = useState('');
+  const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
-    setAccentColor(getComputedStyle(document.body).getPropertyValue('--accent'))
-  }, [colorMode])
+    setAccentColor(
+      getComputedStyle(document.body).getPropertyValue('--accent'),
+    );
+  }, [colorMode]);
 
   useFrame((state, delta) => {
-    mesh.current.rotation.x += delta
-    mesh.current.rotation.z += delta
-  })
+    mesh.current.rotation.x += delta;
+    mesh.current.rotation.z += delta;
+  });
 
   return (
     <mesh
@@ -30,7 +32,7 @@ function SpinnyCube(props) {
       <boxGeometry args={[2, 2, 2]} />
       <meshStandardMaterial color={hovered ? 'green' : accentColor} />
     </mesh>
-  )
+  );
 }
 
 export default function ReactThreeFiberExample(props) {
@@ -41,5 +43,5 @@ export default function ReactThreeFiberExample(props) {
       <SpinnyCube position={[-3, 0.5, 0]} />
       <SpinnyCube position={[3, -0.7, 0]} />
     </Canvas>
-  )
+  );
 }

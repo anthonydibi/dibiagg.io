@@ -1,20 +1,20 @@
-import { useRouter } from 'next/router'
-import ErrorPage from 'next/error'
-import BlogHeader from '../../components/blog/BlogHeader'
-import PostBody from '../../components/blog/PostBody'
-import { getPostBySlug, getAllPosts } from '../../services/BlogApi'
-import PostTitle from '../../components/blog/PostTitle'
-import markdownToHtml from '../../services/MarkdownToHtml'
-import { Box, Heading, Container, Stack } from '@chakra-ui/react'
-import SEO from '../../components/seo'
-import { BlogEntry } from '../../components/blog/BlogEntry'
-import Head from 'next/head'
+import { useRouter } from 'next/router';
+import ErrorPage from 'next/error';
+import BlogHeader from '../../components/blog/BlogHeader';
+import PostBody from '../../components/blog/PostBody';
+import { getPostBySlug, getAllPosts } from '../../services/BlogApi';
+import PostTitle from '../../components/blog/PostTitle';
+import markdownToHtml from '../../services/MarkdownToHtml';
+import { Box, Heading, Container, Stack } from '@chakra-ui/react';
+import SEO from '../../components/seo';
+import { BlogEntry } from '../../components/blog/BlogEntry';
+import Head from 'next/head';
 
 export default function Post({ post }) {
-  const router = useRouter()
-  const title = `${post.title} | dibiagg.io`
+  const router = useRouter();
+  const title = `${post.title} | dibiagg.io`;
   if (!router.isFallback && post && !post.slug) {
-    return <ErrorPage statusCode={404} />
+    return <ErrorPage statusCode={404} />;
   }
   return (
     <>
@@ -39,7 +39,11 @@ export default function Post({ post }) {
             </article>
           </>
         )}
-        <Stack direction={{ base: 'column', md: 'row' }} justify={'center'} gap={"80px"}>
+        <Stack
+          direction={{ base: 'column', md: 'row' }}
+          justify={'center'}
+          gap={'80px'}
+        >
           {post.olderPost && (
             <Box
               align={'center'}
@@ -67,7 +71,7 @@ export default function Post({ post }) {
         </Stack>
       </Container>
     </>
-  )
+  );
 }
 
 export async function getStaticProps({ params }) {
@@ -84,9 +88,9 @@ export async function getStaticProps({ params }) {
       'coverImage',
     ],
     true,
-  )
+  );
 
-  const content = post.content
+  const content = post.content;
 
   return {
     props: {
@@ -95,11 +99,11 @@ export async function getStaticProps({ params }) {
         content,
       },
     },
-  }
+  };
 }
 
 export async function getStaticPaths() {
-  const posts = await getAllPosts(['slug'])
+  const posts = await getAllPosts(['slug']);
 
   return {
     paths: posts.map((post) => {
@@ -107,8 +111,8 @@ export async function getStaticPaths() {
         params: {
           slug: post.slug,
         },
-      }
+      };
     }),
     fallback: false,
-  }
+  };
 }

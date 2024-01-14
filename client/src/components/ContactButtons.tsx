@@ -1,20 +1,23 @@
-import { IconButton, useToast } from '@chakra-ui/react'
-import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa'
-import { MdEmail } from 'react-icons/md'
+import { IconButton, useToast } from '@chakra-ui/react';
+import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 
 export default function ContactButtons() {
   const toast = useToast();
 
-  const copyToClipboardAndShowToast = async (contactType: string, contactLink: string) => {
+  const copyToClipboardAndShowToast = async (
+    contactType: string,
+    contactLink: string,
+  ) => {
     if (window.isSecureContext) {
-      await navigator.clipboard.writeText(contactLink)
+      await navigator.clipboard.writeText(contactLink);
       toast({
         title: 'Copied to clipboard!',
         description: `You can now paste my ${contactType}.`,
         status: 'success',
         duration: 5000,
         isClosable: true,
-      })
+      });
     } else {
       toast({
         title: 'Copy to clipboard failed.',
@@ -23,9 +26,9 @@ export default function ContactButtons() {
         status: 'error',
         duration: 5000,
         isClosable: true,
-      })
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -35,7 +38,7 @@ export default function ContactButtons() {
         variant="interact"
         icon={<FaDiscord />}
         onClick={() => {
-          copyToClipboardAndShowToast('Discord username', 'boat boat#3913')
+          copyToClipboardAndShowToast('Discord username', 'boat boat#3913');
         }}
         rounded="none"
       ></IconButton>
@@ -47,7 +50,7 @@ export default function ContactButtons() {
         onClick={() => {
           window.open(
             'https://www.linkedin.com/in/anthony-di-biaggio-95524916b/',
-          )
+          );
         }}
         rounded="none"
       ></IconButton>
@@ -57,7 +60,7 @@ export default function ContactButtons() {
         variant="interact"
         icon={<MdEmail />}
         onClick={() => {
-          copyToClipboardAndShowToast('e-mail', 'anthony@dibiagg.io')
+          copyToClipboardAndShowToast('e-mail', 'anthony@dibiagg.io');
         }}
         rounded="none"
       ></IconButton>
@@ -67,10 +70,10 @@ export default function ContactButtons() {
         variant="interact"
         icon={<FaGithub />}
         onClick={() => {
-          window.open('https://github.com/anthonydibi')
+          window.open('https://github.com/anthonydibi');
         }}
         rounded="none"
       ></IconButton>
     </>
-  )
+  );
 }

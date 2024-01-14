@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 interface EmojiProps {
-  label: string
-  symbol: string
+  label: string;
+  symbol: string;
 }
 
 const Emoji: FC<EmojiProps> = ({ label, symbol }) => {
@@ -10,7 +10,7 @@ const Emoji: FC<EmojiProps> = ({ label, symbol }) => {
     <span aria-label={label} role="img">
       {symbol}
     </span>
-  )
-}
+  );
+};
 
 export default Emoji;

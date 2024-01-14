@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import {
   Spacer,
   Stack,
@@ -17,43 +17,42 @@ import {
   Skeleton,
   SlideFade,
   useToken,
-} from '@chakra-ui/react'
-import { GiCrenelCrown } from 'react-icons/gi'
-import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
-import { fetchStandings } from '../services/DeathballApi'
-
+} from '@chakra-ui/react';
+import { GiCrenelCrown } from 'react-icons/gi';
+import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
+import { fetchStandings } from '../services/DeathballApi';
 
 export default function Leaderboard(props) {
-  const ENTRIES_PER_PAGE = props.entriesPerPage
+  const ENTRIES_PER_PAGE = props.entriesPerPage;
 
-  const [standings, setStandings] = useState([])
-  const [page, setPage] = useState(0)
-  const [navInfo, setNavInfo] = useState('')
-  const [topPlayer, setTopPlayer] = useState(null)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [standings, setStandings] = useState([]);
+  const [page, setPage] = useState(0);
+  const [navInfo, setNavInfo] = useState('');
+  const [topPlayer, setTopPlayer] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     fetchStandings(page, ENTRIES_PER_PAGE).then((data) => {
-      if (page === 0) setTopPlayer({ ...data[0] })
+      if (page === 0) setTopPlayer({ ...data[0] });
       setNavInfo(
         `${page * ENTRIES_PER_PAGE} TO ${(page + 1) * ENTRIES_PER_PAGE - 1}`,
-      )
-      setIsLoaded(true)
-      setStandings(data)
-    })
-  }, [page, ENTRIES_PER_PAGE])
+      );
+      setIsLoaded(true);
+      setStandings(data);
+    });
+  }, [page, ENTRIES_PER_PAGE]);
 
   const next = () => {
-    setIsLoaded(false)
-    setPage(page + 1)
-  }
+    setIsLoaded(false);
+    setPage(page + 1);
+  };
 
   const back = () => {
     if (page > 0) {
-      setIsLoaded(false)
-      setPage(page - 1)
+      setIsLoaded(false);
+      setPage(page - 1);
     }
-  }
+  };
 
   const LeaderboardTopRank = (props) => {
     return (
@@ -70,8 +69,8 @@ export default function Leaderboard(props) {
         </SlideFade>
         <Heading>{props.player ? props.player.name.toUpperCase() : ''}</Heading>
       </Flex>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -118,7 +117,7 @@ export default function Leaderboard(props) {
                             <Td>{player.wins}</Td>
                             <Td>{player.losses}</Td>
                           </Tr>
-                        )
+                        );
                       })
                     : standings.map((player) => {
                         return (
@@ -130,7 +129,7 @@ export default function Leaderboard(props) {
                             <Td>{player.wins}</Td>
                             <Td>{player.losses}</Td>
                           </Tr>
-                        )
+                        );
                       })}
                 </Tbody>
               </Table>
@@ -162,5 +161,5 @@ export default function Leaderboard(props) {
         </Stack>
       </Center>
     </>
-  )
+  );
 }

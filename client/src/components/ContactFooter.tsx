@@ -1,5 +1,5 @@
-import ContactButtons from './ContactButtons'
-import { Flex, Heading, Stack } from '@chakra-ui/react'
+import ContactButtons from './ContactButtons';
+import { Flex, Heading, Stack } from '@chakra-ui/react';
 
 const ContactFooter = () => {
   return (
@@ -25,7 +25,7 @@ const ContactFooter = () => {
         </Flex>
       </Stack>
     </>
-  )
-}
+  );
+};
 
 export default ContactFooter;

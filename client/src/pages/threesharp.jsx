@@ -1,4 +1,4 @@
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import {
   Box,
   Heading,
@@ -18,33 +18,35 @@ import {
   ModalCloseButton,
   Button,
   Center as ChakraCenter,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import {
   Text,
   OrbitControls,
   Line,
   PerspectiveCamera,
   Center,
-} from '@react-three/drei'
-import React, { useState, useRef, useEffect } from 'react'
-import SEO from '../components/seo'
-import { WhatIsThreeSharp } from '../components/ThreeSharpStrings'
-import { WhyThreeSharp } from '../components/ThreeSharpStrings'
-import { HowItWorks } from '../components/ThreeSharpStrings'
-import UnderlinedHeading from '../components/UnderlinedHeading'
+} from '@react-three/drei';
+import React, { useState, useRef, useEffect } from 'react';
+import SEO from '../components/seo';
+import { WhatIsThreeSharp } from '../components/ThreeSharpStrings';
+import { WhyThreeSharp } from '../components/ThreeSharpStrings';
+import { HowItWorks } from '../components/ThreeSharpStrings';
+import UnderlinedHeading from '../components/UnderlinedHeading';
 
 //TODO: this code is really ugly, kind of just manically hacked it up but definitely need to clean up components
 
 function Node(props) {
-  const mesh = useRef()
-  const [hovered, setHovered] = useState(false)
-  const [active, setActive] = useState(false)
-  const [accentColor, setAccentColor] = useState('')
-  const { colorMode, toggleColorMode } = useColorMode()
+  const mesh = useRef();
+  const [hovered, setHovered] = useState(false);
+  const [active, setActive] = useState(false);
+  const [accentColor, setAccentColor] = useState('');
+  const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
-    setAccentColor(getComputedStyle(document.body).getPropertyValue('--accent'))
-  }, [colorMode])
+    setAccentColor(
+      getComputedStyle(document.body).getPropertyValue('--accent'),
+    );
+  }, [colorMode]);
 
   return (
     <>
@@ -56,8 +58,8 @@ function Node(props) {
           props.onClick
             ? props.onClick
             : (event) => {
-                props.setSelectedNode(props.name)
-                props.setBlurb(props.heading, props.text)
+                props.setSelectedNode(props.name);
+                props.setBlurb(props.heading, props.text);
               }
         }
         onPointerOver={(event) => setHovered(true)}
@@ -74,17 +76,17 @@ function Node(props) {
         <NodeText text={props.heading} />
       </mesh>
     </>
-  )
+  );
 }
 
 function NodeText(props) {
-  const mesh = useRef()
-  const camera = useThree((state) => state.camera)
-  const textColor = useColorModeValue('black', 'white')
+  const mesh = useRef();
+  const camera = useThree((state) => state.camera);
+  const textColor = useColorModeValue('black', 'white');
 
   useFrame(() => {
-    mesh.current.lookAt(camera.position)
-  })
+    mesh.current.lookAt(camera.position);
+  });
 
   return (
     <Text
@@ -95,17 +97,17 @@ function NodeText(props) {
     >
       {props.text}
     </Text>
-  )
+  );
 }
 
 function Blurb(props) {
-  const isMobile = useBreakpointValue({ base: true, md: false })
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
     <>
       {!isMobile ? (
         <>
-          <Heading size={['sm', 'md', 'lg', 'xl']} mb={'8'} whiteSpace='nowrap'>
+          <Heading size={['sm', 'md', 'lg', 'xl']} mb={'8'} whiteSpace="nowrap">
             {props.heading ? props.heading : 'THREESHARP'}
           </Heading>
           <ChakraText
@@ -133,7 +135,7 @@ function Blurb(props) {
         />
       )}
     </>
-  )
+  );
 }
 
 function ThreeSharpModal(props) {
@@ -163,33 +165,36 @@ function ThreeSharpModal(props) {
         </ModalContent>
       </Modal>
     </>
-  )
+  );
 }
 
 function ThreeSharpShowcase(props) {
-  const [selectedNode, setSelectedNode] = useState('')
-  const [text, setText] = useState('')
-  const [heading, setHeading] = useState('')
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [selectedNode, setSelectedNode] = useState('');
+  const [text, setText] = useState('');
+  const [heading, setHeading] = useState('');
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const setBlurb = (heading, text) => {
-    setHeading(heading)
-    setText(text)
-    onOpen()
-  }
+    setHeading(heading);
+    setText(text);
+    onOpen();
+  };
 
   return (
-    <Stack direction={['column', null, null, 'row']} height={['initial', null, null, '80vh']}>
+    <Stack
+      direction={['column', null, null, 'row']}
+      height={['initial', null, null, '80vh']}
+    >
       <Flex
         display={{ base: 'none', md: 'flex' }}
-        width={[ '100%', null, null, '50%']}
+        width={['100%', null, null, '50%']}
         height={['500px', null, null, '100%']}
         align={'center'}
         style={{ marginLeft: 0, marginTop: 0 }}
         p={{ base: '0', md: '10' }}
         direction={'column'}
         justifyContent={'center'}
-        alignItems='end'
+        alignItems="end"
       >
         <Box>
           <Blurb
@@ -200,7 +205,11 @@ function ThreeSharpShowcase(props) {
           />
         </Box>
       </Flex>
-      <Flex alignItems='stretch' width={[ '100%', null, null, '50%']} height={['700px', null, null, 'auto']}>
+      <Flex
+        alignItems="stretch"
+        width={['100%', null, null, '50%']}
+        height={['700px', null, null, 'auto']}
+      >
         <Canvas>
           <OrbitControls />
           <PerspectiveCamera
@@ -243,7 +252,7 @@ function ThreeSharpShowcase(props) {
             <Node
               onClick={() => {
                 if (typeof window !== undefined)
-                  window.open('https://youtu.be/JaxGmNPOdZM')
+                  window.open('https://youtu.be/JaxGmNPOdZM');
               }}
               setSelectedNode={setSelectedNode}
               setBlurb={setBlurb}
@@ -289,7 +298,7 @@ function ThreeSharpShowcase(props) {
         </Canvas>
       </Flex>
     </Stack>
-  )
+  );
 }
 
 export default function ThreeSharp() {
@@ -302,5 +311,5 @@ export default function ThreeSharp() {
       />
       <ThreeSharpShowcase />
     </>
-  )
+  );
 }

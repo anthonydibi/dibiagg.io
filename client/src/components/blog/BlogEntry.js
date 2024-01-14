@@ -9,11 +9,11 @@ import {
   TagLeftIcon,
   TagLabel,
   useColorModeValue,
-} from '@chakra-ui/react'
-import NextLink from 'next/link'
-import DateFormatter from './DateFormatter'
-import Image from 'next/image'
-import BlogTag from './BlogTag'
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
+import DateFormatter from './DateFormatter';
+import Image from 'next/image';
+import BlogTag from './BlogTag';
 
 export const BlogEntry = (props) => {
   return (
@@ -45,7 +45,7 @@ export const BlogEntry = (props) => {
           <DateFormatter dateString={props.post.date} />
         </Box>
         <Image
-          style={{ marginTop: 8, borderRadius: "10px" }}
+          style={{ marginTop: 8, borderRadius: '10px' }}
           src={props.post.coverImage}
           alt={`Cover Image for ${props.post.title}`}
           width={1300}
@@ -56,5 +56,5 @@ export const BlogEntry = (props) => {
         </Text>
       </LinkBox>
     </>
-  )
-}
+  );
+};

@@ -8,19 +8,25 @@ import {
   Button,
   useBreakpointValue,
   Text,
-} from '@chakra-ui/react'
-import { FiInfo } from 'react-icons/fi'
+} from '@chakra-ui/react';
+import { FiInfo } from 'react-icons/fi';
 
 interface BannerProps {
-  header: string
-  action: string
-  onClick: () => void
-  buttonIcon: JSX.Element
-  buttonText: string
+  header: string;
+  action: string;
+  onClick: () => void;
+  buttonIcon: JSX.Element;
+  buttonText: string;
 }
 
-export default function Banner({ header, action, onClick, buttonIcon, buttonText }: BannerProps) {
-  const isMobile = useBreakpointValue({ base: true, md: false })
+export default function Banner({
+  header,
+  action,
+  onClick,
+  buttonIcon,
+  buttonText,
+}: BannerProps) {
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
     <>
@@ -80,5 +86,5 @@ export default function Banner({ header, action, onClick, buttonIcon, buttonText
         </Container>
       </Box>
     </>
-  )
+  );
 }
