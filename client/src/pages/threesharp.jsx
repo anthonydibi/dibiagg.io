@@ -107,22 +107,19 @@ function Blurb(props) {
     <>
       {!isMobile ? (
         <>
-          <Heading size={['sm', 'md', 'lg', 'xl']} mb={'8'} whiteSpace="nowrap">
+          <Heading size={['sm', 'md', 'lg', 'xl', '2xl']} mb={'8'} whiteSpace="nowrap">
             {props.heading ? props.heading : 'THREESHARP'}
           </Heading>
           <ChakraText
             textAlign={'left'}
-            fontSize={{ base: 'lg', md: 'xl' }}
+            fontSize={{ base: 'lg', md: 'xl', xl: '2xl' }}
             maxW={'60ch'}
           >
             {props.text
               ? props.text
-              : `The old showcase I had kind of sucked so I built a new one that
-          is more on-theme. I made this using react-three-fiber. You can pan around,
+              : `You can pan around,
           rotate, and zoom with right click, left click, and mouse wheel, respectively, on desktop.
-          If you're on mobile, you can use a two-finger drag, one-finger drag, and pinch. In the future
-          I am planning on adding a 3D demonstration at some point once I get a better hang of
-          react-three-fiber. Click the nodes on the right to learn more!
+          If you're on mobile, you can use a two-finger drag, one-finger drag, and pinch. Click the nodes on the right to learn more!
           `}
           </ChakraText>{' '}
         </>
