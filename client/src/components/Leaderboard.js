@@ -22,6 +22,7 @@ import { GiCrenelCrown } from 'react-icons/gi'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { fetchStandings } from '../services/DeathballApi'
 
+
 export default function Leaderboard(props) {
   const ENTRIES_PER_PAGE = props.entriesPerPage
 

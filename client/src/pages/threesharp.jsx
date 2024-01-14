@@ -105,12 +105,12 @@ function Blurb(props) {
     <>
       {!isMobile ? (
         <>
-          <Heading size={{ base: 'lg', md: 'xl', lg: '4xl' }} mb={'8'}>
+          <Heading size={['sm', 'md', 'lg', 'xl']} mb={'8'} whiteSpace='nowrap'>
             {props.heading ? props.heading : 'THREESHARP'}
           </Heading>
           <ChakraText
             textAlign={'left'}
-            fontSize={{ base: 'xl', md: '2xl' }}
+            fontSize={{ base: 'lg', md: 'xl' }}
             maxW={'60ch'}
           >
             {props.text
@@ -179,18 +179,19 @@ function ThreeSharpShowcase(props) {
   }
 
   return (
-    <Stack height={'80vh'} direction={{ base: 'column', md: 'row' }}>
+    <Stack direction={['column', null, null, 'row']} height={['initial', null, null, '80vh']}>
       <Flex
         display={{ base: 'none', md: 'flex' }}
-        width={{ base: '100%', md: '50%' }}
-        height={'100%'}
+        width={[ '100%', null, null, '50%']}
+        height={['500px', null, null, '100%']}
         align={'center'}
         style={{ marginLeft: 0, marginTop: 0 }}
         p={{ base: '0', md: '10' }}
         direction={'column'}
         justifyContent={'center'}
+        alignItems='end'
       >
-        <Box width={'75%'}>
+        <Box>
           <Blurb
             isOpen={isOpen}
             onClose={onClose}
@@ -199,7 +200,7 @@ function ThreeSharpShowcase(props) {
           />
         </Box>
       </Flex>
-      <Box width={{ base: '100%', md: '50%' }} height={'100%'}>
+      <Flex alignItems='stretch' width={[ '100%', null, null, '50%']} height={['700px', null, null, 'auto']}>
         <Canvas>
           <OrbitControls />
           <PerspectiveCamera
@@ -286,7 +287,7 @@ function ThreeSharpShowcase(props) {
             />
           </Center>
         </Canvas>
-      </Box>
+      </Flex>
     </Stack>
   )
 }

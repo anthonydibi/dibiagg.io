@@ -11,7 +11,7 @@ import {
 import React from 'react'
 
 export default function GraffitiModal(props) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen } = useDisclosure()
 
   React.useEffect(() => {
     onOpen()

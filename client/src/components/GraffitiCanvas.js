@@ -79,7 +79,7 @@ export default function GraffitiCanvas() {
   )
 
   const updateCanvasState = useCallback(() => {
-    //in the backend, the canvas state is updated line by line
+    //the canvas state is updated line by line
     let line = lines['self'][lines['self'].length - 1]
     if (line != null) {
       postCanvasLine(line)
@@ -91,15 +91,6 @@ export default function GraffitiCanvas() {
     setUserTag(newTag)
     localStorage.setItem('graffitiTag', newTag)
   }
-
-  // const undo = () => {
-  //     if(numSessionLines > 0){
-  //         const newLines = lines.slice(0, lines.length - 1);
-  //         setLines(newLines);
-  //         setNumSessionLines(numSessionLines - 1);
-  //         save();
-  //     }
-  // }
 
   const back = () => {
     setStep(step + 1)
@@ -121,7 +112,6 @@ export default function GraffitiCanvas() {
       return
     }
     updateCanvasState()
-    //.then(res => callback());
   }
 
   React.useEffect(() => {
@@ -144,6 +134,7 @@ export default function GraffitiCanvas() {
     document.querySelector('.swatches-picker div div').style.backgroundColor =
       modeValue
   })
+
   return (
     <Box className="GraffitiContainer" w="100%">
       <TaggingModal isOpen={isOpen} onClose={onClose} />

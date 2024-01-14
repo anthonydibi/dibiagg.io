@@ -1,7 +1,7 @@
 import ContactButtons from './ContactButtons'
 import { Flex, Heading, Stack } from '@chakra-ui/react'
 
-export default function ContactFooter() {
+const ContactFooter = () => {
   return (
     <>
       <Stack
@@ -16,8 +16,6 @@ export default function ContactFooter() {
           mr={{ base: 5, md: 10 }}
           fontWeight="bold"
           size="md"
-          align={'center'}
-          justify={'center'}
           whiteSpace="nowrap"
         >
           GET IN TOUCH
@@ -29,3 +27,5 @@ export default function ContactFooter() {
     </>
   )
 }
+
+export default ContactFooter;

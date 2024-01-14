@@ -51,7 +51,7 @@ export const BlogEntry = (props) => {
           width={1300}
           height={630}
         />
-        <Text mt={'6'} fontSize={'xl'}>
+        <Text mt={'6'} fontSize={'xl'} display={['none', null, 'inherit']}>
           {props.post.excerpt}
         </Text>
       </LinkBox>

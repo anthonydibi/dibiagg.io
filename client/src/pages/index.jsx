@@ -20,8 +20,7 @@ import {
   SiNextDotJs,
 } from 'react-icons/si'
 import { BsLightningFill, BsTriangleFill } from 'react-icons/bs'
-import UnderlinedHeading from '../components/UnderlinedHeading'
-import FrequentlyUsedEmojiExample from '../components/blog/FrequentlyUsedEmojiExample'
+import { UnderlinedHeading } from '../components/UnderlinedHeading'
 
 export default function About() {
   return (

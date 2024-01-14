@@ -1,9 +1,10 @@
-import Nav from './Nav.js'
-import ContactFooter from './ContactFooter.js'
-import Banner from './Banner.js'
+import Nav from '../components/Nav/Nav'
+import ContactFooter from '../components/ContactFooter'
+import Banner from '../components/Banner'
 import { FaGithub } from 'react-icons/fa'
+import { PropsWithChildren } from 'react'
 
-export default function Layout({ children }) {
+export default function MainLayout({ children }: PropsWithChildren) {
   return (
     <>
       <Banner

@@ -3,14 +3,14 @@ import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 
 export default function ContactButtons() {
-  const toast = useToast()
+  const toast = useToast();
 
-  const copyToClipboardAndToast = (contact, copyValue) => {
+  const copyToClipboardAndShowToast = async (contactType: string, contactLink: string) => {
     if (window.isSecureContext) {
-      navigator.clipboard.writeText(copyValue)
+      await navigator.clipboard.writeText(contactLink)
       toast({
         title: 'Copied to clipboard!',
-        description: `You can now paste my ${contact}.`,
+        description: `You can now paste my ${contactType}.`,
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -35,7 +35,7 @@ export default function ContactButtons() {
         variant="interact"
         icon={<FaDiscord />}
         onClick={() => {
-          copyToClipboardAndToast('Discord username', 'boat boat#3913')
+          copyToClipboardAndShowToast('Discord username', 'boat boat#3913')
         }}
         rounded="none"
       ></IconButton>
@@ -57,7 +57,7 @@ export default function ContactButtons() {
         variant="interact"
         icon={<MdEmail />}
         onClick={() => {
-          copyToClipboardAndToast('e-mail', 'anthony@dibiagg.io')
+          copyToClipboardAndShowToast('e-mail', 'anthony@dibiagg.io')
         }}
         rounded="none"
       ></IconButton>

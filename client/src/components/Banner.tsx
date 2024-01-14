@@ -11,14 +11,21 @@ import {
 } from '@chakra-ui/react'
 import { FiInfo } from 'react-icons/fi'
 
-export default function Banner(props) {
+interface BannerProps {
+  header: string
+  action: string
+  onClick: () => void
+  buttonIcon: JSX.Element
+  buttonText: string
+}
+
+export default function Banner({ header, action, onClick, buttonIcon, buttonText }: BannerProps) {
   const isMobile = useBreakpointValue({ base: true, md: false })
 
   return (
     <>
-      <Box align="center" bg="accent" w="100%">
+      <Box bg="accent" w="100%">
         <Container
-          align="center"
           maxW="container.lg"
           py={{ base: '4', md: '1' }}
           position="relative"
@@ -44,10 +51,10 @@ export default function Banner(props) {
                 align={'center'}
               >
                 <Heading color="white" size={'sm'} whiteSpace={'nowrap'}>
-                  {props.header}
+                  {header}
                 </Heading>
                 <Text color="white" whiteSpace={'nowrap'} m="0">
-                  {props.action}
+                  {action}
                 </Text>
               </Stack>
             </Stack>
@@ -61,12 +68,12 @@ export default function Banner(props) {
                 rounded="none"
                 borderColor="white"
                 width="full"
-                onClick={props.onClick}
+                onClick={onClick}
               >
                 <Box mr="2" color="white">
-                  {props.buttonIcon}
+                  {buttonIcon}
                 </Box>
-                <Text color="white">{props.buttonText}</Text>
+                <Text color="white">{buttonText}</Text>
               </Button>
             </Stack>
           </Stack>
