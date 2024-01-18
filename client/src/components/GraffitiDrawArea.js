@@ -1,7 +1,7 @@
 import { Stage, Layer, Line } from 'react-konva';
 import useGraffitiSocket from '../hooks/useGraffitiSocket';
 import React from 'react';
-import { Skeleton, Text } from '@chakra-ui/react';
+import { Box, Skeleton, Text, useBreakpointValue } from '@chakra-ui/react';
 
 export default function GraffitiDrawArea(props) {
   const lines = props.lines;
@@ -10,9 +10,9 @@ export default function GraffitiDrawArea(props) {
   const isLoaded = props.isLoaded;
   const userTag = props.userTag;
   const color = props.color;
-  const stageScale = props.stageScale;
   const step = props.step;
   const save = props.save;
+  const canvasDimension = props.canvasDimension;
   const [numSessionLines, setNumSessionLines] = React.useState(0);
   const [hoveredTag, setHoveredTag] = React.useState('');
   const isDrawing = React.useRef(false);
@@ -25,7 +25,7 @@ export default function GraffitiDrawArea(props) {
       const newLine = {
         tool,
         color: color.hex ?? color,
-        points: [pos.x / stageScale, pos.y / stageScale],
+        points: [pos.x / (canvasDimension / 1000), pos.y / (canvasDimension / 1000)],
         who: userTag,
       };
       setLines({ ...lines, self: [...lines['self'], newLine] });
@@ -35,7 +35,7 @@ export default function GraffitiDrawArea(props) {
 
   const handleMouseMove = (e) => {
     e.evt.preventDefault(); //prevent scrolling when drawing on mobile
-    // not drawing or not on current day - skipping
+
     const stage = e.target.getStage();
     const point = stage.getPointerPosition();
     const intersection = stage.getIntersection(point);
@@ -54,14 +54,16 @@ export default function GraffitiDrawArea(props) {
     } else {
       setHoveredTag('');
     }
+
+
     if (!isDrawing.current || step !== 0) {
       return;
     }
     let lastLine = lines['self'][lines['self'].length - 1];
     // add point
     lastLine.points = lastLine.points.concat([
-      point.x / stageScale,
-      point.y / stageScale,
+      point.x / (canvasDimension / 1000),
+      point.y / (canvasDimension / 1000),
     ]);
 
     // replace last
@@ -69,7 +71,7 @@ export default function GraffitiDrawArea(props) {
     setLines({ ...lines });
     socket.emit('point', {
       peer: socket.id,
-      point: { x: point.x / stageScale, y: point.y / stageScale },
+      point: { x: point.x / (canvasDimension / 1000), y: point.y / (canvasDimension / 1000) },
     }); //send drawn point to peers
   };
 
@@ -100,11 +102,11 @@ export default function GraffitiDrawArea(props) {
         {hoveredTag}
       </Text>
       <Stage
-        style={{ backgroundColor: '#f0f0f0' }}
-        width={1000 * stageScale}
-        height={1000 * stageScale}
-        scaleX={stageScale}
-        scaleY={stageScale}
+        style={{background: '#f0f0f0'}}
+        width={canvasDimension}
+        height={canvasDimension}
+        scaleX={canvasDimension / 1000}
+        scaleY={canvasDimension / 1000}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

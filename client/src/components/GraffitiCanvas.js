@@ -17,6 +17,7 @@ import {
   useColorModeValue,
   useDisclosure,
   HStack,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { FaEraser, FaPen } from 'react-icons/fa';
 import {
@@ -47,15 +48,9 @@ export default function GraffitiCanvas() {
   const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  let [stageScale, setStageScale] = React.useState(1);
-  const { width, height } = useWindowDimensions();
   const colorMode = useColorModeValue('light', 'dark');
-
-  React.useEffect(() => {
-    if (width <= 1000) {
-      setStageScale(width / 1000.0);
-    }
-  }, [width, height]);
+  const { width } = useWindowDimensions();
+  const canvasDimension = useBreakpointValue({base: width, md: width - 400, xl: 900 })
 
   const handleChangeComplete = (color) => {
     setColor(color);
@@ -133,7 +128,7 @@ export default function GraffitiCanvas() {
     //my hacky way to set the color picker background to the correct color :( needs work
     document.querySelector('.swatches-picker div div').style.backgroundColor =
       modeValue;
-  });
+  }, [modeValue]);
 
   return (
     <Box className="GraffitiContainer" w="100%">
@@ -264,11 +259,11 @@ export default function GraffitiCanvas() {
         >
           <SwatchesPicker
             color={color}
-            height={1002 * stageScale}
+            height={canvasDimension}
             onChangeComplete={handleChangeComplete}
           />
         </Box>
-        <Box width={stageScale * 1000} height={stageScale * 1000}>
+        <Box>
           <GraffitiDrawArea
             lines={lines}
             setLines={setLines}
@@ -276,9 +271,9 @@ export default function GraffitiCanvas() {
             isLoaded={isLoaded}
             color={color}
             userTag={userTag}
-            stageScale={stageScale}
             step={step}
             save={save}
+            canvasDimension={canvasDimension}
           />
         </Box>
         <Box flex={'1'}>

@@ -1,8 +1,7 @@
 .swatches-picker {
   border-left: 1px solid;
   border-top: 1px solid;
-  overflow-y: hidden !important;
 }
 .swatches-picker div {
-  overflow-y: hidden !important;
+  overflow-y: auto
 }
