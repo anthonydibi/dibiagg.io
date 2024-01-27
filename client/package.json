@@ -53,7 +53,7 @@
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky install client/.husky"
   },
   "browserslist": {
     "production": [
@@ -70,7 +70,7 @@
   "devDependencies": {
     "eslint": "^8.37.0",
     "eslint-config-prettier": "^8.8.0",
-    "husky": "^9.0.6",
+    "husky": "^8.0.0",
     "lint-staged": "^15.2.0",
     "prettier": "2.8.7"
   },
