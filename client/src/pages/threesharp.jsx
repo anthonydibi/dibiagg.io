@@ -107,7 +107,11 @@ function Blurb(props) {
     <>
       {!isMobile ? (
         <>
-          <Heading size={['sm', 'md', 'lg', 'xl', '2xl']} mb={'8'} whiteSpace="nowrap">
+          <Heading
+            size={['sm', 'md', 'lg', 'xl', '2xl']}
+            mb={'8'}
+            whiteSpace="nowrap"
+          >
             {props.heading ? props.heading : 'THREESHARP'}
           </Heading>
           <ChakraText

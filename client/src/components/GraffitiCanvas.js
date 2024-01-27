@@ -50,7 +50,11 @@ export default function GraffitiCanvas() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const colorMode = useColorModeValue('light', 'dark');
   const { width } = useWindowDimensions();
-  const canvasDimension = useBreakpointValue({base: width, md: width - 400, xl: 900 })
+  const canvasDimension = useBreakpointValue({
+    base: width,
+    md: width - 400,
+    xl: 900,
+  });
 
   const handleChangeComplete = (color) => {
     setColor(color);

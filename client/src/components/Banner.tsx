@@ -37,7 +37,7 @@ export default function Banner({
           position="relative"
         >
           <Stack
-            direction='row'
+            direction="row"
             spacing={{ base: '3', md: '2' }}
             justify="space-between"
           >
@@ -46,9 +46,7 @@ export default function Banner({
               direction={{ base: 'column', md: 'row' }}
               align="center"
             >
-              {!isMobile && (
-                  <Icon color="white" as={FiInfo} boxSize="6" />
-              )}
+              {!isMobile && <Icon color="white" as={FiInfo} boxSize="6" />}
               <Stack
                 direction={{ base: 'column', md: 'row' }}
                 spacing={{ base: '0.5', md: '1.5' }}
@@ -66,7 +64,7 @@ export default function Banner({
               direction={{ base: 'column', sm: 'row' }}
               spacing={{ base: '3', sm: '2' }}
               align={{ base: 'stretch', sm: 'center' }}
-              justifyContent='center'
+              justifyContent="center"
             >
               <Button
                 variant="interact"

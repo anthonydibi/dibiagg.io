@@ -25,7 +25,10 @@ export default function GraffitiDrawArea(props) {
       const newLine = {
         tool,
         color: color.hex ?? color,
-        points: [pos.x / (canvasDimension / 1000), pos.y / (canvasDimension / 1000)],
+        points: [
+          pos.x / (canvasDimension / 1000),
+          pos.y / (canvasDimension / 1000),
+        ],
         who: userTag,
       };
       setLines({ ...lines, self: [...lines['self'], newLine] });
@@ -55,7 +58,6 @@ export default function GraffitiDrawArea(props) {
       setHoveredTag('');
     }
 
-
     if (!isDrawing.current || step !== 0) {
       return;
     }
@@ -71,7 +73,10 @@ export default function GraffitiDrawArea(props) {
     setLines({ ...lines });
     socket.emit('point', {
       peer: socket.id,
-      point: { x: point.x / (canvasDimension / 1000), y: point.y / (canvasDimension / 1000) },
+      point: {
+        x: point.x / (canvasDimension / 1000),
+        y: point.y / (canvasDimension / 1000),
+      },
     }); //send drawn point to peers
   };
 
@@ -102,7 +107,7 @@ export default function GraffitiDrawArea(props) {
         {hoveredTag}
       </Text>
       <Stage
-        style={{background: '#f0f0f0'}}
+        style={{ background: '#f0f0f0' }}
         width={canvasDimension}
         height={canvasDimension}
         scaleX={canvasDimension / 1000}

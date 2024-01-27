@@ -40,7 +40,7 @@ export default function Nav() {
 
   const handleNavLinkClick = () => {
     onClose();
-  }
+  };
 
   const mapToLink = (link: NavLinkType) => {
     return (
@@ -48,35 +48,37 @@ export default function Nav() {
         {link.display}
       </NavLink>
     );
-  }
+  };
 
   const deathballMenu = (
     <Menu>
-          <MenuButton
-                  as={Button}
-                  fontWeight={'bold'}
-                  border="1px solid transparent"
-                  px={2}
-                  rounded={'none'}
-                  _hover={{
-                    textDecoration: 'none',
-                    border: '1px solid',
-                  }}
-                  variant={'interact'}
-                  rightIcon={<ChevronDownIcon />}
-                  h={'31px'}
-                >
-              DEATHBALL CLONE
-            </MenuButton>
-            <MenuList bg={useColorModeValue('white', 'black')} borderRadius="0px" border="1px solid">
-            {DeathballLinks.map((link) => (
-                    <MenuItem key={link.display}>
-                      {mapToLink(link)}
-                    </MenuItem>
-                  ))}
-            </MenuList>
-          </Menu>
-  )
+      <MenuButton
+        as={Button}
+        fontWeight={'bold'}
+        border="1px solid transparent"
+        px={2}
+        rounded={'none'}
+        _hover={{
+          textDecoration: 'none',
+          border: '1px solid',
+        }}
+        variant={'interact'}
+        rightIcon={<ChevronDownIcon />}
+        h={'31px'}
+      >
+        DEATHBALL CLONE
+      </MenuButton>
+      <MenuList
+        bg={useColorModeValue('white', 'black')}
+        borderRadius="0px"
+        border="1px solid"
+      >
+        {DeathballLinks.map((link) => (
+          <MenuItem key={link.display}>{mapToLink(link)}</MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
+  );
 
   return (
     <>
@@ -123,27 +125,27 @@ export default function Nav() {
         <Spacer display={{ base: 'none', md: 'block' }} />
         <Spacer display={{ base: 'none', md: 'block' }} />
         <Flex alignItems={'center'}>
-            <HStack
-              mr={'32px'}
-              as={'nav'}
-              spacing={4}
-              display={{ base: 'none', md: 'flex' }}
-            >
-              {NavRightLinks.map(mapToLink)}
-              <ContactButtons />
-            </HStack>
-            <Button
-              onClick={toggleColorMode}
-              variant="interact"
-              p="2"
-              rounded="none"
-            >
-              {colorMode === 'light' ? (
-                <MoonIcon color="accent" />
-              ) : (
-                <SunIcon color="accent" />
-              )}
-            </Button>
+          <HStack
+            mr={'32px'}
+            as={'nav'}
+            spacing={4}
+            display={{ base: 'none', md: 'flex' }}
+          >
+            {NavRightLinks.map(mapToLink)}
+            <ContactButtons />
+          </HStack>
+          <Button
+            onClick={toggleColorMode}
+            variant="interact"
+            p="2"
+            rounded="none"
+          >
+            {colorMode === 'light' ? (
+              <MoonIcon color="accent" />
+            ) : (
+              <SunIcon color="accent" />
+            )}
+          </Button>
         </Flex>
         <Spacer />
       </Flex>
