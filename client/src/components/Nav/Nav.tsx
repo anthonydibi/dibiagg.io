@@ -28,13 +28,55 @@ import Image from 'next/image';
 import lightModeLogo from '../../../public/lightmodelogo.png';
 import darkModeLogo from '../../../public/darkmodelogo.png';
 import NavLink from './NavLink';
-import { NavLeftLinks, NavRightLinks } from './constants';
+import { DeathballLinks, NavLeftLinks, NavRightLinks } from './constants';
+import { NavLink as NavLinkType } from './types';
+import { Fragment } from 'react';
 
 export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = useColorModeValue('var(--light)', 'var(--dark)');
   const logo = useColorModeValue(lightModeLogo, darkModeLogo);
+
+  const handleNavLinkClick = () => {
+    onClose();
+  }
+
+  const mapToLink = (link: NavLinkType) => {
+    return (
+      <NavLink href={link.href} key={link.display} onClick={handleNavLinkClick}>
+        {link.display}
+      </NavLink>
+    );
+  }
+
+  const deathballMenu = (
+    <Menu>
+          <MenuButton
+                  as={Button}
+                  fontWeight={'bold'}
+                  border="1px solid transparent"
+                  px={2}
+                  rounded={'none'}
+                  _hover={{
+                    textDecoration: 'none',
+                    border: '1px solid',
+                  }}
+                  variant={'interact'}
+                  rightIcon={<ChevronDownIcon />}
+                  h={'31px'}
+                >
+              DEATHBALL CLONE
+            </MenuButton>
+            <MenuList bg={useColorModeValue('white', 'black')} borderRadius="0px" border="1px solid">
+            {DeathballLinks.map((link) => (
+                    <MenuItem key={link.display}>
+                      {mapToLink(link)}
+                    </MenuItem>
+                  ))}
+            </MenuList>
+          </Menu>
+  )
 
   return (
     <>
@@ -73,71 +115,21 @@ export default function Nav() {
               />
             </Box>
             <HStack as={'nav'} display={{ base: 'none', md: 'flex' }}>
-              {NavLeftLinks.map((link) => (
-                <NavLink href={link.href} key={link.display}>
-                  {link.display}
-                </NavLink>
-              ))}
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  fontWeight={'bold'}
-                  border="1px solid transparent"
-                  px={2}
-                  rounded={'none'}
-                  _hover={{
-                    textDecoration: 'none',
-                    border: '1px solid',
-                  }}
-                  variant={'interact'}
-                  rightIcon={<ChevronDownIcon />}
-                  h={'31px'}
-                >
-                  DEATHBALL CLONE
-                </MenuButton>
-                <MenuList
-                  bg={useColorModeValue('white', 'black')}
-                  borderRadius="0px"
-                  border="1px solid"
-                >
-                  <MenuItem>
-                    <NavLink href="/deathball/about" key={'about'}>
-                      ABOUT
-                    </NavLink>
-                  </MenuItem>
-                  <MenuItem>
-                    <NavLink
-                      key="play-deathball"
-                      href="https://gilded-kulfi-c5ad94.netlify.app/"
-                    >
-                      PLAY
-                    </NavLink>
-                  </MenuItem>
-                  <MenuItem>
-                    <NavLink href="/deathball/leaderboard" key={'leaderboard'}>
-                      LEADERBOARD
-                    </NavLink>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+              {NavLeftLinks.map(mapToLink)}
+              {deathballMenu}
             </HStack>
           </HStack>
         </Center>
         <Spacer display={{ base: 'none', md: 'block' }} />
         <Spacer display={{ base: 'none', md: 'block' }} />
         <Flex alignItems={'center'}>
-          <Menu>
             <HStack
               mr={'32px'}
               as={'nav'}
               spacing={4}
               display={{ base: 'none', md: 'flex' }}
             >
-              {NavRightLinks.map((link) => (
-                <NavLink href={link.href} key={link.display}>
-                  {link.display}
-                </NavLink>
-              ))}
+              {NavRightLinks.map(mapToLink)}
               <ContactButtons />
             </HStack>
             <Button
@@ -152,7 +144,6 @@ export default function Nav() {
                 <SunIcon color="accent" />
               )}
             </Button>
-          </Menu>
         </Flex>
         <Spacer />
       </Flex>
@@ -170,52 +161,9 @@ export default function Nav() {
         display={{ md: 'none' }}
       >
         <Stack as={'nav'} spacing={4} align={'start'}>
-          {NavLeftLinks.map((link) => (
-            <NavLink href={link.href} key={link.display}>
-              {link.display}
-            </NavLink>
-          ))}
-          {NavRightLinks.map((link) => (
-            <NavLink href={link.href} key={link.display}>
-              {link.display}
-            </NavLink>
-          ))}
-          <Menu>
-            <MenuButton
-              as={Button}
-              fontWeight={'bold'}
-              border="1px solid transparent"
-              px={2}
-              py={1}
-              rounded={'none'}
-              _hover={{
-                textDecoration: 'none',
-                border: '1px solid',
-              }}
-              variant={'ghost'}
-              rightIcon={<ChevronDownIcon />}
-              h={'31px'}
-            >
-              DEATHBALL CLONE
-            </MenuButton>
-            <MenuList bg={bgColor} borderRadius="0px" border="1px solid">
-              <MenuItem>
-                <NavLink href="/deathball/about" key={'about'}>
-                  ABOUT
-                </NavLink>
-              </MenuItem>
-              <MenuItem>
-                <NavLink href="https://gilded-kulfi-c5ad94.netlify.app/">
-                  PLAY
-                </NavLink>
-              </MenuItem>
-              <MenuItem>
-                <NavLink href="/deathball/leaderboard" key={'leaderboard'}>
-                  LEADERBOARD
-                </NavLink>
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          {NavLeftLinks.map(mapToLink)}
+          {NavRightLinks.map(mapToLink)}
+          {deathballMenu}
           <Stack direction={'row'} justify={'center'}>
             <ContactButtons />
           </Stack>
