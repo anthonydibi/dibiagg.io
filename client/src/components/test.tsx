@@ -1,6 +1,5 @@
-const testt=()=>{
-    return(     <div>bleh</div>)
-}
+const testt = () => {
+  return <div>bleh</div>;
+};
 
-
-export   default test
+export default test;

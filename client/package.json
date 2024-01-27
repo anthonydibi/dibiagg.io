@@ -53,7 +53,8 @@
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "prepare": "cd .. && husky install client/.husky"
+    "prepare": "cd .. && husky install client/.husky",
+    "pre-commit": "lint-staged"
   },
   "browserslist": {
     "production": [
@@ -75,6 +76,6 @@
     "prettier": "2.8.7"
   },
   "lint-staged": {
-    "**/*.js,jsx,ts,tsx": ["eslint --cache --fix", "format:fix"]
+    "**/*.{js,jsx,ts,tsx}": ["npm run format:fix"]
   }
 }
