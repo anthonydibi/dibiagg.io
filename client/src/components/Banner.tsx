@@ -33,23 +33,21 @@ export default function Banner({
       <Box bg="accent" w="100%">
         <Container
           maxW="container.lg"
-          py={{ base: '4', md: '1' }}
+          py={{ base: '2', md: '1' }}
           position="relative"
         >
           <Stack
-            direction={{ base: 'column', sm: 'row' }}
+            direction='row'
             spacing={{ base: '3', md: '2' }}
             justify="space-between"
           >
             <Stack
-              spacing="4"
+              spacing="2"
               direction={{ base: 'column', md: 'row' }}
               align="center"
             >
               {!isMobile && (
-                <Square size="12" bg="bg-subtle" borderRadius="md">
                   <Icon color="white" as={FiInfo} boxSize="6" />
-                </Square>
               )}
               <Stack
                 direction={{ base: 'column', md: 'row' }}
