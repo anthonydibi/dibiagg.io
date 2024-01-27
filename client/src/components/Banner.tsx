@@ -66,6 +66,7 @@ export default function Banner({
               direction={{ base: 'column', sm: 'row' }}
               spacing={{ base: '3', sm: '2' }}
               align={{ base: 'stretch', sm: 'center' }}
+              justifyContent='center'
             >
               <Button
                 variant="interact"
