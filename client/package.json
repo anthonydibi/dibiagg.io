@@ -52,7 +52,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore ."
+    "format:fix": "prettier --write --ignore-path .gitignore .",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
@@ -69,6 +70,13 @@
   "devDependencies": {
     "eslint": "^8.37.0",
     "eslint-config-prettier": "^8.8.0",
+    "husky": "^9.0.6",
+    "lint-staged": "^15.2.0",
     "prettier": "2.8.7"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write",
+    "**/*.{ts,tsx}": "tsc-files --noEmit"
   }
 }
