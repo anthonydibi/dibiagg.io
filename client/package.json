@@ -75,8 +75,6 @@
     "prettier": "2.8.7"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,jsx,css,md}": "prettier --write",
-    "**/*.{ts,tsx}": "tsc-files --noEmit"
+    "*.js,jsx,ts,tsx": ["eslint --cache --fix", "format:fix"],
   }
 }
