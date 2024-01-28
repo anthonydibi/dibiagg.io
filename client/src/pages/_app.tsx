@@ -1,7 +1,6 @@
 import Layout from '../layouts/MainLayout';
 import '../styles/fonts.css';
 import '../styles/swatches.css';
-import '../styles/pdf.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../styles/theme.js';
 import Head from 'next/head';

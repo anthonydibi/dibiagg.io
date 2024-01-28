@@ -1,13 +1,18 @@
-import { Link } from '@chakra-ui/next-js';
+import { Link, LinkProps } from '@chakra-ui/next-js';
 import { FC, PropsWithChildren } from 'react';
 
-interface NavLinkProps extends PropsWithChildren {
-  href: string;
-  onClick?: () => void;
+export interface NavLinkProps extends PropsWithChildren, LinkProps {
+  display: string;
 }
 
-const NavLink: FC<NavLinkProps> = ({ href, onClick, children }) => (
+const NavLink: FC<NavLinkProps> = ({
+  href,
+  onClick,
+  children,
+  ...restProps
+}) => (
   <Link
+    {...restProps}
     href={href}
     onClick={onClick}
     fontWeight={'bold'}

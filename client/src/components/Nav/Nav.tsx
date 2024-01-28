@@ -27,10 +27,8 @@ import ContactButtons from '../ContactButtons';
 import Image from 'next/image';
 import lightModeLogo from '../../../public/lightmodelogo.png';
 import darkModeLogo from '../../../public/darkmodelogo.png';
-import NavLink from './NavLink';
+import NavLink, { NavLinkProps } from './NavLink';
 import { DeathballLinks, NavLeftLinks, NavRightLinks } from './constants';
-import { NavLink as NavLinkType } from './types';
-import { Fragment } from 'react';
 
 export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -42,9 +40,9 @@ export default function Nav() {
     onClose();
   };
 
-  const mapToLink = (link: NavLinkType) => {
+  const mapToLink = (link: NavLinkProps) => {
     return (
-      <NavLink href={link.href} key={link.display} onClick={handleNavLinkClick}>
+      <NavLink key={link.display} {...link} onClick={handleNavLinkClick}>
         {link.display}
       </NavLink>
     );
