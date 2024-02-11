@@ -199,42 +199,46 @@ export default function GraffitiCanvas() {
               </InputRightElement>
             </InputGroup>
           </Stack>
-          <Box m={'2'} borderRadius={'20px'}>
-            <HStack m={'1'} px={'2'} py={'1'} borderRadius={'20px'}>
+          <HStack m={'1'} px={'2'} py={'1'} borderRadius={'20px'}>
+            <IconButton
+              aria-label="Go to previous day"
+              size="sm"
+              isRound="true"
+              value="previousDay"
+              variant="interact"
+              icon={<AiFillCaretLeft />}
+              onClick={back}
+              boxShadow={useColorModeValue(
+                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+              )}
+            ></IconButton>
+            <Heading mx={'1'} minW="10ch" textAlign="center">
+              {day}
+            </Heading>
+            <Box>
               <IconButton
-                aria-label="Go to previous day"
+                aria-label="Go to next day"
                 size="sm"
                 isRound="true"
-                value="previousDay"
+                value="nextDay"
                 variant="interact"
-                icon={<AiFillCaretLeft />}
-                onClick={back}
+                icon={<AiFillCaretRight />}
+                onClick={next}
                 boxShadow={useColorModeValue(
                   '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
                   '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
                 )}
               ></IconButton>
-              <Heading my={'2'} mx={'2'} minW="10ch" textAlign="center">
-                {day}
-              </Heading>
-              <Box>
-                <IconButton
-                  aria-label="Go to next day"
-                  size="sm"
-                  isRound="true"
-                  value="nextDay"
-                  variant="interact"
-                  icon={<AiFillCaretRight />}
-                  onClick={next}
-                  boxShadow={useColorModeValue(
-                    '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                    '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-                  )}
-                ></IconButton>
-              </Box>
-            </HStack>
-          </Box>
-          <Stack flex={'1'} justify={'left'} align={'center'} direction={'row'}>
+            </Box>
+          </HStack>
+          <Stack
+            flex={'1'}
+            justify={'left'}
+            align={'center'}
+            direction={'row'}
+            pl={1}
+          >
             {step > 0 ? (
               <IconButton
                 aria-label="Fast forward to current day"
