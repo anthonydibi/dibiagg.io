@@ -18,7 +18,7 @@ export default function Blog({ allPosts }) {
         px={[4, undefined, 8]}
         my="2em"
       >
-        <SimpleGrid minChildWidth="600px" spacing={12}>
+        <SimpleGrid minChildWidth={{ base: '90vw', lg: '600px' }} spacing={12}>
           {allPosts.map((post) => (
             <BlogEntry key={post.slug} post={post} />
           ))}
