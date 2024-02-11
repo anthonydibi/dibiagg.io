@@ -331,43 +331,47 @@ export default function GraffitiCanvas() {
             </GridItem>
           </Grid>
           <Stack
-            direction={'row'}
-            display={{ base: step === 0 ? 'block' : 'none', lg: 'none' }}
+            direction={'column'}
+            display={{ base: step === 0 ? 'flex' : 'none', lg: 'none' }}
             p={1}
             mb={3}
+            spacing={1}
           >
-            <IconButton
-              size="lg"
-              my={2}
-              isRound="true"
-              value="pen"
-              variant="interact"
-              border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
-              boxShadow={useColorModeValue(
-                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-              )}
-              icon={<FaPen />}
-              onClick={() => {
-                setTool('pen');
-              }}
-            ></IconButton>
-            <IconButton
-              size="lg"
-              my={2}
-              isRound="true"
-              value="eraser"
-              variant="interact"
-              border={tool === 'eraser' ? '1px solid' : '1px solid transparent'}
-              boxShadow={useColorModeValue(
-                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-              )}
-              icon={<FaEraser />}
-              onClick={() => {
-                setTool('eraser');
-              }}
-            ></IconButton>
+            <HStack display="flex" spacing="2">
+              <IconButton
+                size="lg"
+                isRound="true"
+                value="pen"
+                variant="interact"
+                border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
+                boxShadow={useColorModeValue(
+                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+                )}
+                icon={<FaPen />}
+                onClick={() => {
+                  setTool('pen');
+                }}
+              ></IconButton>
+              <IconButton
+                size="lg"
+                my={2}
+                isRound="true"
+                value="eraser"
+                variant="interact"
+                border={
+                  tool === 'eraser' ? '1px solid' : '1px solid transparent'
+                }
+                boxShadow={useColorModeValue(
+                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+                )}
+                icon={<FaEraser />}
+                onClick={() => {
+                  setTool('eraser');
+                }}
+              />
+            </HStack>
             <Box w={'100%'} margin={'0 !important'}>
               <Box
                 w={'100%'}
