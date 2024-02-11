@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import Leaderboard from '../../components/Leaderboard';
 import SEO from '../../components/seo';
 
@@ -9,7 +10,9 @@ export default function DeathballLeaderboard() {
         title="Deathball leaderboard"
         siteTitle="dibiagg.io"
       />
-      <Leaderboard entriesPerPage={15} />
+      <Box minH="95vh">
+        <Leaderboard entriesPerPage={15} />
+      </Box>
     </>
   );
 }

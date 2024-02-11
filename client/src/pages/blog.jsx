@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/react';
+import { Box, Container, Flex, SimpleGrid } from '@chakra-ui/react';
 import { getAllPosts } from '../services/BlogApi';
 import SEO from '../components/seo';
 import { BlogEntry } from '../components/blog/BlogEntry';
@@ -11,11 +11,19 @@ export default function Blog({ allPosts }) {
         siteTitle="dibiagg.io"
         description="Anthony Di Biaggio's blog posts"
       />
-      <Container maxW={'4xl'} minH={'100vh'} align="center" py={'4'}>
-        {allPosts.map((post) => (
-          <BlogEntry key={post.slug} post={post} />
-        ))}
-      </Container>
+      <Flex
+        minH="90vh"
+        justify="center"
+        align="center"
+        px={[4, undefined, 8]}
+        my="2em"
+      >
+        <SimpleGrid minChildWidth="600px" spacing={12}>
+          {allPosts.map((post) => (
+            <BlogEntry key={post.slug} post={post} />
+          ))}
+        </SimpleGrid>
+      </Flex>
     </>
   );
 }

@@ -22,19 +22,12 @@ export default function DeathballAbout() {
         siteTitle="dibiagg.io"
       />
       <Center>
-        <Container
-          px={{ base: 0, md: 30 }}
-          mx={{ base: 1, md: 5 }}
-          maxW={'7xl'}
-          border="1px solid"
-          borderBottom="0px none"
-          borderTop="0px none"
-        >
+        <Container maxW={'8xl'}>
           <Stack
             spacing={{ base: 8, md: 10 }}
             align="start"
             p={{ base: 5, md: 20 }}
-            direction={{ base: 'column', md: 'row' }}
+            direction={{ base: 'column', xl: 'row' }}
           >
             <Stack flex={1} spacing={{ base: 5, md: 10 }}>
               <Heading
@@ -109,7 +102,6 @@ export default function DeathballAbout() {
               top={{ base: '0', md: '80px' }}
               w={'full'}
               p="1"
-              border={'1px'}
             >
               <Box
                 position={'relative'}
@@ -123,14 +115,6 @@ export default function DeathballAbout() {
                   url="https://www.youtube.com/watch?v=aeIkB0Uw2kM"
                 />
               </Box>
-              <Box
-                position="absolute"
-                right="-7rem"
-                w="7rem"
-                h="0px"
-                borderTop="1px"
-                display={{ base: 'none', md: 'block' }}
-              ></Box>
             </Flex>
           </Stack>
         </Container>

@@ -1,6 +1,9 @@
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 
+export const LIGHT_ACCENT = '#FF5F1F';
+export const DARK_ACCENT = '#38B2AC';
+
 const theme = extendTheme({
   fonts: {
     heading: `'Atami'`,

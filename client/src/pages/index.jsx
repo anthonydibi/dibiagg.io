@@ -8,6 +8,7 @@ import {
   Tooltip,
   Box,
   useColorModeValue,
+  Container,
 } from '@chakra-ui/react';
 import React from 'react';
 import IconCard from '../components/IconCard';
@@ -30,15 +31,14 @@ export default function About() {
         title="About"
         siteTitle="dibiagg.io"
       />
-      <Center>
+      <Container display="flex" maxW="8xl">
         <Stack
           h="100%"
           align={'center'}
-          p={{ base: 5, lg: 20 }}
+          py={{ base: 5, lg: 8 }}
           mx={{ base: 1, md: 5 }}
           borderBottom="0px none"
           borderTop="0px none"
-          w={'1300px'}
           transitionDuration="1000ms"
         >
           <Heading size={{ base: '2xl', md: '4xl' }} mb={6}>
@@ -185,7 +185,7 @@ export default function About() {
             </Grid>
           </Stack>
         </Stack>
-      </Center>
+      </Container>
     </>
   );
 }

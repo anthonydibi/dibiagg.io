@@ -10,7 +10,7 @@ const ContactFooter = () => {
         direction="row"
         align="center"
         justify={'center'}
-        h={'60px'}
+        h={'70px'}
       >
         <Heading
           mr={{ base: 5, md: 10 }}

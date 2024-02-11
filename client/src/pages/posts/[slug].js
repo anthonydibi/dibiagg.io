@@ -5,7 +5,7 @@ import PostBody from '../../components/blog/PostBody';
 import { getPostBySlug, getAllPosts } from '../../services/BlogApi';
 import PostTitle from '../../components/blog/PostTitle';
 import markdownToHtml from '../../services/MarkdownToHtml';
-import { Box, Heading, Container, Stack } from '@chakra-ui/react';
+import { Box, Heading, Container, Stack, SimpleGrid } from '@chakra-ui/react';
 import SEO from '../../components/seo';
 import { BlogEntry } from '../../components/blog/BlogEntry';
 import Head from 'next/head';
@@ -22,7 +22,7 @@ export default function Post({ post }) {
       <Head>
         <meta property="og:image" content={post.ogImage.url} />
       </Head>
-      <Container maxW={'6xl'} py={'6'}>
+      <Container maxW={'8xl'} py={'6'}>
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
@@ -39,36 +39,24 @@ export default function Post({ post }) {
             </article>
           </>
         )}
-        <Stack
-          direction={{ base: 'column', md: 'row' }}
-          justify={'center'}
-          gap={'80px'}
-        >
+        <SimpleGrid justify={'center'} spacing={8} minChildWidth="550px">
           {post.olderPost && (
-            <Box
-              align={'center'}
-              minW={'50%'}
-              maxW={{ base: '100%', md: '70%' }}
-            >
-              <Heading size={'lg'} mb={'10'} textDecoration={'underline'}>
+            <Box align={'start'}>
+              <Heading size={'lg'} mb={'8'} pl="2">
                 Older post
               </Heading>
               <BlogEntry post={post.olderPost} />
             </Box>
           )}
           {post.newerPost && (
-            <Box
-              align={'center'}
-              minW={'50%'}
-              maxW={{ base: '100%', md: '70%' }}
-            >
-              <Heading size={'lg'} mb={'10'} textDecoration={'underline'}>
+            <Box align={'start'}>
+              <Heading size={'lg'} mb={'8'} pl="2">
                 Newer post
               </Heading>
               <BlogEntry post={post.newerPost} />
             </Box>
           )}
-        </Stack>
+        </SimpleGrid>
       </Container>
     </>
   );

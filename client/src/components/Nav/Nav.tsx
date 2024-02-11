@@ -6,7 +6,6 @@ import {
   Button,
   useDisclosure,
   useColorModeValue,
-  useColorMode,
   Stack,
   Spacer,
   Center,
@@ -16,23 +15,17 @@ import {
   MenuItem,
   Collapse,
 } from '@chakra-ui/react';
-import {
-  SunIcon,
-  MoonIcon,
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-} from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import ContactButtons from '../ContactButtons';
 import Image from 'next/image';
 import lightModeLogo from '../../../public/lightmodelogo.png';
 import darkModeLogo from '../../../public/darkmodelogo.png';
 import NavLink, { NavLinkProps } from './NavLink';
 import { DeathballLinks, NavLeftLinks, NavRightLinks } from './constants';
+import ColorModeSwitcher from '../ColorModeSwitcher';
 
 export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = useColorModeValue('var(--light)', 'var(--dark)');
   const logo = useColorModeValue(lightModeLogo, darkModeLogo);
 
@@ -132,18 +125,7 @@ export default function Nav() {
             {NavRightLinks.map(mapToLink)}
             <ContactButtons />
           </HStack>
-          <Button
-            onClick={toggleColorMode}
-            variant="interact"
-            p="2"
-            rounded="none"
-          >
-            {colorMode === 'light' ? (
-              <MoonIcon color="accent" />
-            ) : (
-              <SunIcon color="accent" />
-            )}
-          </Button>
+          <ColorModeSwitcher />
         </Flex>
         <Spacer />
       </Flex>

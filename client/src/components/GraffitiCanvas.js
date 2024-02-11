@@ -202,6 +202,7 @@ export default function GraffitiCanvas() {
           <Box m={'2'} borderRadius={'20px'}>
             <HStack m={'1'} px={'2'} py={'1'} borderRadius={'20px'}>
               <IconButton
+                aria-label="Go to previous day"
                 size="sm"
                 isRound="true"
                 value="previousDay"
@@ -213,11 +214,12 @@ export default function GraffitiCanvas() {
                   '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
                 )}
               ></IconButton>
-              <Heading my={'2'} mx={'2'}>
+              <Heading my={'2'} mx={'2'} minW="10ch" textAlign="center">
                 {day}
               </Heading>
               <Box>
                 <IconButton
+                  aria-label="Go to next day"
                   size="sm"
                   isRound="true"
                   value="nextDay"
@@ -235,6 +237,7 @@ export default function GraffitiCanvas() {
           <Stack flex={'1'} justify={'left'} align={'center'} direction={'row'}>
             {step > 0 ? (
               <IconButton
+                aria-label="Fast forward to current day"
                 position={'relative'}
                 left={'0'}
                 ml={'-3'}
@@ -284,6 +287,7 @@ export default function GraffitiCanvas() {
           <Grid display={{ base: 'none', md: step === 0 ? 'block' : 'none' }}>
             <GridItem>
               <IconButton
+                aria-label="Use pen tool"
                 size="lg"
                 isRound="true"
                 m="2"
@@ -302,6 +306,7 @@ export default function GraffitiCanvas() {
             </GridItem>
             <GridItem>
               <IconButton
+                aria-label="Use eraser tool"
                 size="lg"
                 isRound="true"
                 m="2"

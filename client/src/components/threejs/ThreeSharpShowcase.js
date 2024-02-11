@@ -190,7 +190,7 @@ export default function ThreeSharpShowcase() {
         p={{ base: '0', md: '10' }}
         direction={'column'}
         justifyContent={'center'}
-        alignItems="end"
+        alignItems={['center', null, null, 'end']}
       >
         <Box>
           <Blurb

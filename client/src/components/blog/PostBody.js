@@ -29,7 +29,7 @@ const components = {
 
 const PostBody = ({ content }) => {
   return (
-    <Box maxW={'4xl'} mx={'auto'}>
+    <Box mx={'auto'}>
       <Box className={markdownStyles['markdown']}>
         <MDXRemote {...content} components={components} />
       </Box>

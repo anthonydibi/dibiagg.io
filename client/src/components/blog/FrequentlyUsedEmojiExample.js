@@ -46,53 +46,55 @@ function FrequentlyUsedEmojiExample() {
 
   return (
     <>
-      <Grid
-        gridTemplateColumns={'1fr 1fr'}
-        gap={'0px 20px'}
-        border={'1px'}
-        p={'2'}
-        mx={'auto'}
-        overflowX={'scroll'}
-        h={'300px'}
-      >
-        <GridItem textAlign={'center'}>
-          <Heading as={'text'} size={'md'}>
-            Frequently Used
-          </Heading>
-        </GridItem>
-        <GridItem textAlign={'center'}>
-          <Heading as={'text'} size={'md'}>
-            All Emojis
-          </Heading>
-        </GridItem>
-        <GridItem overflow={'scroll'} p={'2'}>
-          <Grid templateColumns={'1fr 1fr 1fr 1fr'} gap={'10px'}>
-            {cachedEmojis.map((emoji) => (
-              <GridItem key={emoji}>
-                <ClickableEmoji emoji={emoji} />
-              </GridItem>
-            ))}
-          </Grid>
-        </GridItem>
-        <GridItem overflowY={'scroll'} p={'2'}>
-          <Grid templateColumns={'1fr 1fr 1fr 1fr 1fr'} gap={'10px'}>
-            {emojis.map((emoji) => (
-              <GridItem key={emoji}>
-                <ClickableEmoji emoji={emoji} />
-              </GridItem>
-            ))}
-          </Grid>
-        </GridItem>
-      </Grid>
-      <InputGroup mt={'4'} mb={'8'} mx={'auto'}>
-        <Input value={emojiInputs} fontSize={'2xl'} />
-        <InputRightElement
-          cursor={'pointer'}
-          onClick={() => setEmojiInputs('')}
+      <Box maxW="600px">
+        <Grid
+          gridTemplateColumns={'1fr 1fr'}
+          gap={'0px 20px'}
+          border={'1px'}
+          p={'2'}
+          mx={'auto'}
+          overflowX={'scroll'}
+          h={'300px'}
         >
-          <IoMdSend />
-        </InputRightElement>
-      </InputGroup>
+          <GridItem textAlign={'center'}>
+            <Heading as={'text'} size={'md'}>
+              Frequently Used
+            </Heading>
+          </GridItem>
+          <GridItem textAlign={'center'}>
+            <Heading as={'text'} size={'md'}>
+              All Emojis
+            </Heading>
+          </GridItem>
+          <GridItem overflow={'scroll'} p={'2'}>
+            <Grid templateColumns={'1fr 1fr 1fr 1fr'} gap={'10px'}>
+              {cachedEmojis.map((emoji) => (
+                <GridItem key={emoji}>
+                  <ClickableEmoji emoji={emoji} />
+                </GridItem>
+              ))}
+            </Grid>
+          </GridItem>
+          <GridItem overflowY={'scroll'} p={'2'}>
+            <Grid templateColumns={'1fr 1fr 1fr 1fr 1fr'} gap={'10px'}>
+              {emojis.map((emoji) => (
+                <GridItem key={emoji}>
+                  <ClickableEmoji emoji={emoji} />
+                </GridItem>
+              ))}
+            </Grid>
+          </GridItem>
+        </Grid>
+        <InputGroup mt={'4'} mb={'8'} mx={'auto'}>
+          <Input value={emojiInputs} fontSize={'2xl'} />
+          <InputRightElement
+            cursor={'pointer'}
+            onClick={() => setEmojiInputs('')}
+          >
+            <IoMdSend />
+          </InputRightElement>
+        </InputGroup>
+      </Box>
     </>
   );
 }

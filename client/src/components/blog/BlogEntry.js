@@ -9,6 +9,7 @@ import {
   TagLeftIcon,
   TagLabel,
   useColorModeValue,
+  AspectRatio,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import DateFormatter from './DateFormatter';
@@ -19,13 +20,11 @@ export const BlogEntry = (props) => {
   return (
     <>
       <LinkBox
-        my={'40px'}
         as={'article'}
         direction={'column'}
         w={'100%'}
         p={'8'}
         textAlign={'start'}
-        mb={'8'}
         position={'relative'}
         borderRadius={'46px'}
         background={useColorModeValue('#f0f0f0', 'dark')}
@@ -44,13 +43,15 @@ export const BlogEntry = (props) => {
         <Box mt={'1'}>
           <DateFormatter dateString={props.post.date} />
         </Box>
-        <Image
-          style={{ marginTop: 8, borderRadius: '10px' }}
-          src={props.post.coverImage}
-          alt={`Cover Image for ${props.post.title}`}
-          width={1300}
-          height={630}
-        />
+        <AspectRatio ratio={16 / 9}>
+          <Image
+            style={{ marginTop: 8, borderRadius: '10px' }}
+            src={props.post.coverImage}
+            alt={`Cover Image for ${props.post.title}`}
+            objectFit="cover"
+            fill
+          />
+        </AspectRatio>
         <Text mt={'6'} fontSize={'xl'} display={['none', null, 'inherit']}>
           {props.post.excerpt}
         </Text>

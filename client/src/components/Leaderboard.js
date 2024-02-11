@@ -88,11 +88,7 @@ export default function Leaderboard(props) {
         </Spacer>
       </Flex>
       <Center>
-        <Stack
-          w={{ base: '90%', md: '60%' }}
-          border="1px solid"
-          borderBottom="0px none"
-        >
+        <Stack w={{ base: '90%', md: '60%' }} border="1px solid">
           <Skeleton isLoaded={isLoaded}>
             <TableContainer h="730px" overflowY="auto">
               <Table>
@@ -146,6 +142,7 @@ export default function Leaderboard(props) {
           >
             <IconButton
               size="sm"
+              variant="interact"
               rounded="full"
               icon={<AiFillCaretLeft />}
               onClick={back}
@@ -153,6 +150,7 @@ export default function Leaderboard(props) {
             <Text>{navInfo}</Text>
             <IconButton
               size="sm"
+              variant="interact"
               rounded="full"
               icon={<AiFillCaretRight />}
               onClick={next}
