@@ -36,7 +36,6 @@ const CodeBlock = ({ children, className }) => {
         <Box>
           <HStack
             align={'center'}
-            p={'1'}
             bg={'linear-gradient(145deg, #222222, #1d1d1d)'}
             borderRadius={'10px 10px 0px 0px'}
             boxShadow={
@@ -44,6 +43,7 @@ const CodeBlock = ({ children, className }) => {
                 ? '15px 15px 10px #cccccc, -15px -15px 10px #ffffff'
                 : 'inset 20px 20px 30px #1b1b1b, inset -20px -20px 30px #252525'
             }
+            p={1}
           >
             <HStack flex={'1'}>
               <Box
@@ -66,7 +66,7 @@ const CodeBlock = ({ children, className }) => {
                 h={'12px'}
               ></Box>
             </HStack>
-            <Text color={'white'} align={'center'} whiteSpace={'pre-line'}>
+            <Text color={'white'} whiteSpace={'pre-line'} m="0 !important">
               {title}
             </Text>
             <Box flex={'1'} />
