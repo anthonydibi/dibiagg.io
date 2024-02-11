@@ -6,7 +6,6 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
 import { FC } from 'react';
 import { DARK_ACCENT, LIGHT_ACCENT } from '../styles/theme';
 
@@ -38,7 +37,6 @@ const ColorModeSwitcher: FC = () => {
         justifyContent="center"
       >
         <Flex
-          as={motion.div}
           zIndex={2}
           borderRadius="4px"
           width="100%"
@@ -49,7 +47,6 @@ const ColorModeSwitcher: FC = () => {
           )}
           justifyContent="center"
           alignItems="center"
-          layout
         >
           {colorMode === 'light' ? (
             <SunIcon color="accent" w={'18px'} h={'18px'} />
