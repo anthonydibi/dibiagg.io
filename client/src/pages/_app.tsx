@@ -1,14 +1,13 @@
 import Layout from '../layouts/MainLayout';
 import '../styles/fonts.css';
 import '../styles/swatches.css';
-import { ChakraProvider } from '@chakra-ui/react';
-import theme from '../styles/theme.js';
 import Head from 'next/head';
 import { AppProps } from 'next/app.js';
+import Chakra from '../components/Chakra';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
+    <Chakra cookies={pageProps.cookies}>
       <Head>
         <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.ico" />
@@ -24,6 +23,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </ChakraProvider>
+    </Chakra>
   );
 }
+
+export { getServerSideProps } from '../components/Chakra';
