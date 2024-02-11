@@ -94,7 +94,7 @@ export default function GraffitiDrawArea(props) {
       isLoaded={isLoaded}
       zIndex={'5'}
       border="1px solid"
-      borderBottom={{ base: '1px', md: '0px none' }}
+      borderBottom={{ base: '1px', lg: '0px none' }}
     >
       <Text
         color={'black'}

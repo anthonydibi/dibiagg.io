@@ -52,7 +52,7 @@ export default function GraffitiCanvas() {
   const { width } = useWindowDimensions();
   const canvasDimension = useBreakpointValue({
     base: width,
-    md: width - 400,
+    lg: width - 400,
     xl: 900,
   });
 
@@ -138,14 +138,14 @@ export default function GraffitiCanvas() {
     <Box className="GraffitiContainer" w="100%">
       <TaggingModal isOpen={isOpen} onClose={onClose} />
       <Stack
-        direction={{ base: 'column', md: 'row' }}
+        direction={{ base: 'column', lg: 'row' }}
         w={'100%'}
-        align={{ base: 'center', md: 'none' }}
+        align={{ base: 'center', lg: 'none' }}
       >
         <InputGroup
           size="md"
           w="95%"
-          display={{ base: 'block', md: 'none' }}
+          display={{ base: 'block', lg: 'none' }}
           mt="2"
         >
           <Input
@@ -177,7 +177,7 @@ export default function GraffitiCanvas() {
             <InputGroup
               size="md"
               w="300px"
-              display={{ base: 'none', md: 'block' }}
+              display={{ base: 'none', lg: 'block' }}
             >
               <Input
                 pr="4.5rem"
@@ -257,10 +257,10 @@ export default function GraffitiCanvas() {
           </Stack>
         </Flex>
       </Stack>
-      <Flex direction={{ base: 'column', md: 'row' }}>
+      <Flex direction={{ base: 'column', lg: 'row' }}>
         <Box
-          visibility={{ base: 'hidden', md: step === 0 ? 'visible' : 'hidden' }}
-          display={{ base: 'none', md: 'block' }}
+          visibility={{ base: 'hidden', lg: step === 0 ? 'visible' : 'hidden' }}
+          display={{ base: 'none', lg: 'block' }}
           flex={'1'}
           align={'right'}
         >
@@ -284,7 +284,7 @@ export default function GraffitiCanvas() {
           />
         </Box>
         <Box flex={'1'}>
-          <Grid display={{ base: 'none', md: step === 0 ? 'block' : 'none' }}>
+          <Grid display={{ base: 'none', lg: step === 0 ? 'block' : 'none' }}>
             <GridItem>
               <IconButton
                 aria-label="Use pen tool"
@@ -328,7 +328,7 @@ export default function GraffitiCanvas() {
           </Grid>
           <Stack
             direction={'row'}
-            display={{ base: step === 0 ? 'block' : 'none', md: 'none' }}
+            display={{ base: step === 0 ? 'block' : 'none', lg: 'none' }}
             p={1}
             mb={3}
           >

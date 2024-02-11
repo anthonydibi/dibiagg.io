@@ -14,6 +14,8 @@ import {
   MenuList,
   MenuItem,
   Collapse,
+  useBreakpoint,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import ContactButtons from '../ContactButtons';
@@ -21,13 +23,19 @@ import Image from 'next/image';
 import lightModeLogo from '../../../public/lightmodelogo.png';
 import darkModeLogo from '../../../public/darkmodelogo.png';
 import NavLink, { NavLinkProps } from './NavLink';
-import { DeathballLinks, NavLeftLinks, NavRightLinks } from './constants';
+import {
+  DeathballLinks,
+  NavLeftLinks,
+  NavProjectLinks,
+  NavRightLinks,
+} from './constants';
 import ColorModeSwitcher from '../ColorModeSwitcher';
 
 export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const bgColor = useColorModeValue('var(--light)', 'var(--dark)');
   const logo = useColorModeValue(lightModeLogo, darkModeLogo);
+  const shouldUseShortenedNav = useBreakpointValue({ base: true, xl: false });
 
   const handleNavLinkClick = () => {
     onClose();
@@ -40,6 +48,36 @@ export default function Nav() {
       </NavLink>
     );
   };
+
+  const projectsMenu = (
+    <Menu>
+      <MenuButton
+        as={Button}
+        fontWeight={'bold'}
+        border="1px solid transparent"
+        px={2}
+        rounded={'none'}
+        _hover={{
+          textDecoration: 'none',
+          border: '1px solid',
+        }}
+        variant={'interact'}
+        rightIcon={<ChevronDownIcon />}
+        h={'31px'}
+      >
+        PROJECTS
+      </MenuButton>
+      <MenuList
+        bg={useColorModeValue('white', 'black')}
+        borderRadius="0px"
+        border="1px solid"
+      >
+        {NavProjectLinks.map((link) => (
+          <MenuItem key={link.display}>{mapToLink(link)}</MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
+  );
 
   const deathballMenu = (
     <Menu>
@@ -91,12 +129,12 @@ export default function Nav() {
           rounded="none"
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
           aria-label={'Open Menu'}
-          display={{ md: 'none' }}
+          display={{ lg: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
         <Center>
           <HStack spacing={8} alignItems={'center'}>
-            <Box mx={{ base: 4, md: 0 }}>
+            <Box mx={{ base: 4, lg: 0 }}>
               <Image
                 alt={
                   'A logo with a circle, two vertical lines, and another circle, representing the letters db'
@@ -107,20 +145,31 @@ export default function Nav() {
                 priority
               />
             </Box>
-            <HStack as={'nav'} display={{ base: 'none', md: 'flex' }}>
-              {NavLeftLinks.map(mapToLink)}
-              {deathballMenu}
+            <HStack as={'nav'} display={{ base: 'none', lg: 'flex' }}>
+              {shouldUseShortenedNav ? (
+                <>
+                  {' '}
+                  {mapToLink({ display: 'ABOUT', href: '/' })}
+                  {projectsMenu}
+                  {deathballMenu}
+                </>
+              ) : (
+                <>
+                  {NavLeftLinks.map(mapToLink)}
+                  {deathballMenu}
+                </>
+              )}
             </HStack>
           </HStack>
         </Center>
-        <Spacer display={{ base: 'none', md: 'block' }} />
-        <Spacer display={{ base: 'none', md: 'block' }} />
+        <Spacer display={{ base: 'none', lg: 'block' }} />
+        <Spacer display={{ base: 'none', lg: 'block' }} />
         <Flex alignItems={'center'}>
           <HStack
             mr={'32px'}
             as={'nav'}
             spacing={4}
-            display={{ base: 'none', md: 'flex' }}
+            display={{ base: 'none', lg: 'flex' }}
           >
             {NavRightLinks.map(mapToLink)}
             <ContactButtons />
@@ -140,7 +189,7 @@ export default function Nav() {
         w={'100%'}
         bg={bgColor}
         p={4}
-        display={{ md: 'none' }}
+        display={{ lg: 'none' }}
       >
         <Stack as={'nav'} spacing={4} align={'start'}>
           {NavLeftLinks.map(mapToLink)}

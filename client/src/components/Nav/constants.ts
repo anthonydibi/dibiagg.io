@@ -1,5 +1,10 @@
 import { NavLinkProps } from './NavLink';
 
+export const NavProjectLinks: NavLinkProps[] = [
+  { display: 'GRAFFITI', href: '/graffiti' },
+  { display: 'THREESHARP', href: '/threesharp' },
+];
+
 export const NavLeftLinks: NavLinkProps[] = [
   { display: 'ABOUT', href: '/' },
   { display: 'GRAFFITI', href: '/graffiti' },
