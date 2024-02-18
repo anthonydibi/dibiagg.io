@@ -9,23 +9,17 @@ All of the code related to **[dibiagg.io]**, my personal website. The exception 
 ```
 dibiagg.io
 ├── client | Front end
-│   ├── next.config.js | Next.js settings
-│   ├── _posts | Blog post content as MDX
-│   ├── public | Static assets
+│   ├── _posts | Markdown blog post content
+│   ├── public | Static assets (images, PDF)
 │   └── src
-│       ├── ColorModeSwitcher.js
 │       ├── components | Reusable React components
 │       ├── hooks | Custom React hooks
-│       ├── pages | Webpage routes
-│       ├── reportWebVitals.js
-│       ├── services | APIs
-│       ├── serviceWorker.js
-│       ├── setupTests.js
-│       ├── styles | ChakraUI theme and CSS modules
-│       └── test-utils.js
+│       ├── pages | Routing
+│       ├── services | APIs/interfaces
+│       └── styles | CSS/Theming
 ├── README.md
 └── server | Backend
-    └── api.js | Server logic for Deathball, Graffiti - handles database queries/WebSocket comms
+    └── api.js | Sets up Express server for Deathball, Graffiti
 ```
 
 ## Codebase Visualization
