@@ -1,0 +1,4 @@
+/* THREE forces { touch-action: none } on event source................... */
+main {
+    touch-action: initial !important;
+}

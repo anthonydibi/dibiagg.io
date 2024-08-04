@@ -48,7 +48,7 @@ const IconCard: FC<IconCardProps> = ({ icon, heading, text }) => {
           color={'accent2'}
         />
       </Box>
-      <Heading size={'md'} mt={'2'}>
+      <Heading size={'md'} mt={'2'} as="h3">
         {heading}
       </Heading>
       <Text w="80%" fontSize={{ base: 'md', sm: 'lg', md: 'xl' }} align="start">

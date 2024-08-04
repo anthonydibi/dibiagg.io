@@ -1,7 +1,7 @@
 import { Box, Container, Flex, SimpleGrid } from '@chakra-ui/react';
 import { getAllPosts } from '../services/BlogApi';
 import SEO from '../components/seo';
-import { BlogEntry } from '../components/blog/BlogEntry';
+import BlogEntry from '../components/blog/BlogEntry';
 
 export default function Blog({ allPosts }) {
   return (

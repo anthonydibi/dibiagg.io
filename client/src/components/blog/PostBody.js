@@ -2,9 +2,9 @@ import markdownStyles from '../../styles/markdown-styles.module.css';
 import { MDXRemote } from 'next-mdx-remote';
 import { Box, Button } from '@chakra-ui/react';
 import Image from 'next/image';
-import CodeBlock from './CodeBlock';
 import ReactThreeFiberExample from './ReactThreeFiberExample';
 import FrequentlyUsedEmojiExample from './FrequentlyUsedEmojiExample';
+import { CodeBlock } from './CodeBlock';
 
 const NextImage = (props) => <Image alt={props.alt} fill={'true'} {...props} />;
 
@@ -23,7 +23,6 @@ const components = {
       <code className="language-text">{children}</code>
     );
   },
-  ReactThreeFiberExample: ReactThreeFiberExample,
   FrequentlyUsedEmojiExample: FrequentlyUsedEmojiExample,
 };
 

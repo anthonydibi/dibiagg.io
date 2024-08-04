@@ -2,7 +2,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { AspectRatio, Box, useColorModeValue } from '@chakra-ui/react';
 
-const CoverImage = ({ title, src, slug }) => {
+export interface CoverImageProps {
+  title: string;
+  src: string;
+  slug?: string;
+}
+
+const CoverImage: React.FC<CoverImageProps> = ({ title, src, slug }) => {
   const image = (
     <AspectRatio ratio={16 / 9}>
       <Image

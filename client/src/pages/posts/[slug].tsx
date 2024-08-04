@@ -7,10 +7,15 @@ import PostTitle from '../../components/blog/PostTitle';
 import markdownToHtml from '../../services/MarkdownToHtml';
 import { Box, Heading, Container, Stack, SimpleGrid } from '@chakra-ui/react';
 import SEO from '../../components/seo';
-import { BlogEntry } from '../../components/blog/BlogEntry';
+import BlogEntry from '../../components/blog/BlogEntry';
 import Head from 'next/head';
+import { Post } from '../../types/post';
 
-export default function Post({ post }) {
+export interface PostProps {
+  post: Post;
+}
+
+const FullPost: React.FC<PostProps> = ({ post }) => {
   const router = useRouter();
   const title = `${post.title} | dibiagg.io`;
   if (!router.isFallback && post && !post.slug) {
@@ -18,7 +23,7 @@ export default function Post({ post }) {
   }
   return (
     <>
-      <SEO siteTitle="dibiagg.io" title={title} />
+      <SEO siteTitle="dibiagg.io" title={title} description={post.excerpt} />
       <Head>
         <meta property="og:image" content={post.ogImage.url} />
       </Head>
@@ -32,16 +37,15 @@ export default function Post({ post }) {
                 title={post.title}
                 coverImage={post.coverImage}
                 date={post.date}
-                author={post.author}
                 tags={post.tags}
               />
               <PostBody content={post.content} />
             </article>
           </>
         )}
-        <SimpleGrid justify={'center'} spacing={8} minChildWidth="550px">
+        <SimpleGrid spacing={8} minChildWidth={['80vw', '550px']}>
           {post.olderPost && (
-            <Box align={'start'}>
+            <Box>
               <Heading size={'lg'} mb={'8'} pl="2">
                 Older post
               </Heading>
@@ -49,7 +53,7 @@ export default function Post({ post }) {
             </Box>
           )}
           {post.newerPost && (
-            <Box align={'start'}>
+            <Box>
               <Heading size={'lg'} mb={'8'} pl="2">
                 Newer post
               </Heading>
@@ -60,11 +64,13 @@ export default function Post({ post }) {
       </Container>
     </>
   );
-}
+};
 
-export async function getStaticProps({ params }) {
-  const post = await getPostBySlug(
-    params.slug,
+import { GetStaticPropsContext } from 'next';
+
+export async function getStaticProps({ params }: GetStaticPropsContext) {
+  const post = (await getPostBySlug(
+    params?.slug,
     [
       'title',
       'date',
@@ -76,7 +82,7 @@ export async function getStaticProps({ params }) {
       'coverImage',
     ],
     true,
-  );
+  )) as Post;
 
   const content = post.content;
 
@@ -90,8 +96,10 @@ export async function getStaticProps({ params }) {
   };
 }
 
+export default FullPost;
+
 export async function getStaticPaths() {
-  const posts = await getAllPosts(['slug']);
+  const posts = (await getAllPosts(['slug'])) as Post[];
 
   return {
     paths: posts.map((post) => {

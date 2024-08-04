@@ -31,8 +31,8 @@ import { fetchCanvasState, postCanvasLine } from '../services/GraffitiApi';
 import TaggingModal from './TaggingModal.js';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 const GraffitiDrawArea = dynamic(() => import('./GraffitiDrawArea'), {
-  //ssr has to be disabled for konva-react
   ssr: false,
+  loading: () => <Skeleton height="100%" width="100%" />,
 });
 
 export default function GraffitiCanvas() {
@@ -49,11 +49,12 @@ export default function GraffitiCanvas() {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const colorMode = useColorModeValue('light', 'dark');
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const canvasDimension = useBreakpointValue({
     base: width,
     lg: width - 400,
-    xl: 900,
+    xl:
+      typeof window === 'undefined' ? 900 : Math.min(height - 200, width - 400),
   });
 
   const handleChangeComplete = (color) => {
@@ -128,7 +129,7 @@ export default function GraffitiCanvas() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     //my hacky way to set the color picker background to the correct color :( needs work
     document.querySelector('.swatches-picker div div').style.backgroundColor =
       modeValue;

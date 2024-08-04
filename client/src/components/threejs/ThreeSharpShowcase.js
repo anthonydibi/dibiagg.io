@@ -23,6 +23,7 @@ import {
   OrbitControls,
   PerspectiveCamera,
   Text,
+  View,
 } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import React, { useEffect, useRef, useState } from 'react';
@@ -206,7 +207,7 @@ export default function ThreeSharpShowcase() {
         width={['100%', null, null, '50%']}
         height={['700px', null, null, 'auto']}
       >
-        <Canvas>
+        <View style={{ width: '100%' }}>
           <OrbitControls />
           <PerspectiveCamera
             makeDefault
@@ -291,7 +292,7 @@ export default function ThreeSharpShowcase() {
               dashed={false} // Default
             />
           </Center>
-        </Canvas>
+        </View>
       </Flex>
     </Stack>
   );

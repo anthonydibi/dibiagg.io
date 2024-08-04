@@ -47,6 +47,7 @@
 .markdown blockquote {
   border-left: 8px solid var(--accent);
   padding-left: 10px;
+  font-style: italic;
 }
 
 .markdown blockquote p {

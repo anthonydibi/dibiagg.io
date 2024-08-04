@@ -6,12 +6,25 @@ import {
   HStack,
   useColorModeValue,
 } from '@chakra-ui/react';
-import BlogTag from './BlogTag';
+import BlogTag from './BlogTag/BlogTag';
 import DateFormatter from './DateFormatter';
 import CoverImage from './CoverImage';
 import PostTitle from './PostTitle';
+import { TagKeys } from './BlogTag/types';
 
-const PostHeader = ({ title, coverImage, date, tags }) => {
+export interface PostHeaderProps {
+  title: string;
+  coverImage: string;
+  date: string;
+  tags: TagKeys[];
+}
+
+const PostHeader: React.FC<PostHeaderProps> = ({
+  title,
+  coverImage,
+  date,
+  tags,
+}) => {
   const BlogAvatar = () => {
     return (
       <Avatar
@@ -56,7 +69,7 @@ const PostHeader = ({ title, coverImage, date, tags }) => {
         </Box>
         <HStack mb={'5'} gap={'15px'} wrap={'wrap'}>
           {tags.map((tag) => (
-            <BlogTag key={tag} label={tag} />
+            <BlogTag key={tag} tagConfigKey={tag} />
           ))}
         </HStack>
         <Box mb={'6'}>
