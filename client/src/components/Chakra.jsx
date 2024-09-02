@@ -19,7 +19,6 @@ const Chakra = ({ cookies, children }) => {
 export default Chakra;
 
 export const getServerSideProps = async ({ req }) => {
-  debugger;
   return {
     props: {
       cookies: req.headers.cookie ?? '',

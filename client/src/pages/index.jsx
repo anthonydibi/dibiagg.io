@@ -28,19 +28,15 @@ import { UnderlinedHeading } from '../components/UnderlinedHeading';
 import OffsetGrid from '../components/grid/OffsetGrid';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
-const Testtt = dynamic(
-  () => import('../components/threejs/Test').then((mod) => mod.default),
-  {
-    ssr: false,
-  },
-);
-const View = dynamic(
-  () => import('@react-three/drei').then((mod) => mod.View),
+
+const SkillsShowcase = dynamic(
+  () =>
+    import('../components/threejs/SkillsShowcase').then((mod) => mod.default),
   {
     ssr: false,
     loading: () => (
-      <Flex width="100%" height="100%" justify="center" alignItems="center">
-        <Spinner size="xl" />
+      <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
+        <Spinner color="white" />
       </Flex>
     ),
   },
@@ -56,14 +52,7 @@ export default function About() {
       />
       <Flex justifyContent="center" p="0 0 6rem 0">
         <Stack w="100%" justifyContent="center" alignItems="center">
-          <Stack spacing={9} maxW="5xl" justifyContent="center" px={5}>
-            <Box w="100%" aspectRatio={1 / 1}>
-              <View
-                style={{ width: '100%', height: '100%', position: 'relative' }}
-              >
-                <Testtt />
-              </View>
-            </Box>
+          <Stack spacing={9} maxW="5xl" justifyContent="center" px={5} pt={8}>
             <Heading size={{ base: '2xl', md: '4xl' }} as="h1">
               HI! MY NAME IS ANTHONY{' '}
               <Tooltip
@@ -102,7 +91,8 @@ export default function About() {
             >
               A full-stack developer who feels most at home developing for
               data-intensive applications, where performance and progressive
-              enhancement are paramount.
+              enhancement are paramount. I love grokking complex systems and
+              solving the hard problems that most would rather shy away from.
             </Text>
             <Text
               px={{ base: 3, md: 6 }}
@@ -131,22 +121,26 @@ export default function About() {
             background="accent"
           >
             <Stack
-              spacing={9}
+              spacing={5}
               w="100%"
-              p="1rem 0 9rem"
-              maxW="5xl"
+              h="100%"
+              p="1rem 0"
               justifyContent="center"
               px={5}
             >
-              <UnderlinedHeading fontColor="white" underlineColor="accent2">
-                Skills
-              </UnderlinedHeading>
-              <Flex direction={['column', null, 'row']} alignItems="center">
-                <Box width={['100%', null, '50%']}>
-                  <OffsetGrid />
-                </Box>
-                <Box width={['100%', null, '50%']} height="100%" pl=".625rem">
-                  <Flex height="100%" direction="column">
+              <Container maxW="5xl">
+                <UnderlinedHeading fontColor="white" underlineColor="accent2">
+                  Skills
+                </UnderlinedHeading>
+              </Container>
+              <Flex
+                direction={['column', null, 'row']}
+                height="100%"
+                alignItems="center"
+                gap={4}
+              >
+                <Flex maxW={['unset', undefined, '40vw']} alignItems="center">
+                  <Flex direction="column">
                     <Heading
                       size="xl"
                       color="white"
@@ -225,7 +219,110 @@ export default function About() {
                       <code>useEffect</code> 🥺👉👈
                     </Text>
                   </Flex>
-                </Box>
+                </Flex>
+                <Flex
+                  width={['100%', null, '50%']}
+                  height="100%"
+                  aspectRatio={16 / 9}
+                >
+                  <SkillsShowcase />
+                </Flex>
+              </Flex>
+              <Flex
+                direction={['column', null, 'row']}
+                height="100%"
+                alignItems="center"
+                gap={4}
+              >
+                <Flex
+                  width={['100%', null, '50%']}
+                  height="100%"
+                  aspectRatio={16 / 9}
+                >
+                  <SkillsShowcase />
+                </Flex>
+                <Flex maxW={['unset', undefined, '40vw']} alignItems="center">
+                  <Flex direction="column">
+                    <Heading
+                      size="xl"
+                      color="white"
+                      p=".625rem"
+                      border="1px solid"
+                    >
+                      Blazor
+                    </Heading>
+                    <Flex
+                      direction="row"
+                      alignItems="center"
+                      gap="20px"
+                      borderX="1px solid white"
+                    >
+                      <Box p=".625rem" borderRight="1px solid white">
+                        <Text
+                          fontSize="xl"
+                          fontWeight={500}
+                          color="white"
+                          whiteSpace="nowrap"
+                        >
+                          Proficiency
+                        </Text>
+                      </Box>
+                      <Flex
+                        direction="row"
+                        alignItems="center"
+                        gap={['16px', null, '20px']}
+                      >
+                        <div class="cube accent">
+                          <div class="top"></div>
+                          <div class="right"></div>
+                          <div class="bottom"></div>
+                          <div class="left"></div>
+                          <div class="front"></div>
+                          <div class="back"></div>
+                        </div>
+                        <div class="cube accent">
+                          <div class="top"></div>
+                          <div class="right"></div>
+                          <div class="bottom"></div>
+                          <div class="left"></div>
+                          <div class="front"></div>
+                          <div class="back"></div>
+                        </div>
+                        <div class="cube accent">
+                          <div class="top"></div>
+                          <div class="right"></div>
+                          <div class="bottom"></div>
+                          <div class="left"></div>
+                          <div class="front"></div>
+                          <div class="back"></div>
+                        </div>
+                        <div class="cube accent">
+                          <div class="top"></div>
+                          <div class="right"></div>
+                          <div class="bottom"></div>
+                          <div class="left"></div>
+                          <div class="front"></div>
+                          <div class="back"></div>
+                        </div>
+                        <div class="cube white">
+                          <div class="top"></div>
+                          <div class="right"></div>
+                          <div class="bottom"></div>
+                          <div class="left"></div>
+                          <div class="front"></div>
+                          <div class="back"></div>
+                        </div>
+                      </Flex>
+                    </Flex>
+                    <motion.div animate={{ height: '100%' }}>
+                      <Text p=".625rem" color="white" border="1px solid white">
+                        I have used Blazor to build modernized internal tooling
+                        at DraftKings. My main focus was to improve performance
+                        and user experience.
+                      </Text>
+                    </motion.div>
+                  </Flex>
+                </Flex>
               </Flex>
             </Stack>
           </Flex>

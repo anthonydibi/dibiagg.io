@@ -45,8 +45,14 @@ export default function MainLayout({ children }: PropsWithChildren) {
               left: 0,
               width: '100vw',
               height: '100vh',
+              pointerEvents: 'none',
             }}
-            eventSource={container}
+            shadows
+            eventSource={
+              typeof window !== 'undefined'
+                ? document.getElementById('__next') ?? undefined
+                : undefined
+            }
           >
             {/* @ts-ignore */}
             <Port />
