@@ -1,15 +1,5 @@
-import Nav from '../components/Nav/Nav';
-import ContactFooter from '../components/ContactFooter';
-import Banner from '../components/Banner';
-import { FaGithub } from 'react-icons/fa';
-import {
-  MutableRefObject,
-  PropsWithChildren,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from 'react';
-import { Box } from '@chakra-ui/react';
+import { MutableRefObject, PropsWithChildren, useRef } from 'react';
+import { Box, Breadcrumb, useColorModeValue } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 const Canvas = dynamic(
   () => import('@react-three/fiber').then((mod) => mod.Canvas),
@@ -19,13 +9,15 @@ const Port = dynamic(
   () => import('@react-three/drei').then((mod) => mod.View.Port),
   { ssr: false },
 );
+import Image from 'next/image';
+import Breadcrumbs from '../components/Nav/Breadcrumbs';
 
 export default function MainLayout({ children }: PropsWithChildren) {
   const container = useRef() as MutableRefObject<HTMLElement>;
 
   return (
     <Box position="relative">
-      <Banner
+      {/* <Banner
         header={'DIBIAGG.IO is open source!'}
         action={'Check it out on Github.'}
         buttonText={'Go'}
@@ -33,8 +25,8 @@ export default function MainLayout({ children }: PropsWithChildren) {
         onClick={() => {
           window.open('https://github.com/anthonydibi/dibiagg.io');
         }}
-      />
-      <Nav />
+      /> */}
+      <Breadcrumbs />
       <main ref={container}>
         <>
           {children}
@@ -47,7 +39,6 @@ export default function MainLayout({ children }: PropsWithChildren) {
               height: '100vh',
               pointerEvents: 'none',
             }}
-            shadows
             eventSource={
               typeof window !== 'undefined'
                 ? document.getElementById('__next') ?? undefined
@@ -59,7 +50,6 @@ export default function MainLayout({ children }: PropsWithChildren) {
           </Canvas>
         </>
       </main>
-      <ContactFooter />
     </Box>
   );
 }

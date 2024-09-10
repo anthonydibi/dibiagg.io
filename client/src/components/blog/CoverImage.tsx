@@ -23,7 +23,11 @@ const CoverImage: React.FC<CoverImageProps> = ({ title, src, slug }) => {
   return (
     <Box mt={'6'}>
       {slug ? (
-        <Link as={`/posts/${slug}`} href="/posts/[slug]" aria-label={title}>
+        <Link
+          as={`/blog/posts/${slug}`}
+          href="/blog/posts/[slug]"
+          aria-label={title}
+        >
           {image}
         </Link>
       ) : (

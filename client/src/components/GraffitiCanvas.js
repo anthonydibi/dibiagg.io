@@ -18,6 +18,9 @@ import {
   useDisclosure,
   HStack,
   useBreakpointValue,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from '@chakra-ui/react';
 import { FaEraser, FaPen } from 'react-icons/fa';
 import {
@@ -26,7 +29,7 @@ import {
   AiFillFastForward,
   AiOutlineQuestion,
 } from 'react-icons/ai';
-import { SliderPicker, SwatchesPicker } from 'react-color';
+import { SliderPicker, BlockPicker } from 'react-color';
 import { fetchCanvasState, postCanvasLine } from '../services/GraffitiApi';
 import TaggingModal from './TaggingModal.js';
 import useWindowDimensions from '../hooks/useWindowDimensions';
@@ -51,10 +54,8 @@ export default function GraffitiCanvas() {
   const colorMode = useColorModeValue('light', 'dark');
   const { width, height } = useWindowDimensions();
   const canvasDimension = useBreakpointValue({
-    base: width,
-    lg: width - 400,
-    xl:
-      typeof window === 'undefined' ? 900 : Math.min(height - 200, width - 400),
+    base: Math.min(width, height) - 16,
+    md: Math.min(Math.min(width - 300, 900), height - 100),
   });
 
   const handleChangeComplete = (color) => {
@@ -130,9 +131,10 @@ export default function GraffitiCanvas() {
   }, [step]);
 
   React.useLayoutEffect(() => {
-    //my hacky way to set the color picker background to the correct color :( needs work
-    document.querySelector('.swatches-picker div div').style.backgroundColor =
-      modeValue;
+    const blockPicker = document.querySelector('.block-picker');
+    if (blockPicker) {
+      blockPicker.style.backgroundColor = modeValue;
+    }
   }, [modeValue]);
 
   return (
@@ -177,7 +179,7 @@ export default function GraffitiCanvas() {
           >
             <InputGroup
               size="md"
-              w="300px"
+              maxWidth={[`${canvasDimension}px`, null, '200px']}
               display={{ base: 'none', lg: 'block' }}
             >
               <Input
@@ -262,20 +264,12 @@ export default function GraffitiCanvas() {
           </Stack>
         </Flex>
       </Stack>
-      <Flex direction={{ base: 'column', lg: 'row' }}>
-        <Box
-          visibility={{ base: 'hidden', lg: step === 0 ? 'visible' : 'hidden' }}
-          display={{ base: 'none', lg: 'block' }}
-          flex={'1'}
-          align={'right'}
-        >
-          <SwatchesPicker
-            color={color}
-            height={canvasDimension}
-            onChangeComplete={handleChangeComplete}
-          />
-        </Box>
-        <Box>
+      <Flex
+        direction={{ base: 'column', lg: 'row' }}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box width={`${canvasDimension}px`} height={`${canvasDimension}px`}>
           <GraffitiDrawArea
             lines={lines}
             setLines={setLines}
@@ -288,7 +282,7 @@ export default function GraffitiCanvas() {
             canvasDimension={canvasDimension}
           />
         </Box>
-        <Box flex={'1'}>
+        <Box>
           <Grid display={{ base: 'none', lg: step === 0 ? 'block' : 'none' }}>
             <GridItem>
               <IconButton
@@ -330,6 +324,40 @@ export default function GraffitiCanvas() {
                 }}
               ></IconButton>
             </GridItem>
+            <GridItem>
+              <Popover>
+                <PopoverTrigger>
+                  <IconButton
+                    aria-label="Pick color"
+                    icon={
+                      <Box
+                        w="20px"
+                        h="20px"
+                        background={color.hex ?? color}
+                        borderRadius="50%"
+                      />
+                    }
+                    size="lg"
+                    isRound="true"
+                    m="2"
+                    variant="interact"
+                    onClick={fastForward}
+                    boxShadow={
+                      colorMode === 'light'
+                        ? '5px 5px 7px #cccccc, -5px -5px 7px #ffffff'
+                        : '5px 5px 7px #1b1b1b, -5px -5px 7px #252525'
+                    }
+                  />
+                </PopoverTrigger>
+                <PopoverContent w="min-content">
+                  <BlockPicker
+                    triangle={'hide'}
+                    color={color}
+                    onChangeComplete={handleChangeComplete}
+                  />
+                </PopoverContent>
+              </Popover>
+            </GridItem>
           </Grid>
           <Stack
             direction={'column'}
@@ -337,6 +365,7 @@ export default function GraffitiCanvas() {
             p={1}
             mb={3}
             spacing={1}
+            width={`${canvasDimension}px`}
           >
             <HStack display="flex" spacing="2">
               <IconButton

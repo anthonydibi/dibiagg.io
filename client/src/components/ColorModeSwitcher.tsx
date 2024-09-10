@@ -19,13 +19,12 @@ const ColorModeSwitcher: FC = () => {
       }`}
       onClick={toggleColorMode}
       variant="unstyled"
-      height="100%"
       border="1px var(--accent)"
       minWidth={0}
     >
       <Flex
-        w="32px"
-        h="48px"
+        aspectRatio={2 / 3}
+        height="100%"
         p={'1.5px'}
         borderRadius={'4px'}
         background={useColorModeValue('#f0f0f0', 'dark')}
@@ -40,7 +39,7 @@ const ColorModeSwitcher: FC = () => {
           zIndex={2}
           borderRadius="4px"
           width="100%"
-          height="24px"
+          height="50%"
           background={useColorModeValue(
             'linear-gradient(145deg, #ffffff, #d8d8d8)',
             'linear-gradient(145deg, #222222, #1d1d1d)',
@@ -49,24 +48,24 @@ const ColorModeSwitcher: FC = () => {
           alignItems="center"
         >
           {colorMode === 'light' ? (
-            <SunIcon color="accent" w={'18px'} h={'18px'} />
+            <SunIcon color="accent" w="50%" />
           ) : (
-            <MoonIcon color="accent" w="18px" h="18px" />
+            <MoonIcon color="accent" w="50%" />
           )}
         </Flex>
         <Box
+          aspectRatio={1 / 1}
           position="absolute"
           top=".55rem"
-          w="6px"
-          h="6px"
+          w="15%"
           background={DARK_ACCENT}
           borderRadius="4px"
         />
         <Box
+          aspectRatio={1 / 1}
           position="absolute"
           bottom=".55rem"
-          w="6px"
-          h="6px"
+          w="15%"
           background={LIGHT_ACCENT}
           borderRadius="4px"
         />

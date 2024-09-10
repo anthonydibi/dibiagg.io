@@ -40,6 +40,17 @@ const theme = extendTheme({
             transform: 'scale(0.98)',
           },
         }),
+        grow: (props) => ({
+          border: '1px solid',
+          borderRadius: '0px',
+          _hover: {
+            transform: 'scale(1.08)',
+          },
+          _active: {
+            bg: mode('gray.300', 'gray.800')(props),
+            transform: 'scale(1.12)',
+          },
+        }),
       },
     },
     CloseButton: {

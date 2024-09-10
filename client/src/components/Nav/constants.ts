@@ -1,4 +1,5 @@
 import { NavLinkProps } from './NavLink';
+import { BreadcrumbConfigType } from './types';
 
 export const NavProjectLinks: NavLinkProps[] = [
   { display: 'GRAFFITI', href: '/graffiti' },
@@ -26,3 +27,12 @@ export const DeathballLinks: NavLinkProps[] = [
   { display: 'PLAY', href: 'https://gilded-kulfi-c5ad94.netlify.app/' },
   { display: 'LEADERBOARD', href: '/deathball/leaderboard' },
 ];
+
+export const BreadcrumbConfig: BreadcrumbConfigType = {
+  blog: { display: 'BLOG', href: '/blog' },
+  recipes: { display: 'RECIPES', href: '/recipes' },
+};
+
+export const BreadcrumbPositionConfig = {
+  '/recipes': 'right',
+};

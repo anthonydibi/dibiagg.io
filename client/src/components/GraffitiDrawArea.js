@@ -90,11 +90,11 @@ export default function GraffitiDrawArea(props) {
 
   return (
     <Skeleton
+      w="min-content"
       position={'relative'}
       isLoaded={isLoaded}
       zIndex={'5'}
       border="1px solid"
-      borderBottom={{ base: '1px', lg: '0px none' }}
     >
       <Text
         color={'black'}

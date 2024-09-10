@@ -38,7 +38,7 @@ const BlogEntry: React.FC<BlogEntryProps> = ({ post }) => {
           '20px 20px 40px #1b1b1b, -20px -20px 40px #252525',
         )}
       >
-        <LinkOverlay as={NextLink} href={`/posts/${post.slug}`}>
+        <LinkOverlay as={NextLink} href={`/blog/posts/${post.slug}`}>
           <Heading display={'block'}>{post.title}</Heading>
         </LinkOverlay>
         <HStack wrap={'wrap'} gap={'15px'} my={'15px'}>

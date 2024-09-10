@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
-import BlogHeader from '../../components/blog/BlogHeader';
-import PostBody from '../../components/blog/PostBody';
-import { getPostBySlug, getAllPosts } from '../../services/BlogApi';
-import PostTitle from '../../components/blog/PostTitle';
-import markdownToHtml from '../../services/MarkdownToHtml';
+import BlogHeader from '../../../components/blog/BlogHeader';
+import PostBody from '../../../components/blog/PostBody';
+import { getPostBySlug, getAllPosts } from '../../../services/BlogApi';
+import PostTitle from '../../../components/blog/PostTitle';
+import markdownToHtml from '../../../services/MarkdownToHtml';
 import { Box, Heading, Container, Stack, SimpleGrid } from '@chakra-ui/react';
-import SEO from '../../components/seo';
-import BlogEntry from '../../components/blog/BlogEntry';
+import SEO from '../../../components/seo';
+import BlogEntry from '../../../components/blog/BlogEntry';
 import Head from 'next/head';
-import { Post } from '../../types/post';
+import { Post } from '../../../types/post';
 
 export interface PostProps {
   post: Post;

@@ -16,14 +16,14 @@ export const UnderlinedHeading: FC<UnderlinedHeadingProps> = ({
   underlineColor = 'accent',
 }) => {
   return (
-    <Box position={'relative'} width={'fit-content'} {...containerProps}>
+    <Box width={'fit-content'} {...containerProps}>
       <Heading display={'inline-block'} size={size} color={fontColor}>
         {children}
       </Heading>
       <Box
-        position={'absolute'}
-        bottom={'-10px'}
-        left={'-8px'}
+        position={'relative'}
+        bottom={'8%'}
+        left={'-4%'}
         width={'118%'}
         height={'20%'}
         backgroundColor={underlineColor}
