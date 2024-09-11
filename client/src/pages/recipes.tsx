@@ -206,74 +206,59 @@ export const getStaticProps = async () => {
     throw new Error('Missing Paprika credentials');
   }
 
-  try {
-    const tokenRes = await getAuthToken(
-      process.env.PAPRIKA_EMAIL,
-      process.env.PAPRIKA_PW,
-    );
-    const tokenData = await tokenRes.json();
-    const token = tokenData.result.token;
+  const tokenRes = await getAuthToken(
+    process.env.PAPRIKA_EMAIL,
+    process.env.PAPRIKA_PW,
+  );
+  const tokenData = await tokenRes.json();
+  const token = tokenData.result.token;
 
-    const categoriesRes = getCategories(token);
+  const categoriesRes = getCategories(token);
 
-    const recipesRes = await getRecipes(token);
-    const recipes = (await recipesRes.json()).result;
+  const recipesRes = await getRecipes(token);
+  const recipes = (await recipesRes.json()).result;
 
-    const fullRecipeReses = await Promise.all(
-      recipes.map(async (recipe) => getRecipe(token, recipe.uid)),
-    );
+  const fullRecipeReses = await Promise.all(
+    recipes.map(async (recipe) => getRecipe(token, recipe.uid)),
+  );
 
-    const fullRecipeResults = await Promise.all(
-      fullRecipeReses.map((res) => res.json()),
-    );
-    const fullRecipes = fullRecipeResults.map((result) => result.result);
+  const fullRecipeResults = await Promise.all(
+    fullRecipeReses.map((res) => res.json()),
+  );
+  const fullRecipes = fullRecipeResults.map((result) => result.result);
 
-    const recipesById = fullRecipes.reduce((acc, recipe) => {
-      acc[recipe.uid] = recipe;
-      return acc;
-    }, {});
+  const recipesById = fullRecipes.reduce((acc, recipe) => {
+    acc[recipe.uid] = recipe;
+    return acc;
+  }, {});
 
-    const categoriesData = await categoriesRes;
-    const categories = (await categoriesData.json()).result;
+  const categoriesData = await categoriesRes;
+  const categories = (await categoriesData.json()).result;
 
-    const recipeUidsByCategoryUid = fullRecipes.reduce((acc, recipe) => {
-      recipe.categories?.forEach((category) => {
-        if (!acc[category]) {
-          acc[category] = [];
-        }
+  const recipeUidsByCategoryUid = fullRecipes.reduce((acc, recipe) => {
+    recipe.categories?.forEach((category) => {
+      if (!acc[category]) {
+        acc[category] = [];
+      }
 
-        acc[category].push(recipe.uid);
-      });
+      acc[category].push(recipe.uid);
+    });
 
-      return acc;
-    }, {});
+    return acc;
+  }, {});
 
-    const recipeUidsByRecipeName = fullRecipes.reduce((acc, recipe) => {
-      acc[recipe.name] = recipe.uid;
-      return acc;
-    }, {});
+  const recipeUidsByRecipeName = fullRecipes.reduce((acc, recipe) => {
+    acc[recipe.name] = recipe.uid;
+    return acc;
+  }, {});
 
-    return {
-      props: {
-        recipesById,
-        recipeUidsByCategoryUid,
-        categories,
-        recipeUidsByRecipeName,
-      },
-      revalidate: 3600,
-    };
-  } catch (error) {
-    console.error(error);
-
-    return {
-      props: {
-        recipesById: {},
-        recipeUidsByCategoryUid: {},
-        categories: [],
-        recipeUidsByRecipeName: {},
-        isError: true,
-      },
-      revalidate: 3600,
-    };
-  }
+  return {
+    props: {
+      recipesById,
+      recipeUidsByCategoryUid,
+      categories,
+      recipeUidsByRecipeName,
+    },
+    revalidate: 3600,
+  };
 };
