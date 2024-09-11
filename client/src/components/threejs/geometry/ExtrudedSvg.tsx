@@ -42,20 +42,8 @@ const ExtrudedSvg = ({
     );
   }, [colorMode]);
 
-  const reff = useRef();
-
-  useFrame(({ clock }) => {
-    //rotate ref
-    reff.current.rotation.y = Math.sin(clock.getElapsedTime()) / 3;
-  });
-
   return (
-    <group
-      ref={reff}
-      position={position}
-      scale={0.12}
-      rotation={[-Math.PI, 0, 0]}
-    >
+    <group position={position} scale={0.12} rotation={[-Math.PI, 0, 0]}>
       <Center cacheKey={svg}>
         {extrudedGeometries.map((geometry, index) => (
           <>

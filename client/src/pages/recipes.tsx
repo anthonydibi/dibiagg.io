@@ -13,6 +13,8 @@ import {
   Link,
   Button,
   ExpandedIndex,
+  LinkOverlay,
+  LinkBox,
 } from '@chakra-ui/react';
 import { getAllPosts } from '../services/BlogApi';
 import SEO from '../components/seo';
@@ -26,25 +28,25 @@ import {
 import Image from 'next/image';
 import { useState } from 'react';
 import { UnderlinedHeading } from '../components/UnderlinedHeading';
+import { AnimatePresence, motion } from 'framer-motion';
+import NextLink from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 export default function Blog({
   recipesById,
   recipeUidsByCategoryUid,
   categories,
+  recipeUidsByRecipeName,
 }) {
-  const [selectedRecipe, setSelectedRecipe] = useState<string | null>(null);
+  const search = useSearchParams();
+  const searchRecipe = search.get('recipe');
+  const selectedRecipe = searchRecipe
+    ? recipeUidsByRecipeName[searchRecipe]
+    : null;
   const [expandedIndices, setExpandedIndices] = useState<number | number[]>([]);
 
   const handleAccordionChange = (index: number | number[]) => {
     setExpandedIndices(index);
-  };
-
-  const handleRecipeSidebarClick = (recipeUid: string) => {
-    if (selectedRecipe === recipeUid) {
-      setSelectedRecipe(null);
-    } else {
-      setSelectedRecipe(recipeUid);
-    }
   };
 
   return (
@@ -69,22 +71,39 @@ export default function Blog({
           CATEGORIES
         </UnderlinedHeading>
         <Accordion
+          allowToggle
           mt="3"
           index={expandedIndices}
           onChange={handleAccordionChange}
-          allowMultiple
           border="0"
           variant="unstyled"
         >
           {categories.map((category) => (
-            <AccordionItem key={category.uid} border="0">
+            <AccordionItem position="relative" key={category.uid} border="0">
               <h2>
-                <AccordionButton
-                  fontWeight={600}
-                  _hover={{ outline: '1px solid' }}
-                >
+                <AccordionButton fontWeight={600}>
                   <Box as="span" flex="1" textAlign="left">
-                    <Text size="md">{category.name}</Text>
+                    <Text width="max-content" size="md" position="relative">
+                      {category.name}
+                      <AnimatePresence>
+                        {recipeUidsByCategoryUid[category.uid].includes(
+                          selectedRecipe,
+                        ) && (
+                          <Box
+                            as={motion.div}
+                            initial={{ width: '0' }}
+                            animate={{ width: '110%' }}
+                            exit={{ width: '0' }}
+                            transition={{ ease: 'ease-in-out' }}
+                            position="absolute"
+                            bottom="10%"
+                            bg="accent"
+                            width="110%"
+                            height="4px"
+                          />
+                        )}
+                      </AnimatePresence>
+                    </Text>
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
@@ -96,6 +115,15 @@ export default function Blog({
                     return (
                       <Button
                         key={recipeUid}
+                        as={NextLink}
+                        href={
+                          selectedRecipe === recipe.uid
+                            ? '/recipes'
+                            : `/recipes?recipe=${encodeURIComponent(
+                                recipe.name,
+                              )}`
+                        }
+                        shallow
                         color="unset"
                         textDecoration={
                           selectedRecipe === recipe.uid
@@ -106,7 +134,6 @@ export default function Blog({
                         fontWeight={400}
                         whiteSpace="normal"
                         textAlign="start"
-                        onClick={(_) => handleRecipeSidebarClick(recipe.uid)}
                       >
                         <Text>{recipe.name}</Text>
                       </Button>
@@ -118,32 +145,58 @@ export default function Blog({
           ))}
         </Accordion>
       </Flex>
-      <SimpleGrid
-        width="100%"
-        gap={8}
-        p={['32px 8px', null, '8px 32px 32px 260px']}
-        minChildWidth={['40vw', null, '200px']}
-      >
-        {Object.values(recipesById).map((recipe) => (
-          <Flex key={recipe.uid} direction="column">
-            <Box aspectRatio={1 / 1} position="relative">
-              <Image src={recipe.photo_url} alt={recipe.name} fill />
-            </Box>
-            <Flex
-              direction="column"
-              flex={1}
-              p={2}
-              justifyContent="space-between"
-              borderWidth="0 1px 1px 1px"
-              borderStyle="solid"
-              borderColor="orange.300"
-            >
-              <Heading size="sm">{recipe.name}</Heading>
-              <Text>{recipe.source}</Text>
-            </Flex>
-          </Flex>
-        ))}
-      </SimpleGrid>
+      {!selectedRecipe ? (
+        <SimpleGrid
+          width="100%"
+          gap={8}
+          p={['32px 8px', null, '8px 32px 32px 260px']}
+          minChildWidth={['40vw', null, '200px']}
+        >
+          {Object.values(recipesById).map((recipe) => (
+            <LinkBox as={'article'} key={recipe.uid}>
+              <Flex
+                _hover={{
+                  transform: 'scale(1.03) translate3d(-4px, -4px, 0)',
+                  boxShadow: '4px 4px 0px var(--accent)',
+                }}
+                transition="all 300ms"
+                key={recipe.uid}
+                direction="column"
+              >
+                <Box aspectRatio={1 / 1} position="relative">
+                  <Image src={recipe.photo_url} alt={recipe.name} fill />
+                </Box>
+                <Flex
+                  direction="column"
+                  flex={1}
+                  p={2}
+                  justifyContent="space-between"
+                  borderWidth="0 1px 1px 1px"
+                  borderStyle="solid"
+                  borderColor="orange.300"
+                >
+                  <LinkOverlay
+                    as={NextLink}
+                    href={`/recipes?recipe=${encodeURIComponent(recipe.name)}`}
+                    shallow
+                  >
+                    <Heading size="sm">{recipe.name}</Heading>
+                  </LinkOverlay>
+                  <Text color={'orange.400'}>{recipe.source}</Text>
+                </Flex>
+              </Flex>
+            </LinkBox>
+          ))}
+        </SimpleGrid>
+      ) : (
+        <Container
+          p={['32px 8px', null, '8px 32px 32px 260px']}
+          maxW="100%"
+          minH="100vh"
+        >
+          help
+        </Container>
+      )}
     </>
   );
 }
@@ -195,8 +248,18 @@ export const getStaticProps = async () => {
       return acc;
     }, {});
 
+    const recipeUidsByRecipeName = fullRecipes.reduce((acc, recipe) => {
+      acc[recipe.name] = recipe.uid;
+      return acc;
+    }, {});
+
     return {
-      props: { recipesById, recipeUidsByCategoryUid, categories },
+      props: {
+        recipesById,
+        recipeUidsByCategoryUid,
+        categories,
+        recipeUidsByRecipeName,
+      },
       revalidate: 3600,
     };
   } catch (error) {
@@ -207,6 +270,7 @@ export const getStaticProps = async () => {
         recipesById: {},
         recipeUidsByCategoryUid: {},
         categories: [],
+        recipeUidsByRecipeName: {},
         isError: true,
       },
       revalidate: 3600,

@@ -1,9 +1,10 @@
 import { Button, Flex, Link, useToast } from '@chakra-ui/react';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { FaDiscord, FaGithub, FaHamburger, FaLinkedin } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import NextLink from 'next/link';
 import { BsChatFill } from 'react-icons/bs';
+import { IconType } from 'react-icons/lib';
 
 type Props = {};
 
@@ -35,7 +36,14 @@ const MyLinks = (props: Props) => {
     }
   };
 
-  const LinksConfig = {
+  const LinksConfig: {
+    [linkKey: string]: {
+      display: string;
+      icon: IconType;
+      onClick?: () => void;
+      href?: string;
+    };
+  } = {
     blog: {
       display: 'Blog',
       icon: BsChatFill,

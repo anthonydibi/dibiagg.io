@@ -4,7 +4,6 @@ import {
   Text,
   Tooltip,
   Box,
-  useColorModeValue,
   Flex,
   Link,
   Button,
@@ -52,9 +51,9 @@ export default function About() {
                 border="1px solid"
                 px="1"
                 borderRadius="0"
-                bg={useColorModeValue('white', 'black')}
-                textColor={useColorModeValue('black', 'white')}
-                borderColor={useColorModeValue('black', 'white')}
+                bg="lightdark"
+                textColor="darklight"
+                borderColor="darklight"
                 fontSize="sm"
               >
                 <Text
@@ -124,6 +123,7 @@ export default function About() {
     >
       {builtWithTechs.map((tech) => (
         <Icon
+          key={tech.name}
           as={tech.icon}
           boxSize={['36px', null, '48px', '76px']}
           color="accent"
@@ -323,7 +323,6 @@ export default function About() {
                   onMouseEnter={handleMarqueeMouseEnter}
                   onMouseLeave={handleMarqueeMouseLeave}
                   w="100%"
-                  overflow="hidden"
                   justifyContent="center"
                   alignItems="center"
                 >

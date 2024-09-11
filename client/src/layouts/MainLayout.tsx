@@ -1,6 +1,7 @@
 import { MutableRefObject, PropsWithChildren, useRef } from 'react';
-import { Box, Breadcrumb, useColorModeValue } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
+import Breadcrumbs from '../components/Nav/Breadcrumbs';
 const Canvas = dynamic(
   () => import('@react-three/fiber').then((mod) => mod.Canvas),
   { ssr: false },
@@ -9,8 +10,6 @@ const Port = dynamic(
   () => import('@react-three/drei').then((mod) => mod.View.Port),
   { ssr: false },
 );
-import Image from 'next/image';
-import Breadcrumbs from '../components/Nav/Breadcrumbs';
 
 export default function MainLayout({ children }: PropsWithChildren) {
   const container = useRef() as MutableRefObject<HTMLElement>;

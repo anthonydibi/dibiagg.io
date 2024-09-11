@@ -12,6 +12,8 @@ const theme = extendTheme({
   colors: {
     accent: 'var(--accent)',
     accent2: 'var(--accent2)',
+    lightdark: 'var(--lightdark)',
+    darklight: 'var(--darklight)',
   },
   styles: {
     global: (props) => ({
@@ -23,6 +25,8 @@ const theme = extendTheme({
         '--accent2': mode('#708747', '#fb6f92')(props),
         '--dark': mode('#202020', '#202020')(props),
         '--light': mode('#f0f0f0', '#f0f0f0')(props),
+        '--lightdark': mode('white', 'black')(props),
+        '--darklight': mode('black', 'white')(props),
       },
     }),
   },
