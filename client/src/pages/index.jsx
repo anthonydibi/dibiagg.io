@@ -267,8 +267,7 @@ export default function About() {
                     Pick6
                     <ExternalLinkIcon mx="2px" />
                   </Link>
-                  , a daily fantasy sports game. I also work on internal
-                  tooling.
+                  , a daily fantasy sports game. I also build internal tooling.
                 </Text>
               </Flex>
             </HomeGridItem>
