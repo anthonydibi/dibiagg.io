@@ -4,7 +4,7 @@ import { PaprikaEndpoints } from './endpoints';
 export const getAuthToken = (email: string, password: string) => {
   return fetch(PaprikaEndpoints.Auth, {
     method: 'POST',
-    signal: AbortSignal.timeout(2500),
+    signal: AbortSignal.timeout(5000),
     body: `email=${email}&password=${password}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

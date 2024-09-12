@@ -31,6 +31,12 @@ import { UnderlinedHeading } from '../components/UnderlinedHeading';
 import { AnimatePresence, motion } from 'framer-motion';
 import NextLink from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  PutObjectCommandInput,
+} from '@aws-sdk/client-s3';
 
 export default function Blog({
   recipesById,
@@ -43,6 +49,7 @@ export default function Blog({
   const selectedRecipe = searchRecipe
     ? recipeUidsByRecipeName[searchRecipe]
     : null;
+  const selectedRecipeObj = selectedRecipe ? recipesById[selectedRecipe] : null;
   const [expandedIndices, setExpandedIndices] = useState<number | number[]>([]);
 
   const handleAccordionChange = (index: number | number[]) => {
@@ -153,7 +160,13 @@ export default function Blog({
           minChildWidth={['40vw', null, '200px']}
         >
           {Object.values(recipesById).map((recipe) => (
-            <LinkBox as={'article'} key={recipe.uid}>
+            <LinkBox
+              as={'article'}
+              display="flex"
+              flex={1}
+              key={recipe.uid}
+              height="100%"
+            >
               <Flex
                 _hover={{
                   transform: 'scale(1.03) translate3d(-4px, -4px, 0)',
@@ -162,6 +175,7 @@ export default function Blog({
                 transition="all 300ms"
                 key={recipe.uid}
                 direction="column"
+                width="100%"
               >
                 <Box aspectRatio={1 / 1} position="relative">
                   <Image src={recipe.photo_url} alt={recipe.name} fill />
@@ -189,13 +203,30 @@ export default function Blog({
           ))}
         </SimpleGrid>
       ) : (
-        <Container
-          p={['32px 8px', null, '8px 32px 32px 260px']}
-          maxW="100%"
-          minH="100vh"
-        >
-          help
-        </Container>
+        <Flex p={['32px 8px', null, '8px 32px 32px 260px']} maxW="6xl">
+          <Flex w="100%">
+            <Flex position="relative" aspectRatio={1 / 1} h="400px">
+              <Image
+                src={selectedRecipeObj.photo_url}
+                alt={selectedRecipeObj.name}
+                fill
+              />
+            </Flex>
+            <Flex
+              w="100%"
+              alignItems="center"
+              justifyContent="end"
+              borderWidth="2px 2px 2px 0"
+              borderStyle="solid"
+              borderColor="orange.300"
+            >
+              <Flex direction="column" gap="8px">
+                <Heading size="lg">{selectedRecipeObj.name}</Heading>
+                <Text>{selectedRecipeObj.source}</Text>
+              </Flex>
+            </Flex>
+          </Flex>
+        </Flex>
       )}
     </>
   );
@@ -206,34 +237,93 @@ export const getStaticProps = async () => {
     throw new Error('Missing Paprika credentials');
   }
 
-  const tokenRes = await getAuthToken(
-    process.env.PAPRIKA_EMAIL,
-    process.env.PAPRIKA_PW,
-  );
-  const tokenData = await tokenRes.json();
-  const token = tokenData.result.token;
+  if (
+    !process.env.AWS_S3_ACCESS_KEY_ID ||
+    !process.env.AWS_S3_SECRET_ACCESS_KEY
+  ) {
+    throw new Error('Missing AWS credentials');
+  }
 
-  const categoriesRes = getCategories(token);
+  const s3 = new S3Client({
+    region: 'us-east-1',
+    credentials: {
+      accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
+    },
+  });
 
-  const recipesRes = await getRecipes(token);
-  const recipes = (await recipesRes.json()).result;
+  let categories;
+  let fullRecipes;
 
-  const fullRecipeReses = await Promise.all(
-    recipes.map(async (recipe) => getRecipe(token, recipe.uid)),
-  );
+  try {
+    const tokenRes = await getAuthToken(
+      process.env.PAPRIKA_EMAIL,
+      process.env.PAPRIKA_PW,
+    );
+    const tokenData = await tokenRes.json();
+    const token = tokenData.result.token;
 
-  const fullRecipeResults = await Promise.all(
-    fullRecipeReses.map((res) => res.json()),
-  );
-  const fullRecipes = fullRecipeResults.map((result) => result.result);
+    const recipesRes = await getRecipes(token);
+    const recipes = (await recipesRes.json()).result;
+
+    const categoriesRes = await getCategories(token);
+    categories = (await categoriesRes.json()).result;
+
+    const fullRecipeReses = await Promise.all(
+      recipes.map(async (recipe) => getRecipe(token, recipe.uid)),
+    );
+    const fullRecipeResults = await Promise.all(
+      fullRecipeReses.map((res) => res.json()),
+    );
+    fullRecipes = fullRecipeResults.map((result) => result.result);
+  } catch (e) {
+    console.error(e);
+
+    const getObjectParams = {
+      Bucket: 'dibiaggdotio-assets',
+      Key: 'recipes.json',
+    };
+    const getObjectCommand = new GetObjectCommand(getObjectParams);
+    const getObjectResponse = await s3.send(getObjectCommand);
+    const recipeJsonString = await getObjectResponse.Body?.transformToString();
+    if (!recipeJsonString) {
+      throw new Error('No data found in S3');
+    }
+
+    const recipeData = JSON.parse(recipeJsonString);
+
+    if (!recipeData.categories || !recipeData.fullRecipes) {
+      throw new Error('No data found in S3');
+    }
+
+    categories = recipeData.categories;
+    fullRecipes = recipeData.fullRecipes;
+  }
+
+  try {
+    // try to upload recipe data to S3 in case we get rate-limited
+    const recipeData = {
+      categories,
+      fullRecipes,
+    };
+
+    const putObjectParams: PutObjectCommandInput = {
+      Bucket: 'dibiaggdotio-assets',
+      Key: 'recipes.json',
+      Body: JSON.stringify(recipeData),
+      ContentType: 'application/json',
+    };
+
+    const putObjectCommand = new PutObjectCommand(putObjectParams);
+    await s3.send(putObjectCommand);
+  } catch (e) {
+    console.error(e);
+  }
 
   const recipesById = fullRecipes.reduce((acc, recipe) => {
     acc[recipe.uid] = recipe;
     return acc;
   }, {});
-
-  const categoriesData = await categoriesRes;
-  const categories = (await categoriesData.json()).result;
 
   const recipeUidsByCategoryUid = fullRecipes.reduce((acc, recipe) => {
     recipe.categories?.forEach((category) => {

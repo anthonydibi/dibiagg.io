@@ -33,6 +33,4 @@ export const BreadcrumbConfig: BreadcrumbConfigType = {
   recipes: { display: 'RECIPES', href: '/recipes' },
 };
 
-export const BreadcrumbPositionConfig = {
-  '/recipes': 'right',
-};
+export const BreadcrumbSearchWhitelist = ['recipe'];
