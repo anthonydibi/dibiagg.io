@@ -36,6 +36,8 @@ import {
   PutObjectCommand,
   GetObjectCommand,
   PutObjectCommandInput,
+  HeadObjectCommand,
+  ListObjectsV2Command,
 } from '@aws-sdk/client-s3';
 
 export default function Blog({
@@ -319,6 +321,46 @@ export const getStaticProps = async () => {
   } catch (e) {
     console.error(e);
   }
+
+  const allRecipeImages = await s3.send(
+    new ListObjectsV2Command({
+      Bucket: 'dibiaggdotio-assets',
+      Prefix: 'images/recipe/',
+    }),
+  );
+  const imageSet = new Set(
+    allRecipeImages.Contents?.map((content) => content.Key),
+  );
+
+  // try to upload images since image links from the API expire
+  fullRecipes.forEach(async (recipe) => {
+    const imageKey = `images/recipe/recipe-${recipe.uid}.jpg`;
+    const imageUrl = `https://d1detxxicj4679.cloudfront.net/${imageKey}`;
+    const imageExists = imageSet.has(imageKey);
+
+    if (!imageExists) {
+      try {
+        const imageRes = await fetch(recipe.photo_url);
+        console.log(imageRes);
+        const imageBuffer = await imageRes.arrayBuffer();
+
+        const putImageParams: PutObjectCommandInput = {
+          Bucket: 'dibiaggdotio-assets',
+          Key: imageKey,
+          Body: imageBuffer,
+        };
+
+        const putImageCommand = new PutObjectCommand(putImageParams);
+        await s3.send(putImageCommand);
+
+        recipe.photo_url = imageUrl;
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      recipe.photo_url = imageUrl;
+    }
+  });
 
   const recipesById = fullRecipes.reduce((acc, recipe) => {
     acc[recipe.uid] = recipe;

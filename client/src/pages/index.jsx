@@ -27,6 +27,11 @@ import {
   SiTypescript,
 } from 'react-icons/si';
 import { BsLightningFill, BsTriangleFill } from 'react-icons/bs';
+import dynamic from 'next/dynamic';
+
+const Skills = dynamic(() => import('../components/threejs/Skills'), {
+  ssr: false,
+});
 
 export default function About() {
   //set 5 second timeout
@@ -283,7 +288,9 @@ export default function About() {
                 </Text>
               </Flex>
             </HomeGridItem>
-            <HomeGridItem colSpan={[6, null, 3]} title="IDK"></HomeGridItem>
+            <HomeGridItem colSpan={[6, null, 3]} title="IDK">
+              <Skills />
+            </HomeGridItem>
             <HomeGridItem
               colSpan={[12, null, 6]}
               title="PROJECTS"
