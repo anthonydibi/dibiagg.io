@@ -43,8 +43,8 @@ import {
 export default function Blog({
   recipesById,
   recipeUidsByCategoryUid,
-  categories,
   recipeUidsByRecipeName,
+  categoriesByUid,
 }) {
   const search = useSearchParams();
   const searchRecipe = search.get('recipe');
@@ -69,14 +69,18 @@ export default function Blog({
         display={['none', null, 'flex']}
         borderRight="2px solid"
         overflowY="scroll"
-        p={4}
+        p={1}
         direction="column"
         position="fixed"
         top="0"
         width="248px"
         height="100%"
       >
-        <UnderlinedHeading size="md" underlineColor="accent">
+        <UnderlinedHeading
+          containerProps={{ ml: 1, mt: 2 }}
+          size="md"
+          underlineColor="accent"
+        >
           CATEGORIES
         </UnderlinedHeading>
         <Accordion
@@ -87,12 +91,17 @@ export default function Blog({
           border="0"
           variant="unstyled"
         >
-          {categories.map((category) => (
+          {Object.values(categoriesByUid).map((category) => (
             <AccordionItem position="relative" key={category.uid} border="0">
               <h2>
                 <AccordionButton fontWeight={600}>
                   <Box as="span" flex="1" textAlign="left">
-                    <Text width="max-content" size="md" position="relative">
+                    <Text
+                      width="max-content"
+                      fontWeight={400}
+                      size="md"
+                      position="relative"
+                    >
                       {category.name}
                       <AnimatePresence>
                         {recipeUidsByCategoryUid[category.uid].includes(
@@ -105,7 +114,7 @@ export default function Blog({
                             exit={{ width: '0' }}
                             transition={{ ease: 'ease-in-out' }}
                             position="absolute"
-                            bottom="10%"
+                            bottom="5%"
                             bg="accent"
                             width="110%"
                             height="4px"
@@ -157,8 +166,8 @@ export default function Blog({
       {!selectedRecipe ? (
         <SimpleGrid
           width="100%"
-          gap={8}
-          p={['32px 8px', null, '8px 32px 32px 260px']}
+          gap={4}
+          p={['8px 2px', null, '20px 32px 32px 260px']}
           minChildWidth={['40vw', null, '200px']}
         >
           {Object.values(recipesById).map((recipe) => (
@@ -191,14 +200,36 @@ export default function Blog({
                   borderStyle="solid"
                   borderColor="orange.300"
                 >
-                  <LinkOverlay
-                    as={NextLink}
-                    href={`/recipes?recipe=${encodeURIComponent(recipe.name)}`}
-                    shallow
-                  >
-                    <Heading size="sm">{recipe.name}</Heading>
-                  </LinkOverlay>
-                  <Text color={'orange.400'}>{recipe.source}</Text>
+                  <Flex direction="column" gap={0.5}>
+                    <LinkOverlay
+                      as={NextLink}
+                      href={`/recipes?recipe=${encodeURIComponent(
+                        recipe.name,
+                      )}`}
+                      shallow
+                    >
+                      <Heading size="sm" fontWeight={500}>
+                        {recipe.name}
+                      </Heading>
+                    </LinkOverlay>
+                    <Flex gap={1} flexWrap="wrap">
+                      {recipe.categories.map((category) => (
+                        <Text
+                          fontSize="sm"
+                          p={1}
+                          border="0.5px solid black"
+                          lineHeight="12px"
+                          key={category.uid}
+                          color="gray.600"
+                        >
+                          {categoriesByUid[category].name}
+                        </Text>
+                      ))}
+                    </Flex>
+                  </Flex>
+                  <Text mt={2} color={'orange.400'}>
+                    {recipe.source}
+                  </Text>
                 </Flex>
               </Flex>
             </LinkBox>
@@ -256,6 +287,7 @@ export const getStaticProps = async () => {
 
   let categories;
   let fullRecipes;
+  let pulledFreshRecipes = true;
 
   try {
     const tokenRes = await getAuthToken(
@@ -263,6 +295,7 @@ export const getStaticProps = async () => {
       process.env.PAPRIKA_PW,
     );
     const tokenData = await tokenRes.json();
+    console.log(tokenData);
     const token = tokenData.result.token;
 
     const recipesRes = await getRecipes(token);
@@ -280,6 +313,7 @@ export const getStaticProps = async () => {
     fullRecipes = fullRecipeResults.map((result) => result.result);
   } catch (e) {
     console.error(e);
+    pulledFreshRecipes = false;
 
     const getObjectParams = {
       Bucket: 'dibiaggdotio-assets',
@@ -302,24 +336,26 @@ export const getStaticProps = async () => {
     fullRecipes = recipeData.fullRecipes;
   }
 
-  try {
-    // try to upload recipe data to S3 in case we get rate-limited
-    const recipeData = {
-      categories,
-      fullRecipes,
-    };
+  if (pulledFreshRecipes) {
+    try {
+      // try to upload recipe data to S3 in case we get rate-limited
+      const recipeData = {
+        categories,
+        fullRecipes,
+      };
 
-    const putObjectParams: PutObjectCommandInput = {
-      Bucket: 'dibiaggdotio-assets',
-      Key: 'recipes.json',
-      Body: JSON.stringify(recipeData),
-      ContentType: 'application/json',
-    };
+      const putObjectParams: PutObjectCommandInput = {
+        Bucket: 'dibiaggdotio-assets',
+        Key: 'recipes.json',
+        Body: JSON.stringify(recipeData),
+        ContentType: 'application/json',
+      };
 
-    const putObjectCommand = new PutObjectCommand(putObjectParams);
-    await s3.send(putObjectCommand);
-  } catch (e) {
-    console.error(e);
+      const putObjectCommand = new PutObjectCommand(putObjectParams);
+      await s3.send(putObjectCommand);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   const allRecipeImages = await s3.send(
@@ -341,7 +377,6 @@ export const getStaticProps = async () => {
     if (!imageExists) {
       try {
         const imageRes = await fetch(recipe.photo_url);
-        console.log(imageRes);
         const imageBuffer = await imageRes.arrayBuffer();
 
         const putImageParams: PutObjectCommandInput = {
@@ -384,12 +419,17 @@ export const getStaticProps = async () => {
     return acc;
   }, {});
 
+  const categoriesByUid = categories.reduce((acc, category) => {
+    acc[category.uid] = category;
+    return acc;
+  }, {});
+
   return {
     props: {
       recipesById,
       recipeUidsByCategoryUid,
-      categories,
       recipeUidsByRecipeName,
+      categoriesByUid,
     },
     revalidate: 3600,
   };

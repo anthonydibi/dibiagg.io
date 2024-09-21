@@ -8,12 +8,19 @@ import {
   Link,
   Button,
   Icon,
+  useOutsideClick,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import React, { Suspense, useEffect } from 'react';
 import SEO from '../components/seo';
 import ColorModeSwitcher from '../components/ColorModeSwitcher';
 import HomeGridItem from '../components/grid/HomeGridItem';
-import { ChevronLeftIcon, ExternalLinkIcon, LinkIcon } from '@chakra-ui/icons';
+import {
+  ChevronLeftIcon,
+  CloseIcon,
+  ExternalLinkIcon,
+  LinkIcon,
+} from '@chakra-ui/icons';
 import Script from 'next/script';
 import GraffitiCanvas from '../components/GraffitiCanvas';
 import NextLink from 'next/link';
@@ -28,144 +35,147 @@ import {
 } from 'react-icons/si';
 import { BsLightningFill, BsTriangleFill } from 'react-icons/bs';
 import dynamic from 'next/dynamic';
+import { AnimatePresence, motion } from 'framer-motion';
+import { skillIcons } from '../components/threejs/Skills';
 
 const Skills = dynamic(() => import('../components/threejs/Skills'), {
   ssr: false,
 });
 
-export default function About() {
-  //set 5 second timeout
-  const [hasPassed, setHasPassed] = React.useState(false);
+const BuiltWithMarqueeContent = () => (
+  <Flex
+    direction={['row', null, 'column']}
+    p=".2rem"
+    gap={8}
+    alignItems="center"
+  >
+    {builtWithTechs.map((tech) => (
+      <Icon
+        key={tech.name}
+        as={tech.icon}
+        boxSize={['36px', null, '48px', '76px']}
+        color="accent"
+      />
+    ))}
+  </Flex>
+);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setHasPassed(true);
-    }, 5000);
-  }, []);
-
-  const MarqueeContent = () => (
-    <Flex direction="row" p=".2rem" alignItems="center">
-      {Array(3)
-        .fill(0)
-        .map((_, i) => (
-          <>
-            <Heading size={['md', null, 'lg']} whiteSpace="nowrap">
-              ANTHONY{' '}
-              <Tooltip
-                label="(dee-bee-aw-jee-oh)"
-                border="1px solid"
-                px="1"
-                borderRadius="0"
-                bg="lightdark"
-                textColor="darklight"
-                borderColor="darklight"
-                fontSize="sm"
-              >
-                <Text
-                  whiteSpace="nowrap"
-                  textDecorationColor={'accent'}
-                  decoration={'underline dotted'}
-                  textDecorationThickness="4px"
-                  as="span"
-                  lineHeight="36px"
-                >
-                  DI BIAGGIO
-                </Text>
-              </Tooltip>
-            </Heading>
-            <Flex>
-              <ChevronLeftIcon boxSize="36px" />
-              <ChevronLeftIcon boxSize="36px" />
-              <ChevronLeftIcon boxSize="36px" />
-              <ChevronLeftIcon boxSize="36px" />
-            </Flex>
-          </>
-        ))}
-    </Flex>
-  );
-
-  const builtWithTechs = [
-    {
-      name: 'React',
-      icon: SiReact,
-    },
-    {
-      name: 'TypeScript',
-      icon: SiTypescript,
-    },
-    {
-      name: 'ChakraUI',
-      icon: BsLightningFill,
-    },
-    {
-      name: 'Next.js',
-      icon: SiNextDotJs,
-    },
-    {
-      name: 'Node.js',
-      icon: SiNodeDotJs,
-    },
-    {
-      name: 'Heroku',
-      icon: SiHeroku,
-    },
-    {
-      name: 'Vercel',
-      icon: BsTriangleFill,
-    },
-    {
-      name: 'PostgreSQL',
-      icon: SiPostgresql,
-    },
-  ];
-
-  const BuiltWithMarqueeContent = () => (
-    <Flex
-      direction={['row', null, 'column']}
-      p=".2rem"
-      gap={8}
-      alignItems="center"
-    >
-      {builtWithTechs.map((tech) => (
-        <Icon
-          key={tech.name}
-          as={tech.icon}
-          boxSize={['36px', null, '48px', '76px']}
-          color="accent"
-        />
-      ))}
-    </Flex>
-  );
-
-  const BuiltWithMarquee = () => {
-    return (
-      <>
-        <Flex className="marquee-vert">
-          <BuiltWithMarqueeContent />
-        </Flex>
-        <Flex className="marquee-vert">
-          <BuiltWithMarqueeContent />
-        </Flex>
-        <Flex className="marquee-vert">
-          <BuiltWithMarqueeContent />
-        </Flex>
-        <Flex className="marquee-vert">
-          <BuiltWithMarqueeContent />
-        </Flex>
-      </>
-    );
-  };
-
-  const Marquee = () => (
+const BuiltWithMarquee = () => {
+  return (
     <>
-      <Flex className="marquee">
-        <MarqueeContent />
+      <Flex className="marquee-vert">
+        <BuiltWithMarqueeContent />
       </Flex>
-      <Flex className="marquee">
-        <MarqueeContent />
+      <Flex className="marquee-vert">
+        <BuiltWithMarqueeContent />
+      </Flex>
+      <Flex className="marquee-vert">
+        <BuiltWithMarqueeContent />
+      </Flex>
+      <Flex className="marquee-vert">
+        <BuiltWithMarqueeContent />
       </Flex>
     </>
   );
+};
+
+const Marquee = () => (
+  <>
+    <Flex className="marquee">
+      <MarqueeContent />
+    </Flex>
+    <Flex className="marquee">
+      <MarqueeContent />
+    </Flex>
+  </>
+);
+
+const MarqueeContent = () => (
+  <Flex direction="row" p=".2rem" alignItems="center">
+    {Array(3)
+      .fill(0)
+      .map((_, i) => (
+        <>
+          <Heading size={['md', null, 'lg']} whiteSpace="nowrap">
+            ANTHONY{' '}
+            <Tooltip
+              label="(dee-bee-aw-jee-oh)"
+              border="1px solid"
+              px="1"
+              borderRadius="0"
+              bg="lightdark"
+              textColor="darklight"
+              borderColor="darklight"
+              fontSize="sm"
+            >
+              <Text
+                whiteSpace="nowrap"
+                textDecorationColor={'accent'}
+                decoration={'underline dotted'}
+                textDecorationThickness="4px"
+                as="span"
+                lineHeight="36px"
+              >
+                DI BIAGGIO
+              </Text>
+            </Tooltip>
+          </Heading>
+          <Flex>
+            <ChevronLeftIcon boxSize="36px" />
+            <ChevronLeftIcon boxSize="36px" />
+            <ChevronLeftIcon boxSize="36px" />
+            <ChevronLeftIcon boxSize="36px" />
+          </Flex>
+        </>
+      ))}
+  </Flex>
+);
+
+const builtWithTechs = [
+  {
+    name: 'React',
+    icon: SiReact,
+  },
+  {
+    name: 'TypeScript',
+    icon: SiTypescript,
+  },
+  {
+    name: 'ChakraUI',
+    icon: BsLightningFill,
+  },
+  {
+    name: 'Next.js',
+    icon: SiNextDotJs,
+  },
+  {
+    name: 'Node.js',
+    icon: SiNodeDotJs,
+  },
+  {
+    name: 'Heroku',
+    icon: SiHeroku,
+  },
+  {
+    name: 'Vercel',
+    icon: BsTriangleFill,
+  },
+  {
+    name: 'PostgreSQL',
+    icon: SiPostgresql,
+  },
+];
+
+export default function About() {
+  const [selectedSkill, setSelectedSkill] = React.useState(null);
+  const skillsPopupRef = React.useRef(null);
+
+  const skillIconColor = useColorModeValue('black', 'white');
+
+  useOutsideClick({
+    ref: skillsPopupRef,
+    handler: () => setSelectedSkill(null),
+  });
 
   const handleMarqueeMouseEnter = (e) => {
     const allMarquees = document.querySelectorAll('.marquee');
@@ -223,7 +233,7 @@ export default function About() {
             borderTop="none"
           >
             <HomeGridItem
-              colSpan={[12, null, 6]}
+              colSpan={[12, null, 5, 6]}
               rowSpan={3}
               position="relative"
               title="WHO?"
@@ -263,6 +273,79 @@ export default function About() {
                 </Text>
               </Flex>
             </HomeGridItem>
+            <HomeGridItem
+              colSpan={[6, null, 4, 3]}
+              title="SKILLS"
+              rowSpan={3}
+              position="relative"
+              overflow="hidden"
+            >
+              <Skills onClick={setSelectedSkill} />
+              <AnimatePresence>
+                {selectedSkill && (
+                  <Flex
+                    ref={skillsPopupRef}
+                    as={motion.div}
+                    p=".2rem"
+                    height="max-content"
+                    width="100%"
+                    left={0}
+                    zIndex={1}
+                    bg="var(--off)"
+                    position="absolute"
+                    initial={{ bottom: '-100%' }}
+                    animate={{ bottom: '0' }}
+                    exit={{ bottom: '-100%' }}
+                  >
+                    <Button
+                      variant="icon"
+                      position="absolute"
+                      top={'.525rem'}
+                      right=".525rem"
+                      onClick={() => setSelectedSkill(null)}
+                    >
+                      <CloseIcon boxSize="12px" />
+                    </Button>
+                    <Flex
+                      flexDirection="column"
+                      gap="8px"
+                      width="100%"
+                      height="100%"
+                      border="2px solid var(--accent)"
+                      p=".625rem"
+                      alignItems="space-between"
+                    >
+                      <Flex
+                        alignItems="center"
+                        flexDirection="row"
+                        gap="4px"
+                        height="max-content"
+                      >
+                        <Text
+                          fontSize="20px"
+                          fill={skillIconColor}
+                          color={skillIconColor}
+                        >
+                          {
+                            skillIcons.find(
+                              (skill) => skill.name === selectedSkill,
+                            ).icon
+                          }
+                        </Text>
+                        <Text>{selectedSkill}</Text>
+                      </Flex>
+                      <Text color={'GrayText'}>
+                        {
+                          skillIcons.find(
+                            (skill) => skill.name === selectedSkill,
+                          ).desc
+                        }
+                      </Text>
+                    </Flex>
+                  </Flex>
+                )}
+              </AnimatePresence>
+            </HomeGridItem>
             <HomeGridItem colSpan={[6, null, 3]} title="CAREER">
               <Flex direction="column">
                 <Text>DraftKings 🤓 🏈</Text>
@@ -276,7 +359,20 @@ export default function About() {
                 </Text>
               </Flex>
             </HomeGridItem>
-            <HomeGridItem colSpan={[6, null, 3]} title="RECIPES">
+            <HomeGridItem colSpan={[6, null, 3]} title="IDK">
+              <Flex direction="column">
+                <Text>DraftKings 🤓 🏈</Text>
+                <Text color={'GrayText'}>
+                  I currently work on the web app for{' '}
+                  <Link href="https://pick6.draftkings.com/" isExternal>
+                    Pick6
+                    <ExternalLinkIcon mx="2px" />
+                  </Link>
+                  , a daily fantasy sports game. I also build internal tooling.
+                </Text>
+              </Flex>
+            </HomeGridItem>
+            {/* <HomeGridItem colSpan={[6, null, 3]} title="RECIPES">
               <Flex direction="column">
                 <Text>
                   I am constantly trying out new recipes, and put my favorites
@@ -287,14 +383,10 @@ export default function About() {
                   </Link>
                 </Text>
               </Flex>
+            </HomeGridItem> */}
+            <HomeGridItem colSpan={12} title="PROJECTS">
+              <Flex h="200px" />
             </HomeGridItem>
-            <HomeGridItem colSpan={[6, null, 3]} title="IDK">
-              <Skills />
-            </HomeGridItem>
-            <HomeGridItem
-              colSpan={[12, null, 6]}
-              title="PROJECTS"
-            ></HomeGridItem>
             <HomeGridItem colSpan={[12, null, 10]} rowSpan={2} title="GRAFFITI">
               <GraffitiCanvas />
             </HomeGridItem>

@@ -1,22 +1,34 @@
 import { MeshProps, useFrame, useLoader, Vector3 } from '@react-three/fiber';
-import React, { ReactElement, useEffect, useMemo, useRef } from 'react';
+import React, {
+  ReactElement,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
 import { useComponentMarkup } from '../../../utils/react';
 import { getSvgDataURI } from '../../../utils/uri';
 import * as THREE from 'three';
 import { useColorMode } from '@chakra-ui/react';
-import { Center } from '@react-three/drei';
+import { Center, MeshRefractionMaterial, Sphere } from '@react-three/drei';
 
 export type ExtrudedSvgProps = {
+  id: string;
   svg: ReactElement;
   extrusionDepth?: number;
   position?: Vector3;
+  onClick?: (id: string) => void;
+  scale?: number;
 } & MeshProps;
 
 const ExtrudedSvg = ({
+  id,
   svg,
   extrusionDepth = 1.5,
   position,
+  onClick,
+  scale = 0.04,
   ...props
 }: ExtrudedSvgProps) => {
   const svgMarkup = useComponentMarkup(svg);
@@ -33,22 +45,48 @@ const ExtrudedSvg = ({
     return extrudedGeometries;
   }, [svg]);
 
-  const [accentColor, setAccentColor] = React.useState<string>();
+  const [accentColor, setAccentColor] = React.useState<string | null>(
+    typeof window !== 'undefined'
+      ? getComputedStyle(document.body).getPropertyValue('--accent')
+      : null,
+  );
   const { colorMode } = useColorMode();
 
-  useEffect(() => {
+  const [hovered, setHovered] = React.useState<boolean>(false);
+
+  const handlePointerEnter = (e) => {
+    setHovered(true);
+  };
+
+  const handlePointerLeave = (e) => {
+    setHovered(false);
+  };
+
+  useLayoutEffect(() => {
     setAccentColor(
       getComputedStyle(document.body).getPropertyValue('--accent'),
     );
   }, [colorMode]);
 
   return (
-    <group position={position} scale={0.12} rotation={[-Math.PI, 0, 0]}>
+    <group scale={scale} onClick={() => onClick(id)}>
+      <Center cacheKey={svg}>
+        {/* sphere */}
+        <mesh
+          onPointerEnter={handlePointerEnter}
+          onPointerLeave={handlePointerLeave}
+        >
+          <sphereGeometry args={[18, 32, 32]} />
+          <meshStandardMaterial color={accentColor} opacity={0.2} transparent />
+        </mesh>
+      </Center>
       <Center cacheKey={svg}>
         {extrudedGeometries.map((geometry, index) => (
           <>
             <mesh key={index} geometry={geometry} {...props}>
-              <meshStandardMaterial color="white" />
+              <meshStandardMaterial
+                color={hovered ? 'lightgreen' : accentColor}
+              />
             </mesh>
           </>
         ))}

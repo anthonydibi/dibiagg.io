@@ -27,6 +27,7 @@ const theme = extendTheme({
         '--light': mode('#f0f0f0', '#f0f0f0')(props),
         '--lightdark': mode('white', 'black')(props),
         '--darklight': mode('black', 'white')(props),
+        '--off': mode('var(--light)', 'var(--dark)')(props),
       },
     }),
   },

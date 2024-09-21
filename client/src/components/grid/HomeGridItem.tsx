@@ -20,7 +20,14 @@ const HomeGridItem: FC<HomeGridItemProps> = ({
       {...rest}
     >
       {title && (
-        <Box position="absolute" top={0} left={0} bg="accent" p=".2rem">
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          bg="accent"
+          p=".2rem"
+          zIndex={1}
+        >
           <Text color="white" fontSize="xs">
             {title}
           </Text>
