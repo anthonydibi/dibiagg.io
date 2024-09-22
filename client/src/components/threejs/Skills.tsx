@@ -50,7 +50,7 @@ import View from './helpers/View';
 
 const getSvgScale = (containerWidth: number, containerHeight: number) => {
   const area = containerWidth * containerHeight;
-  return area / (skillIcons.length * 110000);
+  return area / (skillIcons.length * 280000);
 };
 
 export const skillIcons = [
@@ -150,12 +150,24 @@ const Skills: FC<SkillsProps> = ({
   // camera coords
   const camera = useThree((state) => state.camera);
 
-  const [refs] = useState(() => [] as RapierRigidBody[]);
-  const addRef = (ref: RapierRigidBody) => refs.push(ref);
+  const [svgScale, setSvgScale] = useState(
+    getSvgScale(containerWidth, containerHeight),
+  );
 
-  const svgScale = useMemo(() => {
-    return getSvgScale(containerWidth, containerHeight);
-  }, []);
+  const debouncedSetSvgScale = useCallback(
+    debounce(
+      (containerWidth: number, containerHeight: number) => {
+        setSvgScale(getSvgScale(containerWidth, containerHeight));
+      },
+      250,
+      false,
+    ),
+    [],
+  );
+
+  useLayoutEffect(() => {
+    debouncedSetSvgScale(containerWidth, containerHeight);
+  }, [containerWidth, containerHeight]);
 
   const randomXPositions = useMemo(() => {
     return skillIcons.map((_) => Math.random() * width - width / 2);
@@ -179,8 +191,7 @@ const Skills: FC<SkillsProps> = ({
           {skillIcons.map((skill, index) => {
             return (
               <RigidBody
-                key={index}
-                ref={addRef}
+                key={`${svgScale.toString()}-${index}`}
                 restitution={0}
                 rotation={[-Math.PI, 0, 0]}
                 linearVelocity={[randomXVelocities[index]!, 0, 0]}
@@ -247,12 +258,6 @@ const Wrapped: FC<SkillsProps> = ({ onClick }) => {
 
     return () => resizeObserver.disconnect();
   }, [viewRef]);
-
-  useEffect(() => {
-    return () => {
-      console.log('stop it!!!');
-    };
-  }, []);
 
   return (
     <>
