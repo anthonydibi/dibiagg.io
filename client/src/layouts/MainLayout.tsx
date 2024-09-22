@@ -36,13 +36,10 @@ export default function MainLayout({ children }: PropsWithChildren) {
               left: 0,
               width: '100vw',
               height: '100vh',
+              overflow: 'hidden',
               pointerEvents: 'none',
             }}
-            eventSource={
-              typeof window !== 'undefined'
-                ? document.getElementById('__next') ?? undefined
-                : undefined
-            }
+            eventSource={container}
           >
             {/* @ts-ignore */}
             <Port />

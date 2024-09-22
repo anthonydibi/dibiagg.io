@@ -5,6 +5,7 @@ import React, {
   Suspense,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -22,7 +23,6 @@ import {
   OrbitControls,
   OrthographicCamera,
   PerspectiveCamera,
-  View,
 } from '@react-three/drei';
 import ExtrudedSvg from './geometry/ExtrudedSvg';
 import {
@@ -46,6 +46,7 @@ import Threejs from '../icons/Threejs';
 import Blazor from '../icons/Blazor';
 import Newrelic from '../icons/Newrelic';
 import { debounce } from '../../utils/debounce';
+import View from './helpers/View';
 
 const getSvgScale = (containerWidth: number, containerHeight: number) => {
   const area = containerWidth * containerHeight;
@@ -152,24 +153,19 @@ const Skills: FC<SkillsProps> = ({
   const [refs] = useState(() => [] as RapierRigidBody[]);
   const addRef = (ref: RapierRigidBody) => refs.push(ref);
 
-  const [svgScale, setSvgScale] = useState(
-    getSvgScale(containerWidth, containerHeight),
-  );
+  const svgScale = useMemo(() => {
+    return getSvgScale(containerWidth, containerHeight);
+  }, []);
 
-  const debouncedSetSvgScale = useCallback(
-    debounce(
-      (containerWidth: number, containerHeight: number) => {
-        setSvgScale(getSvgScale(containerWidth, containerHeight));
-      },
-      250,
-      false,
-    ),
-    [],
-  );
+  const randomXPositions = useMemo(() => {
+    return skillIcons.map((_) => Math.random() * width - width / 2);
+  }, []);
 
-  useLayoutEffect(() => {
-    debouncedSetSvgScale(containerWidth, containerHeight);
-  }, [containerWidth, containerHeight]);
+  const randomXVelocities = useMemo(() => {
+    return skillIcons.map(
+      (_) => (Math.random() * 2 + 1) * (Math.random() > 0.5 ? 1 : -1),
+    );
+  }, []);
 
   // TODO: get ortho cam to work so that I don't have to do weird positioning math
   return (
@@ -183,20 +179,16 @@ const Skills: FC<SkillsProps> = ({
           {skillIcons.map((skill, index) => {
             return (
               <RigidBody
-                key={`${svgScale.toString()}-${index}`}
+                key={index}
                 ref={addRef}
                 restitution={0}
                 rotation={[-Math.PI, 0, 0]}
-                linearVelocity={[
-                  (Math.random() * 2 + 1) * (Math.random() > 0.5 ? 1 : -1),
-                  0,
-                  0,
-                ]}
+                linearVelocity={[randomXVelocities[index]!, 0, 0]}
                 colliders="ball"
                 enabledTranslations={[true, true, false]}
                 enabledRotations={[false, true, true]}
                 position={[
-                  Math.random() * width - width / 2,
+                  randomXPositions[index]!,
                   height / 2 + 2 + index * 1,
                   0,
                 ]}
@@ -211,7 +203,6 @@ const Skills: FC<SkillsProps> = ({
             );
           })}
           <RigidBody gravityScale={0}>
-            {/* U-shaped collider that catches the box using 3 cuboid colliders at on the left, right, and bottom sides of the screen */}
             <CuboidCollider
               args={[100, 10, 100]}
               position={[
@@ -257,24 +248,32 @@ const Wrapped: FC<SkillsProps> = ({ onClick }) => {
     return () => resizeObserver.disconnect();
   }, [viewRef]);
 
+  useEffect(() => {
+    return () => {
+      console.log('stop it!!!');
+    };
+  }, []);
+
   return (
-    <View
-      ref={viewRef}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-      }}
-    >
-      <Skills
-        onClick={onClick}
-        containerWidth={containerDimensions.width}
-        containerHeight={containerDimensions.height}
-      />
-    </View>
+    <>
+      <View
+        ref={viewRef}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <Skills
+          onClick={onClick}
+          containerWidth={containerDimensions.width}
+          containerHeight={containerDimensions.height}
+        />
+      </View>
+    </>
   );
 };
 
-export default memo(Wrapped);
+export default Wrapped;

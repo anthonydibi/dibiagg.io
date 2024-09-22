@@ -73,6 +73,7 @@ const ExtrudedSvg = ({
       <Center cacheKey={svg}>
         {/* sphere */}
         <mesh
+          key={'-1'}
           onPointerEnter={handlePointerEnter}
           onPointerLeave={handlePointerLeave}
         >
