@@ -293,7 +293,7 @@ export default function About() {
                     ref={skillsPopupRef}
                     as={motion.div}
                     p=".2rem"
-                    height="max-content"
+                    height="150px"
                     width="100%"
                     left={0}
                     zIndex={1}
