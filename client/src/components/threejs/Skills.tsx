@@ -50,7 +50,7 @@ import View from './helpers/View';
 
 const getSvgScale = (containerWidth: number, containerHeight: number) => {
   const area = containerWidth * containerHeight;
-  return area / (skillIcons.length * 280000);
+  return area / (skillIcons.length * 110000);
 };
 
 export const skillIcons = [
@@ -256,7 +256,7 @@ const Wrapped: FC<SkillsProps> = ({ onClick }) => {
 
   return (
     <>
-      <View
+      <Canvas
         ref={viewRef}
         style={{
           position: 'absolute',
@@ -271,7 +271,7 @@ const Wrapped: FC<SkillsProps> = ({ onClick }) => {
           containerWidth={containerDimensions.width}
           containerHeight={containerDimensions.height}
         />
-      </View>
+      </Canvas>
     </>
   );
 };

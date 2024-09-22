@@ -2,14 +2,6 @@ import { MutableRefObject, PropsWithChildren, useRef } from 'react';
 import { Box } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import Breadcrumbs from '../components/Nav/Breadcrumbs';
-const Canvas = dynamic(
-  () => import('@react-three/fiber').then((mod) => mod.Canvas),
-  { ssr: false },
-);
-const Port = dynamic(
-  () => import('@react-three/drei').then((mod) => mod.View.Port),
-  { ssr: false },
-);
 
 export default function MainLayout({ children }: PropsWithChildren) {
   const container = useRef() as MutableRefObject<HTMLElement>;
@@ -27,24 +19,7 @@ export default function MainLayout({ children }: PropsWithChildren) {
       /> */}
       <Breadcrumbs />
       <main ref={container}>
-        <>
-          {children}
-          <Canvas
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100vw',
-              height: '100vh',
-              overflow: 'hidden',
-              pointerEvents: 'none',
-            }}
-            eventSource={container}
-          >
-            {/* @ts-ignore */}
-            <Port />
-          </Canvas>
-        </>
+        <>{children}</>
       </main>
     </Box>
   );
