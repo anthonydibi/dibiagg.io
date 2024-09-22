@@ -11,6 +11,7 @@ import {
   useOutsideClick,
   useColorModeValue,
   Spinner,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import React, { Suspense, useEffect } from 'react';
 import SEO from '../components/seo';
@@ -56,32 +57,45 @@ const BuiltWithMarqueeContent = () => (
     alignItems="center"
   >
     {builtWithTechs.map((tech) => (
-      <Icon
-        key={tech.name}
-        as={tech.icon}
-        boxSize={['36px', null, '48px', '76px']}
-        color="accent"
-      />
+      <Tooltip
+        label={tech.name}
+        border="1px solid"
+        px="1"
+        borderRadius="0"
+        bg="lightdark"
+        textColor="darklight"
+        borderColor="darklight"
+        fontSize="sm"
+      >
+        <Box>
+          <Icon
+            key={tech.name}
+            as={tech.icon}
+            boxSize={['36px', null, '48px', '76px']}
+            color="accent"
+          />
+        </Box>
+      </Tooltip>
     ))}
   </Flex>
 );
 
-const BuiltWithMarquee = () => {
+const BuiltWithMarquee = (props) => {
   return (
-    <>
-      <Flex className="marquee-vert">
+    <Flex flexDirection={['row', null, 'column']} gap={8}>
+      <Flex className={props.builtWithMarqueeClass}>
         <BuiltWithMarqueeContent />
       </Flex>
-      <Flex className="marquee-vert">
+      <Flex className={props.builtWithMarqueeClass}>
         <BuiltWithMarqueeContent />
       </Flex>
-      <Flex className="marquee-vert">
+      <Flex className={props.builtWithMarqueeClass}>
         <BuiltWithMarqueeContent />
       </Flex>
-      <Flex className="marquee-vert">
+      <Flex className={props.builtWithMarqueeClass}>
         <BuiltWithMarqueeContent />
       </Flex>
-    </>
+    </Flex>
   );
 };
 
@@ -183,19 +197,27 @@ export default function About() {
     handler: () => setSelectedSkill(null),
   });
 
-  const handleMarqueeMouseEnter = (e) => {
-    const allMarquees = document.querySelectorAll('.marquee');
+  const handleMarqueeMouseEnter = (e, className) => {
+    const allMarquees = document.querySelectorAll(`.${className}`);
     allMarquees.forEach((marquee) => {
       marquee.style.animationPlayState = 'paused';
     });
   };
 
-  const handleMarqueeMouseLeave = (e) => {
-    const allMarquees = document.querySelectorAll('.marquee');
+  const handleMarqueeMouseLeave = (e, className) => {
+    const allMarquees = document.querySelectorAll(`.${className}`);
     allMarquees.forEach((marquee) => {
       marquee.style.animationPlayState = 'running';
     });
   };
+
+  const builtWithMarqueeClass = useBreakpointValue([
+    'marquee',
+    null,
+    'marquee-vert',
+  ]);
+  const builtWithTitleLeft = useBreakpointValue(['BUILT WITH?', null, 'BUILT']);
+  const builtWithTitleRight = useBreakpointValue([undefined, null, 'WITH?']);
 
   return (
     <>
@@ -219,8 +241,8 @@ export default function About() {
       >
         <Flex
           maxW="1200px"
-          onMouseEnter={handleMarqueeMouseEnter}
-          onMouseLeave={handleMarqueeMouseLeave}
+          onMouseEnter={(e) => handleMarqueeMouseEnter(e, 'marquee')}
+          onMouseLeave={(e) => handleMarqueeMouseLeave(e, 'marquee')}
           w="100%"
           overflow="hidden"
           direction="row"
@@ -407,13 +429,17 @@ export default function About() {
               </Flex>
             </HomeGridItem>
             <HomeGridItem
-              minH="412px"
+              minH={['120px', null, '412px']}
+              pt={['2rem', null, 'unset']}
               colSpan={[12, null, 2]}
               rowSpan={1}
-              title="BUILT"
-              titleRight="WITH?"
+              title={builtWithTitleLeft}
+              titleRight={builtWithTitleRight}
               overflow="hidden"
               position="relative"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
             >
               <Flex
                 justifyContent="center"
@@ -424,13 +450,19 @@ export default function About() {
                   position="absolute"
                   direction="column"
                   overflow="hidden"
-                  onMouseEnter={handleMarqueeMouseEnter}
-                  onMouseLeave={handleMarqueeMouseLeave}
+                  onMouseEnter={(e) =>
+                    handleMarqueeMouseEnter(e, builtWithMarqueeClass)
+                  }
+                  onMouseLeave={(e) =>
+                    handleMarqueeMouseLeave(e, builtWithMarqueeClass)
+                  }
                   w="100%"
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <BuiltWithMarquee />
+                  <BuiltWithMarquee
+                    builtWithMarqueeClass={builtWithMarqueeClass}
+                  />
                 </Flex>
               </Flex>
             </HomeGridItem>
