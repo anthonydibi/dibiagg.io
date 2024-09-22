@@ -10,6 +10,7 @@ import {
   Icon,
   useOutsideClick,
   useColorModeValue,
+  Spinner,
 } from '@chakra-ui/react';
 import React, { Suspense, useEffect } from 'react';
 import SEO from '../components/seo';
@@ -40,6 +41,11 @@ import { skillIcons } from '../components/threejs/Skills';
 
 const Skills = dynamic(() => import('../components/threejs/Skills'), {
   ssr: false,
+  loading: () => (
+    <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
+      <Spinner color="var(--darklight)" boxSize="28px" />
+    </Flex>
+  ),
 });
 
 const BuiltWithMarqueeContent = () => (
