@@ -21,13 +21,19 @@ const FullPost: React.FC<PostProps> = ({ post }) => {
   if (!router.isFallback && post && !post.slug) {
     return <ErrorPage statusCode={404} />;
   }
+
   return (
     <>
       <SEO siteTitle="dibiagg.io" title={title} description={post.excerpt} />
       <Head>
         <meta property="og:image" content={post.ogImage.url} />
       </Head>
-      <Container maxW={'8xl'} py={'6'}>
+      <Container
+        maxW={'1200px'}
+        px={0}
+        m="auto"
+        p={['0 4px', null, null, 'unset']}
+      >
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
@@ -43,10 +49,10 @@ const FullPost: React.FC<PostProps> = ({ post }) => {
             </article>
           </>
         )}
-        <SimpleGrid spacing={8} minChildWidth={['80vw', '550px']}>
+        <SimpleGrid templateColumns={['1fr', null, null, '1fr 1fr']} gap={4}>
           {post.olderPost && (
             <Box>
-              <Heading size={'lg'} mb={'8'} pl="2">
+              <Heading size={'lg'} mb={'4'}>
                 Older post
               </Heading>
               <BlogEntry post={post.olderPost} />
@@ -54,7 +60,7 @@ const FullPost: React.FC<PostProps> = ({ post }) => {
           )}
           {post.newerPost && (
             <Box>
-              <Heading size={'lg'} mb={'8'} pl="2">
+              <Heading size={'lg'} mb={'4'}>
                 Newer post
               </Heading>
               <BlogEntry post={post.newerPost} />

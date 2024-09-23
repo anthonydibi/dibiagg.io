@@ -1,10 +1,12 @@
 import { Button, Flex, Link, useToast } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
 import { FaDiscord, FaGithub, FaHamburger, FaLinkedin } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
+import { MdChatBubble, MdEmail } from 'react-icons/md';
 import NextLink from 'next/link';
 import { BsChatFill } from 'react-icons/bs';
 import { IconType } from 'react-icons/lib';
+import { GrDocument } from 'react-icons/gr';
+import { BiFoodMenu } from 'react-icons/bi';
 
 type Props = {};
 
@@ -42,16 +44,17 @@ const MyLinks = (props: Props) => {
       icon: IconType;
       onClick?: () => void;
       href?: string;
+      external?: boolean;
     };
   } = {
     blog: {
       display: 'Blog',
-      icon: BsChatFill,
+      icon: MdChatBubble,
       href: '/blog',
     },
     recipes: {
       display: 'Recipes',
-      icon: FaHamburger,
+      icon: BiFoodMenu,
       href: '/recipes',
     },
     discord: {
@@ -75,6 +78,12 @@ const MyLinks = (props: Props) => {
       icon: FaGithub,
       href: 'https://github.com/anthonydibi',
     },
+    resume: {
+      display: 'Resume',
+      icon: GrDocument,
+      href: '/Anthony Di Biaggio Resume.pdf',
+      external: true,
+    },
   };
 
   return (
@@ -88,6 +97,7 @@ const MyLinks = (props: Props) => {
               as={NextLink}
               href={value.href}
               variant="grow"
+              target={value.external ? '_blank' : undefined}
             >
               <Flex gap={1}>
                 {value.display} <Icon />

@@ -18,6 +18,7 @@ import {
   Physics,
   RapierRigidBody,
   RigidBody,
+  useRapier,
 } from '@react-three/rapier';
 import {
   OrbitControls,
@@ -47,6 +48,7 @@ import Blazor from '../icons/Blazor';
 import Newrelic from '../icons/Newrelic';
 import { debounce } from '../../utils/debounce';
 import View from './helpers/View';
+import { useSnapshotStore } from '../../stores/snapshotStore';
 
 const getSvgScale = (containerWidth: number, containerHeight: number) => {
   const area = containerWidth * containerHeight;
@@ -141,15 +143,67 @@ export interface SkillsProps {
   onClick?: (id: string) => void;
 }
 
+const Internal = ({ svgScale, onClick }) => {
+  const { width, height } = useThree((state) => state.viewport);
+  // camera coords
+  const camera = useThree((state) => state.camera);
+
+  const randomXPositions = useMemo(() => {
+    return skillIcons.map((_) => Math.random() * width - width / 2);
+  }, []);
+
+  const randomXVelocities = useMemo(() => {
+    return skillIcons.map(
+      (_) => (Math.random() * 2 + 1) * (Math.random() > 0.5 ? 1 : -1),
+    );
+  }, []);
+
+  return (
+    <>
+      {skillIcons.map((skill, index) => {
+        return (
+          <RigidBody
+            key={`${svgScale.toString()}-${index}`}
+            restitution={0}
+            rotation={[-Math.PI, 0, 0]}
+            linearVelocity={[randomXVelocities[index]!, 0, 0]}
+            colliders="ball"
+            enabledTranslations={[true, true, false]}
+            enabledRotations={[false, true, true]}
+            position={[randomXPositions[index]!, height / 2 + 2 + index * 1, 0]}
+          >
+            <ExtrudedSvg
+              scale={svgScale}
+              svg={skill.icon}
+              id={skill.name}
+              onClick={onClick}
+            />
+          </RigidBody>
+        );
+      })}
+      <RigidBody gravityScale={0} key="bounds">
+        <CuboidCollider
+          args={[100, 10, 100]}
+          position={[camera.position.x, -height / 2 - 10, camera.position.z]}
+        />
+        <CuboidCollider
+          args={[10, 100, 100]}
+          position={[-width / 2 - 10, camera.position.y, camera.position.z]}
+        />
+        <CuboidCollider
+          args={[10, 100, 100]}
+          position={[width / 2 + 10, camera.position.y, camera.position.z]}
+        />
+      </RigidBody>
+    </>
+  );
+};
+
 const Skills: FC<SkillsProps> = ({
   onClick,
   containerWidth,
   containerHeight,
 }) => {
-  const { width, height } = useThree((state) => state.viewport);
-  // camera coords
-  const camera = useThree((state) => state.camera);
-
   const [svgScale, setSvgScale] = useState(
     getSvgScale(containerWidth, containerHeight),
   );
@@ -169,16 +223,6 @@ const Skills: FC<SkillsProps> = ({
     debouncedSetSvgScale(containerWidth, containerHeight);
   }, [containerWidth, containerHeight]);
 
-  const randomXPositions = useMemo(() => {
-    return skillIcons.map((_) => Math.random() * width - width / 2);
-  }, []);
-
-  const randomXVelocities = useMemo(() => {
-    return skillIcons.map(
-      (_) => (Math.random() * 2 + 1) * (Math.random() > 0.5 ? 1 : -1),
-    );
-  }, []);
-
   // TODO: get ortho cam to work so that I don't have to do weird positioning math
   return (
     <>
@@ -188,49 +232,7 @@ const Skills: FC<SkillsProps> = ({
         <ambientLight intensity={2} />
         <pointLight position={[10, 10, 10]} intensity={2} />
         <Physics gravity={[0, -6, 0]}>
-          {skillIcons.map((skill, index) => {
-            return (
-              <RigidBody
-                key={`${svgScale.toString()}-${index}`}
-                restitution={0}
-                rotation={[-Math.PI, 0, 0]}
-                linearVelocity={[randomXVelocities[index]!, 0, 0]}
-                colliders="ball"
-                enabledTranslations={[true, true, false]}
-                enabledRotations={[false, true, true]}
-                position={[
-                  randomXPositions[index]!,
-                  height / 2 + 2 + index * 1,
-                  0,
-                ]}
-              >
-                <ExtrudedSvg
-                  scale={svgScale}
-                  svg={skill.icon}
-                  id={skill.name}
-                  onClick={onClick}
-                />
-              </RigidBody>
-            );
-          })}
-          <RigidBody gravityScale={0}>
-            <CuboidCollider
-              args={[100, 10, 100]}
-              position={[
-                camera.position.x,
-                -height / 2 - 10,
-                camera.position.z,
-              ]}
-            />
-            <CuboidCollider
-              args={[10, 100, 100]}
-              position={[-width / 2 - 10, camera.position.y, camera.position.z]}
-            />
-            <CuboidCollider
-              args={[10, 100, 100]}
-              position={[width / 2 + 10, camera.position.y, camera.position.z]}
-            />
-          </RigidBody>
+          <Internal svgScale={svgScale} onClick={onClick} />
         </Physics>
       </Suspense>
     </>

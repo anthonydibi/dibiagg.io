@@ -1,8 +1,5 @@
 .cube {
-  --dim: 18px;
-  @media screen and (min-width: 768px) {
-    --dim: 22px;
-  }
+  --dim: 14px;
 
   -webkit-transform-style: preserve-3d;
   -webkit-animation: spin 3s infinite ease-out;

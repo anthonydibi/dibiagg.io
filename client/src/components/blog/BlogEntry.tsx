@@ -28,23 +28,25 @@ const BlogEntry: React.FC<BlogEntryProps> = ({ post }) => {
         as={'article'}
         flexDirection={'column'}
         w={'100%'}
-        p={'8'}
+        p={'4'}
         textAlign={'start'}
         position={'relative'}
-        borderRadius={'46px'}
+        borderRadius={'16px'}
         background={useColorModeValue('#f0f0f0', 'dark')}
         boxShadow={useColorModeValue(
-          '20px 20px 30px #cccccc, -20px -20px 30px #ffffff',
-          '20px 20px 40px #1b1b1b, -20px -20px 40px #252525',
+          '10px 10px 15px #cccccc, -10px -10px 15px #ffffff',
+          '10px 10px 20px #1b1b1b, -10px -10px 20px #252525',
         )}
       >
         <LinkOverlay as={NextLink} href={`/blog/posts/${post.slug}`}>
-          <Heading display={'block'}>{post.title}</Heading>
+          <Heading size="md" display={'block'}>
+            {post.title}
+          </Heading>
         </LinkOverlay>
-        <HStack wrap={'wrap'} gap={'15px'} my={'15px'}>
+        {/* <HStack wrap={'wrap'} gap={'8px'} my={'8px'}>
           {post.tags &&
             post.tags.map((tag) => <BlogTag key={tag} tagConfigKey={tag} />)}
-        </HStack>
+        </HStack> */}
         <Box mt={'1'}>
           <DateFormatter dateString={post.date} />
         </Box>
@@ -57,7 +59,7 @@ const BlogEntry: React.FC<BlogEntryProps> = ({ post }) => {
             fill
           />
         </AspectRatio>
-        <Text mt={'6'} fontSize={'xl'} display={['none', null, 'inherit']}>
+        <Text mt={'6'} fontSize={'md'} display={['none', null, 'inherit']}>
           {post.excerpt}
         </Text>
       </LinkBox>

@@ -84,3 +84,8 @@ export async function getAllPosts(fields = []) {
   posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;
 }
+
+export async function getLatestPost(fields = []) {
+  const allPosts = await getAllPosts(fields);
+  return allPosts.sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+}

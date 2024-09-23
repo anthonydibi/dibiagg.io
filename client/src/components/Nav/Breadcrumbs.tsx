@@ -6,8 +6,10 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Button,
   Flex,
   Heading,
+  Text,
   LinkBox,
   LinkOverlay,
   useColorModeValue,
@@ -16,9 +18,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BreadcrumbConfig, BreadcrumbSearchWhitelist } from './constants';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { ChevronRightIcon } from '@chakra-ui/icons';
+import { ChevronRightIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
 import ColorModeSwitcher from '../ColorModeSwitcher';
+import { useNavStore } from '../../stores/navStore';
 
 type Props = {};
 
@@ -29,6 +32,10 @@ const Breadcrumbs = (props: Props) => {
   const search = useSearchParams();
 
   const isRecipesPage = pathname.includes('recipes');
+
+  const navIsOpen = useNavStore((state) => state.isOpen);
+  const toggleNav = useNavStore((state) => state.toggle);
+  const setIsOpen = useNavStore((state) => state.setIsOpen);
 
   return (
     <Flex
@@ -69,8 +76,28 @@ const Breadcrumbs = (props: Props) => {
           bg={useColorModeValue('var(--light)', 'var(--dark)')}
         >
           <Breadcrumb separator={<ChevronRightIcon color="accent" />}>
+            <Button
+              p={0}
+              onClick={toggleNav}
+              variant="icon"
+              display={[
+                pathname.includes('/recipes') ? 'initial' : 'none',
+                null,
+                'none',
+              ]}
+            >
+              {!navIsOpen ? (
+                <HamburgerIcon boxSize="16px" />
+              ) : (
+                <CloseIcon boxSize="16px" />
+              )}
+            </Button>
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} href="/">
+              <BreadcrumbLink
+                as={Link}
+                href="/"
+                onClick={() => setIsOpen(false)}
+              >
                 <Image
                   style={{
                     display: 'inline-block',
@@ -98,15 +125,16 @@ const Breadcrumbs = (props: Props) => {
                     _hover={{ textDecoration: 'underline' }}
                     as={Link}
                     href={config.href}
+                    onClick={() => setIsOpen(false)}
                     shallow
                   >
-                    <Heading
+                    <Text
                       _hover={{ textDecoration: 'underline' }}
-                      size="xs"
+                      fontSize="sm"
                       fontWeight={600}
                     >
                       {config.display}
-                    </Heading>
+                    </Text>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               );
@@ -122,14 +150,16 @@ const Breadcrumbs = (props: Props) => {
                     as={Link}
                     href="#"
                     shallow
+                    onClick={() => setIsOpen(false)}
                   >
-                    <Heading
+                    <Text
                       _hover={{ textDecoration: 'underline' }}
-                      size="xs"
+                      fontSize="xs"
+                      lineHeight="12px"
                       fontWeight={600}
                     >
                       {value}
-                    </Heading>
+                    </Text>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               );
@@ -144,6 +174,7 @@ const Breadcrumbs = (props: Props) => {
           width="min-content"
           position="sticky"
           p=".4rem"
+          ml="4px"
           alignItems="center"
           justifyContent="start"
           border="2px solid var(--accent)"

@@ -18,6 +18,7 @@ import SEO from '../components/seo';
 import ColorModeSwitcher from '../components/ColorModeSwitcher';
 import HomeGridItem from '../components/grid/HomeGridItem';
 import {
+  ArrowForwardIcon,
   ChevronLeftIcon,
   CloseIcon,
   ExternalLinkIcon,
@@ -39,6 +40,8 @@ import { BsLightningFill, BsTriangleFill } from 'react-icons/bs';
 import dynamic from 'next/dynamic';
 import { AnimatePresence, motion } from 'framer-motion';
 import { skillIcons } from '../components/threejs/Skills';
+import { getLatestPost } from '../services/BlogApi';
+import BlogEntry from '../components/blog/BlogEntry';
 
 const Skills = dynamic(() => import('../components/threejs/Skills'), {
   ssr: false,
@@ -52,8 +55,8 @@ const Skills = dynamic(() => import('../components/threejs/Skills'), {
 const BuiltWithMarqueeContent = () => (
   <Flex
     direction={['row', null, 'column']}
-    p=".2rem"
-    gap={8}
+    p=".2rem 8px .2rem 8px"
+    gap={'16px'}
     alignItems="center"
   >
     {builtWithTechs.map((tech) => (
@@ -82,7 +85,7 @@ const BuiltWithMarqueeContent = () => (
 
 const BuiltWithMarquee = (props) => {
   return (
-    <Flex flexDirection={['row', null, 'column']} gap={8}>
+    <Flex flexDirection={['row', null, 'column']}>
       <Flex className={props.builtWithMarqueeClass}>
         <BuiltWithMarqueeContent />
       </Flex>
@@ -151,6 +154,29 @@ const MarqueeContent = () => (
   </Flex>
 );
 
+const projects = [
+  {
+    name: 'dibiagg.io',
+    desc: 'My personal website. Random assortment of things I like and things I want people to see. Built with Next.js.',
+    href: '#',
+  },
+  {
+    name: 'ThreeSharp',
+    desc: 'A Unity application that visualizes C# code in virtual reality using abstract syntax trees.',
+    href: 'https://www.youtube.com/watch?v=JaxGmNPOdZM',
+  },
+  {
+    name: 'Deathball clone',
+    desc: 'A clone of the arcade game Deathball which I manically coded at 2am one night.',
+    href: 'https://gilded-kulfi-c5ad94.netlify.app/',
+  },
+  {
+    name: 'Graffiti',
+    desc: 'A canvas where you can draw and leave your mark on my site. Uses WebSockets to sync your art with peers, and persists drawings in Postgres.',
+    href: '#Graffiti',
+  },
+];
+
 const builtWithTechs = [
   {
     name: 'React',
@@ -186,7 +212,7 @@ const builtWithTechs = [
   },
 ];
 
-export default function About() {
+export default function About({ latestBlogPost }) {
   const [selectedSkill, setSelectedSkill] = React.useState(null);
   const skillsPopupRef = React.useRef(null);
 
@@ -235,11 +261,12 @@ export default function About() {
         w="100%"
         minH="100vh"
         direction="column"
-        justifyContent="center"
+        justifyContent="start"
         alignItems="center"
         p={['.1rem', null, '.625rem']}
       >
         <Flex
+          as="h1"
           maxW="1200px"
           onMouseEnter={(e) => handleMarqueeMouseEnter(e, 'marquee')}
           onMouseLeave={(e) => handleMarqueeMouseLeave(e, 'marquee')}
@@ -252,7 +279,7 @@ export default function About() {
         >
           <Marquee />
         </Flex>
-        <Box maxW="1200px">
+        <Box maxW="1200px" as="article">
           <Grid
             templateColumns="repeat(12, minmax(0, 1fr))"
             bg="accent"
@@ -261,6 +288,7 @@ export default function About() {
             borderTop="none"
           >
             <HomeGridItem
+              hash="Who?"
               colSpan={[12, null, 5, 6]}
               rowSpan={3}
               position="relative"
@@ -279,13 +307,9 @@ export default function About() {
                   <br /> <br />
                   I think that the web is one of the most powerful technology
                   platforms. I am passionate about building anything that lives
-                  in or is related to the browser.
-                  <br /> <br />
-                  In particular, I thrive when creating interactive experiences
-                  that are not only visually robust, but also must deal with
-                  massive amounts of incoming data and have strict performance
-                  requirements. These are the sort of challenges where I feel
-                  most at home.
+                  in or is related to the browser. My favorite challenges
+                  involve creating experiences that are visually robust and
+                  data-intensive.
                   <br /> <br />
                   Most days you will find me scoping out new board games at a
                   local game store, trying out a new recipe, or working on my
@@ -293,15 +317,8 @@ export default function About() {
                 </Text>{' '}
               </Flex>
             </HomeGridItem>
-            <HomeGridItem colSpan={[6, null, 3]} title="LOCATION">
-              <Flex direction="column">
-                <Text>Minneapolis, Minnesota 🥶</Text>
-                <Text color={'GrayText'}>
-                  It's worth it for the summers, I swear.....
-                </Text>
-              </Flex>
-            </HomeGridItem>
             <HomeGridItem
+              hash="Skills"
               colSpan={[6, null, 4, 3]}
               title="SKILLS"
               rowSpan={3}
@@ -374,7 +391,19 @@ export default function About() {
                 )}
               </AnimatePresence>
             </HomeGridItem>
-            <HomeGridItem colSpan={[6, null, 3]} title="CAREER">
+            <HomeGridItem
+              colSpan={[6, null, 3]}
+              title="LOCATION"
+              hash="Location"
+            >
+              <Flex direction="column">
+                <Text>Minneapolis, Minnesota 🥶</Text>
+                <Text color={'GrayText'}>
+                  It's worth it for the summers, I swear.....
+                </Text>
+              </Flex>
+            </HomeGridItem>
+            <HomeGridItem colSpan={[6, null, 3]} title="CAREER" hash="Career">
               <Flex direction="column">
                 <Text>DraftKings 🤓 🏈</Text>
                 <Text color={'GrayText'}>
@@ -387,52 +416,115 @@ export default function About() {
                 </Text>
               </Flex>
             </HomeGridItem>
-            <HomeGridItem colSpan={[6, null, 3]} title="IDK">
-              <Flex direction="column">
-                <Text>DraftKings 🤓 🏈</Text>
-                <Text color={'GrayText'}>
-                  I currently work on the web app for{' '}
-                  <Link href="https://pick6.draftkings.com/" isExternal>
-                    Pick6
-                    <ExternalLinkIcon mx="2px" />
-                  </Link>
-                  , a daily fantasy sports game. I also build internal tooling.
-                </Text>
-              </Flex>
-            </HomeGridItem>
-            {/* <HomeGridItem colSpan={[6, null, 3]} title="RECIPES">
+            <HomeGridItem colSpan={[6, null, 3]} title="RECIPES" hash="Recipes">
               <Flex direction="column">
                 <Text>
-                  I am constantly trying out new recipes, and put my favorites
-                  in Paprika. You can check them out{' '}
+                  I enjoy sharing my love of food 🍝, so I've made all of my
+                  recipes available from my site. You can check them out{' '}
                   <Link as={NextLink} href="/recipes">
                     here.
                     <LinkIcon mx={1} boxSize="12px" />
                   </Link>
                 </Text>
               </Flex>
-            </HomeGridItem> */}
-            <HomeGridItem colSpan={12} title="PROJECTS">
-              <Flex h="200px" />
             </HomeGridItem>
-            <HomeGridItem colSpan={[12, null, 10]} rowSpan={2} title="GRAFFITI">
-              <GraffitiCanvas />
-            </HomeGridItem>
-            <HomeGridItem colSpan={[12, null, 2]} rowSpan={1} title="LINKS">
+            <HomeGridItem
+              p="2rem 0 .625rem 0"
+              colSpan={[12, 12, 9]}
+              title="PROJECTS"
+              hash="Projects"
+            >
               <Flex
-                p={2}
-                direction={['row', null, 'column']}
+                direction="row"
+                overflowX="auto"
                 gap="16px"
-                flexWrap="wrap"
+                overflowY="hidden"
+                h="100%"
               >
-                <MyLinks />
+                {projects.map((project, index) => (
+                  <Flex
+                    ml={index === 0 ? '.625rem' : 0}
+                    mr={index === projects.length - 1 ? '.625rem' : 0}
+                    direction="column"
+                    p="1rem"
+                    border="2px solid var(--accent)"
+                    w="100%"
+                    gap="4px"
+                    minW="200px"
+                  >
+                    <Flex
+                      justifyContent="space-between"
+                      flexDirection="column"
+                      h="100%"
+                    >
+                      <Flex flexDirection="column" gap={1}>
+                        <Heading size="md">{project.name}</Heading>
+                        <Text>{project.desc}</Text>
+                      </Flex>
+                      <Flex justifyContent="right">
+                        <Button
+                          p={0}
+                          border="1px solid"
+                          borderRadius="100%"
+                          transition="background-position 0.3s ease"
+                          background="linear-gradient(to left, transparent 50%, var(--accent) 50%) right"
+                          backgroundSize="200% 100%"
+                          _hover={{ backgroundPosition: 'left' }}
+                          _active={{ backgroundPosition: 'left' }}
+                          variant="icon"
+                          as={NextLink}
+                          href={project.href}
+                          isExternal={
+                            !project.href.startsWith('#') &&
+                            !project.href.startsWith('/')
+                          }
+                        >
+                          <ArrowForwardIcon
+                            transform="rotate(-45deg)"
+                            boxSize="24px"
+                          />
+                        </Button>
+                      </Flex>
+                    </Flex>
+                  </Flex>
+                ))}
               </Flex>
             </HomeGridItem>
             <HomeGridItem
-              minH={['120px', null, '412px']}
-              pt={['2rem', null, 'unset']}
+              colSpan={[12, 12, 3]}
+              title="LATEST POST"
+              hash="Latest post"
+            >
+              <BlogEntry post={latestBlogPost} />
+            </HomeGridItem>
+            <HomeGridItem
+              colSpan={[12, null, 10]}
+              rowSpan={2}
+              title="GRAFFITI"
+              hash="Graffiti"
+            >
+              <GraffitiCanvas />
+            </HomeGridItem>
+            <HomeGridItem
               colSpan={[12, null, 2]}
               rowSpan={1}
+              title="LINKS"
+              hash="Links"
+            >
+              <Grid
+                p={2}
+                templateColumns={['1fr 1fr', '1fr 1fr 1fr', '1fr']}
+                gap="16px"
+              >
+                <MyLinks />
+              </Grid>
+            </HomeGridItem>
+            <HomeGridItem
+              minH={['120px', null, '412px']}
+              p={`2rem 0 .625rem 0`}
+              colSpan={[12, null, 2]}
+              rowSpan={1}
+              hash="Built with"
               title={builtWithTitleLeft}
               titleRight={builtWithTitleRight}
               overflow="hidden"
@@ -472,3 +564,19 @@ export default function About() {
     </>
   );
 }
+
+export const getStaticProps = async () => {
+  const latestBlogPost = await getLatestPost([
+    'title',
+    'date',
+    'slug',
+    'author',
+    'tags',
+    'coverImage',
+    'excerpt',
+  ]);
+
+  return {
+    props: { latestBlogPost },
+  };
+};

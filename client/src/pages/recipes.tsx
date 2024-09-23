@@ -15,6 +15,9 @@ import {
   ExpandedIndex,
   LinkOverlay,
   LinkBox,
+  useBreakpointValue,
+  Grid,
+  GridItem,
 } from '@chakra-ui/react';
 import { getAllPosts } from '../services/BlogApi';
 import SEO from '../components/seo';
@@ -39,6 +42,7 @@ import {
   HeadObjectCommand,
   ListObjectsV2Command,
 } from '@aws-sdk/client-s3';
+import { useNavStore } from '../stores/navStore';
 
 export default function Blog({
   recipesById,
@@ -58,6 +62,33 @@ export default function Blog({
     setExpandedIndices(index);
   };
 
+  const navIsOpen = useNavStore((state) => state.isOpen);
+  const toggleNav = useNavStore((state) => state.toggle);
+  const sidebarShouldBeVisible = useBreakpointValue([navIsOpen, null, true]);
+  const responsiveSidebarStyle = useBreakpointValue([
+    {
+      width: '100%',
+      padding: '3.25rem .2rem .2rem .2rem',
+      translateY: '-100%',
+    },
+    null,
+    { width: '248px', padding: '.5rem', translateY: '0' },
+  ]);
+  const sidebarStyle = {
+    display: 'flex',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    zIndex: 1,
+    height: '100%',
+    background: 'var(--off)',
+    borderRight: '2px solid',
+    borderColor: 'var(--accent)',
+    overflowY: 'scroll',
+    flexDirection: 'column',
+    ...responsiveSidebarStyle,
+  };
+
   return (
     <>
       <SEO
@@ -65,16 +96,10 @@ export default function Blog({
         siteTitle="dibiagg.io"
         description="Anthony Di Biaggio's recipes"
       />
-      <Flex
-        display={['none', null, 'flex']}
-        borderRight="2px solid"
-        overflowY="scroll"
-        p={1}
-        direction="column"
-        position="fixed"
-        top="0"
-        width="248px"
-        height="100%"
+      <motion.div
+        style={sidebarStyle}
+        animate={{ translateY: sidebarShouldBeVisible ? 0 : '-100%' }}
+        transition={{ ease: 'easeInOut' }}
       >
         <UnderlinedHeading
           containerProps={{ ml: 1, mt: 2 }}
@@ -152,6 +177,10 @@ export default function Blog({
                         fontWeight={400}
                         whiteSpace="normal"
                         textAlign="start"
+                        onClick={() => {
+                          toggleNav();
+                          window.scrollTo(0, 0);
+                        }}
                       >
                         <Text>{recipe.name}</Text>
                       </Button>
@@ -162,7 +191,7 @@ export default function Blog({
             </AccordionItem>
           ))}
         </Accordion>
-      </Flex>
+      </motion.div>
       {!selectedRecipe ? (
         <SimpleGrid
           width="100%"
@@ -207,6 +236,7 @@ export default function Blog({
                         recipe.name,
                       )}`}
                       shallow
+                      onClick={() => window.scrollTo(0, 0)}
                     >
                       <Heading size="sm" fontWeight={500}>
                         {recipe.name}
@@ -236,30 +266,62 @@ export default function Blog({
           ))}
         </SimpleGrid>
       ) : (
-        <Flex p={['32px 8px', null, '8px 32px 32px 260px']} maxW="6xl">
-          <Flex w="100%">
-            <Flex position="relative" aspectRatio={1 / 1} h="400px">
+        <Grid
+          templateColumns={['1fr', null, '1fr minmax(200px, 1fr)']}
+          p={['16px 8px', null, '16px 32px 32px 260px']}
+          maxW="7xl"
+        >
+          <GridItem>
+            <Flex
+              w="100%"
+              h="100%"
+              alignItems="center"
+              justifyContent="start"
+              borderWidth="2px 0 2px 2px"
+              borderStyle="solid"
+              borderColor="orange.300"
+            >
+              <Flex direction="column" gap="8px" p=".625rem">
+                <Heading textAlign="left" size="lg">
+                  {selectedRecipeObj.name}
+                </Heading>
+                <Text textAlign="left">{selectedRecipeObj.source}</Text>
+              </Flex>
+            </Flex>
+          </GridItem>
+          <GridItem height="100%">
+            <Flex
+              position="relative"
+              aspectRatio={1 / 1}
+              w="100%"
+              borderWidth="2px 2px 2px 0"
+              borderStyle="solid"
+              borderColor="orange.300"
+            >
               <Image
                 src={selectedRecipeObj.photo_url}
                 alt={selectedRecipeObj.name}
                 fill
               />
             </Flex>
-            <Flex
-              w="100%"
-              alignItems="center"
-              justifyContent="end"
-              borderWidth="2px 2px 2px 0"
-              borderStyle="solid"
-              borderColor="orange.300"
-            >
-              <Flex direction="column" gap="8px">
-                <Heading size="lg">{selectedRecipeObj.name}</Heading>
-                <Text>{selectedRecipeObj.source}</Text>
-              </Flex>
-            </Flex>
-          </Flex>
-        </Flex>
+          </GridItem>
+          <GridItem>
+            <Box pr={8} pt={4}>
+              <Text whiteSpace="pre-wrap">{selectedRecipeObj.directions}</Text>
+            </Box>
+          </GridItem>
+          <GridItem>
+            <Box pl={4} pt={4}>
+              <ul>
+                {selectedRecipeObj.ingredients.split('\n').map((ingredient) => (
+                  <li key={ingredient}>
+                    <Text>{ingredient}</Text>
+                  </li>
+                ))}
+              </ul>
+            </Box>
+          </GridItem>
+        </Grid>
       )}
     </>
   );
@@ -290,12 +352,15 @@ export const getStaticProps = async () => {
   let pulledFreshRecipes = true;
 
   try {
+    if (process.env.NODE_ENV === 'development') {
+      throw new Error('Development mode, skipping API calls');
+    }
+
     const tokenRes = await getAuthToken(
       process.env.PAPRIKA_EMAIL,
       process.env.PAPRIKA_PW,
     );
     const tokenData = await tokenRes.json();
-    console.log(tokenData);
     const token = tokenData.result.token;
 
     const recipesRes = await getRecipes(token);
@@ -431,6 +496,6 @@ export const getStaticProps = async () => {
       recipeUidsByRecipeName,
       categoriesByUid,
     },
-    revalidate: 3600,
+    revalidate: 3600 * 24,
   };
 };

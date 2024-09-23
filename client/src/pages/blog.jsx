@@ -11,18 +11,24 @@ export default function Blog({ allPosts }) {
         siteTitle="dibiagg.io"
         description="Anthony Di Biaggio's blog posts"
       />
-      <Flex
-        minH="90vh"
-        justify="center"
-        align="center"
-        px={[4, undefined, 8]}
-        my="2em"
-      >
-        <SimpleGrid minChildWidth={{ base: '90vw', lg: '600px' }} spacing={12}>
-          {allPosts.map((post) => (
-            <BlogEntry key={post.slug} post={post} />
-          ))}
-        </SimpleGrid>
+      <Flex w="100%" align="center" justify="center">
+        <Flex
+          maxW="1200px"
+          minH="90vh"
+          justify="center"
+          align="center"
+          mx={[4, undefined, 8]}
+          my="2em"
+        >
+          <SimpleGrid
+            minChildWidth={{ base: '90vw', lg: '500px' }}
+            spacing={12}
+          >
+            {allPosts.map((post) => (
+              <BlogEntry key={post.slug} post={post} />
+            ))}
+          </SimpleGrid>
+        </Flex>
       </Flex>
     </>
   );
