@@ -69,10 +69,16 @@ export default function Blog({
     {
       width: '100%',
       padding: '3.25rem .2rem .2rem .2rem',
-      translateY: '-100%',
+      translateX: '-100%',
+      borderRight: '0',
     },
     null,
-    { width: '248px', padding: '.5rem', translateY: '0' },
+    {
+      width: '248px',
+      padding: '.5rem',
+      translateX: '0',
+      borderRight: '2px solid',
+    },
   ]);
   const sidebarStyle = {
     display: 'flex',
@@ -82,7 +88,6 @@ export default function Blog({
     zIndex: 1,
     height: '100%',
     background: 'var(--off)',
-    borderRight: '2px solid',
     borderColor: 'var(--accent)',
     overflowY: 'scroll',
     flexDirection: 'column',
@@ -98,7 +103,7 @@ export default function Blog({
       />
       <motion.div
         style={sidebarStyle}
-        animate={{ translateY: sidebarShouldBeVisible ? 0 : '-100%' }}
+        animate={{ translateX: sidebarShouldBeVisible ? 0 : '-100%' }}
         transition={{ ease: 'easeInOut' }}
       >
         <UnderlinedHeading
@@ -247,7 +252,7 @@ export default function Blog({
                         <Text
                           fontSize="sm"
                           p={1}
-                          border="0.5px solid black"
+                          border="0.5px solid"
                           lineHeight="12px"
                           key={category.uid}
                           color="gray.600"
@@ -267,17 +272,22 @@ export default function Blog({
         </SimpleGrid>
       ) : (
         <Grid
+          templateAreas={[
+            `"photo" "name" "ingredients" "directions"`,
+            null,
+            '"name photo" "directions ingredients"',
+          ]}
           templateColumns={['1fr', null, '1fr minmax(200px, 1fr)']}
-          p={['16px 8px', null, '16px 32px 32px 260px']}
+          p={['8px 2px', null, '16px 32px 32px 260px']}
           maxW="7xl"
         >
-          <GridItem>
+          <GridItem area="name">
             <Flex
               w="100%"
               h="100%"
               alignItems="center"
               justifyContent="start"
-              borderWidth="2px 0 2px 2px"
+              borderWidth={['0 2px 2px 2px', null, '2px 0 2px 2px']}
               borderStyle="solid"
               borderColor="orange.300"
             >
@@ -285,16 +295,56 @@ export default function Blog({
                 <Heading textAlign="left" size="lg">
                   {selectedRecipeObj.name}
                 </Heading>
-                <Text textAlign="left">{selectedRecipeObj.source}</Text>
+                <Flex gap={1} flexWrap="wrap">
+                  {selectedRecipeObj.categories.map((category) => (
+                    <Text
+                      fontSize="md"
+                      p={1}
+                      border="0.5px solid"
+                      lineHeight="12px"
+                      key={category.uid}
+                      color="gray.600"
+                    >
+                      {categoriesByUid[category].name}
+                    </Text>
+                  ))}
+                </Flex>
+                {selectedRecipeObj.servings && (
+                  <Text textAlign="left">
+                    <b>Servings</b>{' '}
+                    {selectedRecipeObj.servings.replace(
+                      /[s]ervings?:?|yields?:?/gi,
+                      '',
+                    )}
+                  </Text>
+                )}
+                {selectedRecipeObj.total_time && (
+                  <Text textAlign="left">
+                    <b>Total time</b> {selectedRecipeObj.total_time}
+                  </Text>
+                )}
+                {selectedRecipeObj.prep_time && (
+                  <Text textAlign="left">
+                    <b>Prep time</b> {selectedRecipeObj.prep_time}
+                  </Text>
+                )}
+                {selectedRecipeObj.cook_time && (
+                  <Text textAlign="left">
+                    <b>Cook time</b> {selectedRecipeObj.cook_time}
+                  </Text>
+                )}
+                <Text textAlign="left">
+                  <b>From</b> {selectedRecipeObj.source}
+                </Text>
               </Flex>
             </Flex>
           </GridItem>
-          <GridItem height="100%">
+          <GridItem height="100%" area="photo">
             <Flex
               position="relative"
               aspectRatio={1 / 1}
               w="100%"
-              borderWidth="2px 2px 2px 0"
+              borderWidth={['2px 2px 0 2px', null, '2px 2px 2px 0']}
               borderStyle="solid"
               borderColor="orange.300"
             >
@@ -305,12 +355,29 @@ export default function Blog({
               />
             </Flex>
           </GridItem>
-          <GridItem>
-            <Box pr={8} pt={4}>
+          <GridItem
+            area="directions"
+            borderTop="8px solid var(--accent)"
+            mt={2}
+            mr={[0, null, 2]}
+          >
+            <Heading size="md" mt={1}>
+              Directions
+            </Heading>
+            <Box pt={2}>
               <Text whiteSpace="pre-wrap">{selectedRecipeObj.directions}</Text>
             </Box>
           </GridItem>
-          <GridItem>
+          <GridItem
+            area="ingredients"
+            borderTop="8px solid var(--accent)"
+            mt={2}
+            ml={[0, null, 2]}
+            mb={[0, null, 4]}
+          >
+            <Heading size="md" mt={1}>
+              Ingredients
+            </Heading>
             <Box pl={4} pt={4}>
               <ul>
                 {selectedRecipeObj.ingredients.split('\n').map((ingredient) => (

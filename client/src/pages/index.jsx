@@ -167,12 +167,12 @@ const projects = [
   },
   {
     name: 'Deathball clone',
-    desc: 'A clone of the arcade game Deathball which I manically coded at 2am one night.',
+    desc: 'A clone of the arcade game Deathball which I manically programmed at 2am one night.',
     href: 'https://gilded-kulfi-c5ad94.netlify.app/',
   },
   {
     name: 'Graffiti',
-    desc: 'A canvas where you can draw and leave your mark on my site. Uses WebSockets to sync your art with peers, and persists drawings in Postgres.',
+    desc: 'A canvas where you can draw and leave your mark on my site. Uses WebSockets to sync your art with peers, and persists drawings in a PostgreSQL DB.',
     href: '#Graffiti',
   },
 ];

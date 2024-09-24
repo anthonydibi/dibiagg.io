@@ -68,8 +68,9 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children, className }) => {
               borderRadius: '0px 0px 10px 10px',
               background: 'var(--dark)',
               maxHeight: '500px',
+              fontSize: '14px',
+              lineHeight: '20px',
             }}
-            fontSize={'sm'}
           >
             {tokens.map((line, i) => (
               <Box
