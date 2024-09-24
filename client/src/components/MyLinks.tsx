@@ -1,11 +1,9 @@
-import { Button, Flex, Link, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, Link, useToast } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
-import { FaDiscord, FaGithub, FaHamburger, FaLinkedin } from 'react-icons/fa';
+import { FaBriefcase, FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { MdChatBubble, MdEmail } from 'react-icons/md';
 import NextLink from 'next/link';
-import { BsChatFill } from 'react-icons/bs';
 import { IconType } from 'react-icons/lib';
-import { GrDocument } from 'react-icons/gr';
 import { BiFoodMenu } from 'react-icons/bi';
 
 type Props = {};
@@ -80,7 +78,7 @@ const MyLinks = (props: Props) => {
     },
     resume: {
       display: 'Resume',
-      icon: GrDocument,
+      icon: FaBriefcase,
       href: '/Anthony Di Biaggio Resume.pdf',
       external: true,
     },
@@ -100,7 +98,7 @@ const MyLinks = (props: Props) => {
               target={value.external ? '_blank' : undefined}
             >
               <Flex gap={1}>
-                {value.display} <Icon />
+                {value.display} <Icon color="var(--accent)" />
               </Flex>
             </Button>
           ) : (
@@ -112,14 +110,14 @@ const MyLinks = (props: Props) => {
               isExternal
             >
               <Flex gap={1}>
-                {value.display} <Icon />
+                {value.display} <Icon color="var(--accent)" />
               </Flex>
             </Button>
           )
         ) : (
           <Button minW="min-content" onClick={value.onClick} variant="grow">
             <Flex gap={1}>
-              {value.display} <Icon />
+              {value.display} <Icon color="var(--accent)" />
             </Flex>
           </Button>
         );
