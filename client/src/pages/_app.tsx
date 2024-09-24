@@ -7,6 +7,7 @@ import '../styles/marquee.css';
 import Head from 'next/head';
 import { AppProps } from 'next/app.js';
 import Chakra from '../components/Chakra';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Layout>
         <Component {...pageProps} />
+        <Analytics />
       </Layout>
     </Chakra>
   );
