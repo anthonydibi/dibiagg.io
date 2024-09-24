@@ -201,7 +201,7 @@ export default function Blog({
         <SimpleGrid
           width="100%"
           gap={4}
-          p={['8px 2px', null, '20px 32px 32px 260px']}
+          p={['8px', null, '20px 32px 32px 260px']}
           minChildWidth={['40vw', null, '200px']}
         >
           {Object.values(recipesById).map((recipe) => (
