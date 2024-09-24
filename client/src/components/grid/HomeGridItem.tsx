@@ -25,20 +25,31 @@ const HomeGridItem: FC<HomeGridItemProps> = forwardRef(
 
     const [isHydrated, setIsHydrated] = React.useState(false);
 
+    const internalRef = React.useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
       setIsHydrated(true);
     }, []);
 
     useEffect(() => {
-      if (hashFromUrl === hash && isHydrated && ref?.current) {
-        ref.current?.scrollIntoView({ behavior: 'smooth' });
+      if (hashFromUrl === hash && isHydrated && internalRef?.current) {
+        internalRef.current?.scrollIntoView({ behavior: 'smooth' });
       }
     }, [hashFromUrl, isHydrated]);
 
     return (
       <GridItem
         //combine ref and internalRef
-        ref={ref}
+        ref={(el) => {
+          if (ref) {
+            if (typeof ref === 'function') {
+              ref(el);
+            } else {
+              ref.current = el;
+            }
+          }
+          internalRef.current = el;
+        }}
         as="section"
         bg={useColorModeValue('var(--light)', 'var(--dark)')}
         position="relative"
