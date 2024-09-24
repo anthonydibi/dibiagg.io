@@ -28,12 +28,7 @@ const FullPost: React.FC<PostProps> = ({ post }) => {
       <Head>
         <meta property="og:image" content={post.ogImage.url} />
       </Head>
-      <Container
-        maxW={'1200px'}
-        px={0}
-        m="auto"
-        p={['0 4px', null, null, 'unset']}
-      >
+      <Container maxW={'1200px'} m="auto" p="0 4px 16px 4px">
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
