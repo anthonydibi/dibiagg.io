@@ -28,6 +28,7 @@ import {
 import ExtrudedSvg from './geometry/ExtrudedSvg';
 import {
   SiAmazonaws,
+  SiBlender,
   SiCss3,
   SiDatadog,
   SiFirebase,
@@ -41,6 +42,7 @@ import {
   SiRedux,
   SiTailwindcss,
   SiTypescript,
+  SiUnity,
 } from 'react-icons/si';
 import Remix from '../icons/Remix';
 import Threejs from '../icons/Threejs';
@@ -52,7 +54,7 @@ import { useSnapshotStore } from '../../stores/snapshotStore';
 
 const getSvgScale = (containerWidth: number, containerHeight: number) => {
   const area = containerWidth * containerHeight;
-  return area / (skillIcons.length * 280000);
+  return area / (skillIcons.length * 250000);
 };
 
 export const skillIcons = [
@@ -64,6 +66,7 @@ export const skillIcons = [
   {
     name: 'Node.js',
     icon: <SiNodeDotJs />,
+    desc: 'I mainly use Node via Express for Remix.',
   },
   {
     name: 'Remix',
@@ -73,7 +76,7 @@ export const skillIcons = [
   {
     name: 'TypeScript',
     icon: <SiTypescript />,
-    desc: "It's JavaScript... but with types. And it is beautiful. Oh, and Zod > Yup.",
+    desc: "It's JavaScript... but with types.",
   },
   {
     name: 'JavaScript',
@@ -83,7 +86,7 @@ export const skillIcons = [
   {
     name: 'Next.js',
     icon: <SiNextDotJs />,
-    desc: 'This site is built with Next.js, but I do prefer Remix.',
+    desc: 'Used to build this site! (but Remix is better)',
   },
   {
     name: 'HTML',
@@ -124,16 +127,27 @@ export const skillIcons = [
   {
     name: 'AWS',
     icon: <SiAmazonaws />,
-    desc: '',
+    desc: 'I know how to use at least 20% of the AWS console.',
   },
   {
     name: 'Firebase',
     icon: <SiFirebase />,
+    desc: "I'm mainly familiar with Firebase Remote Config and Auth and have set them up in both personal and enterprise settings.",
   },
   {
     name: 'New Relic',
     icon: <Newrelic width="20px" height="20px" />,
     desc: "I've built many New Relic dashboards and alerts to monitor the health of production apps.",
+  },
+  {
+    name: 'Unity',
+    icon: <SiUnity />,
+    desc: "I've built a few XR apps in Unity.",
+  },
+  {
+    name: 'Blender',
+    icon: <SiBlender />,
+    desc: 'I dabble in some 3D modeling and animation. Not to brag, but I completed the donut tutorial.',
   },
 ];
 
@@ -141,9 +155,11 @@ export interface SkillsProps {
   containerWidth: number;
   containerHeight: number;
   onClick?: (id: string) => void;
+  selectedSkill?: string;
+  paused?: boolean;
 }
 
-const Internal = ({ svgScale, onClick }) => {
+const Internal = ({ svgScale, onClick, selectedSkill }) => {
   const { width, height } = useThree((state) => state.viewport);
   // camera coords
   const camera = useThree((state) => state.camera);
@@ -177,6 +193,7 @@ const Internal = ({ svgScale, onClick }) => {
               svg={skill.icon}
               id={skill.name}
               onClick={onClick}
+              selected={selectedSkill === skill.name}
             />
           </RigidBody>
         );
@@ -203,6 +220,8 @@ const Skills: FC<SkillsProps> = ({
   onClick,
   containerWidth,
   containerHeight,
+  paused,
+  selectedSkill,
 }) => {
   const [svgScale, setSvgScale] = useState(
     getSvgScale(containerWidth, containerHeight),
@@ -231,15 +250,19 @@ const Skills: FC<SkillsProps> = ({
         <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={70} />
         <ambientLight intensity={2} />
         <pointLight position={[10, 10, 10]} intensity={2} />
-        <Physics gravity={[0, -6, 0]}>
-          <Internal svgScale={svgScale} onClick={onClick} />
+        <Physics paused={paused} gravity={[0, -6, 0]}>
+          <Internal
+            svgScale={svgScale}
+            onClick={onClick}
+            selectedSkill={selectedSkill}
+          />
         </Physics>
       </Suspense>
     </>
   );
 };
 
-const Wrapped: FC<SkillsProps> = ({ onClick }) => {
+const Wrapped: FC<SkillsProps> = ({ onClick, paused, selectedSkill }) => {
   //get width and height of View
   const viewRef = useRef<HTMLElement | null>(null);
   const [containerDimensions, setContainerDimensions] = useState({
@@ -277,6 +300,8 @@ const Wrapped: FC<SkillsProps> = ({ onClick }) => {
           onClick={onClick}
           containerWidth={containerDimensions.width}
           containerHeight={containerDimensions.height}
+          paused={paused}
+          selectedSkill={selectedSkill}
         />
       </Canvas>
     </>

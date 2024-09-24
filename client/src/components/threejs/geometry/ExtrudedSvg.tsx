@@ -20,6 +20,7 @@ export type ExtrudedSvgProps = {
   position?: Vector3;
   onClick?: (id: string) => void;
   scale?: number;
+  selected?: boolean;
 } & MeshProps;
 
 const ExtrudedSvg = ({
@@ -29,6 +30,7 @@ const ExtrudedSvg = ({
   position,
   onClick,
   scale = 0.04,
+  selected,
   ...props
 }: ExtrudedSvgProps) => {
   const svgMarkup = useComponentMarkup(svg);
@@ -86,7 +88,7 @@ const ExtrudedSvg = ({
           <>
             <mesh key={index} geometry={geometry} {...props}>
               <meshStandardMaterial
-                color={hovered ? 'lightgreen' : accentColor}
+                color={hovered || selected ? 'lightgreen' : accentColor}
               />
             </mesh>
           </>

@@ -38,7 +38,7 @@ import {
 } from 'react-icons/si';
 import { BsLightningFill, BsTriangleFill } from 'react-icons/bs';
 import dynamic from 'next/dynamic';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { skillIcons } from '../components/threejs/Skills';
 import { getLatestPost } from '../services/BlogApi';
 import BlogEntry from '../components/blog/BlogEntry';
@@ -245,6 +245,12 @@ export default function About({ latestBlogPost }) {
   const builtWithTitleLeft = useBreakpointValue(['BUILT WITH?', null, 'BUILT']);
   const builtWithTitleRight = useBreakpointValue([undefined, null, 'WITH?']);
 
+  const skillsContainerRef = React.useRef(null);
+  const skillsIsInView = useInView(skillsContainerRef, {
+    once: true,
+    amount: 0.5,
+  });
+
   return (
     <>
       <SEO
@@ -324,8 +330,13 @@ export default function About({ latestBlogPost }) {
               rowSpan={3}
               position="relative"
               overflow="hidden"
+              ref={skillsContainerRef}
             >
-              <Skills onClick={setSelectedSkill} />
+              <Skills
+                onClick={setSelectedSkill}
+                paused={!skillsIsInView}
+                selectedSkill={selectedSkill}
+              />
               <AnimatePresence>
                 {selectedSkill && (
                   <Flex

@@ -361,11 +361,13 @@ export default function Blog({
             mt={2}
             mr={[0, null, 2]}
           >
-            <Heading size="md" mt={1}>
+            <Heading size="md" mt={1} mx={[2, null, 0]}>
               Directions
             </Heading>
-            <Box pt={2}>
-              <Text whiteSpace="pre-wrap">{selectedRecipeObj.directions}</Text>
+            <Box p={[2, null, 0]} pt={[1, null, 2]}>
+              <Text whiteSpace="pre-wrap" mx={[2, null, 0]}>
+                {selectedRecipeObj.directions}
+              </Text>
             </Box>
           </GridItem>
           <GridItem
@@ -375,17 +377,17 @@ export default function Blog({
             ml={[0, null, 2]}
             mb={[0, null, 4]}
           >
-            <Heading size="md" mt={1}>
+            <Heading size="md" mt={1} mx={[2, null, 0]}>
               Ingredients
             </Heading>
-            <Box pl={4} pt={4}>
-              <ul>
+            <Box pl={4} pt={[1, null, 2]}>
+              <Box as="ul" mx={[2, null, 0]}>
                 {selectedRecipeObj.ingredients.split('\n').map((ingredient) => (
                   <li key={ingredient}>
                     <Text>{ingredient}</Text>
                   </li>
                 ))}
-              </ul>
+              </Box>
             </Box>
           </GridItem>
         </Grid>
