@@ -16,7 +16,7 @@ export default function Blog({ allPosts }) {
           maxW="1200px"
           minH="90vh"
           justify="center"
-          align="center"
+          align="start"
           mx={[4, undefined, 8]}
           my="2em"
         >

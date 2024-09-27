@@ -74,6 +74,7 @@ const Breadcrumbs = (props: Props) => {
           justifyContent="start"
           border="2px solid var(--accent)"
           bg={useColorModeValue('var(--light)', 'var(--dark)')}
+          boxShadow="md"
         >
           <Breadcrumb separator={<ChevronRightIcon color="accent" />}>
             <Button
@@ -179,6 +180,7 @@ const Breadcrumbs = (props: Props) => {
           justifyContent="start"
           border="2px solid var(--accent)"
           bg={useColorModeValue('var(--light)', 'var(--dark)')}
+          boxShadow="md"
         >
           <ColorModeSwitcher />
         </Flex>

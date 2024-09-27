@@ -134,6 +134,11 @@ const theme = extendTheme({
         variant: null,
       },
     },
+    Heading: {
+      baseStyle: (props) => ({
+        fontWeight: 500,
+      }),
+    },
   },
 });
 

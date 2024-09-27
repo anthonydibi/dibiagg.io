@@ -3,7 +3,11 @@ import { Stack, Heading } from '@chakra-ui/react';
 
 export default function Avatar(props) {
   <Stack direction={'row'} gap={'15px'}>
-    <ChakraAvatar name="Anthony Di Biaggio" src="../../public/me.png" />
+    <ChakraAvatar
+      name="Anthony Di Biaggio"
+      src="../../public/me.png"
+      boxSize="12px"
+    />
     <Heading>Anthony Di Biaggio</Heading>
   </Stack>;
 }

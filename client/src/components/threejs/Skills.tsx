@@ -38,6 +38,7 @@ import {
   SiNewyorktimes,
   SiNextDotJs,
   SiNodeDotJs,
+  SiPostgresql,
   SiReact,
   SiRedux,
   SiTailwindcss,
@@ -148,6 +149,11 @@ export const skillIcons = [
     name: 'Blender',
     icon: <SiBlender />,
     desc: 'I dabble in some 3D modeling and animation. Not to brag, but I completed the donut tutorial.',
+  },
+  {
+    name: 'PostgreSQL',
+    icon: <SiPostgresql />,
+    desc: "If you don't like the elephant then you are evil.",
   },
 ];
 

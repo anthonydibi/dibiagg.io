@@ -70,14 +70,12 @@ export default function Blog({
       width: '100%',
       padding: '3.25rem .2rem .2rem .2rem',
       translateX: '-100%',
-      borderRight: '0',
     },
     null,
     {
       width: '248px',
       padding: '.5rem',
       translateX: '0',
-      borderRight: '2px solid',
     },
   ]);
   const sidebarStyle = {
@@ -88,8 +86,8 @@ export default function Blog({
     zIndex: 1,
     height: '100%',
     background: 'var(--off)',
-    borderColor: 'var(--accent)',
     overflowY: 'scroll',
+    boxShadow: 'var(--chakra-shadows-lg)',
     flexDirection: 'column',
     ...responsiveSidebarStyle,
   };

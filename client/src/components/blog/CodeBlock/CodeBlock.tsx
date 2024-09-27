@@ -33,11 +33,16 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children, className }) => {
         p={1}
       >
         <Box flex={'1'} />
-        <Text color={'white'} whiteSpace={'pre-line'} m="0 !important">
+        <Text
+          color={'white'}
+          fontSize="md"
+          whiteSpace={'pre-line'}
+          m="0 !important"
+        >
           {title}
         </Text>
         <HStack flex={'1'} justifyContent="end">
-          <Box bg={'red'} borderRadius={'100%'} w={'12px'} h={'12px'}></Box>
+          <Box bg={'accent'} borderRadius={'100%'} w={'12px'} h={'12px'}></Box>
           <Box bg={'yellow'} borderRadius={'100%'} w={'12px'} h={'12px'}></Box>
           <Box
             bg={'green'}

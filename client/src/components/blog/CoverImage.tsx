@@ -12,7 +12,7 @@ const CoverImage: React.FC<CoverImageProps> = ({ title, src, slug }) => {
   const image = (
     <AspectRatio ratio={16 / 9}>
       <Image
-        style={{ borderRadius: '10px' }}
+        style={{ borderRadius: '6px' }}
         src={src}
         alt={`Cover Image for ${title}`}
         objectFit="cover"

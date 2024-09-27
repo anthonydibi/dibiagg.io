@@ -33,34 +33,17 @@ const BlogTag: React.FC<BlogTagProps> = ({ tagConfigKey }) => {
   const { icon, color, fontColor, iconColor } = tag;
 
   return (
-    <Box
+    <Tag
+      bg={color}
       borderRadius={'32px'}
-      p={'0.25rem'}
-      background={background}
-      boxShadow={boxShadow}
-      marginInlineStart={'0 !important'}
+      size={'md'}
+      boxShadow={`inset 5px 5px 8px ${lightShadow(
+        color,
+      )}, inset -5px -5px 8px ${darkShadow(color)}`}
     >
-      <Flex
-        p={'.1rem'}
-        borderRadius={'32px'}
-        background={background}
-        boxShadow={insetBoxShadow}
-        align="center"
-        justify="center"
-      >
-        <Tag
-          bg={color}
-          borderRadius={'32px'}
-          size={'sm'}
-          boxShadow={`inset 5px 5px 8px ${lightShadow(
-            color,
-          )}, inset -5px -5px 8px ${darkShadow(color)}`}
-        >
-          <TagLeftIcon color={iconColor} boxSize={'12px'} as={icon} />
-          <TagLabel color={fontColor}>{tagConfigKey}</TagLabel>
-        </Tag>
-      </Flex>
-    </Box>
+      <TagLeftIcon color={iconColor} boxSize={'12px'} as={icon} />
+      <TagLabel color={fontColor}>{tagConfigKey}</TagLabel>
+    </Tag>
   );
 };
 

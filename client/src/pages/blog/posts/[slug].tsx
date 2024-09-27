@@ -3,9 +3,15 @@ import ErrorPage from 'next/error';
 import BlogHeader from '../../../components/blog/BlogHeader';
 import PostBody from '../../../components/blog/PostBody';
 import { getPostBySlug, getAllPosts } from '../../../services/BlogApi';
-import PostTitle from '../../../components/blog/PostTitle';
 import markdownToHtml from '../../../services/MarkdownToHtml';
-import { Box, Heading, Container, Stack, SimpleGrid } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Container,
+  Stack,
+  SimpleGrid,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import SEO from '../../../components/seo';
 import BlogEntry from '../../../components/blog/BlogEntry';
 import Head from 'next/head';
@@ -28,9 +34,17 @@ const FullPost: React.FC<PostProps> = ({ post }) => {
       <Head>
         <meta property="og:image" content={post.ogImage.url} />
       </Head>
-      <Container maxW={'1200px'} m="auto" p="0 4px 16px 4px">
+      <Container
+        boxShadow="xl"
+        maxW={'4xl'}
+        m="auto"
+        mb={4}
+        p={4}
+        borderRadius="6px"
+        boxShadow="lg"
+      >
         {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
+          <Heading mx="auto">Loading…</Heading>
         ) : (
           <>
             <article>
@@ -47,7 +61,7 @@ const FullPost: React.FC<PostProps> = ({ post }) => {
         <SimpleGrid templateColumns={['1fr', null, null, '1fr 1fr']} gap={4}>
           {post.olderPost && (
             <Box>
-              <Heading size={'lg'} mb={'4'}>
+              <Heading size={'md'} mb={'4'}>
                 Older post
               </Heading>
               <BlogEntry post={post.olderPost} />
@@ -55,7 +69,7 @@ const FullPost: React.FC<PostProps> = ({ post }) => {
           )}
           {post.newerPost && (
             <Box>
-              <Heading size={'lg'} mb={'4'}>
+              <Heading size={'md'} mb={'4'}>
                 Newer post
               </Heading>
               <BlogEntry post={post.newerPost} />

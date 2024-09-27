@@ -172,7 +172,7 @@ const projects = [
   },
   {
     name: 'Graffiti',
-    desc: 'A canvas where you can draw and leave your mark on my site. Uses WebSockets to sync your art with peers, and persists drawings in a PostgreSQL DB.',
+    desc: 'A canvas where you can draw and leave your mark on my site. Uses WebSockets to sync your art with peers, and persists drawings in a PostgreSQL DB. No penises, please.',
     href: '#Graffiti',
   },
 ];
@@ -282,10 +282,11 @@ export default function About({ latestBlogPost }) {
           border="2px solid var(--accent)"
           borderBottom="2px solid var(--accent)"
           justifyContent="space-between"
+          boxShadow="md"
         >
           <Marquee />
         </Flex>
-        <Box maxW="1200px" as="article">
+        <Box maxW="1200px" as="article" boxShadow="md">
           <Grid
             templateColumns="repeat(12, minmax(0, 1fr))"
             bg="accent"
@@ -506,7 +507,7 @@ export default function About({ latestBlogPost }) {
               title="LATEST POST"
               hash="Latest post"
             >
-              <BlogEntry post={latestBlogPost} />
+              <BlogEntry post={latestBlogPost} tags={false} />
             </HomeGridItem>
             <HomeGridItem
               colSpan={[12, null, 10]}

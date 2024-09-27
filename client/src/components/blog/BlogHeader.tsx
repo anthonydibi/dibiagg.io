@@ -5,11 +5,12 @@ import {
   Heading,
   HStack,
   useColorModeValue,
+  Text,
+  Flex,
 } from '@chakra-ui/react';
 import BlogTag from './BlogTag/BlogTag';
 import DateFormatter from './DateFormatter';
 import CoverImage from './CoverImage';
-import PostTitle from './PostTitle';
 import { TagKeys } from './BlogTag/types';
 
 export interface PostHeaderProps {
@@ -28,13 +29,13 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   const BlogAvatar = () => {
     return (
       <Avatar
-        size={'lg'}
-        bg="accent2"
+        size="md"
+        bg="accent"
         name="Anthony Di Biaggio"
         src="/me.png"
         border={useColorModeValue(
-          '3px solid var(--light)',
-          '3px solid var(--dark)',
+          '1px solid var(--light)',
+          '1px solid var(--dark)',
         )}
         boxShadow={useColorModeValue(
           '5px 5px 10px #b6b6b6, -2px -2px 10px #ffffff',
@@ -46,36 +47,25 @@ const PostHeader: React.FC<PostHeaderProps> = ({
 
   return (
     <>
-      <Box mx={'auto'} mt={'6'}>
-        <PostTitle>{title}</PostTitle>
-        <Box display={{ base: 'block', md: 'none' }} mt={'6'}>
-          <Stack direction={'row'} gap={'15px'} align={'center'}>
-            <BlogAvatar />
-            <Heading size={'md'} ml={'0 !important'}>
-              Anthony Di Biaggio
-            </Heading>
-          </Stack>
-        </Box>
+      <Flex direction="column" gap={4}>
         <CoverImage title={title} src={coverImage} />
-      </Box>
-      <Box mx={'auto'} mt={'6'}>
-        <Box mb={'6'} display={{ base: 'none', md: 'block' }}>
-          <Stack direction={'row'} gap={'15px'} align={'center'}>
-            <BlogAvatar />
-            <Heading size={'md'} ml={'0 !important'}>
-              Anthony Di Biaggio
-            </Heading>
-          </Stack>
-        </Box>
-        <HStack mb={'5'} gap={'15px'} wrap={'wrap'}>
+        <Stack direction={'row'} gap={2} align={'center'}>
+          <BlogAvatar />
+          <Flex direction="column" justifyContent="center">
+            <Text size={'sm'}>Anthony Di Biaggio</Text>
+            <Text size={'sm'}>
+              <DateFormatter dateString={date} />
+            </Text>
+          </Flex>
+        </Stack>
+        <Heading size="lg">{title}</Heading>
+        <Box></Box>
+        <HStack gap={'15px'} wrap={'wrap'}>
           {tags.map((tag) => (
             <BlogTag key={tag} tagConfigKey={tag} />
           ))}
         </HStack>
-        <Box mb={'6'}>
-          <DateFormatter dateString={date} />
-        </Box>
-      </Box>
+      </Flex>
     </>
   );
 };
