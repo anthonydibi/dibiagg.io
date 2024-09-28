@@ -29,7 +29,7 @@ import {
   getRecipes,
 } from '../services/Paprika/PaprikaApi';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UnderlinedHeading } from '../components/UnderlinedHeading';
 import { AnimatePresence, motion } from 'framer-motion';
 import NextLink from 'next/link';
@@ -55,6 +55,11 @@ export default function Blog({
   const selectedRecipe = searchRecipe
     ? recipeUidsByRecipeName[searchRecipe]
     : null;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [searchRecipe]);
+
   const selectedRecipeObj = selectedRecipe ? recipesById[selectedRecipe] : null;
   const [expandedIndices, setExpandedIndices] = useState<number | number[]>([]);
 
@@ -86,7 +91,7 @@ export default function Blog({
     zIndex: 1,
     height: '100%',
     background: 'var(--off)',
-    overflowY: 'scroll',
+    overflowY: 'auto',
     boxShadow: 'var(--chakra-shadows-lg)',
     flexDirection: 'column',
     ...responsiveSidebarStyle,
@@ -182,7 +187,6 @@ export default function Blog({
                         textAlign="start"
                         onClick={() => {
                           toggleNav();
-                          window.scrollTo(0, 0);
                         }}
                       >
                         <Text>{recipe.name}</Text>
@@ -239,7 +243,6 @@ export default function Blog({
                         recipe.name,
                       )}`}
                       shallow
-                      onClick={() => window.scrollTo(0, 0)}
                     >
                       <Heading size="sm" fontWeight={500}>
                         {recipe.name}
