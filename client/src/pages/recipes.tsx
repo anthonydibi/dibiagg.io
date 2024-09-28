@@ -512,6 +512,10 @@ export const getStaticProps = async () => {
     if (!imageExists) {
       try {
         const imageRes = await fetch(recipe.photo_url);
+        if(!imageRes.ok) {
+          throw new Error('Failed to fetch image');
+        }
+        
         const imageBuffer = await imageRes.arrayBuffer();
 
         const putImageParams: PutObjectCommandInput = {
