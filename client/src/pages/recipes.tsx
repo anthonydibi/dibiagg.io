@@ -263,9 +263,6 @@ export default function Blog({
                       ))}
                     </Flex>
                   </Flex>
-                  <Text mt={2} color={'orange.400'}>
-                    {recipe.source}
-                  </Text>
                 </Flex>
               </Flex>
             </LinkBox>
@@ -515,7 +512,7 @@ export const getStaticProps = async () => {
         if(!imageRes.ok) {
           throw new Error('Failed to fetch image');
         }
-        
+
         const imageBuffer = await imageRes.arrayBuffer();
 
         const putImageParams: PutObjectCommandInput = {
