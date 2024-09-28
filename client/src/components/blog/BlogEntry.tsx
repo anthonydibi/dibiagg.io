@@ -43,7 +43,7 @@ const BlogEntry: React.FC<BlogEntryProps> = ({ post, tags = true }) => {
         <Flex direction="column" gap={3.5}>
           <AspectRatio ratio={16 / 9}>
             <Image
-              style={{ marginTop: 8, borderRadius: '10px' }}
+              style={{ borderRadius: '10px' }}
               src={post.coverImage}
               alt={`Cover Image for ${post.title}`}
               objectFit="cover"
