@@ -18,7 +18,7 @@ export default function Blog({ allPosts }) {
           justify="center"
           align="start"
           mx={[4, undefined, 8]}
-          my="2em"
+          my="1.625rem"
         >
           <SimpleGrid
             minChildWidth={{ base: '90vw', lg: '500px' }}
