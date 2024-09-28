@@ -30,7 +30,6 @@ const BlogEntry: React.FC<BlogEntryProps> = ({ post, tags = true }) => {
         as={'article'}
         flexDirection={'column'}
         w={'100%'}
-        p={3}
         textAlign={'start'}
         position={'relative'}
         borderRadius={'16px'}
@@ -43,13 +42,14 @@ const BlogEntry: React.FC<BlogEntryProps> = ({ post, tags = true }) => {
         <Flex direction="column" gap={3.5}>
           <AspectRatio ratio={16 / 9}>
             <Image
-              style={{ borderRadius: '10px' }}
+              style={{ borderRadius: '16px 16px 0 0' }}
               src={post.coverImage}
               alt={`Cover Image for ${post.title}`}
               objectFit="cover"
               fill
             />
           </AspectRatio>
+          <Flex direction="column" gap={3.5} p="0 16px 16px 16px">
           <LinkOverlay as={NextLink} href={`/blog/posts/${post.slug}`}>
             <Heading size="md" display={'block'}>
               {post.title}
@@ -69,6 +69,7 @@ const BlogEntry: React.FC<BlogEntryProps> = ({ post, tags = true }) => {
           <Text fontSize={'md'} display={['none', null, 'inherit']}>
             {post.excerpt}
           </Text>
+          </Flex>
         </Flex>
       </LinkBox>
     </>
