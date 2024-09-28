@@ -12,7 +12,7 @@ const CoverImage: React.FC<CoverImageProps> = ({ title, src, slug }) => {
   const image = (
     <AspectRatio ratio={16 / 9}>
       <Image
-        style={{ borderRadius: '6px' }}
+        style={{ borderRadius: '16px 16px 0 0' }}
         src={src}
         alt={`Cover Image for ${title}`}
         objectFit="cover"
@@ -21,7 +21,7 @@ const CoverImage: React.FC<CoverImageProps> = ({ title, src, slug }) => {
     </AspectRatio>
   );
   return (
-    <Box mt={'6'}>
+    <Box>
       {slug ? (
         <Link
           as={`/blog/posts/${slug}`}

@@ -13,12 +13,6 @@ export const TagConfig: TagConfigType = {
     fontColor: 'black',
     iconColor: 'black',
   },
-  'coding-stuff': {
-    icon: VscFileBinary,
-    color: '#4299e1',
-    fontColor: 'black',
-    iconColor: 'black',
-  },
   next: {
     icon: SiNextDotJs,
     color: '#1A202C',

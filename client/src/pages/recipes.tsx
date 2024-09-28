@@ -417,6 +417,7 @@ export const getStaticProps = async () => {
   let categories;
   let fullRecipes;
   let pulledFreshRecipes = true;
+  let uploadedImages = false;
 
   try {
     if (process.env.NODE_ENV === 'development') {
@@ -468,28 +469,6 @@ export const getStaticProps = async () => {
     fullRecipes = recipeData.fullRecipes;
   }
 
-  if (pulledFreshRecipes) {
-    try {
-      // try to upload recipe data to S3 in case we get rate-limited
-      const recipeData = {
-        categories,
-        fullRecipes,
-      };
-
-      const putObjectParams: PutObjectCommandInput = {
-        Bucket: 'dibiaggdotio-assets',
-        Key: 'recipes.json',
-        Body: JSON.stringify(recipeData),
-        ContentType: 'application/json',
-      };
-
-      const putObjectCommand = new PutObjectCommand(putObjectParams);
-      await s3.send(putObjectCommand);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   const allRecipeImages = await s3.send(
     new ListObjectsV2Command({
       Bucket: 'dibiaggdotio-assets',
@@ -524,6 +503,7 @@ export const getStaticProps = async () => {
         const putImageCommand = new PutObjectCommand(putImageParams);
         await s3.send(putImageCommand);
 
+        uploadedImages = true;
         recipe.photo_url = imageUrl;
       } catch (e) {
         console.error(e);
@@ -532,6 +512,28 @@ export const getStaticProps = async () => {
       recipe.photo_url = imageUrl;
     }
   });
+
+  if (pulledFreshRecipes || uploadedImages) {
+    try {
+      // try to upload recipe data to S3 in case we get rate-limited
+      const recipeData = {
+        categories,
+        fullRecipes,
+      };
+
+      const putObjectParams: PutObjectCommandInput = {
+        Bucket: 'dibiaggdotio-assets',
+        Key: 'recipes.json',
+        Body: JSON.stringify(recipeData),
+        ContentType: 'application/json',
+      };
+
+      const putObjectCommand = new PutObjectCommand(putObjectParams);
+      await s3.send(putObjectCommand);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   const recipesById = fullRecipes.reduce((acc, recipe) => {
     acc[recipe.uid] = recipe;

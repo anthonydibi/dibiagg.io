@@ -35,13 +35,12 @@ const FullPost: React.FC<PostProps> = ({ post }) => {
         <meta property="og:image" content={post.ogImage.url} />
       </Head>
       <Container
-        boxShadow="xl"
         maxW={'4xl'}
-        m="auto"
-        mb={4}
-        p={4}
-        borderRadius="6px"
+        borderRadius="16px"
         boxShadow="lg"
+        p={0}
+        my={4}
+        pb={4}
       >
         {router.isFallback ? (
           <Heading mx="auto">Loading…</Heading>
@@ -58,7 +57,7 @@ const FullPost: React.FC<PostProps> = ({ post }) => {
             </article>
           </>
         )}
-        <SimpleGrid templateColumns={['1fr', null, null, '1fr 1fr']} gap={4}>
+        <SimpleGrid templateColumns={['1fr', null, null, '1fr 1fr']} gap={4} px={4}>
           {post.olderPost && (
             <Box>
               <Heading size={'md'} mb={'4'}>

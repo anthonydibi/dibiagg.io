@@ -25,19 +25,14 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children, className }) => {
         align={'center'}
         bg={'linear-gradient(145deg, #222222, #1d1d1d)'}
         borderRadius={'10px 10px 0px 0px'}
-        boxShadow={
-          colorMode === 'light'
-            ? '15px 15px 10px #cccccc, -15px -15px 10px #ffffff'
-            : 'inset 20px 20px 30px #1b1b1b, inset -20px -20px 30px #252525'
-        }
         p={1}
       >
         <Box flex={'1'} />
         <Text
-          color={'white'}
           fontSize="md"
           whiteSpace={'pre-line'}
           m="0 !important"
+          color="accent"
         >
           {title}
         </Text>
@@ -69,7 +64,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children, className }) => {
               overflow: 'auto',
               textAlign: 'left',
               boxShadow:
-                'inset 10px 10px 15px #1b1b1b, inset -10px -10px 15px #252525',
+                'inset 5px 5px 5px #1b1b1b, inset -5px -5px 8px #252525',
               borderRadius: '0px 0px 10px 10px',
               background: 'var(--dark)',
               maxHeight: '500px',

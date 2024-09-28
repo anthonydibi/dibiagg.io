@@ -32,7 +32,7 @@ function FrequentlyUsedEmojiExample() {
           userSelect={'none'}
           as={'span'}
           cursor={'pointer'}
-          fontSize={'4xl'}
+          fontSize={'lg'}
           onClick={() => onEmojiInput(props.emoji)}
           aria-label={
             'A clickable emoji - emojis in this dataset are not tagged, so further information about the content is unavailable.'
@@ -51,23 +51,24 @@ function FrequentlyUsedEmojiExample() {
           gridTemplateColumns={'1fr 1fr'}
           gap={'0px 20px'}
           border={'1px'}
+          borderRadius='10px'
           p={'2'}
           mx={'auto'}
           overflowX={'scroll'}
           h={'300px'}
         >
-          <GridItem textAlign={'center'}>
-            <Heading as={'text'} size={'md'}>
+          <GridItem textAlign={'start'} px={2}>
+            <Heading as={'text'} size={'sm'}>
               Frequently Used
             </Heading>
           </GridItem>
-          <GridItem textAlign={'center'}>
-            <Heading as={'text'} size={'md'}>
+          <GridItem textAlign={'start'} px={2}>
+            <Heading as={'text'} size={'sm'}>
               All Emojis
             </Heading>
           </GridItem>
           <GridItem overflow={'scroll'} p={'2'}>
-            <Grid templateColumns={'1fr 1fr 1fr 1fr'} gap={'10px'}>
+            <Grid templateColumns={'1fr 1fr 1fr 1fr 1fr'}>
               {cachedEmojis.map((emoji) => (
                 <GridItem key={emoji}>
                   <ClickableEmoji emoji={emoji} />
@@ -76,7 +77,7 @@ function FrequentlyUsedEmojiExample() {
             </Grid>
           </GridItem>
           <GridItem overflowY={'scroll'} p={'2'}>
-            <Grid templateColumns={'1fr 1fr 1fr 1fr 1fr'} gap={'10px'}>
+            <Grid templateColumns={'1fr 1fr 1fr 1fr 1fr'}>
               {emojis.map((emoji) => (
                 <GridItem key={emoji}>
                   <ClickableEmoji emoji={emoji} />
@@ -86,7 +87,7 @@ function FrequentlyUsedEmojiExample() {
           </GridItem>
         </Grid>
         <InputGroup mt={'4'} mb={'8'} mx={'auto'}>
-          <Input value={emojiInputs} fontSize={'2xl'} />
+          <Input value={emojiInputs} fontSize={'2xl'} borderRadius='10px' />
           <InputRightElement
             cursor={'pointer'}
             onClick={() => setEmojiInputs('')}

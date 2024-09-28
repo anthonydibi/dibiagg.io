@@ -49,7 +49,8 @@ const PostHeader: React.FC<PostHeaderProps> = ({
     <>
       <Flex direction="column" gap={4}>
         <CoverImage title={title} src={coverImage} />
-        <Stack direction={'row'} gap={2} align={'center'}>
+        <Flex direction="column" gap={4} px={4}>
+          <Stack direction={'row'} gap={2} align={'center'}>
           <BlogAvatar />
           <Flex direction="column" justifyContent="center">
             <Text size={'sm'}>Anthony Di Biaggio</Text>
@@ -59,12 +60,12 @@ const PostHeader: React.FC<PostHeaderProps> = ({
           </Flex>
         </Stack>
         <Heading size="lg">{title}</Heading>
-        <Box></Box>
         <HStack gap={'15px'} wrap={'wrap'}>
           {tags.map((tag) => (
             <BlogTag key={tag} tagConfigKey={tag} />
           ))}
         </HStack>
+        </Flex>
       </Flex>
     </>
   );

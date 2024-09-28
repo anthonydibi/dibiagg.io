@@ -11,7 +11,6 @@ export interface Tag {
 
 export enum TagKeys {
   tutorial = 'tutorial',
-  'coding-stuff' = 'coding-stuff',
   next = 'next',
   dsa = 'dsa',
   'ui-ux' = 'ui-ux',
