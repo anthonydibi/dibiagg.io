@@ -1,27 +1,19 @@
 import {
   Box,
-  Text,
-  Container,
-  Flex,
+  Text, Flex,
   SimpleGrid,
   Heading,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionIcon,
-  AccordionPanel,
-  Link,
-  Button,
-  ExpandedIndex,
-  LinkOverlay,
+  AccordionPanel, Button, LinkOverlay,
   LinkBox,
   useBreakpointValue,
   Grid,
-  GridItem,
+  GridItem
 } from '@chakra-ui/react';
-import { getAllPosts } from '../services/BlogApi';
 import SEO from '../components/seo';
-import BlogEntry from '../components/blog/BlogEntry';
 import {
   getAuthToken,
   getCategories,
@@ -30,26 +22,25 @@ import {
 } from '../services/Paprika/PaprikaApi';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { UnderlinedHeading } from '../components/UnderlinedHeading';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, MotionStyle } from 'framer-motion';
 import NextLink from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
   S3Client,
   PutObjectCommand,
   GetObjectCommand,
-  PutObjectCommandInput,
-  HeadObjectCommand,
-  ListObjectsV2Command,
+  PutObjectCommandInput, ListObjectsV2Command
 } from '@aws-sdk/client-s3';
 import { useNavStore } from '../stores/navStore';
+import { mapToCategoriesById, mapToRecipeIdByRecipeName, mapToRecipeIdsByCategoryId, mapToRecipesById } from '../services/Paprika/internal/map';
+import { InferGetStaticPropsType } from 'next';
 
 export default function Blog({
   recipesById,
   recipeUidsByCategoryUid,
   recipeUidsByRecipeName,
   categoriesByUid,
-}) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const search = useSearchParams();
   const searchRecipe = search.get('recipe');
   const selectedRecipe = searchRecipe
@@ -83,7 +74,7 @@ export default function Blog({
       translateX: '0',
     },
   ]);
-  const sidebarStyle = {
+  const sidebarStyle: MotionStyle = {
     display: 'flex',
     position: 'fixed',
     borderLeft: '4px solid var(--accent)',
@@ -132,7 +123,7 @@ export default function Blog({
                     >
                       {category.name}
                       <AnimatePresence>
-                        {recipeUidsByCategoryUid[category.uid].includes(
+                        {selectedRecipe && recipeUidsByCategoryUid[category.uid].includes(
                           selectedRecipe,
                         ) && (
                           <Box
@@ -194,76 +185,7 @@ export default function Blog({
           ))}
         </Accordion>
       </motion.div>
-      {!selectedRecipe ? (
-        <SimpleGrid
-          width="100%"
-          gap={4}
-          p={['8px', null, '20px 32px 32px 260px']}
-          minChildWidth={['40vw', null, '200px']}
-        >
-          {Object.values(recipesById).map((recipe) => (
-            <LinkBox
-              as={'article'}
-              display="flex"
-              flex={1}
-              key={recipe.uid}
-              height="100%"
-            >
-              <Flex
-                _hover={{
-                  transform: 'scale(1.03) translate3d(-4px, -4px, 0)',
-                  boxShadow: '4px 4px 0px var(--accent)',
-                }}
-                transition="all 300ms"
-                key={recipe.uid}
-                direction="column"
-                width="100%"
-              >
-                <Box aspectRatio={1 / 1} position="relative">
-                  <Image src={recipe.photo_url} alt={recipe.name} fill />
-                </Box>
-                <Flex
-                  direction="column"
-                  flex={1}
-                  p={2}
-                  justifyContent="space-between"
-                  borderWidth="0 1px 1px 1px"
-                  borderStyle="solid"
-                  borderColor="accent"
-                >
-                  <Flex direction="column" gap={0.5}>
-                    <LinkOverlay
-                      as={NextLink}
-                      href={`/recipes?recipe=${encodeURIComponent(
-                        recipe.name,
-                      )}`}
-                      shallow
-                    >
-                      <Heading size="sm" fontWeight={500}>
-                        {recipe.name}
-                      </Heading>
-                    </LinkOverlay>
-                    <Flex gap={1} flexWrap="wrap">
-                      {recipe.categories.map((category) => (
-                        <Text
-                          fontSize="sm"
-                          p={1}
-                          border="0.5px solid"
-                          lineHeight="12px"
-                          key={category.uid}
-                          color="gray.600"
-                        >
-                          {categoriesByUid[category].name}
-                        </Text>
-                      ))}
-                    </Flex>
-                  </Flex>
-                </Flex>
-              </Flex>
-            </LinkBox>
-          ))}
-        </SimpleGrid>
-      ) : (
+      {selectedRecipe && selectedRecipeObj ? (
         <Grid
           templateAreas={[
             `"photo" "name" "ingredients" "directions"`,
@@ -295,7 +217,7 @@ export default function Blog({
                       p={1}
                       border="0.5px solid"
                       lineHeight="12px"
-                      key={category.uid}
+                      key={category}
                       color="gray.600"
                     >
                       {categoriesByUid[category].name}
@@ -317,12 +239,12 @@ export default function Blog({
                   </Text>
                 )}
                 {selectedRecipeObj.prep_time && (
-                  <Text textAlign="left">
+                  <Text textAlign="left" ml={selectedRecipeObj.total_time ? 2 : 0}>
                     <b>Prep time</b> {selectedRecipeObj.prep_time}
                   </Text>
                 )}
                 {selectedRecipeObj.cook_time && (
-                  <Text textAlign="left">
+                  <Text textAlign="left" ml={selectedRecipeObj.total_time ? 2 : 0}>
                     <b>Cook time</b> {selectedRecipeObj.cook_time}
                   </Text>
                 )}
@@ -342,8 +264,12 @@ export default function Blog({
               borderColor="accent"
             >
               <Image
-                src={selectedRecipeObj.photo_url}
+                src={selectedRecipeObj.image_url}
                 alt={selectedRecipeObj.name}
+                unoptimized
+                style={{
+                  objectFit: 'cover',
+                }}
                 fill
               />
             </Flex>
@@ -384,6 +310,77 @@ export default function Blog({
             </Box>
           </GridItem>
         </Grid>
+      ) : (
+        <SimpleGrid
+          width="100%"
+          gap={4}
+          p={['8px', null, '20px 32px 32px 260px']}
+          minChildWidth={['40vw', null, '200px']}
+        >
+          {Object.values(recipesById).map((recipe) => (
+            <LinkBox
+              as={'article'}
+              display="flex"
+              flex={1}
+              key={recipe.uid}
+              height="100%"
+            >
+              <Flex
+                _hover={{
+                  transform: 'scale(1.03) translate3d(-4px, -4px, 0)',
+                  boxShadow: '4px 4px 0px var(--accent)',
+                }}
+                transition="all 300ms"
+                key={recipe.uid}
+                direction="column"
+                width="100%"
+              >
+                <Box aspectRatio={1 / 1} position="relative">
+                  <Image src={recipe.image_url} style={{
+                  objectFit: 'cover',
+                }} alt={recipe.name} fill />
+                </Box>
+                <Flex
+                  direction="column"
+                  flex={1}
+                  p={2}
+                  justifyContent="space-between"
+                  borderWidth="0 1px 1px 1px"
+                  borderStyle="solid"
+                  borderColor="accent"
+                >
+                  <Flex direction="column" gap={0.5}>
+                    <LinkOverlay
+                      as={NextLink}
+                      href={`/recipes?recipe=${encodeURIComponent(
+                        recipe.name,
+                      )}`}
+                      shallow
+                    >
+                      <Heading size="sm" fontWeight={500}>
+                        {recipe.name}
+                      </Heading>
+                    </LinkOverlay>
+                    <Flex gap={1} flexWrap="wrap">
+                      {recipe.categories.map((category) => (
+                        <Text
+                          fontSize="sm"
+                          p={1}
+                          border="0.5px solid"
+                          lineHeight="12px"
+                          key={category}
+                          color="gray.600"
+                        >
+                          {categoriesByUid[category].name}
+                        </Text>
+                      ))}
+                    </Flex>
+                  </Flex>
+                </Flex>
+              </Flex>
+            </LinkBox>
+          ))}
+        </SimpleGrid>
       )}
     </>
   );
@@ -409,8 +406,8 @@ export const getStaticProps = async () => {
     },
   });
 
-  let categories;
-  let fullRecipes;
+  let categories: Category[] = [];
+  let fullRecipes: FullRecipe[] = [];
   let pulledFreshRecipes = true;
   let uploadedImages = false;
 
@@ -419,26 +416,22 @@ export const getStaticProps = async () => {
       throw new Error('Development mode, skipping API calls');
     }
 
-    const tokenRes = await getAuthToken(
+    const tokenData = await getAuthToken(
       process.env.PAPRIKA_EMAIL,
       process.env.PAPRIKA_PW,
     );
-    const tokenData = await tokenRes.json();
     const token = tokenData.result.token;
 
-    const recipesRes = await getRecipes(token);
-    const recipes = (await recipesRes.json()).result;
+    const recipesData = await getRecipes(token);
+    const recipes = recipesData.result;
 
-    const categoriesRes = await getCategories(token);
-    categories = (await categoriesRes.json()).result;
+    const categoriesData = await getCategories(token);
+    categories = categoriesData.result;
 
-    const fullRecipeReses = await Promise.all(
+    const fullRecipesData = await Promise.all(
       recipes.map(async (recipe) => getRecipe(token, recipe.uid)),
     );
-    const fullRecipeResults = await Promise.all(
-      fullRecipeReses.map((res) => res.json()),
-    );
-    fullRecipes = fullRecipeResults.map((result) => result.result);
+    fullRecipes = fullRecipesData.map(result => result.result);
   } catch (e) {
     console.error(e);
     pulledFreshRecipes = false;
@@ -482,7 +475,7 @@ export const getStaticProps = async () => {
 
     if (!imageExists) {
       try {
-        const imageRes = await fetch(recipe.photo_url);
+        const imageRes = await fetch(recipe.image_url);
         if(!imageRes.ok) {
           throw new Error('Failed to fetch image');
         }
@@ -492,6 +485,7 @@ export const getStaticProps = async () => {
         const putImageParams: PutObjectCommandInput = {
           Bucket: 'dibiaggdotio-assets',
           Key: imageKey,
+          // @ts-ignore
           Body: imageBuffer,
         };
 
@@ -499,12 +493,12 @@ export const getStaticProps = async () => {
         await s3.send(putImageCommand);
 
         uploadedImages = true;
-        recipe.photo_url = imageUrl;
+        recipe.image_url = imageUrl;
       } catch (e) {
         console.error(e);
       }
     } else {
-      recipe.photo_url = imageUrl;
+      recipe.image_url = imageUrl;
     }
   });
 
@@ -530,32 +524,13 @@ export const getStaticProps = async () => {
     }
   }
 
-  const recipesById = fullRecipes.reduce((acc, recipe) => {
-    acc[recipe.uid] = recipe;
-    return acc;
-  }, {});
+  const recipesById = mapToRecipesById(fullRecipes);
 
-  const recipeUidsByCategoryUid = fullRecipes.reduce((acc, recipe) => {
-    recipe.categories?.forEach((category) => {
-      if (!acc[category]) {
-        acc[category] = [];
-      }
+  const recipeUidsByCategoryUid = mapToRecipeIdsByCategoryId(fullRecipes);
 
-      acc[category].push(recipe.uid);
-    });
+  const recipeUidsByRecipeName = mapToRecipeIdByRecipeName(fullRecipes);
 
-    return acc;
-  }, {});
-
-  const recipeUidsByRecipeName = fullRecipes.reduce((acc, recipe) => {
-    acc[recipe.name] = recipe.uid;
-    return acc;
-  }, {});
-
-  const categoriesByUid = categories.reduce((acc, category) => {
-    acc[category.uid] = category;
-    return acc;
-  }, {});
+  const categoriesByUid = mapToCategoriesById(categories);
 
   return {
     props: {
