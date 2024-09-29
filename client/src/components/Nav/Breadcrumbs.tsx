@@ -53,7 +53,7 @@ const Breadcrumbs = (props: Props) => {
         '2px',
         null,
         pathname.includes('recipes')
-          ? '.2rem .625rem .2rem 260px'
+          ? '.2rem .625rem .2rem 264px'
           : '.2rem .625rem',
       ]}
     >

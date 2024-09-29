@@ -186,135 +186,136 @@ export default function Blog({
         </Accordion>
       </motion.div>
       {selectedRecipe && selectedRecipeObj ? (
-        <Grid
-          templateAreas={[
-            `"photo" "name" "ingredients" "directions"`,
-            null,
-            '"name photo" "directions ingredients"',
-          ]}
-          templateColumns={['1fr', null, '1fr minmax(200px, 1fr)']}
-          p={['8px 2px', null, '16px 32px 32px 260px']}
-          maxW="7xl"
-        >
-          <GridItem area="name">
-            <Flex
-              w="100%"
-              h="100%"
-              alignItems="center"
-              justifyContent="start"
-              borderWidth={['0 2px 2px 2px', null, '2px 0 2px 2px']}
-              borderStyle="solid"
-              borderColor="accent"
-            >
-              <Flex direction="column" gap="8px" p=".625rem">
-                <Heading textAlign="left" size="lg">
-                  {selectedRecipeObj.name}
-                </Heading>
-                <Flex gap={1} flexWrap="wrap">
-                  {selectedRecipeObj.categories.map((category) => (
-                    <Text
-                      fontSize="md"
-                      p={1}
-                      border="0.5px solid"
-                      lineHeight="12px"
-                      key={category}
-                      color="gray.600"
-                    >
-                      {categoriesByUid[category].name}
+        <Flex p={['8px 2px', null, '8px 8px 8px 256px']} justifyContent="center">
+          <Grid boxShadow="md" p={[0, null, '8px']} borderRadius="6px"
+            templateAreas={[
+              `"photo" "name" "ingredients" "directions"`,
+              null,
+              '"name photo" "directions ingredients"',
+            ]}
+            templateColumns={['1fr', null, '1fr minmax(200px, 1fr)']}
+            maxW="6xl"
+          >
+            <GridItem area="name" boxShadow="md">
+              <Flex
+                w="100%"
+                h="100%"
+                alignItems="center"
+                justifyContent="start"
+                borderWidth={['0 2px 2px 2px', null, '2px 0 2px 2px']}
+                borderStyle="solid"
+                borderColor="accent"
+              >
+                <Flex direction="column" gap="8px" p=".625rem">
+                  <Heading textAlign="left" size="lg">
+                    {selectedRecipeObj.name}
+                  </Heading>
+                  <Flex gap={1} flexWrap="wrap">
+                    {selectedRecipeObj.categories.map((category) => (
+                      <Text
+                        fontSize="md"
+                        p={1}
+                        border="0.5px solid"
+                        lineHeight="12px"
+                        key={category}
+                        color="gray.600"
+                      >
+                        {categoriesByUid[category].name}
+                      </Text>
+                    ))}
+                  </Flex>
+                  {selectedRecipeObj.servings && (
+                    <Text textAlign="left">
+                      <b>Servings</b>{' '}
+                      {selectedRecipeObj.servings.replace(
+                        /[s]ervings?:?|yields?:?/gi,
+                        '',
+                      )}
                     </Text>
-                  ))}
+                  )}
+                  {selectedRecipeObj.total_time && (
+                    <Text textAlign="left">
+                      <b>Total time</b> {selectedRecipeObj.total_time}
+                    </Text>
+                  )}
+                  {selectedRecipeObj.prep_time && (
+                    <Text textAlign="left" ml={selectedRecipeObj.total_time ? 2 : 0}>
+                      <b>Prep time</b> {selectedRecipeObj.prep_time}
+                    </Text>
+                  )}
+                  {selectedRecipeObj.cook_time && (
+                    <Text textAlign="left" ml={selectedRecipeObj.total_time ? 2 : 0}>
+                      <b>Cook time</b> {selectedRecipeObj.cook_time}
+                    </Text>
+                  )}
+                  <Text textAlign="left">
+                    <b>From</b> {selectedRecipeObj.source}
+                  </Text>
                 </Flex>
-                {selectedRecipeObj.servings && (
-                  <Text textAlign="left">
-                    <b>Servings</b>{' '}
-                    {selectedRecipeObj.servings.replace(
-                      /[s]ervings?:?|yields?:?/gi,
-                      '',
-                    )}
-                  </Text>
-                )}
-                {selectedRecipeObj.total_time && (
-                  <Text textAlign="left">
-                    <b>Total time</b> {selectedRecipeObj.total_time}
-                  </Text>
-                )}
-                {selectedRecipeObj.prep_time && (
-                  <Text textAlign="left" ml={selectedRecipeObj.total_time ? 2 : 0}>
-                    <b>Prep time</b> {selectedRecipeObj.prep_time}
-                  </Text>
-                )}
-                {selectedRecipeObj.cook_time && (
-                  <Text textAlign="left" ml={selectedRecipeObj.total_time ? 2 : 0}>
-                    <b>Cook time</b> {selectedRecipeObj.cook_time}
-                  </Text>
-                )}
-                <Text textAlign="left">
-                  <b>From</b> {selectedRecipeObj.source}
-                </Text>
               </Flex>
-            </Flex>
-          </GridItem>
-          <GridItem height="100%" area="photo">
-            <Flex
-              position="relative"
-              aspectRatio={1 / 1}
-              w="100%"
-              borderWidth={['2px 2px 0 2px', null, '2px 2px 2px 0']}
-              borderStyle="solid"
-              borderColor="accent"
+            </GridItem>
+            <GridItem height="100%" area="photo" boxShadow="md">
+              <Flex
+                position="relative"
+                aspectRatio={1 / 1}
+                w="100%"
+                borderWidth={['2px 2px 0 2px', null, '2px 2px 2px 0']}
+                borderStyle="solid"
+                borderColor="accent"
+              >
+                <Image
+                  src={selectedRecipeObj.image_url}
+                  alt={selectedRecipeObj.name}
+                  unoptimized
+                  style={{
+                    objectFit: 'cover',
+                  }}
+                  fill
+                />
+              </Flex>
+            </GridItem>
+            <GridItem
+              area="directions"
+              borderTop="8px solid var(--accent)"
+              mt={2}
+              mr={[0, null, 2]}
             >
-              <Image
-                src={selectedRecipeObj.image_url}
-                alt={selectedRecipeObj.name}
-                unoptimized
-                style={{
-                  objectFit: 'cover',
-                }}
-                fill
-              />
-            </Flex>
-          </GridItem>
-          <GridItem
-            area="directions"
-            borderTop="8px solid var(--accent)"
-            mt={2}
-            mr={[0, null, 2]}
-          >
-            <Heading size="md" mt={1} mx={[2, null, 0]}>
-              Directions
-            </Heading>
-            <Box p={[2, null, 0]} pt={[1, null, 2]}>
-              <Text whiteSpace="pre-wrap" mx={[2, null, 0]}>
-                {selectedRecipeObj.directions}
-              </Text>
-            </Box>
-          </GridItem>
-          <GridItem
-            area="ingredients"
-            borderTop="8px solid var(--accent)"
-            mt={2}
-            ml={[0, null, 2]}
-            mb={[0, null, 4]}
-          >
-            <Heading size="md" mt={1} mx={[2, null, 0]}>
-              Ingredients
-            </Heading>
-            <Box pl={4} pt={[1, null, 2]}>
-              <Box as="ul" mx={[2, null, 0]}>
-                {selectedRecipeObj.ingredients.split('\n').map((ingredient) => (
-                  <li key={ingredient}>
-                    <Text>{ingredient}</Text>
-                  </li>
-                ))}
+              <Heading size="md" mt={1} mx={[2, null, 0]}>
+                Directions
+              </Heading>
+              <Box p={[2, null, 0]} pt={[1, null, 2]}>
+                <Text whiteSpace="pre-wrap" mx={[2, null, 0]}>
+                  {selectedRecipeObj.directions}
+                </Text>
               </Box>
-            </Box>
-          </GridItem>
-        </Grid>
+            </GridItem>
+            <GridItem
+              area="ingredients"
+              borderTop="8px solid var(--accent)"
+              mt={2}
+              ml={[0, null, 2]}
+              mb={[0, null, 4]}
+            >
+              <Heading size="md" mt={1} mx={[2, null, 0]}>
+                Ingredients
+              </Heading>
+              <Box pl={4} pt={[1, null, 2]}>
+                <Box as="ul" mx={[2, null, 0]}>
+                  {selectedRecipeObj.ingredients.split('\n').map((ingredient) => (
+                    <li key={ingredient}>
+                      <Text>{ingredient}</Text>
+                    </li>
+                  ))}
+                </Box>
+              </Box>
+            </GridItem>
+          </Grid>
+        </Flex>
       ) : (
         <SimpleGrid
           width="100%"
           gap={4}
-          p={['8px', null, '20px 32px 32px 260px']}
+          p={['8px', null, '16px 16px 16px 264px']}
           minChildWidth={['40vw', null, '200px']}
         >
           {Object.values(recipesById).map((recipe) => (
