@@ -86,6 +86,7 @@ export default function Blog({
   const sidebarStyle = {
     display: 'flex',
     position: 'fixed',
+    borderLeft: '4px solid var(--accent)',
     top: 0,
     left: 0,
     zIndex: 1,
@@ -107,18 +108,12 @@ export default function Blog({
       <motion.div
         style={sidebarStyle}
         animate={{ translateX: sidebarShouldBeVisible ? 0 : '-100%' }}
+        initial={false}
         transition={{ ease: 'easeInOut' }}
       >
-        <UnderlinedHeading
-          containerProps={{ ml: 1, mt: 2 }}
-          size="md"
-          underlineColor="accent"
-        >
-          CATEGORIES
-        </UnderlinedHeading>
         <Accordion
+          mt={2}
           allowToggle
-          mt="3"
           index={expandedIndices}
           onChange={handleAccordionChange}
           border="0"
@@ -234,7 +229,7 @@ export default function Blog({
                   justifyContent="space-between"
                   borderWidth="0 1px 1px 1px"
                   borderStyle="solid"
-                  borderColor="orange.300"
+                  borderColor="accent"
                 >
                   <Flex direction="column" gap={0.5}>
                     <LinkOverlay
@@ -287,7 +282,7 @@ export default function Blog({
               justifyContent="start"
               borderWidth={['0 2px 2px 2px', null, '2px 0 2px 2px']}
               borderStyle="solid"
-              borderColor="orange.300"
+              borderColor="accent"
             >
               <Flex direction="column" gap="8px" p=".625rem">
                 <Heading textAlign="left" size="lg">
@@ -344,7 +339,7 @@ export default function Blog({
               w="100%"
               borderWidth={['2px 2px 0 2px', null, '2px 2px 2px 0']}
               borderStyle="solid"
-              borderColor="orange.300"
+              borderColor="accent"
             >
               <Image
                 src={selectedRecipeObj.photo_url}
