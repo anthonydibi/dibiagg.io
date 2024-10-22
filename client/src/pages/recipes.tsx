@@ -186,20 +186,20 @@ export default function Blog({
         </Accordion>
       </motion.div>
       {selectedRecipe && selectedRecipeObj ? (
-        <Flex p={['8px 2px', null, '8px 8px 8px 256px']} justifyContent="center">
-          <Grid boxShadow="md" p={[0, null, '8px']} borderRadius="6px"
+        <Flex p={['8px 2px 0 2px', null, '16px 8px 0 256px']} justifyContent="center" minH="100vh">
+          <Grid boxShadow="lg" p={[0, null, '.625rem']}
             templateAreas={[
               `"photo" "name" "ingredients" "directions"`,
               null,
               '"name photo" "directions ingredients"',
             ]}
+            autoRows="max-content"
             templateColumns={['1fr', null, '1fr minmax(200px, 1fr)']}
             maxW="6xl"
           >
-            <GridItem area="name" boxShadow="md">
+            <GridItem area="name">
               <Flex
-                w="100%"
-                h="100%"
+              aspectRatio={[null, null, 1 / 1]}
                 alignItems="center"
                 justifyContent="start"
                 borderWidth={['0 2px 2px 2px', null, '2px 0 2px 2px']}
@@ -254,7 +254,7 @@ export default function Blog({
                 </Flex>
               </Flex>
             </GridItem>
-            <GridItem height="100%" area="photo" boxShadow="md">
+            <GridItem height="100%" area="photo">
               <Flex
                 position="relative"
                 aspectRatio={1 / 1}
