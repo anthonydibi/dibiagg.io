@@ -126,19 +126,19 @@ export default function Blog({
                         {selectedRecipe && recipeUidsByCategoryUid[category.uid].includes(
                           selectedRecipe,
                         ) && (
-                          <Box
-                            as={motion.div}
-                            initial={{ width: '0' }}
-                            animate={{ width: '110%' }}
-                            exit={{ width: '0' }}
-                            transition={{ ease: 'ease-in-out' }}
-                            position="absolute"
-                            bottom="5%"
-                            bg="accent"
-                            width="110%"
-                            height="4px"
-                          />
-                        )}
+                            <Box
+                              as={motion.div}
+                              initial={{ width: '0' }}
+                              animate={{ width: '110%' }}
+                              exit={{ width: '0' }}
+                              transition={{ ease: 'ease-in-out' }}
+                              position="absolute"
+                              bottom="5%"
+                              bg="accent"
+                              width="110%"
+                              height="4px"
+                            />
+                          )}
                       </AnimatePresence>
                     </Text>
                   </Box>
@@ -157,8 +157,8 @@ export default function Blog({
                           selectedRecipe === recipe.uid
                             ? '/recipes'
                             : `/recipes?recipe=${encodeURIComponent(
-                                recipe.name,
-                              )}`
+                              recipe.name,
+                            )}`
                         }
                         shallow
                         color="unset"
@@ -199,12 +199,9 @@ export default function Blog({
           >
             <GridItem area="name">
               <Flex
-              aspectRatio={[null, null, 1 / 1]}
+                aspectRatio={[null, null, 1 / 1]}
                 alignItems="center"
                 justifyContent="start"
-                borderWidth={['0 2px 2px 2px', null, '2px 0 2px 2px']}
-                borderStyle="solid"
-                borderColor="accent"
               >
                 <Flex direction="column" gap="8px" p=".625rem">
                   <Heading textAlign="left" size="lg">
@@ -259,9 +256,6 @@ export default function Blog({
                 position="relative"
                 aspectRatio={1 / 1}
                 w="100%"
-                borderWidth={['2px 2px 0 2px', null, '2px 2px 2px 0']}
-                borderStyle="solid"
-                borderColor="accent"
               >
                 <Image
                   src={selectedRecipeObj.image_url}
@@ -338,8 +332,8 @@ export default function Blog({
               >
                 <Box aspectRatio={1 / 1} position="relative">
                   <Image src={recipe.image_url} style={{
-                  objectFit: 'cover',
-                }} alt={recipe.name} fill />
+                    objectFit: 'cover',
+                  }} alt={recipe.name} fill />
                 </Box>
                 <Flex
                   direction="column"
@@ -477,7 +471,7 @@ export const getStaticProps = async () => {
     if (!imageExists) {
       try {
         const imageRes = await fetch(recipe.image_url);
-        if(!imageRes.ok) {
+        if (!imageRes.ok) {
           throw new Error('Failed to fetch image');
         }
 
