@@ -11,6 +11,7 @@ const io = socketio(server, {
         methods: ["GET", "POST"]
     }
 })
+const compression = require('compression')
 var cors = require('cors')
 
 const { Client, types } = require('pg');
@@ -32,6 +33,8 @@ app.use(
 )
 
 app.use(cors())
+
+app.use(compression());
 
 types.setTypeParser(1114, function(stringValue) {
     return stringValue;
