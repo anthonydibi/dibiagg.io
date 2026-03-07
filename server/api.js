@@ -12,7 +12,6 @@ const io = socketio(server, {
     }
 })
 var cors = require('cors')
-const compression = require('compression');
 
 const { Client, types } = require('pg');
 const { json } = require('express')
@@ -33,8 +32,6 @@ app.use(
 )
 
 app.use(cors())
-
-app.use(compression())
 
 types.setTypeParser(1114, function(stringValue) {
     return stringValue;
