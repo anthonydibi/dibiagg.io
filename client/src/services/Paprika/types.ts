@@ -18,7 +18,7 @@ interface FullRecipe {
     total_time?: string;
     source: string;
     source_url: string;
-    image_url: string;
+    image_url: string | null;
     photo?: string;
     photo_hash?: string;
     photo_large?: string;
@@ -31,7 +31,7 @@ interface FullRecipe {
     on_favorites?: boolean;
     on_grocery_list?: boolean;
     created: string;
-    photo_url: string;
+    photo_url: string | null;
 }
 
 // only send props we need
@@ -47,8 +47,8 @@ interface MappedFullRecipe {
     total_time?: string;
     source: string;
     categories: string[];
-    photo_url: string;
-    image_url: string;
+    photo_url: string | null;
+    image_url: string | null;
 }
 
 //CATEGORIES

@@ -35,6 +35,32 @@ import { useNavStore } from '../stores/navStore';
 import { mapToCategoriesById, mapToRecipeIdByRecipeName, mapToRecipeIdsByCategoryId, mapToRecipesById } from '../services/Paprika/internal/map';
 import { InferGetStaticPropsType } from 'next';
 
+const getRecipeImageUrl = (
+  recipe: Pick<MappedFullRecipe, 'image_url' | 'photo_url'>,
+) => recipe.image_url || recipe.photo_url || null;
+
+const getFetchableImageUrl = (
+  recipe: Pick<FullRecipe, 'image_url' | 'photo_url'>,
+) => {
+  const imageUrl = recipe.image_url || recipe.photo_url;
+
+  if (!imageUrl) {
+    return null;
+  }
+
+  try {
+    const url = new URL(imageUrl);
+
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return null;
+    }
+
+    return url.toString();
+  } catch {
+    return null;
+  }
+};
+
 export default function Blog({
   recipesById,
   recipeUidsByCategoryUid,
@@ -257,15 +283,17 @@ export default function Blog({
                 aspectRatio={1 / 1}
                 w="100%"
               >
-                <Image
-                  src={selectedRecipeObj.image_url}
-                  alt={selectedRecipeObj.name}
-                  unoptimized
-                  style={{
-                    objectFit: 'cover',
-                  }}
-                  fill
-                />
+                {getRecipeImageUrl(selectedRecipeObj) && (
+                  <Image
+                    src={getRecipeImageUrl(selectedRecipeObj) as string}
+                    alt={selectedRecipeObj.name}
+                    unoptimized
+                    style={{
+                      objectFit: 'cover',
+                    }}
+                    fill
+                  />
+                )}
               </Flex>
             </GridItem>
             <GridItem
@@ -331,9 +359,16 @@ export default function Blog({
                 width="100%"
               >
                 <Box aspectRatio={1 / 1} position="relative">
-                  <Image src={recipe.image_url} style={{
-                    objectFit: 'cover',
-                  }} alt={recipe.name} fill />
+                  {getRecipeImageUrl(recipe) && (
+                    <Image
+                      src={getRecipeImageUrl(recipe) as string}
+                      style={{
+                        objectFit: 'cover',
+                      }}
+                      alt={recipe.name}
+                      fill
+                    />
+                  )}
                 </Box>
                 <Flex
                   direction="column"
@@ -462,40 +497,47 @@ export const getStaticProps = async () => {
     allRecipeImages.Contents?.map((content) => content.Key),
   );
 
-  // try to upload images since image links from the API expire
-  fullRecipes.forEach(async (recipe) => {
+  // Try to upload images since image links from the API expire.
+  for (const recipe of fullRecipes) {
     const imageKey = `images/recipe/recipe-${recipe.uid}.jpg`;
     const imageUrl = `https://d1detxxicj4679.cloudfront.net/${imageKey}`;
     const imageExists = imageSet.has(imageKey);
 
-    if (!imageExists) {
-      try {
-        const imageRes = await fetch(recipe.image_url);
-        if (!imageRes.ok) {
-          throw new Error('Failed to fetch image');
-        }
-
-        const imageBuffer = await imageRes.arrayBuffer();
-
-        const putImageParams: PutObjectCommandInput = {
-          Bucket: 'dibiaggdotio-assets',
-          Key: imageKey,
-          // @ts-ignore
-          Body: imageBuffer,
-        };
-
-        const putImageCommand = new PutObjectCommand(putImageParams);
-        await s3.send(putImageCommand);
-
-        uploadedImages = true;
-        recipe.image_url = imageUrl;
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
+    if (imageExists) {
       recipe.image_url = imageUrl;
+      continue;
     }
-  });
+
+    const sourceImageUrl = getFetchableImageUrl(recipe);
+
+    if (!sourceImageUrl) {
+      recipe.image_url = null;
+      continue;
+    }
+
+    try {
+      const imageRes = await fetch(sourceImageUrl);
+      if (!imageRes.ok) {
+        throw new Error('Failed to fetch image');
+      }
+
+      const imageBuffer = await imageRes.arrayBuffer();
+
+      const putImageParams: PutObjectCommandInput = {
+        Bucket: 'dibiaggdotio-assets',
+        Key: imageKey,
+        Body: Buffer.from(imageBuffer),
+      };
+
+      const putImageCommand = new PutObjectCommand(putImageParams);
+      await s3.send(putImageCommand);
+
+      uploadedImages = true;
+      recipe.image_url = imageUrl;
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   if (pulledFreshRecipes || uploadedImages) {
     try {

@@ -12,6 +12,7 @@ const io = socketio(server, {
     }
 })
 var cors = require('cors')
+const compression = require('compression')
 
 const { Client, types } = require('pg');
 const { json } = require('express')
@@ -32,6 +33,7 @@ app.use(
 )
 
 app.use(cors())
+app.use(compression())
 
 types.setTypeParser(1114, function(stringValue) {
     return stringValue;
@@ -115,8 +117,11 @@ app.post('/graffiti', (request, response) => {
 })
 
 app.get('/deathball/standings', (request, response) => {
-    client.query("SELECT DENSE_RANK () OVER (ORDER BY elo DESC) AS rank, name, wins, losses, elo FROM (SELECT name, wins, losses, wins::decimal + 5 + AVG(wins::decimal/(wins::decimal+losses::decimal))/(wins::decimal + losses::decimal + 5) as elo FROM deathballplayers GROUP BY name, wins, losses) as alias ORDER BY rank OFFSET $1 LIMIT $2;", [request.query.start, request.query.stop], (err, res) => { //ranks players by a simple elo calculation which weights each player's performance by their win ratio and number of games compared to the average global win ratio
-        if(err) console.log(err);
+    client.query("SELECT DENSE_RANK () OVER (ORDER BY elo DESC) AS rank, name, wins, losses, elo FROM (SELECT name, wins, losses, wins::decimal + 5 + COALESCE(AVG(wins::decimal / NULLIF(wins::decimal + losses::decimal, 0)), 0) / (wins::decimal + losses::decimal + 5) as elo FROM deathballplayers GROUP BY name, wins, losses) as alias ORDER BY rank OFFSET $1 LIMIT $2;", [request.query.start, request.query.stop], (err, res) => { //ranks players by a simple elo calculation which weights each player's performance by their win ratio and number of games compared to the average global win ratio
+        if(err) {
+            console.error(err);
+            return response.sendStatus(500);
+        }
         response.json(res.rows);
     })
 })
