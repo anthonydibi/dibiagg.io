@@ -15,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta charSet="utf-8" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon-48x48.png" sizes="48x48" />
         <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
         <link rel="icon" href="/favicon-16x16.png" sizes="16x16" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
