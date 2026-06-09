@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
           name="dibiagg.io"
           content="Anthony Di Biaggio's personal website"
         />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon-v2.png" />
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <Layout>
