@@ -156,26 +156,49 @@ const MarqueeContent = () => (
 
 const projects = [
   {
-    name: 'dibiagg.io',
-    desc: 'My personal website. Random assortment of things I like and things I want people to see. Built with Next.js.',
-    href: '#',
+    name: 'RaidGuessr',
+    desc: 'A daily puzzle game for MMO raids.',
+    href: 'https://raidguessr.dev/',
+    videoSrc: '/raidguessr-showcase.mp4',
+    videoPosition: '38.5% center',
+    videoOffsetY: '15%',
+    videoBackground: '#080b16',
   },
   {
     name: 'ThreeSharp',
-    desc: 'A Unity application that visualizes C# code in virtual reality using abstract syntax trees.',
+    desc: 'A Unity app that visualizes C# code in virtual reality.',
     href: 'https://www.youtube.com/watch?v=JaxGmNPOdZM',
+    videoSrc: '/threesharp-showcase.mp4',
+    videoPosition: 'center center',
+    videoBackground: '#1e2530',
   },
   {
-    name: 'Deathball clone',
-    desc: 'A clone of the arcade game Deathball which I manically programmed at 2am one night.',
-    href: 'https://gilded-kulfi-c5ad94.netlify.app/',
+    name: 'Memedle',
+    desc: 'Meme guessing game, each guess upgrades quality.',
+    href: 'https://memedle.dev/',
+    videoSrc: '/memedle-showcase-tile.mp4',
+    videoPosition: 'center center',
+    videoInset: true,
+    videoOffsetY: '35%',
+    videoWidth: '84%',
+    videoFit: 'contain',
+    videoBackground: '#f0f0f0',
+    videoTextColor: '#202020',
   },
   {
     name: 'Graffiti',
     desc: 'A canvas where you can draw and leave your mark on my site. Uses WebSockets to sync your art with peers, and persists drawings in a PostgreSQL DB. No penises, please.',
     href: '#Graffiti',
   },
+  {
+    name: 'Deathball clone',
+    desc: 'A clone of the arcade game Deathball which I manically programmed at 2am one night.',
+    href: 'https://gilded-kulfi-c5ad94.netlify.app/',
+  },
 ];
+
+const isExternalProjectHref = (href) =>
+  href.startsWith('http://') || href.startsWith('https://');
 
 const builtWithTechs = [
   {
@@ -454,51 +477,94 @@ export default function About({ latestBlogPost }) {
                 h="100%"
               >
                 {projects.map((project, index) => (
-                  <Flex
-                    ml={index === 0 ? '.625rem' : 0}
-                    mr={index === projects.length - 1 ? '.625rem' : 0}
-                    direction="column"
-                    p="1rem"
-                    border="2px solid var(--accent)"
-                    w="100%"
-                    gap="4px"
-                    minW="200px"
-                  >
                     <Flex
-                      justifyContent="space-between"
-                      flexDirection="column"
-                      h="100%"
+                      key={project.name}
+                      ml={index === 0 ? '.625rem' : 0}
+                      mr={index === projects.length - 1 ? '.625rem' : 0}
+                      direction="column"
+                      p="1rem"
+                      border="2px solid var(--accent)"
+                      w="100%"
+                      gap="4px"
+                      minW="200px"
+                      position="relative"
+                      overflow="hidden"
+                      color={
+                        project.videoTextColor ??
+                        (project.videoSrc ? 'white' : undefined)
+                      }
+                      bg={project.videoBackground}
                     >
-                      <Flex flexDirection="column" gap={1}>
-                        <Heading size="md">{project.name}</Heading>
-                        <Text>{project.desc}</Text>
-                      </Flex>
-                      <Flex justifyContent="right">
-                        <Button
-                          p={0}
-                          border="1px solid"
-                          borderRadius="100%"
-                          transition="background-position 0.3s ease"
-                          background="linear-gradient(to left, transparent 50%, var(--accent) 50%) right"
-                          backgroundSize="200% 100%"
-                          _hover={{ backgroundPosition: 'left' }}
-                          _active={{ backgroundPosition: 'left' }}
-                          variant="icon"
-                          as={NextLink}
-                          href={project.href}
-                          isExternal={
-                            !project.href.startsWith('#') &&
-                            !project.href.startsWith('/')
+                      {project.videoSrc && (
+                        <Box
+                          as="video"
+                          aria-hidden="true"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="metadata"
+                          src={project.videoSrc}
+                          position="absolute"
+                          top={project.videoOffsetY ?? 0}
+                          left={project.videoInset ? '50%' : 0}
+                          transform={
+                            project.videoInset ? 'translateX(-50%)' : undefined
                           }
-                        >
-                          <ArrowForwardIcon
-                            transform="rotate(-45deg)"
-                            boxSize="24px"
-                          />
-                        </Button>
+                          w={project.videoInset ? project.videoWidth : '100%'}
+                          h={project.videoInset ? 'auto' : '100%'}
+                          aspectRatio={project.videoInset ? '1 / 1' : undefined}
+                          objectFit={project.videoFit ?? 'cover'}
+                          objectPosition={
+                            project.videoPosition ?? 'center center'
+                          }
+                          pointerEvents="none"
+                        />
+                      )}
+                      <Flex
+                        justifyContent="space-between"
+                        flexDirection="column"
+                        h="100%"
+                        position="relative"
+                        zIndex={1}
+                      >
+                        <Flex flexDirection="column" gap={1}>
+                          <Heading size="md">{project.name}</Heading>
+                          <Text>{project.desc}</Text>
+                        </Flex>
+                        <Flex justifyContent="right">
+                          <Button
+                            p={0}
+                            border="1px solid"
+                            borderRadius="100%"
+                            transition="background-position 0.3s ease"
+                            background="linear-gradient(to left, transparent 50%, var(--accent) 50%) right"
+                            backgroundSize="200% 100%"
+                            _hover={{ backgroundPosition: 'left' }}
+                            _active={{ backgroundPosition: 'left' }}
+                            variant="icon"
+                            as={NextLink}
+                            href={project.href}
+                            isExternal={isExternalProjectHref(project.href)}
+                            target={
+                              isExternalProjectHref(project.href)
+                                ? '_blank'
+                                : undefined
+                            }
+                            rel={
+                              isExternalProjectHref(project.href)
+                                ? 'noopener noreferrer'
+                                : undefined
+                            }
+                          >
+                            <ArrowForwardIcon
+                              transform="rotate(-45deg)"
+                              boxSize="24px"
+                            />
+                          </Button>
+                        </Flex>
                       </Flex>
                     </Flex>
-                  </Flex>
                 ))}
               </Flex>
             </HomeGridItem>
