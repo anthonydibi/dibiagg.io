@@ -176,14 +176,26 @@ const projects = [
     name: 'Memedle',
     desc: 'Meme guessing game, each guess upgrades quality.',
     href: 'https://memedle.dev/',
-    videoSrc: '/memedle-showcase-tile.mp4',
-    videoPosition: 'center center',
-    videoInset: true,
-    videoOffsetY: '35%',
-    videoWidth: '84%',
-    videoFit: 'contain',
     videoBackground: '#f0f0f0',
     videoTextColor: '#202020',
+    content: (
+      <Flex justifyContent="center" mt={1} mb={1} overflow="hidden">
+        <Box
+          as="video"
+          aria-hidden="true"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          src="/memedle-showcase-tile.mp4"
+          aspectRatio="1 / 1"
+          objectFit="contain"
+          objectPosition="center center"
+          pointerEvents="none"
+        />
+      </Flex>
+    ),
   },
   {
     name: 'Graffiti',
@@ -487,6 +499,7 @@ export default function About({ latestBlogPost }) {
                       w="100%"
                       gap="4px"
                       minW="200px"
+                      minH="260px"
                       position="relative"
                       overflow="hidden"
                       color={
@@ -507,13 +520,9 @@ export default function About({ latestBlogPost }) {
                           src={project.videoSrc}
                           position="absolute"
                           top={project.videoOffsetY ?? 0}
-                          left={project.videoInset ? '50%' : 0}
-                          transform={
-                            project.videoInset ? 'translateX(-50%)' : undefined
-                          }
-                          w={project.videoInset ? project.videoWidth : '100%'}
-                          h={project.videoInset ? 'auto' : '100%'}
-                          aspectRatio={project.videoInset ? '1 / 1' : undefined}
+                          left={0}
+                          w="100%"
+                          h="100%"
                           objectFit={project.videoFit ?? 'cover'}
                           objectPosition={
                             project.videoPosition ?? 'center center'
@@ -531,6 +540,7 @@ export default function About({ latestBlogPost }) {
                         <Flex flexDirection="column" gap={1}>
                           <Heading size="md">{project.name}</Heading>
                           <Text>{project.desc}</Text>
+                          {project.content}
                         </Flex>
                         <Flex justifyContent="right">
                           <Button
