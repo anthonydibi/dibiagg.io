@@ -1,17 +1,20 @@
 import {
   Box,
-  Text, Flex,
+  Text,
+  Flex,
   SimpleGrid,
   Heading,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionIcon,
-  AccordionPanel, Button, LinkOverlay,
+  AccordionPanel,
+  Button,
+  LinkOverlay,
   LinkBox,
   useBreakpointValue,
   Grid,
-  GridItem
+  GridItem,
 } from '@chakra-ui/react';
 import SEO from '../components/seo';
 import {
@@ -29,10 +32,16 @@ import {
   S3Client,
   PutObjectCommand,
   GetObjectCommand,
-  PutObjectCommandInput, ListObjectsV2Command
+  PutObjectCommandInput,
+  ListObjectsV2Command,
 } from '@aws-sdk/client-s3';
 import { useNavStore } from '../stores/navStore';
-import { mapToCategoriesById, mapToRecipeIdByRecipeName, mapToRecipeIdsByCategoryId, mapToRecipesById } from '../services/Paprika/internal/map';
+import {
+  mapToCategoriesById,
+  mapToRecipeIdByRecipeName,
+  mapToRecipeIdsByCategoryId,
+  mapToRecipesById,
+} from '../services/Paprika/internal/map';
 import { InferGetStaticPropsType } from 'next';
 
 const getRecipeImageUrl = (
@@ -149,9 +158,10 @@ export default function Blog({
                     >
                       {category.name}
                       <AnimatePresence>
-                        {selectedRecipe && recipeUidsByCategoryUid[category.uid].includes(
-                          selectedRecipe,
-                        ) && (
+                        {selectedRecipe &&
+                          recipeUidsByCategoryUid[category.uid].includes(
+                            selectedRecipe,
+                          ) && (
                             <Box
                               as={motion.div}
                               initial={{ width: '0' }}
@@ -183,8 +193,8 @@ export default function Blog({
                           selectedRecipe === recipe.uid
                             ? '/recipes'
                             : `/recipes?recipe=${encodeURIComponent(
-                              recipe.name,
-                            )}`
+                                recipe.name,
+                              )}`
                         }
                         shallow
                         color="unset"
@@ -212,8 +222,14 @@ export default function Blog({
         </Accordion>
       </motion.div>
       {selectedRecipe && selectedRecipeObj ? (
-        <Flex p={['8px 2px 0 2px', null, '16px 8px 0 256px']} justifyContent="center" minH="100vh">
-          <Grid boxShadow="lg" p={[0, null, '.625rem']}
+        <Flex
+          p={['8px 2px 0 2px', null, '16px 8px 0 256px']}
+          justifyContent="center"
+          minH="100vh"
+        >
+          <Grid
+            boxShadow="lg"
+            p={[0, null, '.625rem']}
             templateAreas={[
               `"photo" "name" "ingredients" "directions"`,
               null,
@@ -262,12 +278,18 @@ export default function Blog({
                     </Text>
                   )}
                   {selectedRecipeObj.prep_time && (
-                    <Text textAlign="left" ml={selectedRecipeObj.total_time ? 2 : 0}>
+                    <Text
+                      textAlign="left"
+                      ml={selectedRecipeObj.total_time ? 2 : 0}
+                    >
                       <b>Prep time</b> {selectedRecipeObj.prep_time}
                     </Text>
                   )}
                   {selectedRecipeObj.cook_time && (
-                    <Text textAlign="left" ml={selectedRecipeObj.total_time ? 2 : 0}>
+                    <Text
+                      textAlign="left"
+                      ml={selectedRecipeObj.total_time ? 2 : 0}
+                    >
                       <b>Cook time</b> {selectedRecipeObj.cook_time}
                     </Text>
                   )}
@@ -278,11 +300,7 @@ export default function Blog({
               </Flex>
             </GridItem>
             <GridItem height="100%" area="photo">
-              <Flex
-                position="relative"
-                aspectRatio={1 / 1}
-                w="100%"
-              >
+              <Flex position="relative" aspectRatio={1 / 1} w="100%">
                 {getRecipeImageUrl(selectedRecipeObj) && (
                   <Image
                     src={getRecipeImageUrl(selectedRecipeObj) as string}
@@ -323,11 +341,13 @@ export default function Blog({
               </Heading>
               <Box pl={4} pt={[1, null, 2]}>
                 <Box as="ul" mx={[2, null, 0]}>
-                  {selectedRecipeObj.ingredients.split('\n').map((ingredient) => (
-                    <li key={ingredient}>
-                      <Text>{ingredient}</Text>
-                    </li>
-                  ))}
+                  {selectedRecipeObj.ingredients
+                    .split('\n')
+                    .map((ingredient) => (
+                      <li key={ingredient}>
+                        <Text>{ingredient}</Text>
+                      </li>
+                    ))}
                 </Box>
               </Box>
             </GridItem>
@@ -418,7 +438,19 @@ export default function Blog({
 
 export const getStaticProps = async () => {
   if (!process.env.PAPRIKA_EMAIL || !process.env.PAPRIKA_PW) {
-    throw new Error('Missing Paprika credentials');
+    console.warn(
+      'Missing Paprika credentials; generating the recipes page without recipe data.',
+    );
+
+    return {
+      props: {
+        recipesById: {},
+        recipeUidsByCategoryUid: {},
+        recipeUidsByRecipeName: {},
+        categoriesByUid: {},
+      },
+      revalidate: 3600,
+    };
   }
 
   if (
@@ -461,7 +493,7 @@ export const getStaticProps = async () => {
     const fullRecipesData = await Promise.all(
       recipes.map(async (recipe) => getRecipe(token, recipe.uid)),
     );
-    fullRecipes = fullRecipesData.map(result => result.result);
+    fullRecipes = fullRecipesData.map((result) => result.result);
   } catch (e) {
     console.error(e);
     pulledFreshRecipes = false;

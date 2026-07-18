@@ -59,7 +59,6 @@ import AiSparkle from '../icons/AiSparkle';
 import Playwright from '../icons/Playwright';
 import Locust from '../icons/Locust';
 import { debounce } from '../../utils/debounce';
-import View from './helpers/View';
 import { useSnapshotStore } from '../../stores/snapshotStore';
 import { Box, Flex, Text } from '@chakra-ui/react';
 

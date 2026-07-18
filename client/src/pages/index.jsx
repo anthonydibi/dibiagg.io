@@ -22,7 +22,6 @@ import {
   ChevronLeftIcon,
   CloseIcon,
   ExternalLinkIcon,
-  LinkIcon,
 } from '@chakra-ui/icons';
 import Script from 'next/script';
 import GraffitiCanvas from '../components/GraffitiCanvas';
@@ -38,6 +37,7 @@ import {
 } from 'react-icons/si';
 import { BsLightningFill, BsTriangleFill } from 'react-icons/bs';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { skillCategories, skillIcons } from '../components/threejs/Skills';
 import { getLatestPost } from '../services/BlogApi';
@@ -53,15 +53,22 @@ const Skills = dynamic(() => import('../components/threejs/Skills'), {
   ),
 });
 
+const RecipesPotView = dynamic(
+  () => import('../components/threejs/RecipesPotView'),
+  { ssr: false },
+);
+
 const BuiltWithMarqueeContent = () => (
   <Flex
     direction={['row', null, 'column']}
-    p=".2rem 8px .2rem 8px"
-    gap={'16px'}
+    py="tight"
+    px="control"
+    gap="card"
     alignItems="center"
   >
     {builtWithTechs.map((tech) => (
       <Tooltip
+        key={tech.name}
         label={tech.name}
         border="1px solid"
         px="1"
@@ -73,7 +80,6 @@ const BuiltWithMarqueeContent = () => (
       >
         <Box>
           <Icon
-            key={tech.name}
             as={tech.icon}
             boxSize={['36px', null, '48px', '76px']}
             color="accent"
@@ -115,7 +121,7 @@ const Marquee = () => (
 );
 
 const MarqueeContent = () => (
-  <Flex direction="row" p=".2rem" alignItems="center">
+  <Flex direction="row" p="tight" alignItems="center">
     {Array(3)
       .fill(0)
       .map((_, i) => (
@@ -206,7 +212,7 @@ const projects = [
   },
   {
     name: 'Deathball clone',
-    desc: 'A clone of the arcade game Deathball which I manically programmed at 2am one night.',
+    desc: 'A clone of the arcade game Deathball which I manically programmed at 2am one night during college.',
     href: 'https://gilded-kulfi-c5ad94.netlify.app/',
   },
 ];
@@ -250,6 +256,7 @@ const builtWithTechs = [
 ];
 
 export default function About({ latestBlogPost }) {
+  const [isGraffitiDrawing, setIsGraffitiDrawing] = React.useState(false);
   const [selectedSkill, setSelectedSkill] = React.useState(null);
   const [selectedSkillCategory, setSelectedSkillCategory] =
     React.useState(null);
@@ -274,6 +281,14 @@ export default function About({ latestBlogPost }) {
     'whiteAlpha.200',
   );
   const skillCategoryColor = useColorModeValue('var(--dark)', 'white');
+  const projectCardBackground = useColorModeValue(
+    'var(--light)',
+    'var(--dark)',
+  );
+  const projectCardShadow = useColorModeValue(
+    '5px 5px 8px #cccccc, -5px -5px 8px #fafafa',
+    '5px 5px 8px #1b1b1b, -5px -5px 8px #252525',
+  );
 
   const updateSkillCategoryScrollEdges = React.useCallback(() => {
     const scroller = skillCategoryScrollerRef.current;
@@ -399,11 +414,24 @@ export default function About({ latestBlogPost }) {
 
   return (
     <>
-      <SEO
-        description="About dibiagg.io"
-        title="About"
-        siteTitle="dibiagg.io"
-      />
+      <Head>
+        <link
+          rel="preload"
+          href="/recipe-pot-stew.glb"
+          as="fetch"
+          type="model/gltf-binary"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/recipe-pot-stew-lid.glb"
+          as="fetch"
+          type="model/gltf-binary"
+          crossOrigin="anonymous"
+        />
+        <link rel="preload" href="/Textures/colormap.png" as="image" />
+      </Head>
+      <SEO description="About dibiagg.io" title="Home" siteTitle="dibiagg.io" />
       <Script
         src="https://cdn.socket.io/4.5.0/socket.io.min.js"
         integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
@@ -415,7 +443,7 @@ export default function About({ latestBlogPost }) {
         direction="column"
         justifyContent="start"
         alignItems="center"
-        p={['.1rem', null, '.625rem']}
+        p={['grid', null, 'tile']}
       >
         <Flex
           as="h1"
@@ -454,20 +482,22 @@ export default function About({ latestBlogPost }) {
                   flexWrap="wrap"
                 ></Flex>
                 <Text>
-                  I'm a software engineer. Grew up in West Chester, PA, now living
-                  in Minneapolis. I graduated from the University of Minnesota
-                  in 2023.
+                  I'm a software engineer. Grew up in West Chester, PA, now
+                  living in Minneapolis. I graduated from the University of
+                  Minnesota in 2023.
                   <br /> <br />
-                  I think that the web is one of the most powerful technology
-                  platforms. I am passionate about building anything that lives
-                  in or is related to the browser. My favorite challenges
-                  involve creating experiences that are visually robust and
-                  data-intensive, and tackling these problems as part of a team
-                  that is obsessed with delivering a polished end product.
+                  The browser is one of my favorite creative and technical
+                  platforms, but I'm most interested in solving complex problems
+                  wherever they live, from frontend experiences and realtime
+                  systems, to backend services, infrastructure, and tooling. My
+                  favorite challenges involve distilling complicated problems
+                  into polished, intuitive solutions as part of a team that
+                  cares deeply about the end product.
                   <br /> <br />
                   Most days you will find me scoping out new board games at a
-                  local game store, biking unreasonable distances, trying out a new recipe, or working on my
-                  latest random project. Have fun looking around!
+                  local game store, biking unreasonable distances, trying out a
+                  new recipe, or working on my latest random project. Have fun
+                  looking around!
                   <TrackingEye />
                 </Text>{' '}
               </Flex>
@@ -482,11 +512,11 @@ export default function About({ latestBlogPost }) {
                   role="group"
                   aria-label="Filter skills by category"
                   align="center"
-                  mt="2px"
-                  px="6px"
+                  mt="grid"
+                  px="1.5"
                   width="100%"
                   maxW="100%"
-                  gap="3px"
+                  gap="tight"
                   overflowX="auto"
                   overflowY="hidden"
                   justifyContent="safe center"
@@ -525,7 +555,7 @@ export default function About({ latestBlogPost }) {
                         height="18px"
                         fontSize="9px"
                         lineHeight="1"
-                        px="4px"
+                        px="tight"
                         flexShrink={0}
                         whiteSpace="nowrap"
                         onPointerDown={(event) => {
@@ -592,7 +622,7 @@ export default function About({ latestBlogPost }) {
                   <Flex
                     ref={skillsPopupRef}
                     as={motion.div}
-                    p=".2rem"
+                    p="tight"
                     height="auto"
                     width="100%"
                     left={0}
@@ -623,17 +653,17 @@ export default function About({ latestBlogPost }) {
                     </Button>
                     <Flex
                       flexDirection="column"
-                      gap="8px"
+                      gap="control"
                       width="100%"
                       height="100%"
                       border="2px solid var(--accent)"
-                      p=".625rem"
+                      p="tile"
                       alignItems="space-between"
                     >
                       <Flex
                         alignItems="center"
                         flexDirection="row"
-                        gap="4px"
+                        gap="tight"
                         height="max-content"
                       >
                         <Text
@@ -680,122 +710,178 @@ export default function About({ latestBlogPost }) {
                   I currently work on the web app for{' '}
                   <Link href="https://pick6.draftkings.com/" isExternal>
                     Pick6
-                    <ExternalLinkIcon mx="2px" />
+                    <ExternalLinkIcon mx="grid" />
                   </Link>
                   , a daily fantasy sports game. I also build internal tooling.
                 </Text>
               </Flex>
             </HomeGridItem>
             <HomeGridItem colSpan={[6, null, 3]} title="RECIPES" hash="Recipes">
-              <Flex direction="column">
-                <Text>
-                  I enjoy sharing my love of food 🍝, so all of my
-                  recipes sync to my site. You can check them out{' '}
-                  <Link as={NextLink} href="/recipes">
-                    here.
-                    <LinkIcon mx={1} boxSize="12px" />
-                  </Link>
-                </Text>
+              <Flex
+                mt="-32px"
+                mb="-10px"
+                minH="192px"
+                align="stretch"
+                direction={['column-reverse', null, 'row']}
+              >
+                <Flex
+                  w={['100%', null, '52%']}
+                  minW="0"
+                  pt={[0, null, '32px']}
+                  align="center"
+                >
+                  <Text id="recipes-description">
+                    I enjoy sharing my love of food, so all of my recipes
+                    sync to my site.
+                  </Text>
+                </Flex>
+                <Box
+                  w="125px"
+                  flex="0 0 125px"
+                  minH="150px"
+                  alignSelf={['center', null, 'stretch']}
+                >
+                  <RecipesPotView />
+                </Box>
               </Flex>
             </HomeGridItem>
             <HomeGridItem
-              p="2rem 0 .625rem 0"
+              pt="header"
+              pb="tile"
+              px="0"
               colSpan={[12, 12, 9]}
               title="PROJECTS"
               hash="Projects"
+              display="flex"
+              flexDirection="column"
             >
               <Flex
                 direction="row"
+                flex="1"
                 overflowX="auto"
-                gap="16px"
+                gap="card"
                 overflowY="hidden"
-                h="100%"
+                py="shadow"
+                my="-14px"
               >
                 {projects.map((project, index) => (
                   <Flex
                     key={project.name}
-                    ml={index === 0 ? '.625rem' : 0}
-                    mr={index === projects.length - 1 ? '.625rem' : 0}
+                    ml={index === 0 ? 'shadow' : 0}
+                    mr={index === projects.length - 1 ? 'shadow' : 0}
                     direction="column"
-                    p="1rem"
-                    border="2px solid var(--accent)"
+                    borderRadius="16px"
+                    boxShadow={projectCardShadow}
                     w="100%"
-                    gap="4px"
+                    gap="tight"
                     minW="200px"
                     minH="260px"
                     position="relative"
                     overflow="hidden"
-                    color={
-                      project.videoTextColor ??
-                      (project.videoSrc ? 'white' : undefined)
-                    }
-                    bg={project.videoBackground}
+                    bg={projectCardBackground}
+                    _after={{
+                      content: '""',
+                      position: 'absolute',
+                      inset: '2px',
+                      zIndex: 2,
+                      pointerEvents: 'none',
+                      border: '2px solid var(--accent)',
+                      borderRadius: '14px',
+                    }}
                   >
-                    {project.videoSrc && (
-                      <Box
-                        as="video"
-                        aria-hidden="true"
-                        tabIndex={-1}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
-                        src={project.videoSrc}
-                        position="absolute"
-                        top={project.videoOffsetY ?? 0}
-                        left={0}
-                        w="100%"
-                        h="100%"
-                        objectFit={project.videoFit ?? 'cover'}
-                        objectPosition={
-                          project.videoPosition ?? 'center center'
-                        }
-                        pointerEvents="none"
-                      />
-                    )}
                     <Flex
-                      justifyContent="space-between"
-                      flexDirection="column"
-                      h="100%"
                       position="relative"
-                      zIndex={1}
+                      m="tight"
+                      flex="1"
+                      minW="0"
+                      overflow="hidden"
+                      borderRadius="12px"
+                      bg={project.videoBackground ?? projectCardBackground}
+                      color={
+                        project.videoTextColor ??
+                        (project.videoSrc ? 'white' : undefined)
+                      }
                     >
-                      <Flex flexDirection="column" gap={1}>
-                        <Heading size="md">{project.name}</Heading>
-                        <Text>{project.desc}</Text>
-                        {project.content}
-                      </Flex>
-                      <Flex justifyContent="right">
-                        <Button
-                          p={0}
-                          border="1px solid"
-                          borderRadius="100%"
-                          transition="background-position 0.3s ease"
-                          background="linear-gradient(to left, transparent 50%, var(--accent) 50%) right"
-                          backgroundSize="200% 100%"
-                          _hover={{ backgroundPosition: 'left' }}
-                          _active={{ backgroundPosition: 'left' }}
-                          variant="icon"
-                          as={NextLink}
-                          href={project.href}
-                          isExternal={isExternalProjectHref(project.href)}
-                          target={
-                            isExternalProjectHref(project.href)
-                              ? '_blank'
-                              : undefined
+                      {project.videoSrc && (
+                        <Box
+                          as="video"
+                          aria-hidden="true"
+                          tabIndex={-1}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="metadata"
+                          src={project.videoSrc}
+                          position="absolute"
+                          top={project.videoOffsetY ?? 0}
+                          left={0}
+                          w="100%"
+                          h="100%"
+                          objectFit={project.videoFit ?? 'cover'}
+                          objectPosition={
+                            project.videoPosition ?? 'center center'
                           }
-                          rel={
-                            isExternalProjectHref(project.href)
-                              ? 'noopener noreferrer'
-                              : undefined
-                          }
-                        >
-                          <ArrowForwardIcon
-                            transform="rotate(-45deg)"
-                            boxSize="24px"
-                          />
-                        </Button>
+                          pointerEvents="none"
+                        />
+                      )}
+                      <Flex
+                        justifyContent="space-between"
+                        flexDirection="column"
+                        flex="1"
+                        w="100%"
+                        p="medium"
+                        position="relative"
+                        zIndex={1}
+                      >
+                        <Flex flexDirection="column" gap="tight">
+                          <Heading size="md">{project.name}</Heading>
+                          <Text>{project.desc}</Text>
+                          {project.content}
+                        </Flex>
+                        <Flex justifyContent="right">
+                          <Button
+                            p={0}
+                            boxSize="40px"
+                            minW="40px"
+                            minH="40px"
+                            flexShrink={0}
+                            border="1px solid"
+                            borderRadius="100%"
+                            transition="background-position 0.3s ease, color 0.3s ease"
+                            background="linear-gradient(to left, transparent 50%, var(--accent) 50%) right"
+                            backgroundSize="200% 100%"
+                            _hover={{
+                              backgroundPosition: 'left',
+                              color: 'white',
+                              transform: 'none',
+                            }}
+                            _active={{
+                              backgroundPosition: 'left',
+                              color: 'white',
+                              transform: 'none',
+                            }}
+                            variant="icon"
+                            as={NextLink}
+                            href={project.href}
+                            isExternal={isExternalProjectHref(project.href)}
+                            target={
+                              isExternalProjectHref(project.href)
+                                ? '_blank'
+                                : undefined
+                            }
+                            rel={
+                              isExternalProjectHref(project.href)
+                                ? 'noopener noreferrer'
+                                : undefined
+                            }
+                          >
+                            <ArrowForwardIcon
+                              transform="rotate(-45deg)"
+                              boxSize="24px"
+                            />
+                          </Button>
+                        </Flex>
                       </Flex>
                     </Flex>
                   </Flex>
@@ -809,67 +895,85 @@ export default function About({ latestBlogPost }) {
             >
               <BlogEntry post={latestBlogPost} tags={false} />
             </HomeGridItem>
-            <HomeGridItem
-              colSpan={[12, null, 10]}
-              rowSpan={2}
-              title="GRAFFITI"
-              hash="Graffiti"
+            <Grid
+              gridColumn="1 / -1"
+              templateColumns="repeat(12, minmax(0, 1fr))"
+              templateRows={['auto', null, 'repeat(2, minmax(0, 1fr))']}
+              bg="accent"
+              gap="grid"
             >
-              <GraffitiCanvas />
-            </HomeGridItem>
-            <HomeGridItem
-              colSpan={[12, null, 2]}
-              rowSpan={1}
-              title="LINKS"
-              hash="Links"
-            >
-              <Grid
-                p={2}
-                templateColumns={['1fr 1fr', '1fr 1fr 1fr', '1fr']}
-                gap="16px"
+              <HomeGridItem
+                colSpan={[12, null, 10]}
+                rowSpan={[1, null, 2]}
+                hash="Graffiti"
+                title={isGraffitiDrawing ? undefined : 'GRAFFITI'}
+                p="0"
+                minH="0"
               >
-                <MyLinks />
-              </Grid>
-            </HomeGridItem>
-            <HomeGridItem
-              minH={['120px', null, '412px']}
-              p={`2rem 0 .625rem 0`}
-              colSpan={[12, null, 2]}
-              rowSpan={1}
-              hash="Built with"
-              title={builtWithTitleLeft}
-              titleRight={builtWithTitleRight}
-              overflow="hidden"
-              position="relative"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Flex
-                justifyContent="center"
-                alignItems="center"
+                <GraffitiCanvas onDrawingChange={setIsGraffitiDrawing} />
+              </HomeGridItem>
+              <HomeGridItem
+                colSpan={[12, null, 2]}
+                rowSpan={1}
+                title="LINKS"
+                hash="Links"
+                minH="0"
                 overflow="hidden"
               >
+                <Grid
+                  h="100%"
+                  minH="0"
+                  p={['control', null, 'tight']}
+                  templateColumns={['1fr 1fr', '1fr 1fr 1fr', '1fr']}
+                  gap={['control', null, 'medium']}
+                  alignContent="start"
+                  justifyItems="center"
+                >
+                  <MyLinks />
+                </Grid>
+              </HomeGridItem>
+              <HomeGridItem
+                minH={['120px', null, '0']}
+                pt="header"
+                pb="tile"
+                px="0"
+                colSpan={[12, null, 2]}
+                rowSpan={1}
+                hash="Built with"
+                title={builtWithTitleLeft}
+                titleRight={builtWithTitleRight}
+                overflow="hidden"
+                position="relative"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
                 <Flex
-                  position="absolute"
-                  direction="column"
-                  overflow="hidden"
-                  onMouseEnter={(e) =>
-                    handleMarqueeMouseEnter(e, builtWithMarqueeClass)
-                  }
-                  onMouseLeave={(e) =>
-                    handleMarqueeMouseLeave(e, builtWithMarqueeClass)
-                  }
-                  w="100%"
                   justifyContent="center"
                   alignItems="center"
+                  overflow="hidden"
                 >
-                  <BuiltWithMarquee
-                    builtWithMarqueeClass={builtWithMarqueeClass}
-                  />
+                  <Flex
+                    position="absolute"
+                    direction="column"
+                    overflow="hidden"
+                    onMouseEnter={(e) =>
+                      handleMarqueeMouseEnter(e, builtWithMarqueeClass)
+                    }
+                    onMouseLeave={(e) =>
+                      handleMarqueeMouseLeave(e, builtWithMarqueeClass)
+                    }
+                    w="100%"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <BuiltWithMarquee
+                      builtWithMarqueeClass={builtWithMarqueeClass}
+                    />
+                  </Flex>
                 </Flex>
-              </Flex>
-            </HomeGridItem>
+              </HomeGridItem>
+            </Grid>
           </Grid>
         </Box>
       </Flex>

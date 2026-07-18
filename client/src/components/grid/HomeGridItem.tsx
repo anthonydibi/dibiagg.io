@@ -36,7 +36,7 @@ const HomeGridItem: FC<HomeGridItemProps> = forwardRef(
       if (hashFromUrl === hash && isHydrated && internalRef?.current) {
         internalRef.current?.scrollIntoView({ behavior: 'smooth' });
       }
-    }, [hashFromUrl, isHydrated]);
+    }, [hash, hashFromUrl, isHydrated]);
 
     return (
       <GridItem
@@ -54,7 +54,9 @@ const HomeGridItem: FC<HomeGridItemProps> = forwardRef(
         as="section"
         bg={useColorModeValue('var(--light)', 'var(--dark)')}
         position="relative"
-        p={`${title ? '2rem' : '.625rem'} .625rem .625rem .625rem`}
+        pt={title ? 'header' : 'tile'}
+        px="tile"
+        pb="tile"
         {...rest}
         scrollMarginTop="4rem"
       >
@@ -64,7 +66,7 @@ const HomeGridItem: FC<HomeGridItemProps> = forwardRef(
             top={0}
             left={0}
             right={0}
-            zIndex={1}
+            zIndex={3}
             align="stretch"
             pointerEvents="none"
           >
@@ -72,7 +74,7 @@ const HomeGridItem: FC<HomeGridItemProps> = forwardRef(
               as={'h2'}
               position="relative"
               bg="accent"
-              p=".2rem"
+              p="tight"
               align="center"
               justify="center"
               pointerEvents="auto"
@@ -117,7 +119,7 @@ const HomeGridItem: FC<HomeGridItemProps> = forwardRef(
             top={0}
             right={0}
             bg="accent"
-            p=".2rem"
+            p="tight"
             zIndex={1}
           >
             {typeof titleRight === 'string' ? (

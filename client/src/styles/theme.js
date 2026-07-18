@@ -5,6 +5,17 @@ export const LIGHT_ACCENT = '#FF5F1F';
 export const DARK_ACCENT = '#38B2AC';
 
 const theme = extendTheme({
+  space: {
+    grid: '2px',
+    tight: '4px',
+    control: '8px',
+    tile: '10px',
+    medium: '12px',
+    shadow: '14px',
+    card: '16px',
+    section: '24px',
+    header: '32px',
+  },
   fonts: {
     heading: `'Atami'`,
     body: `'Roboto', sans-serif`,

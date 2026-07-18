@@ -91,39 +91,51 @@ const MyLinks = (props: Props) => {
         return value.href ? (
           value.href.startsWith('/') ? (
             <Button
-              minW="min-content"
+              minW="0"
+              w="100%"
+              maxW="100%"
+              px={{ base: 'card', md: 'tight' }}
+              fontSize={{ base: 'sm', md: 'clamp(0.625rem, 1.3vw, 1rem)' }}
               fontWeight="normal"
               as={NextLink}
               href={value.href}
               variant="grow"
               target={value.external ? '_blank' : undefined}
             >
-              <Flex gap={1}>
+              <Flex minW="0" justify="center" align="center" gap="tight">
                 {value.display} <Icon color="var(--accent)" />
               </Flex>
             </Button>
           ) : (
             <Button
-              minW="min-content"
+              minW="0"
+              w="100%"
+              maxW="100%"
+              px={{ base: 'card', md: 'tight' }}
+              fontSize={{ base: 'sm', md: 'clamp(0.625rem, 1.3vw, 1rem)' }}
               fontWeight="normal"
               as={Link}
               href={value.href}
               variant="grow"
               isExternal
             >
-              <Flex gap={1}>
+              <Flex minW="0" justify="center" align="center" gap="tight">
                 {value.display} <Icon color="var(--accent)" />
               </Flex>
             </Button>
           )
         ) : (
           <Button
-            minW="min-content"
+            minW="0"
+            w="100%"
+            maxW="100%"
+            px={{ base: 'card', md: 'tight' }}
+            fontSize={{ base: 'sm', md: 'clamp(0.625rem, 1.3vw, 1rem)' }}
             fontWeight="normal"
             onClick={value.onClick}
             variant="grow"
           >
-            <Flex gap={1}>
+            <Flex minW="0" justify="center" align="center" gap="tight">
               {value.display} <Icon color="var(--accent)" />
             </Flex>
           </Button>

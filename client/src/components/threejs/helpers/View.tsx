@@ -1,31 +1,32 @@
 import {
-  FC,
   forwardRef,
+  HTMLAttributes,
   PropsWithChildren,
   useImperativeHandle,
   useRef,
 } from 'react';
 import { View as ViewImpl } from '@react-three/drei';
+import Three from './Three';
 
-export interface ViewProps extends PropsWithChildren {}
+export interface ViewProps
+  extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {}
 
-const View: FC<ViewProps> = forwardRef(({ children, ...props }, ref) => {
-  const localRef = useRef(null);
-  useImperativeHandle(ref, () => localRef.current);
+const View = forwardRef<HTMLDivElement, ViewProps>(
+  ({ children, ...props }, ref) => {
+    const localRef = useRef<HTMLDivElement>(null!);
+    useImperativeHandle(ref, () => localRef.current);
 
-  return (
-    <>
-      <div ref={localRef} {...props}>
-        <ViewImpl
-          track={localRef}
-          style={{ width: '100%', height: '100%' }}
-          track={localRef}
-        >
-          {children}
-        </ViewImpl>
-      </div>
-    </>
-  );
-});
+    return (
+      <>
+        <div ref={localRef} {...props} />
+        <Three>
+          <ViewImpl track={localRef}>{children}</ViewImpl>
+        </Three>
+      </>
+    );
+  },
+);
+
+View.displayName = 'View';
 
 export default View;

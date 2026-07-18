@@ -4,6 +4,7 @@ import '../styles/swatches.css';
 import '../styles/cube.css';
 import '../styles/global.css';
 import '../styles/marquee.css';
+import 'lenis/dist/lenis.css';
 import Head from 'next/head';
 import { AppProps } from 'next/app.js';
 import Chakra from '../components/Chakra';

@@ -5,16 +5,9 @@ import {
   IconButton,
   Box,
   Heading,
-  Grid,
-  GridItem,
   Stack,
-  Skeleton,
-  Input,
-  InputGroup,
-  Text,
-  InputRightElement,
+  Spinner,
   useColorModeValue,
-  useDisclosure,
   HStack,
   Popover,
   PopoverTrigger,
@@ -24,33 +17,55 @@ import { FaEraser, FaPen } from 'react-icons/fa';
 import {
   AiFillCaretLeft,
   AiFillCaretRight,
+  AiFillEye,
+  AiFillEyeInvisible,
   AiFillFastForward,
-  AiOutlineQuestion,
 } from 'react-icons/ai';
-import { SliderPicker, BlockPicker } from 'react-color';
+import { BlockPicker, SliderPicker } from 'react-color';
 import { fetchCanvasState, postCanvasLine } from '../services/GraffitiApi';
-import TaggingModal from './TaggingModal.js';
 const GraffitiDrawArea = dynamic(() => import('./GraffitiDrawArea'), {
   ssr: false,
-  loading: () => <Skeleton height="100%" width="100%" />,
+  loading: () => (
+    <Flex
+      width="100%"
+      height="100%"
+      align="center"
+      justify="center"
+      bg="var(--light)"
+    >
+      <Spinner color="var(--dark)" />
+    </Flex>
+  ),
 });
 
-export default function GraffitiCanvas() {
+export default function GraffitiCanvas({ onDrawingChange }) {
   //built off of free-draw template from react-konva docs
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  const modeValue = useColorModeValue('var(--light)', 'var(--dark)');
   const [step, setStep] = React.useState(0);
   const [tool, setTool] = React.useState('pen');
   const [lines, setLines] = React.useState({ self: [] });
   const [color, setColor] = React.useState('#000000');
-  const [userTag, setUserTag] = React.useState('');
   const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
   const [isLoaded, setIsLoaded] = React.useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const colorMode = useColorModeValue('light', 'dark');
+  const mobileControlShadow = useColorModeValue(
+    '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
+    '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
+  );
+  const desktopControlShadow = '5px 5px 7px #cccccc, -5px -5px 7px #ffffff';
   const canvasFrameRef = React.useRef(null);
   const [canvasDimension, setCanvasDimension] = React.useState(0);
+  const [controlsVisible, setControlsVisible] = React.useState(true);
+  const [isDrawing, setIsDrawing] = React.useState(false);
+  const controlsAreShown = controlsVisible && !isDrawing;
+
+  const handleDrawingChange = React.useCallback(
+    (nextIsDrawing) => {
+      setIsDrawing(nextIsDrawing);
+      onDrawingChange?.(nextIsDrawing);
+    },
+    [onDrawingChange],
+  );
 
   const handleChangeComplete = (color) => {
     setColor(color);
@@ -81,12 +96,6 @@ export default function GraffitiCanvas() {
     }
   }, [lines]);
 
-  const handleTagChange = (e) => {
-    const newTag = e.target.value;
-    setUserTag(newTag);
-    localStorage.setItem('graffitiTag', newTag);
-  };
-
   const back = () => {
     setStep(step + 1);
   };
@@ -111,10 +120,6 @@ export default function GraffitiCanvas() {
 
   React.useEffect(() => {
     getCanvasState(0);
-    let savedUserTag = localStorage.getItem('graffitiTag');
-    if (savedUserTag) {
-      setUserTag(savedUserTag);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -124,23 +129,14 @@ export default function GraffitiCanvas() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
-  React.useLayoutEffect(() => {
-    const blockPicker = document.querySelector('.block-picker');
-    if (blockPicker) {
-      blockPicker.style.backgroundColor = modeValue;
-    }
-  }, [modeValue]);
-
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const canvasFrame = canvasFrameRef.current;
     if (!canvasFrame) return;
 
     const updateCanvasDimension = (width) => {
       const nextDimension = Math.round(width);
       setCanvasDimension((currentDimension) =>
-        currentDimension === nextDimension
-          ? currentDimension
-          : nextDimension,
+        currentDimension === nextDimension ? currentDimension : nextDimension,
       );
     };
 
@@ -155,297 +151,284 @@ export default function GraffitiCanvas() {
   }, []);
 
   return (
-    <Box className="GraffitiContainer" w="100%">
-      <TaggingModal isOpen={isOpen} onClose={onClose} />
-      <Stack
-        direction={{ base: 'column', lg: 'row' }}
-        w={'100%'}
-        align={{ base: 'center', lg: 'none' }}
-      >
-        <InputGroup
-          size="md"
-          w="95%"
-          display={{ base: 'block', lg: 'none' }}
-          mt="2"
-        >
-          <Input
-            pr="4.5rem"
-            type={'text'}
-            placeholder="Enter tag"
-            maxLength={'20'}
-            value={userTag}
-            onChange={handleTagChange}
-          />
-          <InputRightElement width="4.5rem" mr="-3">
-            <IconButton
-              size="sm"
-              isRound="true"
-              value="taggingHelp"
-              variant="interact"
-              icon={<AiOutlineQuestion />}
-              onClick={onOpen}
-            ></IconButton>
-          </InputRightElement>
-        </InputGroup>
-        <Flex w={'100%'}>
-          <Stack
-            flex={'1'}
-            justify={'right'}
-            align={'center'}
-            direction={'row'}
-          >
-            <InputGroup
-              size="md"
-              maxWidth={{ base: '100%', lg: '200px' }}
-              display={{ base: 'none', lg: 'block' }}
-            >
-              <Input
-                pr="4.5rem"
-                type={'text'}
-                placeholder="Enter tag"
-                maxLength={'20'}
-                value={userTag}
-                onChange={handleTagChange}
-              />
-              <InputRightElement width="4.5rem" mr="-3">
-                <IconButton
-                  size="sm"
-                  isRound="true"
-                  value="taggingHelp"
-                  variant="interact"
-                  icon={<AiOutlineQuestion />}
-                  onClick={onOpen}
-                ></IconButton>
-              </InputRightElement>
-            </InputGroup>
-          </Stack>
-          <HStack m={'1'} px={'2'} py={'1'} borderRadius={'20px'}>
-            <IconButton
-              aria-label="Go to previous day"
-              size="sm"
-              isRound="true"
-              value="previousDay"
-              variant="interact"
-              icon={<AiFillCaretLeft />}
-              onClick={back}
-              boxShadow={useColorModeValue(
-                '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-              )}
-            ></IconButton>
-            <Heading mx={'1'} minW="10ch" textAlign="center">
-              {day}
-            </Heading>
-            <Box>
-              <IconButton
-                aria-label="Go to next day"
-                size="sm"
-                isRound="true"
-                value="nextDay"
-                variant="interact"
-                icon={<AiFillCaretRight />}
-                onClick={next}
-                boxShadow={useColorModeValue(
-                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-                )}
-              ></IconButton>
-            </Box>
-          </HStack>
-          <Stack
-            flex={'1'}
-            justify={'left'}
-            align={'center'}
-            direction={'row'}
-            pl={1}
-          >
-            {step > 0 ? (
-              <IconButton
-                aria-label="Fast forward to current day"
-                position={'relative'}
-                left={'0'}
-                ml={'-3'}
-                size="sm"
-                isRound="true"
-                value="fastForward"
-                variant="interact"
-                icon={<AiFillFastForward />}
-                onClick={fastForward}
-                boxShadow={
-                  colorMode === 'light'
-                    ? '5px 5px 7px #cccccc, -5px -5px 7px #ffffff'
-                    : '5px 5px 7px #1b1b1b, -5px -5px 7px #252525'
-                }
-              ></IconButton>
-            ) : null}
-          </Stack>
-        </Flex>
-      </Stack>
-      <Flex
-        direction={{ base: 'column', lg: 'row' }}
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Box
-          ref={canvasFrameRef}
-          className="graffiti-canvas-size graffiti-canvas-frame"
-        >
-          {canvasDimension > 0 ? (
-            <GraffitiDrawArea
-              lines={lines}
-              setLines={setLines}
-              tool={tool}
-              isLoaded={isLoaded}
-              color={color}
-              userTag={userTag}
-              step={step}
-              save={save}
-              canvasDimension={canvasDimension}
-            />
+    <Box
+      className="GraffitiContainer"
+      w="100%"
+      position="relative"
+      overflow="hidden"
+    >
+      <IconButton
+        aria-label={
+          controlsVisible ? 'Hide graffiti controls' : 'Show graffiti controls'
+        }
+        aria-expanded={controlsVisible}
+        display={{ base: 'none', lg: 'inline-flex' }}
+        position="absolute"
+        right="8px"
+        top="8px"
+        zIndex="20"
+        size="sm"
+        isRound
+        variant="interact"
+        bg="var(--light)"
+        color="var(--dark)"
+        boxShadow={desktopControlShadow}
+        opacity={isDrawing ? 0 : 1}
+        pointerEvents={isDrawing ? 'none' : 'auto'}
+        transition="opacity 120ms ease"
+        icon={
+          controlsVisible ? (
+            <AiFillEyeInvisible size="20px" />
           ) : (
-            <Skeleton height="100%" width="100%" />
+            <AiFillEye size="20px" />
+          )
+        }
+        onClick={() => setControlsVisible((isVisible) => !isVisible)}
+      />
+
+      <Stack
+        display={{ base: 'flex', lg: 'none' }}
+        w="100%"
+        spacing="control"
+        p="control"
+        bg="var(--off)"
+        borderBottom="0.5px solid var(--accent)"
+        opacity={isDrawing ? 0 : 1}
+        pointerEvents={isDrawing ? 'none' : 'auto'}
+        transition="opacity 120ms ease"
+      >
+        <HStack position="relative" alignSelf="center">
+          <IconButton
+            aria-label="Go to previous day"
+            size="sm"
+            isRound
+            variant="interact"
+            boxShadow={mobileControlShadow}
+            icon={<AiFillCaretLeft />}
+            onClick={back}
+          />
+          <Heading minW="10ch" textAlign="center">
+            {day}
+          </Heading>
+          <IconButton
+            aria-label="Go to next day"
+            size="sm"
+            isRound
+            variant="interact"
+            boxShadow={mobileControlShadow}
+            icon={<AiFillCaretRight />}
+            onClick={next}
+          />
+          {step > 0 && (
+            <IconButton
+              aria-label="Fast forward to current day"
+              position="absolute"
+              right="-36px"
+              size="sm"
+              isRound
+              variant="interact"
+              boxShadow={mobileControlShadow}
+              icon={<AiFillFastForward />}
+              onClick={fastForward}
+            />
           )}
-        </Box>
-        <Box>
-          <Grid display={{ base: 'none', lg: step === 0 ? 'block' : 'none' }}>
-            <GridItem>
-              <IconButton
-                aria-label="Use pen tool"
-                size="lg"
-                isRound="true"
-                m="2"
-                value="pen"
-                variant="interact"
-                border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
-                icon={<FaPen />}
-                onClick={() => {
-                  setTool('pen');
-                }}
-                boxShadow={useColorModeValue(
-                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-                )}
-              ></IconButton>
-            </GridItem>
-            <GridItem>
-              <IconButton
-                aria-label="Use eraser tool"
-                size="lg"
-                isRound="true"
-                m="2"
-                value="eraser"
-                variant="interact"
-                border={
-                  tool === 'eraser' ? '1px solid' : '1px solid transparent'
-                }
-                boxShadow={useColorModeValue(
-                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-                )}
-                icon={<FaEraser />}
-                onClick={() => {
-                  setTool('eraser');
-                }}
-              ></IconButton>
-            </GridItem>
-            <GridItem>
-              <Popover>
-                <PopoverTrigger>
-                  <IconButton
-                    aria-label="Pick color"
-                    icon={
-                      <Box
-                        w="20px"
-                        h="20px"
-                        background={color.hex ?? color}
-                        borderRadius="50%"
-                      />
-                    }
-                    size="lg"
-                    isRound="true"
-                    m="2"
-                    variant="interact"
-                    onClick={fastForward}
-                    boxShadow={
-                      colorMode === 'light'
-                        ? '5px 5px 7px #cccccc, -5px -5px 7px #ffffff'
-                        : '5px 5px 7px #1b1b1b, -5px -5px 7px #252525'
-                    }
-                  />
-                </PopoverTrigger>
-                <PopoverContent w="min-content">
-                  <BlockPicker
-                    triangle={'hide'}
-                    color={color}
-                    onChangeComplete={handleChangeComplete}
-                  />
-                </PopoverContent>
-              </Popover>
-            </GridItem>
-          </Grid>
-          <Stack
-            className="graffiti-canvas-size"
-            direction={'column'}
-            display={{ base: step === 0 ? 'flex' : 'none', lg: 'none' }}
-            p={1}
-            mb={3}
-            spacing={1}
-          >
-            <HStack display="flex" spacing="2">
-              <IconButton
-                size="lg"
-                isRound="true"
-                value="pen"
-                variant="interact"
-                border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
-                boxShadow={useColorModeValue(
-                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-                )}
-                icon={<FaPen />}
-                onClick={() => {
-                  setTool('pen');
-                }}
-              ></IconButton>
-              <IconButton
-                size="lg"
-                my={2}
-                isRound="true"
-                value="eraser"
-                variant="interact"
-                border={
-                  tool === 'eraser' ? '1px solid' : '1px solid transparent'
-                }
-                boxShadow={useColorModeValue(
-                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-                )}
-                icon={<FaEraser />}
-                onClick={() => {
-                  setTool('eraser');
-                }}
-              />
-            </HStack>
-            <Box w={'100%'} margin={'0 !important'}>
-              <Box
-                w={'100%'}
-                h={'100%'}
-                boxShadow={useColorModeValue(
-                  '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-                  '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-                )}
-                p={'4'}
-                borderRadius={'20px'}
-              >
-                <SliderPicker
-                  color={color}
-                  onChangeComplete={handleChangeComplete}
-                />
-              </Box>
-            </Box>
-          </Stack>
-        </Box>
+        </HStack>
+      </Stack>
+
+      <Flex
+        display={{ base: 'none', lg: 'flex' }}
+        position="absolute"
+        top="10px"
+        left="10px"
+        right="10px"
+        zIndex="10"
+        justify="center"
+        align="center"
+        transform={
+          controlsAreShown ? 'translateY(0)' : 'translateY(calc(-100% - 12px))'
+        }
+        transition="transform 220ms ease, opacity 180ms ease"
+        opacity={controlsAreShown ? 1 : 0}
+        pointerEvents="none"
+      >
+        <HStack
+          position="relative"
+          p="tight"
+          borderRadius="full"
+          _before={{
+            content: '""',
+            position: 'absolute',
+            inset: 0,
+            right: step > 0 ? '-40px' : 0,
+            zIndex: -1,
+            borderRadius: '9999px',
+            bg: 'var(--light)',
+            boxShadow: desktopControlShadow,
+          }}
+          color="var(--dark)"
+          pointerEvents="auto"
+        >
+          <IconButton
+            aria-label="Go to previous day"
+            size="sm"
+            isRound
+            variant="interact"
+            icon={<AiFillCaretLeft />}
+            onClick={back}
+          />
+          <Heading minW="10ch" textAlign="center">
+            {day}
+          </Heading>
+          <IconButton
+            aria-label="Go to next day"
+            size="sm"
+            isRound
+            variant="interact"
+            icon={<AiFillCaretRight />}
+            onClick={next}
+          />
+          {step > 0 && (
+            <IconButton
+              aria-label="Fast forward to current day"
+              position="absolute"
+              right="-36px"
+              size="sm"
+              isRound
+              variant="interact"
+              icon={<AiFillFastForward />}
+              onClick={fastForward}
+            />
+          )}
+        </HStack>
       </Flex>
+
+      <Box ref={canvasFrameRef} className="graffiti-canvas-frame">
+        {canvasDimension > 0 ? (
+          <GraffitiDrawArea
+            lines={lines}
+            setLines={setLines}
+            tool={tool}
+            isLoaded={isLoaded}
+            color={color}
+            step={step}
+            save={save}
+            onDrawingChange={handleDrawingChange}
+            canvasDimension={canvasDimension}
+          />
+        ) : (
+          <Flex
+            height="100%"
+            width="100%"
+            align="center"
+            justify="center"
+            bg="var(--light)"
+          >
+            <Spinner color="var(--dark)" />
+          </Flex>
+        )}
+      </Box>
+
+      <Stack
+        display={{ base: step === 0 ? 'flex' : 'none', lg: 'none' }}
+        w="100%"
+        spacing="control"
+        p="control"
+        bg="var(--off)"
+        borderTop="0.5px solid var(--accent)"
+        opacity={isDrawing ? 0 : 1}
+        pointerEvents={isDrawing ? 'none' : 'auto'}
+        transition="opacity 120ms ease"
+      >
+        <HStack justify="flex-start" spacing="control">
+          <IconButton
+            aria-label="Use pen tool"
+            size="md"
+            isRound
+            variant="interact"
+            boxShadow={mobileControlShadow}
+            border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
+            icon={<FaPen />}
+            onClick={() => setTool('pen')}
+          />
+          <IconButton
+            aria-label="Use eraser tool"
+            size="md"
+            isRound
+            variant="interact"
+            boxShadow={mobileControlShadow}
+            border={tool === 'eraser' ? '1px solid' : '1px solid transparent'}
+            icon={<FaEraser />}
+            onClick={() => setTool('eraser')}
+          />
+        </HStack>
+        <SliderPicker color={color} onChangeComplete={handleChangeComplete} />
+      </Stack>
+
+      <Stack
+        display={{ base: 'none', lg: step === 0 ? 'flex' : 'none' }}
+        position="absolute"
+        right="10px"
+        top="50%"
+        transform={
+          controlsAreShown
+            ? 'translate(0, -50%)'
+            : 'translate(calc(100% + 12px), -50%)'
+        }
+        transition="transform 220ms ease, opacity 180ms ease"
+        opacity={controlsAreShown ? 1 : 0}
+        pointerEvents={controlsAreShown ? 'auto' : 'none'}
+        zIndex="10"
+        spacing="control"
+        p="control"
+        borderRadius="32px"
+        bg="var(--light)"
+        color="var(--dark)"
+        boxShadow={desktopControlShadow}
+      >
+        <IconButton
+          aria-label="Use pen tool"
+          size="lg"
+          isRound
+          variant="interact"
+          border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
+          icon={<FaPen />}
+          onClick={() => setTool('pen')}
+        />
+        <Popover>
+          <PopoverTrigger>
+            <IconButton
+              aria-label="Pick color"
+              icon={
+                <Box
+                  w="20px"
+                  h="20px"
+                  background={color.hex ?? color}
+                  borderRadius="50%"
+                />
+              }
+              size="lg"
+              isRound
+              variant="interact"
+            />
+          </PopoverTrigger>
+          <PopoverContent w="min-content" bg="var(--light)" color="var(--dark)">
+            <BlockPicker
+              triangle="hide"
+              color={color}
+              onChangeComplete={handleChangeComplete}
+            />
+          </PopoverContent>
+        </Popover>
+        <IconButton
+          aria-label="Use eraser tool"
+          size="lg"
+          isRound
+          variant="interact"
+          border={tool === 'eraser' ? '1px solid' : '1px solid transparent'}
+          icon={<FaEraser />}
+          onClick={() => setTool('eraser')}
+        />
+      </Stack>
     </Box>
   );
 }
