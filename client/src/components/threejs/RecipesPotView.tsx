@@ -2,15 +2,16 @@ import { OrthographicCamera, useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { Box, usePrefersReducedMotion } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Group, MathUtils } from 'three';
 import View from './helpers/View';
 
 interface RecipesPotProps {
   isOpen: boolean;
+  onReady: () => void;
 }
 
-const RecipesPot = ({ isOpen }: RecipesPotProps) => {
+const RecipesPot = ({ isOpen, onReady }: RecipesPotProps) => {
   const reduceMotion = usePrefersReducedMotion();
   const pot = useGLTF('/recipe-pot-stew.glb');
   const lid = useGLTF('/recipe-pot-stew-lid.glb');
@@ -19,6 +20,10 @@ const RecipesPot = ({ isOpen }: RecipesPotProps) => {
   const spinningPotRef = useRef<Group>(null);
   const lidRef = useRef<Group>(null);
   const spinningLidRef = useRef<Group>(null);
+
+  useEffect(() => {
+    onReady();
+  }, [onReady]);
 
   useFrame((_, delta) => {
     if (!spinningPotRef.current || !lidRef.current || !spinningLidRef.current) {
@@ -69,7 +74,11 @@ const RecipesPot = ({ isOpen }: RecipesPotProps) => {
   );
 };
 
-const RecipesPotView = () => {
+interface RecipesPotViewProps {
+  onReady: () => void;
+}
+
+const RecipesPotView = ({ onReady }: RecipesPotViewProps) => {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -93,7 +102,10 @@ const RecipesPotView = () => {
         <ambientLight intensity={1.6} />
         <directionalLight position={[3, 5, 4]} intensity={2.2} />
         <directionalLight position={[-3, 1, 2]} intensity={0.7} />
-        <RecipesPot isOpen={isHovered || isFocused} />
+        <RecipesPot
+          isOpen={isHovered || isFocused}
+          onReady={onReady}
+        />
       </View>
       <Box
         as="button"

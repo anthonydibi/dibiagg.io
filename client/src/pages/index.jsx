@@ -55,7 +55,14 @@ const Skills = dynamic(() => import('../components/threejs/Skills'), {
 
 const RecipesPotView = dynamic(
   () => import('../components/threejs/RecipesPotView'),
-  { ssr: false },
+  {
+    ssr: false,
+    loading: () => (
+      <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
+        <Spinner color="var(--darklight)" boxSize="28px" />
+      </Flex>
+    ),
+  },
 );
 
 const BuiltWithMarqueeContent = () => (
@@ -256,6 +263,11 @@ const builtWithTechs = [
 ];
 
 export default function About({ latestBlogPost }) {
+  const [isRecipesPotReady, setIsRecipesPotReady] = React.useState(false);
+  const handleRecipesPotReady = React.useCallback(
+    () => setIsRecipesPotReady(true),
+    [],
+  );
   const [isGraffitiDrawing, setIsGraffitiDrawing] = React.useState(false);
   const [selectedSkill, setSelectedSkill] = React.useState(null);
   const [selectedSkillCategory, setSelectedSkillCategory] =
@@ -740,8 +752,21 @@ export default function About({ latestBlogPost }) {
                   flex="0 0 125px"
                   minH="150px"
                   alignSelf={['center', null, 'stretch']}
+                  position="relative"
                 >
-                  <RecipesPotView />
+                  {!isRecipesPotReady && (
+                    <Flex
+                      position="absolute"
+                      inset="0"
+                      zIndex={3}
+                      justifyContent="center"
+                      alignItems="center"
+                      bg="var(--off)"
+                    >
+                      <Spinner color="var(--darklight)" boxSize="28px" />
+                    </Flex>
+                  )}
+                  <RecipesPotView onReady={handleRecipesPotReady} />
                 </Box>
               </Flex>
             </HomeGridItem>
