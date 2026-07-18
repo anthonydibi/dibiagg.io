@@ -30,8 +30,8 @@ import NextLink from 'next/link';
 import MyLinks from '../components/MyLinks';
 import {
   SiHeroku,
-  SiNextDotJs,
-  SiNodeDotJs,
+  SiNextdotjs,
+  SiNodedotjs,
   SiPostgresql,
   SiReact,
   SiTypescript,
@@ -39,9 +39,10 @@ import {
 import { BsLightningFill, BsTriangleFill } from 'react-icons/bs';
 import dynamic from 'next/dynamic';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
-import { skillIcons } from '../components/threejs/Skills';
+import { skillCategories, skillIcons } from '../components/threejs/Skills';
 import { getLatestPost } from '../services/BlogApi';
 import BlogEntry from '../components/blog/BlogEntry';
+import TrackingEye from '../components/TrackingEye';
 
 const Skills = dynamic(() => import('../components/threejs/Skills'), {
   ssr: false,
@@ -183,6 +184,7 @@ const projects = [
         <Box
           as="video"
           aria-hidden="true"
+          tabIndex={-1}
           autoPlay
           loop
           muted
@@ -227,11 +229,11 @@ const builtWithTechs = [
   },
   {
     name: 'Next.js',
-    icon: SiNextDotJs,
+    icon: SiNextdotjs,
   },
   {
     name: 'Node.js',
-    icon: SiNodeDotJs,
+    icon: SiNodedotjs,
   },
   {
     name: 'Heroku',
@@ -249,14 +251,96 @@ const builtWithTechs = [
 
 export default function About({ latestBlogPost }) {
   const [selectedSkill, setSelectedSkill] = React.useState(null);
+  const [selectedSkillCategory, setSelectedSkillCategory] =
+    React.useState(null);
+  const [previewedSkillCategory, setPreviewedSkillCategory] =
+    React.useState(null);
+  const activeSkillCategory = previewedSkillCategory ?? selectedSkillCategory;
+  const skillCategoryScrollerRef = React.useRef(null);
+  const skillCategoryScrollFrameRef = React.useRef(null);
+  const skillCategoryTouchFocusRef = React.useRef(false);
+  const skillCategoryHasInteractedRef = React.useRef(false);
+  const [skillCategoryScrollEdges, setSkillCategoryScrollEdges] =
+    React.useState({ left: false, right: false });
   const skillsPopupRef = React.useRef(null);
+  const skillCloseButtonRef = React.useRef(null);
+  const skillTriggerRef = React.useRef(null);
+  const useSkillTooltips =
+    useBreakpointValue({ base: false, md: true }) ?? false;
 
   const skillIconColor = useColorModeValue('black', 'white');
+  const skillCategoryBackground = useColorModeValue(
+    'gray.300',
+    'whiteAlpha.200',
+  );
+  const skillCategoryColor = useColorModeValue('var(--dark)', 'white');
+
+  const updateSkillCategoryScrollEdges = React.useCallback(() => {
+    const scroller = skillCategoryScrollerRef.current;
+    if (!scroller) return;
+
+    const nextEdges = {
+      left: skillCategoryHasInteractedRef.current && scroller.scrollLeft > 1,
+      right:
+        scroller.scrollLeft < scroller.scrollWidth - scroller.clientWidth - 1,
+    };
+
+    setSkillCategoryScrollEdges((currentEdges) =>
+      currentEdges.left === nextEdges.left &&
+      currentEdges.right === nextEdges.right
+        ? currentEdges
+        : nextEdges,
+    );
+  }, []);
+
+  const handleSkillCategoryScroll = React.useCallback(() => {
+    if (skillCategoryScrollFrameRef.current !== null) return;
+
+    skillCategoryScrollFrameRef.current = requestAnimationFrame(() => {
+      skillCategoryScrollFrameRef.current = null;
+      updateSkillCategoryScrollEdges();
+    });
+  }, [updateSkillCategoryScrollEdges]);
+
+  const scrollSkillCategoryIntoView = React.useCallback((categoryButton) => {
+    const scroller = skillCategoryScrollerRef.current;
+    if (!scroller || scroller.scrollWidth <= scroller.clientWidth) return;
+
+    const scrollerBounds = scroller.getBoundingClientRect();
+    const buttonBounds = categoryButton.getBoundingClientRect();
+    const scrollerCenter = scrollerBounds.left + scrollerBounds.width / 2;
+    const buttonCenter = buttonBounds.left + buttonBounds.width / 2;
+
+    scroller.scrollBy({
+      left: buttonCenter - scrollerCenter,
+      behavior: 'smooth',
+    });
+  }, []);
 
   useOutsideClick({
     ref: skillsPopupRef,
     handler: () => setSelectedSkill(null),
   });
+
+  useEffect(() => {
+    if (!useSkillTooltips && selectedSkill) {
+      skillCloseButtonRef.current?.focus({ preventScroll: true });
+    }
+  }, [selectedSkill, useSkillTooltips]);
+
+  const handleSkillSelect = (skillName) => {
+    skillTriggerRef.current = document.activeElement;
+    setSelectedSkill((currentSkill) =>
+      currentSkill === skillName ? null : skillName,
+    );
+  };
+
+  const closeSkillDetails = () => {
+    setSelectedSkill(null);
+    requestAnimationFrame(() =>
+      skillTriggerRef.current?.focus?.({ preventScroll: true }),
+    );
+  };
 
   const handleMarqueeMouseEnter = (e, className) => {
     const allMarquees = document.querySelectorAll(`.${className}`);
@@ -285,6 +369,33 @@ export default function About({ latestBlogPost }) {
     once: true,
     amount: 0.5,
   });
+
+  useEffect(() => {
+    const scroller = skillCategoryScrollerRef.current;
+    if (!scroller) return;
+
+    updateSkillCategoryScrollEdges();
+    const resizeObserver = new ResizeObserver(updateSkillCategoryScrollEdges);
+    resizeObserver.observe(scroller);
+    Array.from(scroller.children).forEach((categoryButton) => {
+      resizeObserver.observe(categoryButton);
+    });
+
+    return () => {
+      resizeObserver.disconnect();
+      if (skillCategoryScrollFrameRef.current !== null) {
+        cancelAnimationFrame(skillCategoryScrollFrameRef.current);
+      }
+    };
+  }, [updateSkillCategoryScrollEdges]);
+
+  const skillCategoryScrollMask = skillCategoryScrollEdges.left
+    ? skillCategoryScrollEdges.right
+      ? 'linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent)'
+      : 'linear-gradient(to right, transparent, black 14px)'
+    : skillCategoryScrollEdges.right
+    ? 'linear-gradient(to right, black calc(100% - 14px), transparent)'
+    : undefined;
 
   return (
     <>
@@ -343,7 +454,7 @@ export default function About({ latestBlogPost }) {
                   flexWrap="wrap"
                 ></Flex>
                 <Text>
-                  I'm a software engineer. Grew up in Philadelphia, now living
+                  I'm a software engineer. Grew up in West Chester, PA, now living
                   in Minneapolis. I graduated from the University of Minnesota
                   in 2023.
                   <br /> <br />
@@ -351,11 +462,13 @@ export default function About({ latestBlogPost }) {
                   platforms. I am passionate about building anything that lives
                   in or is related to the browser. My favorite challenges
                   involve creating experiences that are visually robust and
-                  data-intensive.
+                  data-intensive, and tackling these problems as part of a team
+                  that is obsessed with delivering a polished end product.
                   <br /> <br />
                   Most days you will find me scoping out new board games at a
-                  local game store, trying out a new recipe, or working on my
-                  latest random project. Have fun looking around! ✌️
+                  local game store, biking unreasonable distances, trying out a new recipe, or working on my
+                  latest random project. Have fun looking around!
+                  <TrackingEye />
                 </Text>{' '}
               </Flex>
             </HomeGridItem>
@@ -363,18 +476,119 @@ export default function About({ latestBlogPost }) {
               hash="Skills"
               colSpan={[6, null, 4, 3]}
               title="SKILLS"
+              titleCenter={
+                <Flex
+                  ref={skillCategoryScrollerRef}
+                  role="group"
+                  aria-label="Filter skills by category"
+                  align="center"
+                  mt="2px"
+                  px="6px"
+                  width="100%"
+                  maxW="100%"
+                  gap="3px"
+                  overflowX="auto"
+                  overflowY="hidden"
+                  justifyContent="safe center"
+                  onScroll={handleSkillCategoryScroll}
+                  onPointerDownCapture={() => {
+                    skillCategoryHasInteractedRef.current = true;
+                  }}
+                  onWheel={() => {
+                    skillCategoryHasInteractedRef.current = true;
+                  }}
+                  onKeyDown={() => {
+                    skillCategoryHasInteractedRef.current = true;
+                  }}
+                  sx={{
+                    scrollbarWidth: 'none',
+                    WebkitMaskImage: skillCategoryScrollMask,
+                    maskImage: skillCategoryScrollMask,
+                    '&::-webkit-scrollbar': { display: 'none' },
+                  }}
+                >
+                  {skillCategories.map((category) => {
+                    const isActive = activeSkillCategory === category.id;
+
+                    return (
+                      <Box
+                        key={category.id}
+                        as="button"
+                        type="button"
+                        aria-label={`Filter skills by ${category.label.toLowerCase()}`}
+                        aria-pressed={selectedSkillCategory === category.id}
+                        title={category.label}
+                        color={isActive ? 'white' : skillCategoryColor}
+                        bg={isActive ? 'accent' : skillCategoryBackground}
+                        display="inline-flex"
+                        alignItems="center"
+                        height="18px"
+                        fontSize="9px"
+                        lineHeight="1"
+                        px="4px"
+                        flexShrink={0}
+                        whiteSpace="nowrap"
+                        onPointerDown={(event) => {
+                          skillCategoryTouchFocusRef.current =
+                            event.pointerType === 'touch';
+                        }}
+                        onPointerEnter={(event) => {
+                          if (event.pointerType === 'touch') return;
+                          setPreviewedSkillCategory(category.id);
+                        }}
+                        onPointerLeave={(event) => {
+                          if (event.pointerType === 'touch') return;
+                          setPreviewedSkillCategory(null);
+                        }}
+                        onFocus={() => {
+                          if (!skillCategoryTouchFocusRef.current) {
+                            setPreviewedSkillCategory(category.id);
+                          }
+                        }}
+                        onBlur={() => {
+                          skillCategoryTouchFocusRef.current = false;
+                          setPreviewedSkillCategory(null);
+                        }}
+                        onClick={(event) => {
+                          scrollSkillCategoryIntoView(event.currentTarget);
+                          setPreviewedSkillCategory(null);
+                          setSelectedSkillCategory((currentCategory) =>
+                            currentCategory === category.id
+                              ? null
+                              : category.id,
+                          );
+                        }}
+                        sx={{
+                          '@media (hover: hover)': {
+                            '&:hover': { bg: 'accent', color: 'white' },
+                          },
+                        }}
+                        _focusVisible={{
+                          outline: '1px solid white',
+                          outlineOffset: '-1px',
+                        }}
+                      >
+                        {category.label}
+                      </Box>
+                    );
+                  })}
+                </Flex>
+              }
               rowSpan={3}
               position="relative"
               overflow="hidden"
+              zIndex={2}
               ref={skillsContainerRef}
             >
               <Skills
-                onClick={setSelectedSkill}
+                onClick={handleSkillSelect}
                 paused={!skillsIsInView}
                 selectedSkill={selectedSkill}
+                showTooltips={useSkillTooltips}
+                activeCategory={activeSkillCategory}
               />
               <AnimatePresence>
-                {selectedSkill && (
+                {!useSkillTooltips && selectedSkill && (
                   <Flex
                     ref={skillsPopupRef}
                     as={motion.div}
@@ -382,19 +596,28 @@ export default function About({ latestBlogPost }) {
                     height="auto"
                     width="100%"
                     left={0}
-                    zIndex={1}
+                    zIndex={2}
                     bg="var(--off)"
                     position="absolute"
+                    role="region"
+                    aria-live="polite"
+                    aria-label={`${selectedSkill} skill details`}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Escape') closeSkillDetails();
+                    }}
                     initial={{ bottom: '-100%' }}
                     animate={{ bottom: '0' }}
                     exit={{ bottom: '-100%' }}
                   >
                     <Button
+                      ref={skillCloseButtonRef}
                       variant="icon"
                       position="absolute"
                       top={'.525rem'}
                       right=".525rem"
-                      onClick={() => setSelectedSkill(null)}
+                      onClick={closeSkillDetails}
+                      aria-label="Close skill details"
+                      data-skill-drawer-control=""
                     >
                       <CloseIcon boxSize="12px" />
                     </Button>
@@ -466,8 +689,8 @@ export default function About({ latestBlogPost }) {
             <HomeGridItem colSpan={[6, null, 3]} title="RECIPES" hash="Recipes">
               <Flex direction="column">
                 <Text>
-                  I enjoy sharing my love of food 🍝, so I've made all of my
-                  recipes available from my site. You can check them out{' '}
+                  I enjoy sharing my love of food 🍝, so all of my
+                  recipes sync to my site. You can check them out{' '}
                   <Link as={NextLink} href="/recipes">
                     here.
                     <LinkIcon mx={1} boxSize="12px" />
@@ -489,92 +712,93 @@ export default function About({ latestBlogPost }) {
                 h="100%"
               >
                 {projects.map((project, index) => (
-                    <Flex
-                      key={project.name}
-                      ml={index === 0 ? '.625rem' : 0}
-                      mr={index === projects.length - 1 ? '.625rem' : 0}
-                      direction="column"
-                      p="1rem"
-                      border="2px solid var(--accent)"
-                      w="100%"
-                      gap="4px"
-                      minW="200px"
-                      minH="260px"
-                      position="relative"
-                      overflow="hidden"
-                      color={
-                        project.videoTextColor ??
-                        (project.videoSrc ? 'white' : undefined)
-                      }
-                      bg={project.videoBackground}
-                    >
-                      {project.videoSrc && (
-                        <Box
-                          as="video"
-                          aria-hidden="true"
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          preload="metadata"
-                          src={project.videoSrc}
-                          position="absolute"
-                          top={project.videoOffsetY ?? 0}
-                          left={0}
-                          w="100%"
-                          h="100%"
-                          objectFit={project.videoFit ?? 'cover'}
-                          objectPosition={
-                            project.videoPosition ?? 'center center'
-                          }
-                          pointerEvents="none"
-                        />
-                      )}
-                      <Flex
-                        justifyContent="space-between"
-                        flexDirection="column"
+                  <Flex
+                    key={project.name}
+                    ml={index === 0 ? '.625rem' : 0}
+                    mr={index === projects.length - 1 ? '.625rem' : 0}
+                    direction="column"
+                    p="1rem"
+                    border="2px solid var(--accent)"
+                    w="100%"
+                    gap="4px"
+                    minW="200px"
+                    minH="260px"
+                    position="relative"
+                    overflow="hidden"
+                    color={
+                      project.videoTextColor ??
+                      (project.videoSrc ? 'white' : undefined)
+                    }
+                    bg={project.videoBackground}
+                  >
+                    {project.videoSrc && (
+                      <Box
+                        as="video"
+                        aria-hidden="true"
+                        tabIndex={-1}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        src={project.videoSrc}
+                        position="absolute"
+                        top={project.videoOffsetY ?? 0}
+                        left={0}
+                        w="100%"
                         h="100%"
-                        position="relative"
-                        zIndex={1}
-                      >
-                        <Flex flexDirection="column" gap={1}>
-                          <Heading size="md">{project.name}</Heading>
-                          <Text>{project.desc}</Text>
-                          {project.content}
-                        </Flex>
-                        <Flex justifyContent="right">
-                          <Button
-                            p={0}
-                            border="1px solid"
-                            borderRadius="100%"
-                            transition="background-position 0.3s ease"
-                            background="linear-gradient(to left, transparent 50%, var(--accent) 50%) right"
-                            backgroundSize="200% 100%"
-                            _hover={{ backgroundPosition: 'left' }}
-                            _active={{ backgroundPosition: 'left' }}
-                            variant="icon"
-                            as={NextLink}
-                            href={project.href}
-                            isExternal={isExternalProjectHref(project.href)}
-                            target={
-                              isExternalProjectHref(project.href)
-                                ? '_blank'
-                                : undefined
-                            }
-                            rel={
-                              isExternalProjectHref(project.href)
-                                ? 'noopener noreferrer'
-                                : undefined
-                            }
-                          >
-                            <ArrowForwardIcon
-                              transform="rotate(-45deg)"
-                              boxSize="24px"
-                            />
-                          </Button>
-                        </Flex>
+                        objectFit={project.videoFit ?? 'cover'}
+                        objectPosition={
+                          project.videoPosition ?? 'center center'
+                        }
+                        pointerEvents="none"
+                      />
+                    )}
+                    <Flex
+                      justifyContent="space-between"
+                      flexDirection="column"
+                      h="100%"
+                      position="relative"
+                      zIndex={1}
+                    >
+                      <Flex flexDirection="column" gap={1}>
+                        <Heading size="md">{project.name}</Heading>
+                        <Text>{project.desc}</Text>
+                        {project.content}
+                      </Flex>
+                      <Flex justifyContent="right">
+                        <Button
+                          p={0}
+                          border="1px solid"
+                          borderRadius="100%"
+                          transition="background-position 0.3s ease"
+                          background="linear-gradient(to left, transparent 50%, var(--accent) 50%) right"
+                          backgroundSize="200% 100%"
+                          _hover={{ backgroundPosition: 'left' }}
+                          _active={{ backgroundPosition: 'left' }}
+                          variant="icon"
+                          as={NextLink}
+                          href={project.href}
+                          isExternal={isExternalProjectHref(project.href)}
+                          target={
+                            isExternalProjectHref(project.href)
+                              ? '_blank'
+                              : undefined
+                          }
+                          rel={
+                            isExternalProjectHref(project.href)
+                              ? 'noopener noreferrer'
+                              : undefined
+                          }
+                        >
+                          <ArrowForwardIcon
+                            transform="rotate(-45deg)"
+                            boxSize="24px"
+                          />
+                        </Button>
                       </Flex>
                     </Flex>
+                  </Flex>
                 ))}
               </Flex>
             </HomeGridItem>

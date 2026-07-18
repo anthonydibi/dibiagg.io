@@ -2,7 +2,7 @@ import { BiNews } from 'react-icons/bi';
 import { BsPhone } from 'react-icons/bs';
 import { GrTree } from 'react-icons/gr';
 import { MdSchool } from 'react-icons/md';
-import { SiNextDotJs } from 'react-icons/si';
+import { SiNextdotjs } from 'react-icons/si';
 import { VscFileBinary } from 'react-icons/vsc';
 import { TagConfigType } from './types';
 
@@ -14,7 +14,7 @@ export const TagConfig: TagConfigType = {
     iconColor: 'black',
   },
   next: {
-    icon: SiNextDotJs,
+    icon: SiNextdotjs,
     color: '#1A202C',
     fontColor: 'white',
     iconColor: 'white',

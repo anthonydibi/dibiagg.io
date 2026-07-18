@@ -2,3 +2,41 @@
 main {
   touch-action: initial !important;
 }
+
+.skill-orb-control {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  pointer-events: auto;
+}
+
+.skill-orb-control:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.skill-tooltip-root {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.graffiti-canvas-size {
+  width: min(calc(100vw - 16px), calc(100vh - 16px));
+  max-width: 100%;
+}
+
+.graffiti-canvas-frame {
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 48em) {
+  .graffiti-canvas-size {
+    width: min(calc(100vw - 300px), 900px, calc(100vh - 100px));
+  }
+}

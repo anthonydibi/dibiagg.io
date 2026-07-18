@@ -92,6 +92,7 @@ const MyLinks = (props: Props) => {
           value.href.startsWith('/') ? (
             <Button
               minW="min-content"
+              fontWeight="normal"
               as={NextLink}
               href={value.href}
               variant="grow"
@@ -104,6 +105,7 @@ const MyLinks = (props: Props) => {
           ) : (
             <Button
               minW="min-content"
+              fontWeight="normal"
               as={Link}
               href={value.href}
               variant="grow"
@@ -115,7 +117,12 @@ const MyLinks = (props: Props) => {
             </Button>
           )
         ) : (
-          <Button minW="min-content" onClick={value.onClick} variant="grow">
+          <Button
+            minW="min-content"
+            fontWeight="normal"
+            onClick={value.onClick}
+            variant="grow"
+          >
             <Flex gap={1}>
               {value.display} <Icon color="var(--accent)" />
             </Flex>

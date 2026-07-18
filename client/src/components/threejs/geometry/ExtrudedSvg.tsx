@@ -21,7 +21,8 @@ export type ExtrudedSvgProps = {
   onClick?: (id: string) => void;
   scale?: number;
   selected?: boolean;
-} & MeshProps;
+  dimmed?: boolean;
+} & Omit<MeshProps, 'id' | 'onClick'>;
 
 const ExtrudedSvg = ({
   id,
@@ -31,6 +32,7 @@ const ExtrudedSvg = ({
   onClick,
   scale = 0.04,
   selected,
+  dimmed = false,
   ...props
 }: ExtrudedSvgProps) => {
   const svgMarkup = useComponentMarkup(svg);
@@ -80,7 +82,11 @@ const ExtrudedSvg = ({
           onPointerLeave={handlePointerLeave}
         >
           <sphereGeometry args={[18, 32, 32]} />
-          <meshStandardMaterial color={accentColor} opacity={0.2} transparent />
+          <meshStandardMaterial
+            color={dimmed ? 'gray' : accentColor}
+            opacity={dimmed ? 0.08 : 0.2}
+            transparent
+          />
         </mesh>
       </Center>
       <Center cacheKey={svg}>
@@ -88,7 +94,13 @@ const ExtrudedSvg = ({
           <>
             <mesh key={index} geometry={geometry} {...props}>
               <meshStandardMaterial
-                color={hovered || selected ? 'lightgreen' : accentColor}
+                color={
+                  dimmed
+                    ? 'gray'
+                    : hovered || selected
+                    ? 'lightgreen'
+                    : accentColor
+                }
               />
             </mesh>
           </>

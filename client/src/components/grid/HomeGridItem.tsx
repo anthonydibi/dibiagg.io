@@ -14,12 +14,13 @@ import { set } from 'date-fns';
 
 interface HomeGridItemProps extends PropsWithChildren {
   hash: string;
-  title: string;
-  titleRight: string;
+  title?: string;
+  titleCenter?: React.ReactNode;
+  titleRight?: React.ReactNode;
 }
 
 const HomeGridItem: FC<HomeGridItemProps> = forwardRef(
-  ({ hash, title, titleRight, children, ...rest }, ref) => {
+  ({ hash, title, titleCenter, titleRight, children, ...rest }, ref) => {
     const hashFromUrl = useHash();
     const isHashed = hashFromUrl === hash;
 
@@ -59,36 +60,73 @@ const HomeGridItem: FC<HomeGridItemProps> = forwardRef(
       >
         {title && (
           <Flex
-            as={'h2'}
             position="absolute"
             top={0}
             left={0}
-            bg="accent"
-            p=".2rem"
+            right={0}
             zIndex={1}
-            align="center"
-            justify="center"
+            align="stretch"
+            pointerEvents="none"
           >
-            <Text as={Link} href={`#${hash}`} color="white" fontSize="xs">
-              {title}
-            </Text>
-            {isHashed && isHydrated && (
-              <Box position="absolute" right="-20px" className="cube accent">
-                <Box className="top"></Box>
-                <Box className="right"></Box>
-                <Box className="bottom"></Box>
-                <Box className="left"></Box>
-                <Box className="front"></Box>
-                <Box className="back"></Box>
-              </Box>
+            <Flex
+              as={'h2'}
+              position="relative"
+              bg="accent"
+              p=".2rem"
+              align="center"
+              justify="center"
+              pointerEvents="auto"
+            >
+              <Text as={Link} href={`#${hash}`} color="white" fontSize="xs">
+                {title}
+              </Text>
+              {isHashed && isHydrated && (
+                <Box
+                  position="absolute"
+                  top={titleCenter ? 'calc(100% + 7px)' : undefined}
+                  left={titleCenter ? '7px' : undefined}
+                  right={titleCenter ? undefined : '-20px'}
+                  className="cube accent"
+                >
+                  <Box className="top"></Box>
+                  <Box className="right"></Box>
+                  <Box className="bottom"></Box>
+                  <Box className="left"></Box>
+                  <Box className="front"></Box>
+                  <Box className="back"></Box>
+                </Box>
+              )}
+            </Flex>
+            {titleCenter && (
+              <Flex
+                flex="1"
+                minW={0}
+                align="center"
+                justify="center"
+                overflow="hidden"
+                pointerEvents="auto"
+              >
+                {titleCenter}
+              </Flex>
             )}
           </Flex>
         )}
         {titleRight && (
-          <Box position="absolute" top={0} right={0} bg="accent" p=".2rem">
-            <Text color="white" fontSize="xs">
-              {titleRight}
-            </Text>
+          <Box
+            position="absolute"
+            top={0}
+            right={0}
+            bg="accent"
+            p=".2rem"
+            zIndex={1}
+          >
+            {typeof titleRight === 'string' ? (
+              <Text color="white" fontSize="xs">
+                {titleRight}
+              </Text>
+            ) : (
+              titleRight
+            )}
           </Box>
         )}
         {children}
@@ -96,5 +134,7 @@ const HomeGridItem: FC<HomeGridItemProps> = forwardRef(
     );
   },
 );
+
+HomeGridItem.displayName = 'HomeGridItem';
 
 export default HomeGridItem;

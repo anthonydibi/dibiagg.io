@@ -7,7 +7,6 @@ import {
   Heading,
   Grid,
   GridItem,
-  useBreakpoint,
   Stack,
   Skeleton,
   Input,
@@ -17,7 +16,6 @@ import {
   useColorModeValue,
   useDisclosure,
   HStack,
-  useBreakpointValue,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -32,7 +30,6 @@ import {
 import { SliderPicker, BlockPicker } from 'react-color';
 import { fetchCanvasState, postCanvasLine } from '../services/GraffitiApi';
 import TaggingModal from './TaggingModal.js';
-import useWindowDimensions from '../hooks/useWindowDimensions';
 const GraffitiDrawArea = dynamic(() => import('./GraffitiDrawArea'), {
   ssr: false,
   loading: () => <Skeleton height="100%" width="100%" />,
@@ -52,11 +49,8 @@ export default function GraffitiCanvas() {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const colorMode = useColorModeValue('light', 'dark');
-  const { width, height } = useWindowDimensions();
-  const canvasDimension = useBreakpointValue({
-    base: Math.min(width, height) - 16,
-    md: Math.min(Math.min(width - 300, 900), height - 100),
-  });
+  const canvasFrameRef = React.useRef(null);
+  const [canvasDimension, setCanvasDimension] = React.useState(0);
 
   const handleChangeComplete = (color) => {
     setColor(color);
@@ -137,6 +131,29 @@ export default function GraffitiCanvas() {
     }
   }, [modeValue]);
 
+  React.useLayoutEffect(() => {
+    const canvasFrame = canvasFrameRef.current;
+    if (!canvasFrame) return;
+
+    const updateCanvasDimension = (width) => {
+      const nextDimension = Math.round(width);
+      setCanvasDimension((currentDimension) =>
+        currentDimension === nextDimension
+          ? currentDimension
+          : nextDimension,
+      );
+    };
+
+    updateCanvasDimension(canvasFrame.getBoundingClientRect().width);
+
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      if (entry) updateCanvasDimension(entry.contentRect.width);
+    });
+    resizeObserver.observe(canvasFrame);
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
   return (
     <Box className="GraffitiContainer" w="100%">
       <TaggingModal isOpen={isOpen} onClose={onClose} />
@@ -179,7 +196,7 @@ export default function GraffitiCanvas() {
           >
             <InputGroup
               size="md"
-              maxWidth={[`${canvasDimension}px`, null, '200px']}
+              maxWidth={{ base: '100%', lg: '200px' }}
               display={{ base: 'none', lg: 'block' }}
             >
               <Input
@@ -269,18 +286,25 @@ export default function GraffitiCanvas() {
         justifyContent="center"
         alignItems="center"
       >
-        <Box width={`${canvasDimension}px`} height={`${canvasDimension}px`}>
-          <GraffitiDrawArea
-            lines={lines}
-            setLines={setLines}
-            tool={tool}
-            isLoaded={isLoaded}
-            color={color}
-            userTag={userTag}
-            step={step}
-            save={save}
-            canvasDimension={canvasDimension}
-          />
+        <Box
+          ref={canvasFrameRef}
+          className="graffiti-canvas-size graffiti-canvas-frame"
+        >
+          {canvasDimension > 0 ? (
+            <GraffitiDrawArea
+              lines={lines}
+              setLines={setLines}
+              tool={tool}
+              isLoaded={isLoaded}
+              color={color}
+              userTag={userTag}
+              step={step}
+              save={save}
+              canvasDimension={canvasDimension}
+            />
+          ) : (
+            <Skeleton height="100%" width="100%" />
+          )}
         </Box>
         <Box>
           <Grid display={{ base: 'none', lg: step === 0 ? 'block' : 'none' }}>
@@ -360,12 +384,12 @@ export default function GraffitiCanvas() {
             </GridItem>
           </Grid>
           <Stack
+            className="graffiti-canvas-size"
             direction={'column'}
             display={{ base: step === 0 ? 'flex' : 'none', lg: 'none' }}
             p={1}
             mb={3}
             spacing={1}
-            width={`${canvasDimension}px`}
           >
             <HStack display="flex" spacing="2">
               <IconButton
