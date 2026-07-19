@@ -112,7 +112,12 @@ export const skillIcons: SkillDefinition[] = [
     name: 'Node.js',
     categories: ['backend'],
     icon: <SiNodedotjs />,
-    desc: 'Node powers my BFFs, microservices, and the server-side pieces behind React Router apps.',
+    desc: (
+      <>
+        I've spent an embarrassing amount of time reading the documentation for{' '}
+        <pre style={{ display: 'inline-block' }}>Stream</pre>.
+      </>
+    ),
   },
   {
     name: 'React Router',
@@ -148,7 +153,7 @@ export const skillIcons: SkillDefinition[] = [
     name: '.NET',
     categories: ['backend'],
     icon: <SiDotnet />,
-    desc: 'Blazor lets me build internal tools that .NET-native developers can comfortably maintain.',
+    desc: "I mainly use .NET to build/service internal tooling. I'm also one of the 5 devs who has used Blazor.",
   },
   {
     name: 'Tailwind',
