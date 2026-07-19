@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anthony Di Biaggio Resume</title>
+    <style>
+      @page { size: Letter; margin: 0.5in; }
+      * { box-sizing: border-box; }
+      body {
+        width: 7.5in;
+        margin: 0 auto;
+        color: #111;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10pt;
+        line-height: 1.25;
+      }
+      header { text-align: center; margin-bottom: 10px; }
+      h1 { margin: 0 0 4px; font-size: 21pt; line-height: 1; letter-spacing: 0.2px; }
+      .contact { font-size: 9.2pt; line-height: 1.35; }
+      a { color: inherit; text-decoration: none; }
+      h2 {
+        margin: 9px 0 4px;
+        border-bottom: 1px solid #222;
+        font-size: 11pt;
+        line-height: 1.1;
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+      }
+      .entry { margin-bottom: 6px; }
+      .entry:last-child { margin-bottom: 0; }
+      .entry-header, .entry-subheader {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .entry-header { font-weight: 700; }
+      .entry-subheader { font-style: italic; }
+      .right { flex: none; text-align: right; }
+      ul { margin: 2px 0 0; padding-left: 17px; }
+      li { margin: 0 0 2px; padding-left: 1px; }
+      .skills p { margin: 0 0 2.5px; }
+      .skills p:last-child { margin-bottom: 0; }
+      .label { font-weight: 700; }
+      @media screen {
+        body { padding: 0.5in 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Anthony Di Biaggio</h1>
+      <div class="contact">
+        Minneapolis, MN · <a href="tel:+16103293696">(610) 329-3696</a> ·
+        <a href="mailto:anthony@dibiagg.io">anthony@dibiagg.io</a><br />
+        <a href="https://www.dibiagg.io/">dibiagg.io</a> ·
+        <a href="https://github.com/anthonydibi">github.com/anthonydibi</a> ·
+        <a href="https://www.linkedin.com/in/anthonydibi">linkedin.com/in/anthonydibi</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="entry">
+        <div class="entry-header"><span>DraftKings</span><span class="right">Boston, MA (Remote)</span></div>
+        <div class="entry-subheader"><span>Software Engineer</span><span class="right">June 2023–Present</span></div>
+        <ul>
+          <li>Shipped NFL live markets and an immersive live-event experience that drove significant incremental revenue for Pick6.</li>
+          <li>Delivered an early payouts feature that increased winnings reinvestment.</li>
+          <li>Reduced the homepage bundle size by 50%, improved page-load latency by 30%, and tripled worst-case frame rates through animation optimizations.</li>
+          <li>Diagnose and resolve production incidents through an on-call rotation using Datadog, New Relic, OpenLens, and Kibana.</li>
+          <li>Build MCP servers, developer tools, and agentic workflows that reduce customer-support case handling time.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <div class="entry-header"><span>Medtronic</span><span class="right">Minneapolis, MN</span></div>
+        <div class="entry-subheader"><span>Software Design Extern</span><span class="right">September 2022–May 2023</span></div>
+        <ul><li>Built and deployed an on-premises dashboard for monitoring a battery-testing system.</li></ul>
+      </div>
+      <div class="entry">
+        <div class="entry-header"><span>Principal Financial Group</span><span class="right">Des Moines, IA</span></div>
+        <div class="entry-subheader"><span>Software Engineer Intern</span><span class="right">May 2022–December 2022</span></div>
+        <ul>
+          <li>Built a production ASP.NET web application for managing file-sharing workflows.</li>
+          <li>Designed and refactored Spring Boot REST APIs with a focus on performance and usability.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      <div class="entry">
+        <div class="entry-header"><span>RaidGuessr</span><span><a href="https://raidguessr.dev/">raidguessr.dev</a></span></div>
+        <ul>
+          <li>Develop and operate a daily game that turns MMO raid replays into interactive puzzles for 1,000+ monthly active users.</li>
+          <li>Built the replay experience around HTML canvas using React Router, with AWS infrastructure provisioned through Terraform and GitHub Actions for CI/CD.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <div class="entry-header"><span>ThreeSharp</span><span><a href="https://github.com/anthonydibi/ThreeSharp">github.com/anthonydibi/ThreeSharp</a></span></div>
+        <ul><li>Built a virtual-reality application with Unity, OpenXR, and Roslyn that visualizes relationships within C# codebases.</li></ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <div class="entry">
+        <div class="entry-header"><span>University of Minnesota</span><span class="right">Minneapolis, MN</span></div>
+        <div class="entry-subheader"><span>B.S. in Computer Science, GPA: 3.97</span><span class="right">May 2023</span></div>
+      </div>
+    </section>
+
+    <section class="skills">
+      <h2>Skills</h2>
+      <p><span class="label">Languages:</span> TypeScript, JavaScript, C#, Python, Java, SQL</p>
+      <p><span class="label">Frontend:</span> React, React Router (Remix), Next.js, Blazor, HTML, CSS, Tailwind CSS, WebGL</p>
+      <p><span class="label">Backend &amp; Data:</span> Node.js, .NET, PostgreSQL</p>
+      <p><span class="label">Cloud &amp; Infrastructure:</span> AWS, Kubernetes, Helm, Terraform, GitHub Actions, Jenkins, Bamboo</p>
+      <p><span class="label">Testing &amp; Observability:</span> Playwright, Vitest, Locust, Datadog, New Relic, Kibana</p>
+      <p><span class="label">Applied AI:</span> MCP servers, AI integrations, agentic workflows</p>
+    </section>
+
+    <section class="skills">
+      <h2>Interests</h2>
+      <p>Cooking, board games, video games, cycling</p>
+    </section>
+  </body>
+</html>
