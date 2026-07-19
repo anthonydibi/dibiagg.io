@@ -89,10 +89,9 @@ const RecipesPotView = ({ onReady }: RecipesPotViewProps) => {
         position: 'relative',
         width: '100%',
         height: '100%',
-        minHeight: '150px',
       }}
     >
-      <View style={{ width: '100%', height: '100%', minHeight: '150px' }}>
+      <View style={{ width: '100%', height: '100%' }}>
         <OrthographicCamera
           makeDefault
           position={[0, 1.25, 3.8]}

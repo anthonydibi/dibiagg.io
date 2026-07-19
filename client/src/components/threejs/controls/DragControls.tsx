@@ -231,3 +231,5 @@ export const CustomDragControls: ForwardRefComponent<
     );
   },
 );
+
+CustomDragControls.displayName = 'CustomDragControls';

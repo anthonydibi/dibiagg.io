@@ -293,6 +293,7 @@ export default function About({ latestBlogPost }) {
     'whiteAlpha.200',
   );
   const skillCategoryColor = useColorModeValue('var(--dark)', 'white');
+  const secondaryTileTextColor = useColorModeValue('GrayText', 'gray.300');
   const projectCardBackground = useColorModeValue(
     'var(--light)',
     'var(--dark)',
@@ -388,8 +389,8 @@ export default function About({ latestBlogPost }) {
     null,
     'marquee-vert',
   ]);
-  const builtWithTitleLeft = useBreakpointValue(['BUILT WITH?', null, 'BUILT']);
-  const builtWithTitleRight = useBreakpointValue([undefined, null, 'WITH?']);
+  const builtWithTitleLeft = useBreakpointValue(['BUILT WITH', null, 'BUILT']);
+  const builtWithTitleRight = useBreakpointValue([undefined, null, 'WITH']);
 
   const skillsContainerRef = React.useRef(null);
   const skillsIsInView = useInView(skillsContainerRef, {
@@ -710,7 +711,7 @@ export default function About({ latestBlogPost }) {
             >
               <Flex direction="column">
                 <Text>Minneapolis, Minnesota 🥶</Text>
-                <Text color={'GrayText'}>
+                <Text color={secondaryTileTextColor}>
                   It's worth it for the summers, I swear.....
                 </Text>
               </Flex>
@@ -718,7 +719,7 @@ export default function About({ latestBlogPost }) {
             <HomeGridItem colSpan={[6, null, 3]} title="CAREER" hash="Career">
               <Flex direction="column">
                 <Text>DraftKings 🤓 🏈</Text>
-                <Text color={'GrayText'}>
+                <Text color={secondaryTileTextColor}>
                   I currently work on the web app for{' '}
                   <Link href="https://pick6.draftkings.com/" isExternal>
                     Pick6
@@ -730,16 +731,12 @@ export default function About({ latestBlogPost }) {
             </HomeGridItem>
             <HomeGridItem colSpan={[6, null, 3]} title="RECIPES" hash="Recipes">
               <Flex
-                mt="-32px"
-                mb="-10px"
-                minH="192px"
                 align="stretch"
                 direction={['column-reverse', null, 'row']}
               >
                 <Flex
                   w={['100%', null, '52%']}
                   minW="0"
-                  pt={[0, null, '32px']}
                   align="center"
                 >
                   <Text id="recipes-description">
@@ -750,9 +747,11 @@ export default function About({ latestBlogPost }) {
                 <Box
                   w="125px"
                   flex="0 0 125px"
-                  minH="150px"
+                  minH={['140px', null, '0']}
                   alignSelf={['center', null, 'stretch']}
                   position="relative"
+                  mt="-32px"
+                  mb={[0, null, '-10px']}
                 >
                   {!isRecipesPotReady && (
                     <Flex
@@ -781,6 +780,7 @@ export default function About({ latestBlogPost }) {
               flexDirection="column"
             >
               <Flex
+                data-lenis-prevent-horizontal
                 direction="row"
                 flex="1"
                 overflowX="auto"

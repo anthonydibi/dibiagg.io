@@ -85,7 +85,12 @@ export default function GraffitiDrawArea(props) {
   };
 
   return (
-    <Box w="min-content" position={'relative'} zIndex={'0'}>
+    <Box
+      data-lenis-prevent
+      w="min-content"
+      position={'relative'}
+      zIndex={'0'}
+    >
       {!isLoaded && (
         <Flex
           position="absolute"

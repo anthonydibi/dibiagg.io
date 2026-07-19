@@ -261,4 +261,6 @@ const DraggableRigidBody = forwardRef<
   );
 });
 
+DraggableRigidBody.displayName = 'DraggableRigidBody';
+
 export default DraggableRigidBody;

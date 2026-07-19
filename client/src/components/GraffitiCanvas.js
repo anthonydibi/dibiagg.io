@@ -193,9 +193,6 @@ export default function GraffitiCanvas({ onDrawingChange }) {
         p="control"
         bg="var(--off)"
         borderBottom="0.5px solid var(--accent)"
-        opacity={isDrawing ? 0 : 1}
-        pointerEvents={isDrawing ? 'none' : 'auto'}
-        transition="opacity 120ms ease"
       >
         <HStack position="relative" alignSelf="center">
           <IconButton
@@ -207,7 +204,7 @@ export default function GraffitiCanvas({ onDrawingChange }) {
             icon={<AiFillCaretLeft />}
             onClick={back}
           />
-          <Heading minW="10ch" textAlign="center">
+          <Heading minW="10ch" textAlign="center" fontSize="xl">
             {day}
           </Heading>
           <IconButton
@@ -335,9 +332,6 @@ export default function GraffitiCanvas({ onDrawingChange }) {
         p="control"
         bg="var(--off)"
         borderTop="0.5px solid var(--accent)"
-        opacity={isDrawing ? 0 : 1}
-        pointerEvents={isDrawing ? 'none' : 'auto'}
-        transition="opacity 120ms ease"
       >
         <HStack justify="flex-start" spacing="control">
           <IconButton
