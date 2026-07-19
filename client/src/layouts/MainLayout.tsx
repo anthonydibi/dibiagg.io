@@ -20,7 +20,7 @@ export default function MainLayout({ children }: PropsWithChildren) {
       h="100%"
       overflowY="auto"
       overflowX="hidden"
-      sx={{ overscrollBehaviorY: 'none', touchAction: 'auto' }}
+      sx={{ touchAction: 'auto' }}
     >
       <Box ref={content} position="relative">
         {/* <Banner

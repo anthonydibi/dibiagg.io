@@ -522,6 +522,7 @@ export default function About({ latestBlogPost }) {
               titleCenter={
                 <Flex
                   ref={skillCategoryScrollerRef}
+                  data-lenis-prevent-horizontal
                   role="group"
                   aria-label="Filter skills by category"
                   align="center"
