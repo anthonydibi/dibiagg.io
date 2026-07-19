@@ -438,19 +438,7 @@ export default function Blog({
 
 export const getStaticProps = async () => {
   if (!process.env.PAPRIKA_EMAIL || !process.env.PAPRIKA_PW) {
-    console.warn(
-      'Missing Paprika credentials; generating the recipes page without recipe data.',
-    );
-
-    return {
-      props: {
-        recipesById: {},
-        recipeUidsByCategoryUid: {},
-        recipeUidsByRecipeName: {},
-        categoriesByUid: {},
-      },
-      revalidate: 3600,
-    };
+    throw new Error('Missing Paprika credentials');
   }
 
   if (
