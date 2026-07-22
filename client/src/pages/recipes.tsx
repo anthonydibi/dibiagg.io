@@ -507,6 +507,15 @@ export const getStaticProps = async () => {
     fullRecipes = recipeData.fullRecipes;
   }
 
+  fullRecipes = fullRecipes.filter((recipe) => !recipe.in_trash);
+
+  const categoryUids = new Set(categories.map((category) => category.uid));
+  for (const recipe of fullRecipes) {
+    recipe.categories = recipe.categories.filter((categoryUid) =>
+      categoryUids.has(categoryUid),
+    );
+  }
+
   const allRecipeImages = await s3.send(
     new ListObjectsV2Command({
       Bucket: 'dibiaggdotio-assets',

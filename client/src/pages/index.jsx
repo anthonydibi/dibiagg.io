@@ -158,10 +158,10 @@ const MarqueeContent = () => (
             </Tooltip>
           </Heading>
           <Flex>
-            <ChevronLeftIcon boxSize="36px" />
-            <ChevronLeftIcon boxSize="36px" />
-            <ChevronLeftIcon boxSize="36px" />
-            <ChevronLeftIcon boxSize="36px" />
+            <ChevronLeftIcon boxSize={['24px', null, '36px']} />
+            <ChevronLeftIcon boxSize={['24px', null, '36px']} />
+            <ChevronLeftIcon boxSize={['24px', null, '36px']} />
+            <ChevronLeftIcon boxSize={['24px', null, '36px']} />
           </Flex>
         </>
       ))}
