@@ -1,6 +1,6 @@
-import { Box, Button, Flex, Link, useToast } from '@chakra-ui/react';
-import React, { ReactNode } from 'react';
-import { FaBriefcase, FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { Button, Flex, Link } from '@chakra-ui/react';
+import React from 'react';
+import { FaBriefcase, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { MdChatBubble, MdEmail } from 'react-icons/md';
 import NextLink from 'next/link';
 import { IconType } from 'react-icons/lib';
@@ -9,33 +9,6 @@ import { BiFoodMenu } from 'react-icons/bi';
 type Props = {};
 
 const MyLinks = (props: Props) => {
-  const toast = useToast();
-
-  const copyToClipboardAndShowToast = async (
-    contactType: string,
-    contactLink: string,
-  ) => {
-    if (window.isSecureContext) {
-      await navigator.clipboard.writeText(contactLink);
-      toast({
-        title: 'Copied to clipboard!',
-        description: `You can now paste my ${contactType}.`,
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        title: 'Copy to clipboard failed.',
-        description:
-          'Sorry! Your browser does not support clipboard modification, or you are not visiting my site from a secure context :(',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
-
   const LinksConfig: {
     [linkKey: string]: {
       display: string;
@@ -54,12 +27,6 @@ const MyLinks = (props: Props) => {
       display: 'Recipes',
       icon: BiFoodMenu,
       href: '/recipes',
-    },
-    discord: {
-      display: 'Discord',
-      icon: FaDiscord,
-      onClick: () =>
-        copyToClipboardAndShowToast('Discord username', 'boat boat#3913'),
     },
     linkedin: {
       display: 'LinkedIn',

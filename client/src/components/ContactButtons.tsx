@@ -1,5 +1,5 @@
 import { IconButton, useToast } from '@chakra-ui/react';
-import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 
 export default function ContactButtons() {
@@ -32,16 +32,6 @@ export default function ContactButtons() {
 
   return (
     <>
-      <IconButton
-        aria-label="discord"
-        size="md"
-        variant="interact"
-        icon={<FaDiscord />}
-        onClick={() => {
-          copyToClipboardAndShowToast('Discord username', 'boat boat#3913');
-        }}
-        rounded="none"
-      ></IconButton>
       <IconButton
         aria-label="linkedin"
         size="md"
