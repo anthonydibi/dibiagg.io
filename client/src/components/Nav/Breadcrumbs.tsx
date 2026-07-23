@@ -61,6 +61,7 @@ const Breadcrumbs = (props: Props) => {
         alignItems="center"
         justifyContent="space-between"
         width="100%"
+        minWidth={0}
         maxWidth={isRecipesPage ? 'unset' : '1200px'}
       >
         <Flex
@@ -69,14 +70,28 @@ const Breadcrumbs = (props: Props) => {
           pointerEvents="auto"
           pr={1}
           h="48px"
+          flex="0 1 auto"
           width="max-content"
+          minWidth={0}
+          overflow="hidden"
           alignItems="center"
           justifyContent="start"
           border="2px solid var(--accent)"
           bg={useColorModeValue('var(--light)', 'var(--dark)')}
           boxShadow="md"
         >
-          <Breadcrumb separator={<ChevronRightIcon color="accent" />}>
+          <Breadcrumb
+            width="100%"
+            minWidth={0}
+            overflow="hidden"
+            separator={<ChevronRightIcon color="accent" />}
+            sx={{
+              '& > ol': {
+                flexWrap: 'nowrap',
+                minWidth: 0,
+              },
+            }}
+          >
             <Button
               p={0}
               onClick={toggleNav}
@@ -93,7 +108,7 @@ const Breadcrumbs = (props: Props) => {
                 <CloseIcon boxSize="16px" />
               )}
             </Button>
-            <BreadcrumbItem>
+            <BreadcrumbItem flexShrink={0}>
               <BreadcrumbLink
                 as={Link}
                 href="/"
@@ -121,7 +136,7 @@ const Breadcrumbs = (props: Props) => {
               }
               const config = BreadcrumbConfig[path];
               return (
-                <BreadcrumbItem key={path}>
+                <BreadcrumbItem key={path} flexShrink={0}>
                   <BreadcrumbLink
                     _hover={{ textDecoration: 'underline' }}
                     as={Link}
@@ -132,6 +147,7 @@ const Breadcrumbs = (props: Props) => {
                     <Text
                       _hover={{ textDecoration: 'underline' }}
                       fontSize="sm"
+                      lineHeight="1.5"
                       fontWeight={600}
                     >
                       {config.display}
@@ -145,19 +161,30 @@ const Breadcrumbs = (props: Props) => {
                 return null;
               }
               return (
-                <BreadcrumbItem key={key}>
+                <BreadcrumbItem
+                  key={key}
+                  flex="1 1 auto"
+                  minWidth={0}
+                  overflow="hidden"
+                >
                   <BreadcrumbLink
                     _hover={{ textDecoration: 'underline' }}
                     as={Link}
                     href="#"
                     shallow
                     onClick={() => setIsOpen(false)}
+                    display="block"
+                    width="100%"
+                    minWidth={0}
+                    overflow="hidden"
                   >
                     <Text
+                      isTruncated
                       _hover={{ textDecoration: 'underline' }}
                       fontSize="xs"
-                      lineHeight="12px"
+                      lineHeight="1.5"
                       fontWeight={600}
+                      maxWidth="100%"
                     >
                       {value}
                     </Text>
@@ -173,6 +200,7 @@ const Breadcrumbs = (props: Props) => {
           pointerEvents="auto"
           h="48px"
           width="min-content"
+          flexShrink={0}
           position="sticky"
           p=".4rem"
           ml="4px"

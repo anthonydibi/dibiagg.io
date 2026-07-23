@@ -119,6 +119,9 @@ export default function Blog({
     height: '100%',
     background: 'var(--off)',
     overflowY: 'auto',
+    overscrollBehavior: 'contain',
+    touchAction: 'pan-y',
+    WebkitOverflowScrolling: 'touch',
     boxShadow: 'var(--chakra-shadows-lg)',
     flexDirection: 'column',
     ...responsiveSidebarStyle,
@@ -132,6 +135,7 @@ export default function Blog({
         description="Anthony Di Biaggio's recipes"
       />
       <motion.div
+        data-lenis-prevent
         style={sidebarStyle}
         animate={{ translateX: sidebarShouldBeVisible ? 0 : '-100%' }}
         initial={false}
