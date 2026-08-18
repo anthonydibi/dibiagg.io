@@ -596,6 +596,7 @@ const Internal: FC<InternalProps> = ({
   const rigidBodiesRef = useRef<Array<RapierRigidBody | null>>([]);
   const controlElementsRef = useRef<Array<HTMLButtonElement | null>>([]);
   const rightingStartedRef = useRef(false);
+  const visibleFallingStartedAtRef = useRef<number | null>(null);
   const isTabbingRef = useRef(false);
   const tabDirectionRef = useRef<1 | -1>(1);
 
@@ -710,18 +711,34 @@ const Internal: FC<InternalProps> = ({
   const shouldRightBodies = useCallback((elapsedTime: number) => {
     if (rightingStartedRef.current) return true;
 
+    if (visibleFallingStartedAtRef.current === null) {
+      const radius = BALL_GEOMETRY_RADIUS * svgScale;
+      const viewportTop = height / 2;
+      const hasVisibleFallingBody = rigidBodiesRef.current.some(
+        (rigidBody) =>
+          rigidBody !== null &&
+          rigidBody.translation().y - radius <= viewportTop &&
+          rigidBody.linvel().y < 0,
+      );
+
+      if (!hasVisibleFallingBody) return false;
+      visibleFallingStartedAtRef.current = elapsedTime;
+    }
+
     rightingStartedRef.current =
-      elapsedTime >= FORCE_RIGHTING_AFTER_SECONDS ||
+      elapsedTime - visibleFallingStartedAtRef.current >=
+        FORCE_RIGHTING_AFTER_SECONDS ||
       skillIcons.every((_, index) => {
         const rigidBody = rigidBodiesRef.current[index];
         return rigidBody ? isStill(rigidBody) : false;
       });
 
     return rightingStartedRef.current;
-  }, []);
+  }, [height, svgScale]);
 
   useLayoutEffect(() => {
     rightingStartedRef.current = false;
+    visibleFallingStartedAtRef.current = null;
   }, [svgScale]);
 
   const initialPositions = useMemo(() => {

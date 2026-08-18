@@ -1,7 +1,7 @@
 import { Stage, Layer, Line } from 'react-konva';
 import useGraffitiSocket from '../hooks/useGraffitiSocket';
 import React from 'react';
-import { Box, Flex, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Spinner, useColorModeValue } from '@chakra-ui/react';
 
 const getToolCursor = (tool) => {
   const hotspot = tool === 'eraser' ? '8 22' : '4 24';
@@ -25,6 +25,7 @@ export default function GraffitiDrawArea(props) {
   const save = props.save;
   const onDrawingChange = props.onDrawingChange;
   const canvasDimension = props.canvasDimension;
+  const canvasBackground = useColorModeValue('#f0f0f0', '#6b7684');
   const [numSessionLines, setNumSessionLines] = React.useState(0);
   const isDrawing = React.useRef(false);
   const socket = useGraffitiSocket(setLines);
@@ -98,14 +99,14 @@ export default function GraffitiDrawArea(props) {
           zIndex="1"
           align="center"
           justify="center"
-          bg="var(--light)"
+          bg={canvasBackground}
         >
           <Spinner color="var(--dark)" />
         </Flex>
       )}
       <Stage
         style={{
-          background: '#f0f0f0',
+          background: canvasBackground,
           cursor: step === 0 ? toolCursor : 'default',
         }}
         width={canvasDimension}

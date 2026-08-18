@@ -43,6 +43,7 @@ import { skillCategories, skillIcons } from '../components/threejs/Skills';
 import { getLatestPost } from '../services/BlogApi';
 import BlogEntry from '../components/blog/BlogEntry';
 import TrackingEye from '../components/TrackingEye';
+import InteractiveDotField from '../components/InteractiveDotField';
 
 const Skills = dynamic(() => import('../components/threejs/Skills'), {
   ssr: false,
@@ -391,6 +392,8 @@ export default function About({ latestBlogPost }) {
   ]);
   const builtWithTitleLeft = useBreakpointValue(['BUILT WITH', null, 'BUILT']);
   const builtWithTitleRight = useBreakpointValue([undefined, null, 'WITH']);
+  const hideGraffitiTitleWhileDrawing =
+    useBreakpointValue({ base: false, lg: true }) ?? false;
 
   const skillsContainerRef = React.useRef(null);
   const skillsIsInView = useInView(skillsContainerRef, {
@@ -924,15 +927,19 @@ export default function About({ latestBlogPost }) {
             <Grid
               gridColumn="1 / -1"
               templateColumns="repeat(12, minmax(0, 1fr))"
-              templateRows={['auto', null, 'repeat(2, minmax(0, 1fr))']}
+              templateRows={['auto', null, 'auto minmax(0, 1fr)']}
               bg="accent"
               gap="grid"
             >
               <HomeGridItem
-                colSpan={[12, null, 10]}
+                colSpan={[12, null, 8]}
                 rowSpan={[1, null, 2]}
                 hash="Graffiti"
-                title={isGraffitiDrawing ? undefined : 'GRAFFITI'}
+                title={
+                  isGraffitiDrawing && hideGraffitiTitleWhileDrawing
+                    ? undefined
+                    : 'GRAFFITI'
+                }
                 p="0"
                 minH="0"
               >
@@ -958,6 +965,16 @@ export default function About({ latestBlogPost }) {
                   <MyLinks />
                 </Grid>
               </HomeGridItem>
+              <Box
+                aria-hidden="true"
+                display={['none', null, 'block']}
+                gridColumn={['span 12', null, 'span 2']}
+                gridRow={['span 1', null, 'span 2']}
+                bg="var(--off)"
+                overflow="hidden"
+              >
+                <InteractiveDotField />
+              </Box>
               <HomeGridItem
                 minH={['120px', null, '0']}
                 pt="header"

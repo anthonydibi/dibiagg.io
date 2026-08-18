@@ -23,19 +23,26 @@ import {
 } from 'react-icons/ai';
 import { BlockPicker, SliderPicker } from 'react-color';
 import { fetchCanvasState, postCanvasLine } from '../services/GraffitiApi';
-const GraffitiDrawArea = dynamic(() => import('./GraffitiDrawArea'), {
-  ssr: false,
-  loading: () => (
+
+const GraffitiLoading = () => {
+  const canvasBackground = useColorModeValue('#f0f0f0', '#6b7684');
+
+  return (
     <Flex
       width="100%"
       height="100%"
       align="center"
       justify="center"
-      bg="var(--light)"
+      bg={canvasBackground}
     >
       <Spinner color="var(--dark)" />
     </Flex>
-  ),
+  );
+};
+
+const GraffitiDrawArea = dynamic(() => import('./GraffitiDrawArea'), {
+  ssr: false,
+  loading: () => <GraffitiLoading />,
 });
 
 export default function GraffitiCanvas({ onDrawingChange }) {
@@ -48,16 +55,29 @@ export default function GraffitiCanvas({ onDrawingChange }) {
   const [color, setColor] = React.useState('#000000');
   const [day, setDay] = React.useState(today.toISOString().split('T')[0]);
   const [isLoaded, setIsLoaded] = React.useState(false);
-  const mobileControlShadow = useColorModeValue(
-    '5px 5px 7px #cccccc, -5px -5px 7px #ffffff',
-    '5px 5px 7px #1b1b1b, -5px -5px 7px #252525',
-  );
-  const desktopControlShadow = '5px 5px 7px #cccccc, -5px -5px 7px #ffffff';
+  const canvasBackground = useColorModeValue('#f0f0f0', '#6b7684');
   const canvasFrameRef = React.useRef(null);
   const [canvasDimension, setCanvasDimension] = React.useState(0);
   const [controlsVisible, setControlsVisible] = React.useState(true);
   const [isDrawing, setIsDrawing] = React.useState(false);
   const controlsAreShown = controlsVisible && !isDrawing;
+  const controlSurface = useColorModeValue('var(--light)', 'var(--dark)');
+  const controlHoverSurface = useColorModeValue('#e2e2e2', '#2b2b2b');
+  const controlActiveSurface = useColorModeValue('#d6d6d6', '#151515');
+  const controlText = useColorModeValue('#202020', '#f8fafc');
+  const controlBorder = 'var(--accent)';
+  const controlButtonStyles = {
+    bg: 'transparent',
+    color: 'inherit',
+    border: '2px solid transparent',
+    borderRadius: 'full',
+    boxShadow: 'none',
+    _hover: {
+      bg: controlHoverSurface,
+      borderColor: controlBorder,
+    },
+    _active: { bg: controlActiveSurface },
+  };
 
   const handleDrawingChange = React.useCallback(
     (nextIsDrawing) => {
@@ -164,15 +184,21 @@ export default function GraffitiCanvas({ onDrawingChange }) {
         aria-expanded={controlsVisible}
         display={{ base: 'none', lg: 'inline-flex' }}
         position="absolute"
-        right="8px"
-        top="8px"
+        right="0"
+        top="0"
         zIndex="20"
         size="sm"
-        isRound
         variant="interact"
-        bg="var(--light)"
-        color="var(--dark)"
-        boxShadow={desktopControlShadow}
+        borderRadius="0"
+        bg={controlSurface}
+        color={controlText}
+        border="2px solid"
+        borderColor={controlBorder}
+        borderTop="0"
+        borderRight="0"
+        boxShadow="none"
+        _hover={{ bg: controlHoverSurface }}
+        _active={{ bg: controlActiveSurface }}
         opacity={isDrawing ? 0 : 1}
         pointerEvents={isDrawing ? 'none' : 'auto'}
         transition="opacity 120ms ease"
@@ -191,8 +217,10 @@ export default function GraffitiCanvas({ onDrawingChange }) {
         w="100%"
         spacing="control"
         p="control"
-        bg="var(--off)"
-        borderBottom="0.5px solid var(--accent)"
+        bg={controlSurface}
+        color={controlText}
+        borderBottom="2px solid"
+        borderColor={controlBorder}
       >
         <HStack position="relative" alignSelf="center">
           <IconButton
@@ -200,7 +228,7 @@ export default function GraffitiCanvas({ onDrawingChange }) {
             size="sm"
             isRound
             variant="interact"
-            boxShadow={mobileControlShadow}
+            {...controlButtonStyles}
             icon={<AiFillCaretLeft />}
             onClick={back}
           />
@@ -212,7 +240,7 @@ export default function GraffitiCanvas({ onDrawingChange }) {
             size="sm"
             isRound
             variant="interact"
-            boxShadow={mobileControlShadow}
+            {...controlButtonStyles}
             icon={<AiFillCaretRight />}
             onClick={next}
           />
@@ -224,7 +252,7 @@ export default function GraffitiCanvas({ onDrawingChange }) {
               size="sm"
               isRound
               variant="interact"
-              boxShadow={mobileControlShadow}
+              {...controlButtonStyles}
               icon={<AiFillFastForward />}
               onClick={fastForward}
             />
@@ -235,14 +263,14 @@ export default function GraffitiCanvas({ onDrawingChange }) {
       <Flex
         display={{ base: 'none', lg: 'flex' }}
         position="absolute"
-        top="10px"
-        left="10px"
-        right="10px"
+        top="0"
+        left="0"
+        right="0"
         zIndex="10"
         justify="center"
         align="center"
         transform={
-          controlsAreShown ? 'translateY(0)' : 'translateY(calc(-100% - 12px))'
+          controlsAreShown ? 'translateY(0)' : 'translateY(calc(-100% - 2px))'
         }
         transition="transform 220ms ease, opacity 180ms ease"
         opacity={controlsAreShown ? 1 : 0}
@@ -251,18 +279,20 @@ export default function GraffitiCanvas({ onDrawingChange }) {
         <HStack
           position="relative"
           p="tight"
-          borderRadius="full"
+          borderRadius="0"
           _before={{
             content: '""',
             position: 'absolute',
             inset: 0,
             right: step > 0 ? '-40px' : 0,
             zIndex: -1,
-            borderRadius: '9999px',
-            bg: 'var(--light)',
-            boxShadow: desktopControlShadow,
+            borderRadius: '0',
+            bg: controlSurface,
+            border: '2px solid',
+            borderColor: controlBorder,
+            borderTop: '0',
           }}
-          color="var(--dark)"
+          color={controlText}
           pointerEvents="auto"
         >
           <IconButton
@@ -270,6 +300,7 @@ export default function GraffitiCanvas({ onDrawingChange }) {
             size="sm"
             isRound
             variant="interact"
+            {...controlButtonStyles}
             icon={<AiFillCaretLeft />}
             onClick={back}
           />
@@ -281,6 +312,7 @@ export default function GraffitiCanvas({ onDrawingChange }) {
             size="sm"
             isRound
             variant="interact"
+            {...controlButtonStyles}
             icon={<AiFillCaretRight />}
             onClick={next}
           />
@@ -292,6 +324,7 @@ export default function GraffitiCanvas({ onDrawingChange }) {
               size="sm"
               isRound
               variant="interact"
+              {...controlButtonStyles}
               icon={<AiFillFastForward />}
               onClick={fastForward}
             />
@@ -318,7 +351,7 @@ export default function GraffitiCanvas({ onDrawingChange }) {
             width="100%"
             align="center"
             justify="center"
-            bg="var(--light)"
+            bg={canvasBackground}
           >
             <Spinner color="var(--dark)" />
           </Flex>
@@ -330,8 +363,10 @@ export default function GraffitiCanvas({ onDrawingChange }) {
         w="100%"
         spacing="control"
         p="control"
-        bg="var(--off)"
-        borderTop="0.5px solid var(--accent)"
+        bg={controlSurface}
+        color={controlText}
+        borderTop="2px solid"
+        borderColor={controlBorder}
       >
         <HStack justify="flex-start" spacing="control">
           <IconButton
@@ -339,8 +374,8 @@ export default function GraffitiCanvas({ onDrawingChange }) {
             size="md"
             isRound
             variant="interact"
-            boxShadow={mobileControlShadow}
-            border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
+            {...controlButtonStyles}
+            borderColor={tool === 'pen' ? controlBorder : 'transparent'}
             icon={<FaPen />}
             onClick={() => setTool('pen')}
           />
@@ -349,8 +384,8 @@ export default function GraffitiCanvas({ onDrawingChange }) {
             size="md"
             isRound
             variant="interact"
-            boxShadow={mobileControlShadow}
-            border={tool === 'eraser' ? '1px solid' : '1px solid transparent'}
+            {...controlButtonStyles}
+            borderColor={tool === 'eraser' ? controlBorder : 'transparent'}
             icon={<FaEraser />}
             onClick={() => setTool('eraser')}
           />
@@ -361,12 +396,12 @@ export default function GraffitiCanvas({ onDrawingChange }) {
       <Stack
         display={{ base: 'none', lg: step === 0 ? 'flex' : 'none' }}
         position="absolute"
-        right="10px"
+        right="0"
         top="50%"
         transform={
           controlsAreShown
             ? 'translate(0, -50%)'
-            : 'translate(calc(100% + 12px), -50%)'
+            : 'translate(calc(100% + 2px), -50%)'
         }
         transition="transform 220ms ease, opacity 180ms ease"
         opacity={controlsAreShown ? 1 : 0}
@@ -374,17 +409,21 @@ export default function GraffitiCanvas({ onDrawingChange }) {
         zIndex="10"
         spacing="control"
         p="control"
-        borderRadius="32px"
-        bg="var(--light)"
-        color="var(--dark)"
-        boxShadow={desktopControlShadow}
+        borderRadius="0"
+        bg={controlSurface}
+        color={controlText}
+        border="2px solid"
+        borderColor={controlBorder}
+        borderRight="0"
+        boxShadow="none"
       >
         <IconButton
           aria-label="Use pen tool"
           size="lg"
           isRound
           variant="interact"
-          border={tool === 'pen' ? '1px solid' : '1px solid transparent'}
+          {...controlButtonStyles}
+          borderColor={tool === 'pen' ? controlBorder : 'transparent'}
           icon={<FaPen />}
           onClick={() => setTool('pen')}
         />
@@ -403,13 +442,38 @@ export default function GraffitiCanvas({ onDrawingChange }) {
               size="lg"
               isRound
               variant="interact"
+              {...controlButtonStyles}
             />
           </PopoverTrigger>
-          <PopoverContent w="min-content" bg="var(--light)" color="var(--dark)">
+          <PopoverContent
+            w="min-content"
+            bg={controlSurface}
+            color={controlText}
+            border="2px solid"
+            borderColor={controlBorder}
+            borderRadius="0"
+            boxShadow="none"
+          >
             <BlockPicker
               triangle="hide"
               color={color}
               onChangeComplete={handleChangeComplete}
+              styles={{
+                card: {
+                  background: controlSurface,
+                  boxShadow: 'none',
+                  borderRadius: '0',
+                },
+                head: { borderRadius: '0' },
+                body: { background: controlSurface },
+                input: {
+                  color: controlText,
+                  background: controlActiveSurface,
+                  boxShadow: 'none',
+                  border: `2px solid ${controlBorder}`,
+                  borderRadius: '0',
+                },
+              }}
             />
           </PopoverContent>
         </Popover>
@@ -418,7 +482,8 @@ export default function GraffitiCanvas({ onDrawingChange }) {
           size="lg"
           isRound
           variant="interact"
-          border={tool === 'eraser' ? '1px solid' : '1px solid transparent'}
+          {...controlButtonStyles}
+          borderColor={tool === 'eraser' ? controlBorder : 'transparent'}
           icon={<FaEraser />}
           onClick={() => setTool('eraser')}
         />
