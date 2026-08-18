@@ -791,7 +791,7 @@ export default function About({ latestBlogPost }) {
                 gap="card"
                 overflowY="hidden"
                 py="shadow"
-                my="-14px"
+                mt="-14px"
               >
                 {projects.map((project, index) => (
                   <Flex
@@ -968,10 +968,12 @@ export default function About({ latestBlogPost }) {
               <Box
                 aria-hidden="true"
                 display={['none', null, 'block']}
-                gridColumn={['span 12', null, 'span 2']}
-                gridRow={['span 1', null, 'span 2']}
+                gridColumn="span 2"
+                gridRow="span 2"
                 bg="var(--off)"
                 overflow="hidden"
+                position="relative"
+                minH="0"
               >
                 <InteractiveDotField />
               </Box>
@@ -1016,6 +1018,19 @@ export default function About({ latestBlogPost }) {
                   </Flex>
                 </Flex>
               </HomeGridItem>
+              <Box
+                aria-hidden="true"
+                data-lenis-prevent
+                display={['block', null, 'none']}
+                gridColumn="span 12"
+                bg="var(--off)"
+                overflow="hidden"
+                position="relative"
+                h="120px"
+                minH="120px"
+              >
+                <InteractiveDotField />
+              </Box>
             </Grid>
           </Grid>
         </Box>

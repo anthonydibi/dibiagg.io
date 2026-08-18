@@ -23,6 +23,8 @@ const InteractiveDotField = () => {
   React.useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    const container = canvas.parentElement;
+    if (!container) return;
 
     const context = canvas.getContext('2d', { alpha: true });
     if (!context) return;
@@ -140,16 +142,35 @@ const InteractiveDotField = () => {
     };
 
     const resize = () => {
-      const bounds = canvas.getBoundingClientRect();
-      width = bounds.width;
-      height = bounds.height;
-
+      const bounds = container.getBoundingClientRect();
       const pixelRatio = Math.min(
         window.devicePixelRatio || 1,
         MAX_DEVICE_PIXEL_RATIO,
       );
-      canvas.width = Math.max(1, Math.round(width * pixelRatio));
-      canvas.height = Math.max(1, Math.round(height * pixelRatio));
+      const nextWidth = bounds.width;
+      const nextHeight = bounds.height;
+      const nextCanvasWidth = Math.max(
+        1,
+        Math.round(nextWidth * pixelRatio),
+      );
+      const nextCanvasHeight = Math.max(
+        1,
+        Math.round(nextHeight * pixelRatio),
+      );
+
+      if (
+        width === nextWidth &&
+        height === nextHeight &&
+        canvas.width === nextCanvasWidth &&
+        canvas.height === nextCanvasHeight
+      ) {
+        return;
+      }
+
+      width = nextWidth;
+      height = nextHeight;
+      canvas.width = nextCanvasWidth;
+      canvas.height = nextCanvasHeight;
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
       dots = [];
@@ -205,7 +226,7 @@ const InteractiveDotField = () => {
       }
     });
 
-    resizeObserver.observe(canvas);
+    resizeObserver.observe(container);
     intersectionObserver.observe(canvas);
     canvas.addEventListener('pointerenter', updatePointer, { passive: true });
     canvas.addEventListener('pointermove', updatePointer, { passive: true });
@@ -235,7 +256,13 @@ const InteractiveDotField = () => {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      style={{ display: 'block', width: '100%', height: '100%' }}
+      style={{
+        display: 'block',
+        position: 'absolute',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+      }}
     />
   );
 };
